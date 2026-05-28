@@ -1,4 +1,4 @@
-# OpenEuler 图标库 componentKey 索引
+# openEuler 图标库 componentKey 索引
 
 > 数据来源：Pixso 图标库文件 `kbqInwBrCTGnM0MsPJDgvA`  
 > 生成日期：2026-05-25  

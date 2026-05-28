@@ -1,4 +1,4 @@
-# OpenEuler 组件 componentKey 完整速查表
+# openEuler 组件 componentKey 完整速查表
 
 > 数据来源：Pixso 设计文件 `JZkjW0mhmT61Mtd98dCfBw`  
 > 生成日期：2026-04-28  
