@@ -16,7 +16,10 @@ pnpx skills add finch-poi/opendesign-skills --all
 pnpx skills add finch-poi/opendesign-skills --skill opendesign-components
 pnpx skills add finch-poi/opendesign-skills --skill opendesign-scripts
 pnpx skills add finch-poi/opendesign-skills --skill opendesign-tokens
+pnpx skills add finch-poi/opendesign-skills --skill opendesign-design
 ```
+
+> opendesign-components / scripts / tokens 生产 Vue 代码；opendesign-design 生产 Pixso 设计稿。两类 skill 互补，可按需安装。
 
 安装后，skill 会自动注入到支持的 AI 编码助手。
 
@@ -33,6 +36,7 @@ pnpx skills experimental_install
 | [opendesign-components](#opendesign-components) | `@opensig/opendesign` | 46 个 Vue 3 UI 组件 | [SKILL.md](skills/opendesign-components/SKILL.md) |
 | [opendesign-scripts](#opendesign-scripts) | `@opensig/open-scripts` | 5 个 CLI 构建命令 | [SKILL.md](skills/opendesign-scripts/SKILL.md) |
 | [opendesign-tokens](#opendesign-tokens) | `@opensig/opendesign-token` | 3 套主题的设计令牌体系 | [SKILL.md](skills/opendesign-tokens/SKILL.md) |
+| [opendesign-design](#opendesign-design) | Pixso MCP（无 npm 包） | 21 个组件设计规范 + 536 变体 + 187 图标 | [SKILL.md](skills/opendesign-design/SKILL.md) |
 
 ---
 
@@ -166,28 +170,82 @@ skills/opendesign-tokens/
 
 ---
 
+## opendesign-design
+
+**用途**：在 Pixso 中通过 MCP 工具生产符合 OpenDesign 规范的设计稿。当 AI 需要在 Pixso 画布上创建/编辑 UI 组件、搭建页面框架、调用 Symbol 组件库或读取设计变量时加载此 skill。**本 skill 仅生产 Pixso 设计稿，不输出代码**。
+
+**适用场景**：
+- 在 Pixso 中创建按钮、输入框、卡片、导航等 UI 组件
+- 应用栅格 / 颜色 / 字号 / 间距 / 圆角等设计规范
+- 调用 OpenDesign 的 Pixso Symbol 组件库（按 componentKey 实例化）
+- 读取并应用设计变量（Tokens）到画布元素
+- 含图标场景下采用两阶段生成（`code_to_design` + `create_instance`）
+
+**覆盖范围**：
+- **21 个组件设计规范**：OAnchor / OBreadcrumb / OButton / OCard / OCheckbox / ODivider / ODropdown / OInput / OLink / OLoading / OMessage / ONavigation / OPagination / ORadio / OScrollbar / OSearch / OStep / OSwitch / OTab / OTag / OToggle
+- **536 个 UI 组件变体**的 `componentKey` 索引
+- **187 个图标**的 `componentKey` 索引（独立图标库 `kbqInwBrCTGnM0MsPJDgvA`）
+
+**数据资源（运行时拉取，不本地化）**：
+
+栅格 / 响应式断点 / openEuler 主题 token 等上游数据通过 WebFetch 实时从 atomgit 拉取，**不下载到本地副本**：
+
+| 用途 | URL |
+|---|---|
+| 栅格规范 | `https://raw.atomgit.com/openeuler/opendesign-token/raw/master/packages/opendesign-token/tokens/grid-token.json` |
+| 响应式断点 | `https://raw.atomgit.com/openeuler/opendesign-token/raw/master/packages/opendesign-token/tokens/responsive-token.json` |
+| openEuler 主题 Token | `https://raw.atomgit.com/openeuler/opendesign-token/raw/master/packages/opendesign-token/tokens/openeuler-token.json` |
+
+**与其他 skill 的关系**：
+- 与 `opendesign-components` 互补：本 skill 在 Pixso 中产出设计稿，components skill 把设计稿转为 Vue 代码
+- 与 `opendesign-tokens` 共享 Token 真源（同一 atomgit 上游），但本 skill 侧重在 Pixso 画布上落地 Token
+
+**目录结构**：
+```
+skills/opendesign-design/
+├── SKILL.md                          # 主 skill 文件（含工作流、图标处理规范、componentKey 速查）
+└── references/
+    ├── components/
+    │   └── {component}.md            # 21 个组件设计规范
+    ├── component-keys.md             # 536 个 UI 组件变体 componentKey 索引
+    └── icon-keys.md                  # 187 个图标 componentKey 索引
+```
+
+> 不包含本地 `scripts/` 目录 — token / 栅格数据由 SKILL.md 在执行时通过远端 URL 获取。
+
+---
+
 ## Skill 之间的关系
 
 ```
-opendesign-tokens          opendesign-scripts
-(设计令牌 CSS 变量)         (CLI 构建工具)
-       │                        │
-       │ 提供主题变量             │ gen:icon 生成图标组件
-       │ 供组件消费               │ build:component 构建产物
-       ▼                        ▼
-opendesign-components ◄─────────┘
-(46 个 Vue 3 UI 组件)
-       │
-       │ 被业务项目使用
-       ▼
-   业务项目
+   ┌── 设计阶段（Pixso 画布） ──┐         ┌────── 开发阶段（Vue 代码） ──────┐
+   │                          │         │                                │
+   │   opendesign-design      │         │   opendesign-tokens   opendesign-scripts
+   │   (Pixso 设计稿生产)      │ ──映射──▶│   (CSS 变量)          (CLI 构建工具)
+   │                          │         │       │                    │
+   └──────────────────────────┘         │       │ 提供主题变量         │ gen:icon / build
+                                        │       ▼                    ▼
+                                        │   opendesign-components ◄──┘
+                                        │   (46 个 Vue 3 UI 组件)
+                                        │       │
+                                        │       │ 被业务项目使用
+                                        │       ▼
+                                        │    业务项目
+                                        └────────────────────────────────┘
 ```
 
-**业务项目的典型使用路径**：
+**两类典型使用路径**：
+
+**A. 业务项目（开发侧）**：
 1. 安装 `@opensig/opendesign` + `@opensig/opendesign-token`
 2. 选择主题，引入 token CSS（参考 **opendesign-tokens**）
 3. 使用组件搭建页面（参考 **opendesign-components**）
 4. 如有自定义图标，使用 `gen:icon`（参考 **opendesign-scripts**）
+
+**B. 设计稿生产（设计侧）**：
+1. 在 Pixso 中打开工作文件，启用 Pixso MCP
+2. 按 **opendesign-design** 中的两阶段策略生成页面（`code_to_design` 结构 + `create_instance` 组件）
+3. 通过 WebFetch 拉取最新 token / 栅格数据并应用到画布
 
 ---
 
@@ -195,8 +253,11 @@ opendesign-components ◄─────────┘
 
 | 指标 | 数量 |
 |------|------|
-| Skill 大类 | 3 |
-| 组件 Skill | 46 |
+| Skill 大类 | 4 |
+| 组件 Skill（代码侧） | 46 |
 | 脚本 Skill | 5 |
 | Token 参考 | 7 |
-| 参考文件总计 | 58 |
+| 组件设计规范（设计侧） | 21 |
+| componentKey 变体索引 | 536 |
+| 图标 componentKey 索引 | 187 |
+| 参考文件总计 | 81 |
