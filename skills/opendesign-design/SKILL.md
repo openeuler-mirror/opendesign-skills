@@ -1,9 +1,11 @@
 ---
 name: opendesign-design
-description: OpenDesign Pixso 设计稿生产指南。当需要在 Pixso 中创建/编辑 UI 组件（按钮、输入框、卡片、导航等）、应用设计规范（栅格/颜色/字号/间距/圆角）、搭建页面框架、调用 Pixso 组件库（Symbol）或读取设计变量（Tokens）时使用此 skill。覆盖 23 个组件设计规范、536 个 componentKey 变体与 187 个图标 componentKey。本 skill 仅生产 Pixso 设计稿，不输出代码。
+description: OpenDesign Pixso 设计稿生产指南。当需要在 Pixso 中创建/编辑 UI 组件（按钮、输入框、卡片、导航等）、应用设计规范（栅格/颜色/字号/间距/圆角）、搭建页面框架、调用 Pixso 组件库（Symbol）或读取设计变量（Tokens）时使用此 skill。包含 PC/MB 双断点的变量映射硬约束（字号/行高/间距/栅格/图标尺寸的合法取值白名单），覆盖 23 个组件设计规范、536 个 componentKey 变体与 187 个图标 componentKey。本 skill 仅生产 Pixso 设计稿，不输出代码。
 ---
 
 # Design Skill · Pixso 组件系统
+
+> 🔴 **生成任何设计稿前，必读**：[references/hard-constraints/skill.md](references/hard-constraints/skill.md) — 变量映射硬约束（PC / MB 双断点下，字号 / 行高 / 间距 / 栅格 / 图标尺寸的合法取值白名单）。本约束**最高优先级**，与下文 [#图标处理规范（核心约束）](#图标处理规范核心约束) 并列。所有几何数值必须严格选自该白名单，禁止四舍五入、推断或造数。
 
 ## 概述
 
@@ -100,6 +102,15 @@ OpenEuler 拥有独立图标库 Pixso 文件 `kbqInwBrCTGnM0MsPJDgvA`，包含 *
 ---
 
 ## 执行工作流
+
+### 第零步：读取变量映射硬约束（强制起手式）
+
+```
+读取 references/hard-constraints/skill.md，锁定当前目标设备（MB 或 PC），
+明确该设备下字号 / 行高 / 间距 / 栅格 / 图标尺寸的合法取值集合。
+```
+
+后续所有步骤产出的几何数值必须落在该白名单内。无法对应到清单的需求 → 停下询问用户，禁止造数。
 
 ### 第一步：读取设计规范
 

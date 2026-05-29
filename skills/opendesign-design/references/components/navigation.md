@@ -59,8 +59,9 @@ ONavigation Header PC（SYMBOL）
 │
 ├── [左侧区域 FRAME]（gap 40px，align: flex-end）
 │   ├── [Logo FRAME]（padding: 20px 0）
-│   │   └── [OpenEuler LOGO GROUP]（136px × 32px）
+│   │   └── [OpenEuler LOGO GROUP]（136px × 32px）📌 **可替换插槽** → [Part F](#part-flogo-自定义仅顶导)
 │   │         图标（28.86px × 32px）+ 文字（100.2px × 18.75px）
+│   │         默认内容：OpenEuler Logo；可由调用方传入自定义 SVG/PNG 切图替换
 │   │
 │   └── [主导航菜单 FRAME]（gap 32px）
 │       └── [菜单项 FRAME] × 7（32px × 48px，padding-bottom: 24px）
@@ -98,8 +99,9 @@ ONavigation Header Mb（SYMBOL）
 ├── [汉堡菜单图标 FRAME]（24px × 24px）
 │   position: absolute | left: 24px | top: 36px
 │
-├── [OpenEuler Logo GROUP]（85px × 20px）
+├── [OpenEuler Logo GROUP]（85px × 20px）📌 **可替换插槽** → [Part F](#part-flogo-自定义仅顶导)
 │   position: absolute | left: 138px | top: 38px
+│   默认内容：OpenEuler Logo；可由调用方传入自定义 SVG/PNG 切图替换
 │
 └── [右侧操作 GROUP]（64px × 24px）
     position: absolute | left: 272px | top: 36px
@@ -410,6 +412,7 @@ ONavigation Footer Mb（SYMBOL）
 3. **插入页脚**：选择 `type=PC, openEuler` 或 `type=Mb, openEuler`
 4. **修改菜单文字**：双击进入组件 → 双击文字图层直接编辑
 5. **调整定位**：顶导固定在画板顶部（x: 0, y: 0）；页脚固定在画板底部
+6. **替换 Logo（仅顶导）**：详见 [Part F · Logo 自定义](#part-flogo-自定义仅顶导)
 
 ---
 
@@ -491,6 +494,86 @@ ONavigation Footer Mb（SYMBOL）
 - 移动端 Logo、汉堡、操作图标均为绝对定位，top 统一为 36px（状态栏 18px + 10px 居中偏移）
 - PC 页脚导航列使用绝对定位，6 列左起 x 坐标：0 / 221.5 / 409.5 / 646.5 / 834.5 / 1022.5px
 - 移动端页脚平台 Logo 分两行排列（第一行 3 个，第二行 2 个），注意保持间距对齐
+
+---
+
+## Part F：Logo 自定义（仅顶导）
+
+> 顶导左侧 Logo 区域是**可替换插槽**。本 skill 已自带 **openEuler 默认 Logo 的 4 个 SVG 变体**（见下方「默认 Logo 资源」），与 ONavigation Symbol 内置 Logo 视觉一致；调用方也可用自家品牌的 SVG / PNG 切图替换。本节定义默认资源、自定义资源要求、目标尺寸、主题适配与 Pixso 操作流程。
+
+### 适用范围
+
+- ✅ **PC 顶导**（`type=PC, Dark=off/on`） — Logo GROUP 136×32px
+- ✅ **移动端顶导**（`type=Mb, Dark=off/on`） — Logo GROUP 85×20px
+- ❌ **页脚 Logo 不在此范围**：PC 页脚底部 Logo 区（150×68px）、移动端页脚 Logo GROUP（86×34px）、PC 页脚顶部基金会 Logo（160.43×32px）、移动端基金会 Logo（150.4×30px）**均保持 OpenEuler 默认**，不可替换
+
+### 默认 Logo 资源（已入仓）
+
+本 skill 自带 4 个 SVG 文件，位于 [`references/assets/logos/`](../assets/logos/)，与 ONavigation 顶导内置 Logo 视觉一致。当 Pixso 跨文件库链接失败导致 Logo 显示为空白矩形时，可作为兜底资源直接 import；也可在 detach 后用这些 SVG 强制替换。
+
+| 文件 | 适用变体 | viewBox | 颜色 | 替换粒度 |
+|---|---|---|---|---|
+| [`PC-light.svg`](../assets/logos/PC-light.svg) | PC 顶导 `Dark=off`（`1303:10846`）| 136×32 | 蓝 mark + 黑字 | 纯 [Logo GROUP]（无 padding） |
+| [`PC-dark.svg`](../assets/logos/PC-dark.svg) | PC 顶导 `Dark=on`（`1303:10896`）| 136×32 | 白 mark + 白字 | 纯 [Logo GROUP]（无 padding） |
+| [`MB-light.svg`](../assets/logos/MB-light.svg) | Mb 顶导 `Dark=off`（`1303:11169`）| 85×20 | 蓝 mark + 黑字 | 纯 [Logo GROUP]（无 padding） |
+| [`MB-dark.svg`](../assets/logos/MB-dark.svg) | Mb 顶导 `Dark=on`（`1303:11391`）| 85×20 | 白 mark + 白字 | 纯 [Logo GROUP]（无 padding） |
+
+> ✅ **4 个 SVG 粒度一致**：均为纯 Logo GROUP（PC 136×32 / Mb 85×20），不含外层 Logo FRAME 的 padding。替换时统一选中 [Logo GROUP] 节点。外层 padding 由原 Logo FRAME 保持不变。
+
+### 自定义 Logo 输入资源
+
+如需用自家品牌替换默认 openEuler Logo，按以下规格准备：
+
+| 资源类型 | 要求 | 优先级 |
+|---|---|---|
+| SVG | 矢量、viewBox 完整、颜色优先用 `currentColor` 或准备两套主题版本 | ⭐ 优先 |
+| PNG 切图 | ≥ @2x 高分辨率（移动端建议 ≥ @3x），透明背景 | 备选 |
+
+### 目标容器规格（不可改）
+
+| 变体 | Logo GROUP 尺寸 | 外层 padding / 定位 | 本仓默认 SVG viewBox |
+|---|---|---|---|
+| PC（`1303:10846` / `1303:10896`）| 136×32px | 左侧 FRAME 内，padding 20px 0 | 136×32（纯 Logo GROUP） |
+| Mb（`1303:11169` / `1303:11391`）| 85×20px | 绝对定位 left:138px / top:38px | 85×20（纯 Logo GROUP） |
+
+> 资源原始宽高比与目标 GROUP 不一致时，按"等比缩放后水平垂直居中"对齐到目标 GROUP，**禁止拉伸变形**。
+
+### 主题适配
+
+| 主题 | 建议 Logo 版本 |
+|---|---|
+| Light（Dark=off） | 深色版（主色或纯黑 #000） |
+| Dark（Dark=on） | 浅色版（白色或品牌浅色变体） |
+
+- 调用方应**准备两套** SVG / 切图，分别对应 Light / Dark
+- 或单套 SVG 内部颜色使用 `currentColor`，由外层填充驱动，避免主题切换时露出错误色
+
+### Pixso 替换流程
+
+**手动流程（推荐）**：
+
+1. 用 componentKey 插入 ONavigation 顶导实例（PC 或 Mb 对应变体）
+2. 右键实例 → **拆分组件**（detach instance）
+3. 进入左侧 FRAME → 选中 `[Logo GROUP]` 节点（PC 136×32 / Mb 85×20，不要选外层 Logo FRAME）
+4. 删除内部原 vector 图标 + 文字图层（保留 GROUP 外框作为容器）
+5. `File → Import` 导入 SVG：
+   - **用 openEuler 默认 Logo**：从 [`references/assets/logos/`](../assets/logos/) 选对应变体（如 PC Light → `PC-light.svg`，Mb Dark → `MB-dark.svg`）
+   - **用自定义品牌 Logo**：用调用方提供的 SVG / PNG
+6. 等比缩放到 Logo GROUP 尺寸（PC 136×32 / Mb 85×20），水平垂直居中对齐
+
+**MCP 工具流程（有限）**：
+
+- `create_instance(componentKey)` 只生成带默认 OpenEuler Logo 的实例
+- 当前 Pixso MCP **暂无** `detach_instance` 与 `replace_image_fill` 接口
+- ⚠️ **AI 无法自动完成 Logo 替换**，生成默认实例后必须明确交付用户在 Pixso 中手动执行上述步骤
+
+### 注意事项
+
+- ⚠️ **脱钩风险**：detach 后该实例与组件库脱钩，后续 ONavigation 组件库更新不会自动同步到该实例
+- ⚠️ **保持外层 padding**：只替换 Logo GROUP 内部内容，**不要**修改外层 Logo FRAME 的 padding（PC 上下 20px）
+- ⚠️ **颜色用 currentColor**：自定义 SVG 内避免硬编码黑/白，主题切换时会露出错误色；**本仓默认 4 个 SVG 颜色已按主题对齐**（`*-light.svg` 黑字/蓝 mark、`*-dark.svg` 白字/白 mark），直接选对应变体即可
+- ⚠️ **切图分辨率**：移动端 < @2x 真机显示模糊；优先用 SVG
+- ⚠️ **不要扩大占位**：替换后 Logo 仍占据原 136×32 / 85×20 容器，**不要**因新 Logo 长宽比不同而扩大占位（会破坏顶导整体布局与右侧操作区间距）
 
 ---
 
