@@ -122,7 +122,7 @@ ONavigation Footer PC（SYMBOL）
 ├── [顶部说明 FRAME]（居中，column，gap 12px，再外层 gap 16px）
 │   ├── [文字 PARAGRAPH]（20px，Regular，lineHeight 28px，white，居中）
 │   │   "openEuler 是由开放原子开源基金会（OpenAtom Foundation）孵化及运营的开源项目"
-│   └── [基金会 Logo RECTANGLE]（160.43px × 32px，图片填充）
+│   └── [基金会 Logo RECTANGLE]（160.43px × 32px，图片填充）📌 → Part G
 │
 ├── [导航列 GROUP]（1122.5px × 180px）
 │   6 列绝对定位，各列左起位置：0 / 221.5 / 409.5 / 646.5 / 834.5 / 1022.5px
@@ -146,14 +146,14 @@ ONavigation Footer PC（SYMBOL）
 │   fill: rgba(229,229,229,1) | opacity: 0.12
 │
 └── [底部信息行 GROUP]（1487.91px × 78px）
-    ├── [Logo区 GROUP]（150px × 68px，left: 0）
+    ├── [Logo区 GROUP]（150px × 68px，left: 0）📌 → Part G
     │   OpenEuler 白色 Logo（130px × 24.53px）
     │   "contact@openeuler.org" fontSize: 14px，fill: white，top: 46px
     ├── [版权信息区 GROUP]（266px × 78px，left: 611px）
     │   品牌 | 隐私政策 | 法律声明（14px white，分隔线 1px×14px white）
     │   "版权所有 © 2024 openEuler 保留一切权利"（14px white@0.6）
     │   "遵循 木兰宽松许可证第2版（MulanPSL2）"（14px white@0.6）
-    └── [社交媒体区 GROUP]（353.91px × 52px，left: 1134px）
+    └── [社交媒体区 GROUP]（353.91px × 52px，left: 1134px）📌 → Part G
         二维码行（top: 0）：openEuler小助手 + openEuler公众号（各 126.96px × 20px）
         平台Logo行（top: 32px）：OSCHINA / CSDN / 新土提金 / bilibili / 头条
         各平台 Logo 背景：rgba(43,43,47,1)，borderRadius: 4px
@@ -172,7 +172,7 @@ ONavigation Footer Mb（SYMBOL）
 │   "（OpenAtom Foundation）"
 │   "孵化及运营的开源项目"
 │
-├── [基金会 Logo RECTANGLE]（150.4px × 30px，left: 105px，top: 102px，图片填充）
+├── [基金会 Logo RECTANGLE]（150.4px × 30px，left: 105px，top: 102px，图片填充）📌 → Part G
 │
 ├── [分隔线 GROUP]（312px × 1px，left: 24px，top: 146px）
 │   fill: rgba(229,229,229,1) | opacity: 0.12
@@ -185,14 +185,14 @@ ONavigation Footer Mb（SYMBOL）
 │   "版权所有 © 2022 openEuler 保留一切权利"
 │   ⚠️ 注意：移动端版权年份为 2022，PC 端为 2024
 │
-├── [OpenEuler Logo GROUP]（86px × 34px，left: 137px，top: 213px）
+├── [OpenEuler Logo GROUP]（86px × 34px，left: 137px，top: 213px）📌 → Part G
 │   Logo 图形（86px × 20px）+ "contact@openeuler.org"（8px white，top: 24px）
 │
-├── [QR 码区 GROUP]（243px × 102px，left: 60px，top: 264px）
+├── [QR 码区 GROUP]（243px × 102px，left: 60px，top: 264px）📌 → Part G
 │   openEuler公众号（78px × 78px 白底二维码 + 12px 标题）
 │   openEuler小助手（78px × 78px 二维码 + 12px 标题，left: 151px）
 │
-└── [平台 Logo 行 GROUP]（232px × 49px，left: 64px，top: 385px）
+└── [平台 Logo 行 GROUP]（232px × 49px，left: 64px，top: 385px）📌 → Part G
     第一行（top: 0）：OSCHINA（77px）/ CSDN（58px）/ 新土提金（73px）
     第二行（top: 29px）：bilibili（48px，left: 57px）/ 头条（48px，left: 117px）
     各平台 Logo 背景：rgba(43,43,47,1)，borderRadius: 4px
@@ -505,18 +505,18 @@ ONavigation Footer Mb（SYMBOL）
 
 - ✅ **PC 顶导**（`type=PC, Dark=off/on`） — Logo GROUP 136×32px
 - ✅ **移动端顶导**（`type=Mb, Dark=off/on`） — Logo GROUP 85×20px
-- ❌ **页脚 Logo 不在此范围**：PC 页脚底部 Logo 区（150×68px）、移动端页脚 Logo GROUP（86×34px）、PC 页脚顶部基金会 Logo（160.43×32px）、移动端基金会 Logo（150.4×30px）**均保持 OpenEuler 默认**，不可替换
+- ❌ **页脚 Logo 不在此范围**：PC 页脚底部 Logo 区（150×68px）、移动端页脚 Logo GROUP（86×34px）、PC 页脚顶部基金会 Logo（160.43×32px）、移动端基金会 Logo（150.4×30px）**均保持 OpenEuler 默认**，不可替换；页脚所有图形资源（含底部 Logo、基金会 Logo、社交媒体、二维码、平台 Logo）详见 [Part G](#part-g页脚图形资源已入仓)
 
 ### 默认 Logo 资源（已入仓）
 
-本 skill 自带 4 个 SVG 文件，位于 [`references/assets/logos/`](../assets/logos/)，与 ONavigation 顶导内置 Logo 视觉一致。当 Pixso 跨文件库链接失败导致 Logo 显示为空白矩形时，可作为兜底资源直接 import；也可在 detach 后用这些 SVG 强制替换。
+本 skill 自带 4 个 SVG 文件，位于 [`references/assets/Header/`](../assets/Header/)，与 ONavigation 顶导内置 Logo 视觉一致。当 Pixso 跨文件库链接失败导致 Logo 显示为空白矩形时，可作为兜底资源直接 import；也可在 detach 后用这些 SVG 强制替换。
 
 | 文件 | 适用变体 | viewBox | 颜色 | 替换粒度 |
 |---|---|---|---|---|
-| [`PC-light.svg`](../assets/logos/PC-light.svg) | PC 顶导 `Dark=off`（`1303:10846`）| 136×32 | 蓝 mark + 黑字 | 纯 [Logo GROUP]（无 padding） |
-| [`PC-dark.svg`](../assets/logos/PC-dark.svg) | PC 顶导 `Dark=on`（`1303:10896`）| 136×32 | 白 mark + 白字 | 纯 [Logo GROUP]（无 padding） |
-| [`MB-light.svg`](../assets/logos/MB-light.svg) | Mb 顶导 `Dark=off`（`1303:11169`）| 85×20 | 蓝 mark + 黑字 | 纯 [Logo GROUP]（无 padding） |
-| [`MB-dark.svg`](../assets/logos/MB-dark.svg) | Mb 顶导 `Dark=on`（`1303:11391`）| 85×20 | 白 mark + 白字 | 纯 [Logo GROUP]（无 padding） |
+| [`PC-light.svg`](../assets/Header/PC-light.svg) | PC 顶导 `Dark=off`（`1303:10846`）| 136×32 | 蓝 mark + 黑字 | 纯 [Logo GROUP]（无 padding） |
+| [`PC-dark.svg`](../assets/Header/PC-dark.svg) | PC 顶导 `Dark=on`（`1303:10896`）| 136×32 | 白 mark + 白字 | 纯 [Logo GROUP]（无 padding） |
+| [`MB-light.svg`](../assets/Header/MB-light.svg) | Mb 顶导 `Dark=off`（`1303:11169`）| 85×20 | 蓝 mark + 黑字 | 纯 [Logo GROUP]（无 padding） |
+| [`MB-dark.svg`](../assets/Header/MB-dark.svg) | Mb 顶导 `Dark=on`（`1303:11391`）| 85×20 | 白 mark + 白字 | 纯 [Logo GROUP]（无 padding） |
 
 > ✅ **4 个 SVG 粒度一致**：均为纯 Logo GROUP（PC 136×32 / Mb 85×20），不含外层 Logo FRAME 的 padding。替换时统一选中 [Logo GROUP] 节点。外层 padding 由原 Logo FRAME 保持不变。
 
@@ -557,7 +557,7 @@ ONavigation Footer Mb（SYMBOL）
 3. 进入左侧 FRAME → 选中 `[Logo GROUP]` 节点（PC 136×32 / Mb 85×20，不要选外层 Logo FRAME）
 4. 删除内部原 vector 图标 + 文字图层（保留 GROUP 外框作为容器）
 5. `File → Import` 导入 SVG：
-   - **用 openEuler 默认 Logo**：从 [`references/assets/logos/`](../assets/logos/) 选对应变体（如 PC Light → `PC-light.svg`，Mb Dark → `MB-dark.svg`）
+   - **用 openEuler 默认 Logo**：从 [`references/assets/Header/`](../assets/Header/) 选对应变体（如 PC Light → `PC-light.svg`，Mb Dark → `MB-dark.svg`）
    - **用自定义品牌 Logo**：用调用方提供的 SVG / PNG
 6. 等比缩放到 Logo GROUP 尺寸（PC 136×32 / Mb 85×20），水平垂直居中对齐
 
@@ -574,6 +574,32 @@ ONavigation Footer Mb（SYMBOL）
 - ⚠️ **颜色用 currentColor**：自定义 SVG 内避免硬编码黑/白，主题切换时会露出错误色；**本仓默认 4 个 SVG 颜色已按主题对齐**（`*-light.svg` 黑字/蓝 mark、`*-dark.svg` 白字/白 mark），直接选对应变体即可
 - ⚠️ **切图分辨率**：移动端 < @2x 真机显示模糊；优先用 SVG
 - ⚠️ **不要扩大占位**：替换后 Logo 仍占据原 136×32 / 85×20 容器，**不要**因新 Logo 长宽比不同而扩大占位（会破坏顶导整体布局与右侧操作区间距）
+
+---
+
+## Part G：页脚图形资源（已入仓）
+
+本 skill 自带 8 个页脚 SVG 文件，位于 [`references/assets/footer/`](../assets/footer/)，覆盖 PC 和移动端页脚所有图形区域。与顶导 Logo（[Part F](#part-flogo-自定义仅顶导)）不同，页脚图形资源**不可替换**，仅作为跨文件库链接失联时的兜底资源。
+
+### PC 页脚图形资源
+
+| 文件 | 适用节点 | viewBox | 说明 |
+|---|---|---|---|
+| [`PC页脚-基金会logo.svg`](../assets/footer/PC页脚-基金会logo.svg) | `[基金会 Logo RECTANGLE]` | 160.43×32 | 开放原子开源基金会 Logo |
+| [`PC页脚-底部logo.svg`](../assets/footer/PC页脚-底部logo.svg) | `[Logo区 GROUP]` | 150×68 | OpenEuler 白色 Logo + 联系邮箱 |
+| [`PC页脚-社交媒体.svg`](../assets/footer/PC页脚-社交媒体.svg) | `[社交媒体区 GROUP]` | 353.91×52 | 二维码行 + 平台 Logo 行 |
+
+### 移动端页脚图形资源
+
+| 文件 | 适用节点 | viewBox | 说明 |
+|---|---|---|---|
+| [`移动端页脚-基金会logo.svg`](../assets/footer/移动端页脚-基金会logo.svg) | `[基金会 Logo RECTANGLE]` | 150.4×30 | 开放原子开源基金会 Logo（移动端版） |
+| [`移动端页脚-底部logo.svg`](../assets/footer/移动端页脚-底部logo.svg) | `[OpenEuler Logo GROUP]` | 86×34 | OpenEuler Logo + 联系邮箱 |
+| [`移动端页脚-二维码1.svg`](../assets/footer/移动端页脚-二维码1.svg) | `[QR 码区 GROUP]` 左（公众号） | 78×78 | openEuler 公众号二维码 |
+| [`移动端页脚-二维码2.svg`](../assets/footer/移动端页脚-二维码2.svg) | `[QR 码区 GROUP]` 右（小助手） | 78×78 | openEuler 小助手二维码 |
+| [`移动端页脚-平台logo.svg`](../assets/footer/移动端页脚-平台logo.svg) | `[平台 Logo 行 GROUP]` | 232×49 | OSCHINA / CSDN / bilibili 等平台 Logo |
+
+> ✅ **8 个 SVG 均为整节点粒度**：每个文件对应布局树中一个 GROUP/RECTANGLE 节点，viewBox 与设计稿节点尺寸精确对齐。
 
 ---
 
