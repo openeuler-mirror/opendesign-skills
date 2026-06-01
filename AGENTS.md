@@ -43,13 +43,21 @@
     │   └── references/
     │       ├── tokens.md
     │       └── tokens-{theme}.md
-    └── opendesign-design/         ← Pixso 设计稿生产 Skill（设计侧，21 组件）
-        ├── SKILL.md               ← 工作流 + 图标处理规范 + componentKey 速查（第二层）
+    ├── opendesign-design/         ← Pixso 设计稿生产 Skill（设计侧，21 组件）
+    │   ├── SKILL.md               ← 工作流 + 图标处理规范 + componentKey 速查（第二层）
+    │   └── references/
+    │       ├── components/        ← 21 个组件设计规范（第三层）
+    │       │   └── {name}.md
+    │       ├── component-keys.md  ← 536 个 UI 组件变体 componentKey 索引
+    │       └── icon-keys.md       ← 187 个图标 componentKey 索引
+    └── opendesign-codegen/        ← 代码直出 Skill（设计师侧，从设计意图直出合规 Vue+OpenDesign 代码）
+        ├── SKILL.md               ← 四大约束 + 硬规则 + 工作流（第二层）
         └── references/
-            ├── components/        ← 21 个组件设计规范（第三层）
-            │   └── {name}.md
-            ├── component-keys.md  ← 536 个 UI 组件变体 componentKey 索引
-            └── icon-keys.md       ← 187 个图标 componentKey 索引
+            ├── starter-page.vue        ← 合规 SFC 起手模板（真实 O 组件 + token + 响应式）
+            ├── component-cheatsheet.md ← 设计意图 → OpenDesign 组件选用速查
+            ├── engineering-rules.md    ← 工程落地约束
+            ├── checklist.md            ← 生成后四维度自检清单
+            └── examples/               ← feature-section.vue / list-filter-page.vue 示例
 ```
 
 > `skills/` 下采用**平铺结构**（每个组件/命令一个 `.md` 文件），适合直接链接和 RAG 按文件检索。若未来需要为单个组件添加多个文件（如 `.detail.md`），再按需引入文件夹结构。
