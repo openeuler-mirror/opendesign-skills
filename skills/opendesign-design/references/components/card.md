@@ -2,7 +2,7 @@
 
 # OCard 卡片 · 设计 Skill
 
-> 组件集合节点：`1042:21386` · 组件名：OCard 卡片 · 变体总数：待确认
+> 组件集合节点：`1042:21386` · 组件名：OCard 卡片 · 变体总数：8（2 type × 2 layout × 2 Dark）
 
 ---
 
@@ -199,7 +199,7 @@ OCard（HORIZONTAL，自适应宽高）
 | 卡片背景 | `color-fill2` | `color-fill2` | rgb(255,255,255) → rgb(36,36,39) |
 | 悬浮阴影 | `shadow-2` | `shadow-2` | 0 2px 24px rgba(0,0,0,0.15) → 0 2px 24px rgba(255,255,255,0.15) |
 | 标题文字 | `color-info1` | `color-info1` | rgb(0,0,0) → rgb(255,255,255) |
-| 内容文字 | `color-info2` | `color-info2` | rgba(0,0,0,0.8) → rgba(255,255,255,0.8) |
+| 内容文字 | `color-info3` | `color-info3` | rgba(0,0,0,0.6) → rgba(255,255,255,0.6) |
 | 图标颜色 | `color-info1` | `color-info1` | rgb(0,0,0) → rgb(255,255,255) |
 
 ---
@@ -257,15 +257,16 @@ OCard（FRAME，自适应宽高）
 
 ### 变体 componentKey 速查
 
-| 变体组合 | node_id | 说明 |
-|---------|---------|------|
-| type=cover, layout=vertical, Dark=off | `1042:21386` | 封面卡片，垂直布局，浅色模式（待确认） |
-| type=icon, layout=vertical, Dark=off | 待确认 | 图标卡片，垂直布局，浅色模式 |
-| type=cover, layout=horizontal, Dark=off | 待确认 | 封面卡片，水平布局，浅色模式 |
-| type=icon, layout=horizontal, Dark=off | 待确认 | 图标卡片，水平布局，浅色模式 |
-| Dark=on | 待确认 | 深色模式变体 |
-
-> **注意**：componentKey 需从 Pixso 组件面板获取。当前 node_id 为用户提供的设计稿链接中的 item-id。
+| 变体组合 | componentKey | node_id |
+|---------|-------------|---------|
+| type=cover, layout=vertical, Dark=off | `a22044aaa494bba137bd3ebba74319449b998694` | `1042:21387` |
+| type=cover, layout=vertical, Dark=on | `b442f4ab38ddf235f7b2f1ca16e5d011d777fa6a` | `1042:21393` |
+| type=cover, layout=horizontal, Dark=off | `0fceafcdae43547862ffb167bdcce89f510c3c35` | `1080:9979` |
+| type=cover, layout=horizontal, Dark=on | `1d440d9b3a482404e267607061409a25607dfa5b` | `1081:8783` |
+| type=icon, layout=vertical, Dark=off | `6103b3265e752087a546bf1b77a0f1b5bfef888b` | `1042:21417` |
+| type=icon, layout=vertical, Dark=on | `730ae95ca65d8dbe6c3c72776d98d3cca249ef39` | `1042:21423` |
+| type=icon, layout=horizontal, Dark=off | `e2a10a804dc8cb9ab507d237c712f65c7cf12f5e` | `1042:21399` |
+| type=icon, layout=horizontal, Dark=on | `e9916f1e7742eeeba207639563416798817546ad` | `1042:21408` |
 
 ---
 
@@ -293,6 +294,9 @@ OCard（FRAME，自适应宽高）
 - **图标语义**：图标应与卡片内容语义一致，增强信息传达
 - **深色模式**：背景色自动切换为深色值，确保在深色背景上可见
 - **三段式结构**：Header、Body、Footer 可根据场景选择性使用，不必全部包含
+- ⚠️ **Footer 操作按钮排列顺序（硬约束）**：Footer 内多个元素并排时，**操作按钮（OButton / 链接）必须排在左侧，辅助信息（版本号、日期、meta 等）排在右侧**。禁止将操作按钮放在右侧，无论 justify-content 如何设置。
+- ⚠️ **Footer 左右边距须与 Body 对齐（硬约束）**：Footer 的左右内边距必须与 Body 保持一致——在"容器 8px + Body 额外 8px = 总计 16px"的模型下，Footer 也需要额外 `padding: 0 8px`，使操作按钮与正文文字左右对齐。禁止 Footer 左右无内边距导致内容顶到容器边缘。
+- ⚠️ **Footer 操作按钮使用 OButton medium text 变体（硬约束）**：卡片 Footer 内的操作按钮必须使用 **OButton size=medium, Variant=text**。关键规格：高度 32px、padding=0（无水平内边距）、文字色 `grey-14`（Light: `rgb(0,0,0)` **黑色**）、无背景无边框。**禁止使用品牌蓝 `#002FA7` / `color-primary1` 作为 text 变体文字色**——蓝色是 outline/solid 变体的颜色，text 变体始终为黑色。
 
 ---
 
@@ -364,7 +368,7 @@ OCard（FRAME，自适应宽高）
 - 组件节点 ID：`1042:21386`（组件集）
 - 设计稿 URL：https://pixso.cn/app/design/JZkjW0mhmT61Mtd98dCfBw?item-id=1042:21386
 - 生成日期：2026-04-17
-- 变体总数：待确认（type × layout × Dark）
+- 变体总数：8（2 type × 2 layout × 2 Dark）
 - 卡片类型：cover（封面卡片）、icon（图标卡片）
 - 布局方式：horizontal（水平）、vertical（垂直）
 - 结构组成：Header（头部）、Body（内容区）、Footer（底部）

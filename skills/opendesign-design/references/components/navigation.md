@@ -76,7 +76,7 @@ ONavigation Header PC（SYMBOL）
     │          padding: 5px 16px，gap 8px（图标 16px + 文字 flex-grow）
     │          占位文字 fill: rgba(255,255,255,0.4)，14px
     ├── [源码下拉 GROUP]（48px × 24px）
-    │   text "源码" 14px lineHeight 24px + 下箭头图标（16px × 16px）
+    │   text dropdown "源码" 14px lineHeight 24px + 下箭头图标（16px × 16px）
     ├── [国际化图标 GROUP]（24px × 24px）
     ├── [主题切换图标 FRAME]（24px × 24px）
     └── [用户图标 FRAME]（24px × 24px）
@@ -509,16 +509,25 @@ ONavigation Footer Mb（SYMBOL）
 
 ### 默认 Logo 资源（已入仓）
 
-本 skill 自带 4 个 SVG 文件，位于 [`references/assets/Header/`](../assets/Header/)，与 ONavigation 顶导内置 Logo 视觉一致。当 Pixso 跨文件库链接失败导致 Logo 显示为空白矩形时，可作为兜底资源直接 import；也可在 detach 后用这些 SVG 强制替换。
+本 skill 自带 2 个 PC Logo SVG 和 4 个顶导 Icon SVG，位于 [`references/assets/navigation/`](../assets/navigation/)，覆盖 PC 顶导 Logo 亮色/暗色变体及全部顶导操作图标（移动端暂无入仓资源）。
 
-| 文件 | 适用变体 | viewBox | 颜色 | 替换粒度 |
+#### PC Logo（SVG，`<img>` 引用）
+
+| 文件 | 适用变体 | 尺寸 | 颜色 |
+|---|---|---|---|
+| [`header-pc-light logo.svg`](../assets/navigation/header-pc-light logo.svg) | PC 顶导 `Dark=off`（`1303:10846`）| 136×32 | 蓝 mark + 黑字 |
+| [`header-pc-dark logo.svg`](../assets/navigation/header-pc-dark logo.svg) | PC 顶导 `Dark=on`（`1303:10896`）| 136×32 | 白 mark + 白字 |
+
+#### 顶导 Icon SVG（CSS mask 着色，见 Part H）
+
+| 文件 | 用途 | 尺寸 | Light 色 | Dark 色 |
 |---|---|---|---|---|
-| [`PC-light.svg`](../assets/Header/PC-light.svg) | PC 顶导 `Dark=off`（`1303:10846`）| 136×32 | 蓝 mark + 黑字 | 纯 [Logo GROUP]（无 padding） |
-| [`PC-dark.svg`](../assets/Header/PC-dark.svg) | PC 顶导 `Dark=on`（`1303:10896`）| 136×32 | 白 mark + 白字 | 纯 [Logo GROUP]（无 padding） |
-| [`MB-light.svg`](../assets/Header/MB-light.svg) | Mb 顶导 `Dark=off`（`1303:11169`）| 85×20 | 蓝 mark + 黑字 | 纯 [Logo GROUP]（无 padding） |
-| [`MB-dark.svg`](../assets/Header/MB-dark.svg) | Mb 顶导 `Dark=on`（`1303:11391`）| 85×20 | 白 mark + 白字 | 纯 [Logo GROUP]（无 padding） |
+| [`header-pc-search icon.svg`](../assets/navigation/header-pc-search icon.svg) | 搜索框图标 | 16×16 | `rgba(0,0,0,.4)` | `rgba(255,255,255,.4)` |
+| [`header-pc-语言切换 icon.svg`](../assets/navigation/header-pc-语言切换 icon.svg) | 国际化切换 | 20×20 | `rgba(0,0,0,.65)` | `rgba(255,255,255,.85)` |
+| [`header-pc-深浅模式.svg`](../assets/navigation/header-pc-深浅模式.svg) | 主题切换 | 20×20 | `rgba(0,0,0,.65)` | `rgba(255,255,255,.85)` |
+| [`header-pc-头像.svg`](../assets/navigation/header-pc-头像.svg) | 用户/登录 | 20×20 | `rgba(0,0,0,.65)` | `rgba(255,255,255,.85)` |
 
-> ✅ **4 个 SVG 粒度一致**：均为纯 Logo GROUP（PC 136×32 / Mb 85×20），不含外层 Logo FRAME 的 padding。替换时统一选中 [Logo GROUP] 节点。外层 padding 由原 Logo FRAME 保持不变。
+> ✅ PC Logo SVG 已按主题备齐两套；Icon SVG 通过 CSS mask + background-color 控制颜色，无需准备两份文件。
 
 ### 自定义 Logo 输入资源
 
@@ -557,7 +566,7 @@ ONavigation Footer Mb（SYMBOL）
 3. 进入左侧 FRAME → 选中 `[Logo GROUP]` 节点（PC 136×32 / Mb 85×20，不要选外层 Logo FRAME）
 4. 删除内部原 vector 图标 + 文字图层（保留 GROUP 外框作为容器）
 5. `File → Import` 导入 SVG：
-   - **用 openEuler 默认 Logo**：从 [`references/assets/Header/`](../assets/Header/) 选对应变体（如 PC Light → `PC-light.svg`，Mb Dark → `MB-dark.svg`）
+   - **用 openEuler 默认 Logo**：从 [`references/assets/navigation/`](../assets/navigation/) 选对应变体（PC Light → `header-pc-light logo.svg`，PC Dark → `header-pc-dark logo.svg`；⚠️ 移动端暂无入仓资源）
    - **用自定义品牌 Logo**：用调用方提供的 SVG / PNG
 6. 等比缩放到 Logo GROUP 尺寸（PC 136×32 / Mb 85×20），水平垂直居中对齐
 
@@ -571,7 +580,7 @@ ONavigation Footer Mb（SYMBOL）
 
 - ⚠️ **脱钩风险**：detach 后该实例与组件库脱钩，后续 ONavigation 组件库更新不会自动同步到该实例
 - ⚠️ **保持外层 padding**：只替换 Logo GROUP 内部内容，**不要**修改外层 Logo FRAME 的 padding（PC 上下 20px）
-- ⚠️ **颜色用 currentColor**：自定义 SVG 内避免硬编码黑/白，主题切换时会露出错误色；**本仓默认 4 个 SVG 颜色已按主题对齐**（`*-light.svg` 黑字/蓝 mark、`*-dark.svg` 白字/白 mark），直接选对应变体即可
+- ⚠️ **颜色用 currentColor**：自定义 SVG 内避免硬编码黑/白，主题切换时会露出错误色；**本仓 PC Logo SVG 已按主题对齐**（`header-pc-light logo.svg` 黑字/蓝 mark、`header-pc-dark logo.svg` 白字/白 mark），直接选对应变体即可
 - ⚠️ **切图分辨率**：移动端 < @2x 真机显示模糊；优先用 SVG
 - ⚠️ **不要扩大占位**：替换后 Logo 仍占据原 136×32 / 85×20 容器，**不要**因新 Logo 长宽比不同而扩大占位（会破坏顶导整体布局与右侧操作区间距）
 
@@ -579,27 +588,289 @@ ONavigation Footer Mb（SYMBOL）
 
 ## Part G：页脚图形资源（已入仓）
 
-本 skill 自带 8 个页脚 SVG 文件，位于 [`references/assets/footer/`](../assets/footer/)，覆盖 PC 和移动端页脚所有图形区域。与顶导 Logo（[Part F](#part-flogo-自定义仅顶导)）不同，页脚图形资源**不可替换**，仅作为跨文件库链接失联时的兜底资源。
+本 skill 自带 8 个页脚 SVG 文件，位于 [`references/assets/navigation/`](../assets/navigation/)，覆盖 PC 和移动端页脚所有图形区域。与顶导 Logo（[Part F](#part-flogo-自定义仅顶导)）不同，页脚图形资源**不可替换**，仅作为跨文件库链接失联时的兜底资源。
 
 ### PC 页脚图形资源
 
-| 文件 | 适用节点 | viewBox | 说明 |
+| 文件 | 适用节点 | 尺寸 | 说明 |
 |---|---|---|---|
-| [`PC页脚-基金会logo.svg`](../assets/footer/PC页脚-基金会logo.svg) | `[基金会 Logo RECTANGLE]` | 160.43×32 | 开放原子开源基金会 Logo |
-| [`PC页脚-底部logo.svg`](../assets/footer/PC页脚-底部logo.svg) | `[Logo区 GROUP]` | 150×68 | OpenEuler 白色 Logo + 联系邮箱 |
-| [`PC页脚-社交媒体.svg`](../assets/footer/PC页脚-社交媒体.svg) | `[社交媒体区 GROUP]` | 353.91×52 | 二维码行 + 平台 Logo 行 |
+| [`footer-pc-基金会logo.svg`](../assets/navigation/footer-pc-基金会logo.svg) | `[基金会 Logo RECTANGLE]` | 160×32 | 开放原子开源基金会 Logo |
+| [`footer-pc-底部logo.svg`](../assets/navigation/footer-pc-底部logo.svg) | `[Logo区 GROUP]` | 150×68 | OpenEuler 白色 Logo + 联系邮箱 |
+| [`footer-pc-社交媒体logo.svg`](../assets/navigation/footer-pc-社交媒体logo.svg) | `[社交媒体区 GROUP]` | 354×52 | 二维码行 + 平台 Logo 行 |
 
 ### 移动端页脚图形资源
 
-| 文件 | 适用节点 | viewBox | 说明 |
+| 文件 | 适用节点 | 尺寸 | 说明 |
 |---|---|---|---|
-| [`移动端页脚-基金会logo.svg`](../assets/footer/移动端页脚-基金会logo.svg) | `[基金会 Logo RECTANGLE]` | 150.4×30 | 开放原子开源基金会 Logo（移动端版） |
-| [`移动端页脚-底部logo.svg`](../assets/footer/移动端页脚-底部logo.svg) | `[OpenEuler Logo GROUP]` | 86×34 | OpenEuler Logo + 联系邮箱 |
-| [`移动端页脚-二维码1.svg`](../assets/footer/移动端页脚-二维码1.svg) | `[QR 码区 GROUP]` 左（公众号） | 78×78 | openEuler 公众号二维码 |
-| [`移动端页脚-二维码2.svg`](../assets/footer/移动端页脚-二维码2.svg) | `[QR 码区 GROUP]` 右（小助手） | 78×78 | openEuler 小助手二维码 |
-| [`移动端页脚-平台logo.svg`](../assets/footer/移动端页脚-平台logo.svg) | `[平台 Logo 行 GROUP]` | 232×49 | OSCHINA / CSDN / bilibili 等平台 Logo |
+| [`footer-mb-基金会logo.svg`](../assets/navigation/footer-mb-基金会logo.svg) | `[基金会 Logo RECTANGLE]` | 150×30 | 开放原子开源基金会 Logo（移动端版） |
+| [`footer-mb-底部logo.svg`](../assets/navigation/footer-mb-底部logo.svg) | `[OpenEuler Logo GROUP]` | 86×34 | OpenEuler Logo + 联系邮箱 |
+| [`footer-mb-二维码1.svg`](../assets/navigation/footer-mb-二维码1.svg) | `[QR 码区 GROUP]` 左（公众号） | 78×78 | openEuler 公众号二维码 |
+| [`footer-mb-二维码2.svg`](../assets/navigation/footer-mb-二维码2.svg) | `[QR 码区 GROUP]` 右（小助手） | 78×78 | openEuler 小助手二维码 |
+| [`footer-mb-平台logo.svg`](../assets/navigation/footer-mb-平台logo.svg) | `[平台 Logo 行 GROUP]` | 232×49 | OSCHINA / CSDN / bilibili 等平台 Logo |
 
-> ✅ **8 个 SVG 均为整节点粒度**：每个文件对应布局树中一个 GROUP/RECTANGLE 节点，viewBox 与设计稿节点尺寸精确对齐。
+> ✅ **8 个 SVG 均为整节点粒度**：每个文件对应布局树中一个 GROUP/RECTANGLE 节点，尺寸与设计稿节点精确对齐。
+
+---
+
+## Part H：HTML 页面实现参考
+
+> 本节记录在 HTML 页面中实现 ONavigation 导航栏和页脚时的正确结构、CSS 值与资源路径，作为后续 HTML 生成的基准。所有数值均经设计稿核对，与 Part A/B 规格完全对应。
+
+---
+
+### 资源路径（相对 HTML 文件根目录）
+
+| 用途 | 路径 | 用法 |
+|---|---|---|
+| PC 顶导 Light Logo | `skills/opendesign-design/references/assets/navigation/header-pc-light logo.svg` | `<img>`（SVG） |
+| PC 顶导 Dark Logo | `skills/opendesign-design/references/assets/navigation/header-pc-dark logo.svg` | `<img>`（SVG） |
+| 顶导搜索图标 | `skills/opendesign-design/references/assets/navigation/header-pc-search icon.svg` | CSS mask |
+| 顶导国际化图标 | `skills/opendesign-design/references/assets/navigation/header-pc-语言切换 icon.svg` | CSS mask |
+| 顶导主题切换图标 | `skills/opendesign-design/references/assets/navigation/header-pc-深浅模式.svg` | CSS mask |
+| 顶导用户图标 | `skills/opendesign-design/references/assets/navigation/header-pc-头像.svg` | CSS mask |
+| PC 页脚 基金会 Logo | `skills/opendesign-design/references/assets/navigation/footer-pc-基金会logo.svg` | `<img>`（SVG） |
+| PC 页脚 底部 Logo（含邮箱） | `skills/opendesign-design/references/assets/navigation/footer-pc-底部logo.svg` | `<img>`（SVG） |
+| PC 页脚 社交媒体 | `skills/opendesign-design/references/assets/navigation/footer-pc-社交媒体logo.svg` | `<img>`（SVG） |
+
+> ⚠️ Logo 和页脚图片均用 `<img>` 直接引用；4 个顶导 Icon SVG 用 **CSS mask** 着色（见下方 CSS 片段），**禁止用自绘 SVG 路径模拟**。
+
+---
+
+### PC 顶导 CSS 关键值
+
+```css
+.nav-right  { display: flex; align-items: center; gap: 20px; }  /* ⚠️ gap=20 不是 16 */
+.icon-btn   { width: 24px; height: 24px; }
+
+/* OSearch small 变体：背景白色(color-fill2)，描边 rgba(0,0,0,.25)(grey-14@0.25) */
+.nav-search { width: 160px; height: 32px;
+              background: rgb(255,255,255);            /* ⚠️ 不是 rgba(0,0,0,.04) */
+              border: 1px solid rgba(0,0,0,.25);       /* ⚠️ 不是 rgba(0,0,0,.12) */
+              border-radius: 4px; }
+.nav-search span { font-size: 14px; line-height: 22px; color: rgba(0,0,0,.4); }
+
+/* ODropdown text 变体：无背景无描边无Padding，颜色 color-info1 = rgba(0,0,0,.85) */
+.nav-btn    { padding: 0; border: none; background: transparent;
+              color: rgba(0,0,0,.85);                  /* ⚠️ 不是 #002FA7 */
+              font-size: 14px; line-height: 22px;
+              display: flex; align-items: center; gap: 4px; }
+```
+
+### 顶导 Icon CSS mask
+
+```css
+/* Icon SVG 通过 CSS mask + background-color 控制 Light/Dark 颜色，无需准备两份文件 */
+.nav-icon {
+  display: inline-block;
+  border: none; background-color: rgba(0,0,0,.65); cursor: pointer; padding: 0;
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+}
+.nav-icon-search {
+  width: 16px; height: 16px;
+  background-color: rgba(0,0,0,.4);
+  -webkit-mask-image: url('skills/opendesign-design/references/assets/navigation/header-pc-search icon.svg');
+  mask-image:         url('skills/opendesign-design/references/assets/navigation/header-pc-search icon.svg');
+}
+.nav-icon-lang {
+  width: 20px; height: 20px;
+  -webkit-mask-image: url('skills/opendesign-design/references/assets/navigation/header-pc-语言切换 icon.svg');
+  mask-image:         url('skills/opendesign-design/references/assets/navigation/header-pc-语言切换 icon.svg');
+}
+.nav-icon-theme {
+  width: 20px; height: 20px;
+  -webkit-mask-image: url('skills/opendesign-design/references/assets/navigation/header-pc-深浅模式.svg');
+  mask-image:         url('skills/opendesign-design/references/assets/navigation/header-pc-深浅模式.svg');
+}
+.nav-icon-user {
+  width: 20px; height: 20px;
+  -webkit-mask-image: url('skills/opendesign-design/references/assets/navigation/header-pc-头像.svg');
+  mask-image:         url('skills/opendesign-design/references/assets/navigation/header-pc-头像.svg');
+}
+/* Dark mode：切换 background-color 即可变色，无需换图 */
+.dark .nav-icon                { background-color: rgba(255,255,255,.85); }
+.dark .nav-icon-search         { background-color: rgba(255,255,255,.4); }
+```
+
+### PC 顶导 HTML 骨架
+
+```html
+<header class="nav">
+  <div class="nav-left">
+    <!-- Logo：固定 136×32，用 img 引用 PNG，禁止内联自绘 -->
+    <a class="logo" href="#">
+      <img src="skills/opendesign-design/references/assets/navigation/header-pc-light logo.svg"
+           width="136" height="32" alt="openEuler">
+    </a>
+    <!-- 导航菜单：7 项，顺序固定 -->
+    <nav class="nav-menu">
+      <a>下载</a><a>开发</a><a>文档</a><a>学习</a><a>支持</a><a>社区</a><a>动态</a>
+    </nav>
+  </div>
+  <!-- ⚠️ 顺序：搜索 → 源码(含箭头) → 国际化 → 主题切换 → 用户 -->
+  <div class="nav-right">
+    <div class="nav-search">
+      <span class="nav-icon nav-icon-search"></span>
+      <span>搜索</span>
+    </div>
+    <button class="nav-btn">
+      源码
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M4 6l4 4 4-4" stroke="#002FA7" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <span class="nav-icon nav-icon-lang" role="button" aria-label="语言切换"></span>
+    <span class="nav-icon nav-icon-theme" role="button" aria-label="主题切换"></span>  <!-- ⚠️ 不可省略 -->
+    <span class="nav-icon nav-icon-user" role="button" aria-label="用户"></span>
+  </div>
+</header>
+```
+
+---
+
+### PC 页脚 CSS 关键值
+
+```css
+.footer {
+  background: rgba(18,18,20,1);
+  min-height: 460px;
+  padding: 24px 216px 34px;   /* ⚠️ 顶部 24px，不是 40px */
+}
+/* 顶部说明区：居中列布局 */
+.footer-intro { display: flex; flex-direction: column; align-items: center; gap: 16px; margin-bottom: 32px; }
+.footer-intro-text { font-size: 20px; line-height: 28px; color: rgba(255,255,255,1); text-align: center; }
+
+/* 导航列：6 列等宽，⚠️ 标题 20px Regular，不是 16px/600 */
+.footer-nav   { display: flex; margin-bottom: 24px; }
+.footer-col   { flex: 1; }
+.footer-col-title { font-size: 20px; line-height: 28px; font-weight: 400; color: rgba(255,255,255,1); margin-bottom: 16px; }
+.footer-col a { font-size: 14px; line-height: 22px; color: rgba(255,255,255,.6); }
+
+/* 友情链接：在导航列之后、分隔线之前 */
+.footer-links { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 0; margin-bottom: 24px; }
+.footer-links-title { font-size: 12px; font-weight: 200; color: rgba(255,255,255,1); margin-right: 8px; }
+.footer-links a { font-size: 12px; color: rgba(255,255,255,.6); padding: 0 8px; }
+
+/* 分隔线 */
+.footer-divider { height: 2px; background: rgba(229,229,229,1); opacity: .12; }
+
+/* 底部信息行：Logo（150×68）| 版权（居中）| 社交媒体（354×52） */
+.footer-bottom { display: flex; align-items: center; justify-content: space-between; height: 78px; }
+.footer-logo   { width: 150px; height: 68px; }          /* ⚠️ 含邮箱，整体 68px 高 */
+.footer-social { width: 354px; height: 52px; }          /* ⚠️ 含二维码+平台 Logo 两行 */
+
+/* 版权：⚠️ 顺序：品牌/隐私/法律声明（上）→ 版权文字（下） */
+.footer-copy { text-align: center; display: flex; flex-direction: column; gap: 4px; }
+.footer-copy-links { font-size: 14px; color: rgba(255,255,255,1); }
+.footer-copy p     { font-size: 14px; color: rgba(255,255,255,.6); }
+```
+
+### PC 页脚 HTML 骨架
+
+```html
+<footer class="footer">
+
+  <!-- 1. 顶部说明 + 基金会 Logo -->
+  <div class="footer-intro">
+    <p class="footer-intro-text">openEuler 是由开放原子开源基金会（OpenAtom Foundation）孵化及运营的开源项目</p>
+    <!-- ⚠️ 基金会 Logo 用 img，不是文字或自绘 SVG；⚠️ 邮箱不在此处 -->
+    <img src="skills/opendesign-design/references/assets/navigation/footer-pc-基金会logo.svg"
+         width="160" height="32" alt="OpenAtom Foundation">
+  </div>
+
+  <!-- 2. 导航列（6 列）-->
+  <div class="footer-nav">
+    <div class="footer-col">
+      <div class="footer-col-title">关于openEuler</div>   <!-- ⚠️ 无空格 -->
+      <a>成员单位</a><a>组织架构</a><a>社区章程</a><a>贡献看板</a><a>社区介绍</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">新闻与资讯</div>
+      <a>新闻</a><a>博客</a><a>白皮书</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">获取与下载</div>
+      <a>获取openEuler操作系统</a><a>最新社区发行版</a><a>商业发行版</a><a>软件中心</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">支持与服务</div>
+      <a>FAQ</a><a>联系我们</a><a>反馈问题</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">互动与交流</div>
+      <a>邮件列表</a><a>活动</a><a>论坛</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">贡献与成长</div>
+      <a>SIG中心</a><a>贡献攻略</a><a>课程中心</a>   <!-- ⚠️ 无空格 -->
+    </div>
+  </div>
+
+  <!-- 3. 友情链接（⚠️ 不可省略） -->
+  <div class="footer-links">
+    <span class="footer-links-title">友情链接</span>
+    <a>木兰开源社区</a><span>/</span><a>鲲鹏社区</a><span>/</span>
+    <a>鲲鹏小智</a><span>/</span><a>鹏城实验室</a><span>/</span>
+    <a>InfoQ</a><span>/</span><a>开源社</a><span>/</span>
+    <a>中科微澜</a><span>/</span><a>Authing</a><span>/</span>
+    <a>openGauss</a><span>/</span><a>昇思MindSpore</a><span>/</span><a>Ebaina</a>
+  </div>
+
+  <!-- 4. 分隔线 -->
+  <div class="footer-divider"></div>
+
+  <!-- 5. 底部信息行 -->
+  <div class="footer-bottom">
+    <!-- Logo + 邮箱：整体用 150×68 img，邮箱已内嵌在 SVG 里 -->
+    <div class="footer-logo">
+      <img src="skills/opendesign-design/references/assets/navigation/footer-pc-底部logo.svg"
+           width="150" height="68" alt="openEuler">
+    </div>
+
+    <!-- 版权：⚠️ 品牌/隐私/法律声明在上，版权文字在下 -->
+    <div class="footer-copy">
+      <div class="footer-copy-links">品牌<span>|</span>隐私政策<span>|</span>法律声明</div>
+      <p>版权所有 © 2024 openEuler 保留一切权利</p>
+      <p>遵循 木兰宽松许可证第2版（MulanPSL2）</p>
+    </div>
+
+    <!-- 社交媒体：含二维码行+平台 Logo 行，整体用 354×52 img -->
+    <div class="footer-social">
+      <img src="skills/opendesign-design/references/assets/navigation/footer-pc-社交媒体logo.svg"
+           width="354" height="52" alt="社交媒体">
+    </div>
+  </div>
+
+</footer>
+```
+
+---
+
+### 常见错误清单（已踩坑）
+
+| # | 错误 | 正确 |
+|---|------|------|
+| 1 | 顶导 Logo 用自绘六边形 SVG + 文字 | `<img>` 引用 `header-pc-light logo.svg`（136×32） |
+| 2 | 导航菜单 6 项，含"开始" | 7 项：下载/开发/文档/学习/支持/社区/动态 |
+| 3 | `nav-left` gap=48px，align=center | gap=40px，align=**flex-end** |
+| 4 | 页脚 padding 顶部 40px | 顶部 **24px**，底部 34px |
+| 5 | 顶部说明区放邮件图标+邮箱文字 | 放**基金会 Logo img**（160×32），邮箱在底部 Logo SVG 内 |
+| 6 | 列标题 16px/weight 600 | **20px/weight 400**（Regular） |
+| 7 | 列名含多余空格："关于 openEuler"、"SIG 中心" | "关于openEuler"、"SIG中心"（无空格） |
+| 8 | 链接文字："获取 openEuler" | "获取openEuler**操作系统**"（完整名称） |
+| 9 | 省略友情链接区 | 分隔线前必须有**友情链接**区 |
+| 10 | 底部 Logo 用自绘白色六边形 SVG | `<img>` 引用 `footer-pc-底部logo.svg`（150×68） |
+| 11 | 版权顺序：版权文字在上，法律链接在下 | **品牌\|隐私政策\|法律声明在上**，版权文字在下 |
+| 13 | 右侧顺序：搜索→国际化→用户→源码 | 搜索→**源码**→国际化→**主题切换**→用户 |
+| 14 | 源码 height 32px，无下拉箭头 | height **24px**，含下拉箭头 16×16 |
+| 15 | 主题切换图标缺失 | 必须有，24×24px，位于国际化与用户之间 |
+| 16 | nav-right gap 16px | gap **20px** |
+| 17 | 搜索框背景 `rgba(0,0,0,.04)`，描边 `.12` | OSearch small：背景 **`rgb(255,255,255)`**（white/color-fill2），描边 **`rgba(0,0,0,.25)`**（grey-14@0.25） |
+| 18 | 源码按钮蓝色描边 pill，颜色 `#002FA7` | ODropdown **text 变体**：无背景无描边，颜色 **`rgba(0,0,0,.85)`**（color-info1），padding=0 |
 
 ---
 
