@@ -17,9 +17,10 @@ pnpx skills add https://atomgit.com/openeuler/opendesign-skills.git --skill open
 pnpx skills add https://atomgit.com/openeuler/opendesign-skills.git --skill opendesign-scripts
 pnpx skills add https://atomgit.com/openeuler/opendesign-skills.git --skill opendesign-tokens
 pnpx skills add https://atomgit.com/openeuler/opendesign-skills.git --skill opendesign-design
+pnpx skills add https://atomgit.com/openeuler/opendesign-skills.git --skill opendesign-codegen
 ```
 
-> opendesign-components / scripts / tokens 生产 Vue 代码；opendesign-design 生产 Pixso 设计稿。两类 skill 互补，可按需安装。
+> opendesign-components / scripts / tokens 生产 Vue 代码；opendesign-design 生产 Pixso 设计稿；opendesign-codegen 让 AI 从设计意图直出合规的 Vue+OpenDesign 代码（面向设计师）。各 skill 互补，可按需安装。
 
 安装后，skill 会自动注入到支持的 AI 编码助手。
 
@@ -37,6 +38,7 @@ pnpx skills experimental_install
 | [opendesign-scripts](#opendesign-scripts) | `@opensig/open-scripts` | 5 个 CLI 构建命令 | [SKILL.md](skills/opendesign-scripts/SKILL.md) |
 | [opendesign-tokens](#opendesign-tokens) | `@opensig/opendesign-token` | 3 套主题的设计令牌体系 | [SKILL.md](skills/opendesign-tokens/SKILL.md) |
 | [opendesign-design](#opendesign-design) | Pixso MCP（无 npm 包） | 21 个组件设计规范 + 536 变体 + 187 图标 | [SKILL.md](skills/opendesign-design/SKILL.md) |
+| [opendesign-codegen](#opendesign-codegen) | `@opensig/opendesign` + `@opensig/opendesign-token` | 设计意图直出合规 Vue+OpenDesign 代码（约束 + SFC 模板 + 示例） | [SKILL.md](skills/opendesign-codegen/SKILL.md) |
 
 ---
 
@@ -215,6 +217,43 @@ skills/opendesign-design/
 
 ---
 
+## opendesign-codegen
+
+**用途**：面向**各社区设计师**，让 AI 工具把需求/设计意图**直接做成符合工程规范的 Vue 3 + OpenDesign 代码**时加载此 skill。渲染出来即设计稿，可直接进生产工程——**不经过"先出 HTML 再转代码"的中间步骤**。
+
+**适用场景**：
+- 设计师用 AI 一步生成页面/组件，产物即真实 `@opensig/opendesign` 组件 + `--o-` token 的 Vue SFC
+- 需要零硬编码、全 Token、`<script setup lang="ts">` + BEM + i18n、可直接进生产
+- 覆盖 OpenDesign 六社区主题与 light/dark
+
+**四大约束**：视觉 Token / 组件用法 / 布局与响应式 / 工程落地。**复用而非重复** `opendesign-tokens`（Token 取值）与 `opendesign-components`（组件 API），仅作链接引用。
+
+**核心产物**：
+- 合规 Vue SFC 起手模板（真实 O 组件 + `--o-`/`--o-r-` token + scoped SCSS + 响应式 + i18n 占位）
+- 设计意图 → OpenDesign 组件选用速查（关键 props/slots + 直出代码片段）
+- 生成后四维度自检清单（含「常见违规→修正」速查与 grep 命令）
+- 两个 `.vue` 示例：楼层 + 卡片栅格、带筛选的列表页
+
+**与其他 skill 的关系**：
+- 取值看 `opendesign-tokens`，组件 API 看 `opendesign-components`，本 skill 负责把两者 + 工程规范合成「设计意图 → 合规 Vue 代码」的一步直出
+- 与 `opendesign-design`（产 Pixso 设计稿）互补：本 skill 产代码，不产 Pixso
+
+**目录结构**：
+```
+skills/opendesign-codegen/
+├── SKILL.md                          # 入口：四大约束 + 硬规则 + 工作流
+└── references/
+    ├── starter-page.vue              # 合规 SFC 起手模板
+    ├── component-cheatsheet.md       # 设计意图 → OpenDesign 组件速查
+    ├── engineering-rules.md          # 工程落地约束
+    ├── checklist.md                  # 生成后自检清单
+    └── examples/
+        ├── feature-section.vue       # 示例：楼层 + 卡片栅格
+        └── list-filter-page.vue      # 示例：带筛选的列表页
+```
+
+---
+
 ## Skill 之间的关系
 
 ```
@@ -253,11 +292,12 @@ skills/opendesign-design/
 
 | 指标 | 数量 |
 |------|------|
-| Skill 大类 | 4 |
+| Skill 大类 | 5 |
 | 组件 Skill（代码侧） | 46 |
 | 脚本 Skill | 5 |
 | Token 参考 | 7 |
 | 组件设计规范（设计侧） | 21 |
 | componentKey 变体索引 | 536 |
 | 图标 componentKey 索引 | 187 |
-| 参考文件总计 | 81 |
+| 代码直出约束/模板/示例 | 6 |
+| 参考文件总计 | 87 |
