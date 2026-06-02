@@ -76,28 +76,18 @@ OpenEuler 拥有独立图标库 Pixso 文件 `kbqInwBrCTGnM0MsPJDgvA`，包含 *
 | 公共图标（线性） | `icon/01公共图标/线性/` | 185 |
 | 开关 | `icon/开关/` | 2 |
 
-### 图标安全规则
+### 图标使用规则
 
-| 场景 | 允许的方式 | 禁止的方式 |
-|------|-----------|-----------|
-| 含图标的 UI 组件（导航、搜索、按钮、分页、下拉等） | `create_instance(componentKey)` 插入标准组件，图标自动随组件加载 | `code_to_design` 内嵌 SVG |
-| 独立图标（自定义布局中的功能图标） | `create_instance(componentKey)`，从 [references/icon-keys.md](references/icon-keys.md) 查找图标 componentKey | `code_to_design` 内嵌 SVG |
-| 纯布局结构（背景、容器、栅格、文字区块） | `code_to_design` | — |
-| 找不到对应图标的占位符 | `code_to_design` 使用色块矩形 + 文字标注（如 `[icon:搜索]`） | SVG 路径 |
+| 场景 | 方式 |
+|------|------|
+| 含图标的 UI 组件（导航、搜索、按钮、分页、下拉等） | `code_to_design` 内嵌 SVG 路径，直接渲染真实图标 |
+| 独立图标（自定义布局中的功能图标） | `code_to_design` 内嵌 SVG 路径 |
+| 纯布局结构（背景、容器、栅格、文字区块） | `code_to_design` |
+| SVG 来源 | 优先使用 [references/assets/](references/assets/) 目录中已有的 SVG 文件；其次使用符合线性风格的标准 SVG 路径 |
 
-### 两阶段生成策略（整页设计）
+**SVG 内嵌方式**：直接将 `<svg>` 标签写入 HTML，不使用 `<img src>`。图标颜色跟随设计系统 Token，默认使用 `currentColor` 继承父元素色值。
 
-生成包含图标的完整页面时，强制采用两阶段方式：
-
-**阶段一：结构层（`code_to_design`）**
-- 生成页面整体布局：背景色、容器、栅格、区块划分、标题文字
-- 所有 UI 组件位置使用**色块矩形占位符**，不嵌入任何 SVG
-- 占位符规格：与目标组件同尺寸，填充 `rgba(0,0,0,0.06)`，内置文字标注（如 `[ONavigation]`、`[OSearch]`）
-
-**阶段二：组件层（`create_instance`）**
-- 针对每个 UI 组件调用 `create_instance(componentKey)` 生成真实实例
-- 实例图标由 Pixso 自动从设计系统解析，保证与规范一致
-- 在 Pixso 中手动将实例拖入对应占位符位置（AI 无法自动定位）
+> `create_instance` 仍可用于需要 live Symbol 绑定或 Token 联动的特殊场景，但不再作为图标的强制路径。
 
 ---
 
@@ -129,47 +119,97 @@ OpenEuler 拥有独立图标库 Pixso 文件 `kbqInwBrCTGnM0MsPJDgvA`，包含 *
 根据需求筛选目标组件名称和 componentKey
 ```
 
-**图标查找**：当需要使用独立图标时，**不要**调用 `get_all_components`（图标库与组件库在不同 Pixso 文件中），直接查阅 [references/icon-keys.md](references/icon-keys.md) 按中文图标名称匹配，取出 componentKey 后调用 `create_instance`。
+**图标查找**：需要独立图标时，查阅 [references/icon-keys.md](references/icon-keys.md) 按中文图标名称匹配，确认图标名称，然后从 [references/assets/](references/assets/) 目录取对应 SVG 文件内嵌；若 assets 中无该图标，使用线性风格 SVG 路径手写。
 
-### 第三步：两阶段生成
+### 第三步：确认本次涉及的组件（强制询问用户）
 
-**含图标组件的场景**：
+> 🚨 **禁止自行决定使用哪些组件后直接跳到生成。必须先向用户确认。**
 
-```
-阶段一（结构层）：
-  code_to_design(htmlStr) — 纯布局 HTML，UI 组件位置用矩形色块替代，无任何 SVG
-
-阶段二（组件层）：
-  对每个需要图标的 UI 组件执行：
-  create_instance(componentKey) → 返回 instanceGuid
-```
-
-**纯组件/单组件场景**（无需整页布局）：
+根据设计需求，列出你认为本次将用到的所有组件，以清单形式展示给用户，**等待用户确认或修正后才能继续**：
 
 ```
-直接使用 create_instance(componentKey) 插入组件实例
+我理解本次设计需要以下组件，请确认或补充：
+  - ONavigation（顶部导航）
+  - OCard × N（卡片列表）
+  - OButton（按钮）
+  - OPagination（分页）
+  - …（按需列出）
+
+如有遗漏或需要调整，请告知，确认后我将读取对应规范再生成。
 ```
 
-### 第四步：图标验证
+用户确认后，逐一读取每个组件的 `references/components/{name}.md`，全部读取完毕才能进入下一步。
 
-插入组件实例后，**必须**通过 DSL 验证图标是否正确存在：
+---
+
+### 第四步：选择生成模式
+
+根据用户需求在两种模式中选择：
+
+| 条件 | 选择 |
+|------|------|
+| 用户需要 Pixso 可编辑画布、Token 绑定或交互原型 | 模式 A |
+| 用户需要可在浏览器直接打开的网站页面 / 未明确说明 | 模式 B（默认） |
+
+> ## 🚨 无论模式 A 还是模式 B——强制读取规范，禁止自定义
+>
+> **生成任何内容前，必须逐一读取所有涉及组件的规范文档 `references/components/{name}.md`。**
+>
+> - 禁止！禁止！！根据经验、记忆或推断生成任何视觉属性（色值、字号、行高、间距、圆角、变体参数……）
+> - 合法的参数来源只有三个：① 对应组件规范文档 ② 硬约束白名单（第零步） ③ 上游 Token 真源
+> - 三者之外的任何取值均属**自定义内容，一律禁止**，包括但不限于：近似色值、估算间距、推断圆角、猜测默认变体
+> - 如果规范文档中找不到所需参数 → 停下，询问用户，**禁止自行填充**
+
+---
+
+#### 模式 A：Pixso 可编辑画布模式（单阶段）
+
+无需 `create_instance`，`code_to_design` 一次输出完整设计稿，所有元素位置与样式自动到位，Pixso 中可直接编辑每个图层。
+
+> **【强制前置：读取规范文档】** 执行前必须读取所有涉及组件的 `references/components/{name}.md`，严格按规范文档中的变体参数、颜色 Token、间距规格、字号规格生成。**禁止！禁止！！自定义任何视觉属性。**
+
+**所有场景统一执行**：
 
 ```
-get_node_dsl(instanceGuid) → 在 childNode 中查找 VECTOR 类型节点
+【前置】Read references/components/{name}.md  ← 涉及哪些组件就读哪些，不可跳过
+code_to_design(htmlStr)
+  — 完整页面 HTML，包含所有组件的精确位置与像素级样式还原
+  — 所有样式值必须来自规范文档或 Token 白名单，禁止自定义
+  — 图标：直接内嵌 <svg> 路径（不使用占位符，不使用 <img src>）
+  — SVG 颜色使用 currentColor 继承父元素，或按 Token 硬编码对应色值
+  — 产出为 Pixso 可直接编辑的设计稿画布
 ```
 
-**验证结果判断**：
+---
 
-| DSL 中的图标节点特征 | 状态 | 处理方式 |
-|---------------------|------|---------|
-| `type: VECTOR` + `svgSha: "IconX"` | ✅ 正常 | 图标已正确引用，Pixso 渲染时自动解析 |
-| `type: VECTOR` + 无 `svgSha`，有 `vectorPaths` | ✅ 正常 | 图标路径内嵌，直接可用 |
-| 无 VECTOR 子节点 | ⚠️ 异常 | 组件内无图标（可能是纯文字变体），检查是否选错了 componentKey |
-| `type: RECTANGLE`（空矩形替代了图标） | ❌ 错误 | 库链接失败，通知用户执行"从库复制粘贴"流程 |
+#### 模式 B：可视化 HTML 网站模式（单阶段，默认）
 
-**跨文件警告**：若当前工作文件（如 `975xPIJXN66PO6CHYokq_w`）与组件库文件（`JZkjW0mhmT61Mtd98dCfBw`）不同，且验证发现图标为空矩形时，提示用户：
+生成可独立运行于浏览器的完整 HTML 网站页面，像素级还原设计系统视觉风格。
 
-> 图标依赖 Pixso 跨文件库链接解析。修复方式：在 Pixso 中打开组件库文件 → 复制组件 → 粘贴到当前工作文件。
+> **【强制前置：读取规范文档】** 执行前必须读取所有涉及组件的 `references/components/{name}.md`，严格按规范文档中的变体参数、颜色 Token、间距规格、字号规格生成。**禁止！禁止！！自定义任何视觉属性。**
+
+**所有场景统一执行**：
+
+```
+【前置】Read references/components/{name}.md  ← 涉及哪些组件就读哪些，不可跳过
+生成独立 HTML 文件
+  — 完整页面 HTML + 内联 CSS，包含所有组件的精确位置与像素级样式
+  — 所有样式值必须来自规范文档或 Token 白名单，禁止自定义
+  — 图标：直接内嵌 <svg> 路径（不使用占位符，不使用 <img src>）
+  — SVG 颜色使用 currentColor 或按 Token 硬编码对应 CSS 变量
+  — 产出为可在浏览器直接打开 / 部署的网站页面
+```
+
+**SVG 图标规范**：
+
+| 属性 | 规格 |
+|------|------|
+| 尺寸 | 与设计系统图标一致（通常 24×24px，使用 `icon_size-m` Token） |
+| 风格 | 线性（stroke），与 OpenEuler 图标库保持一致 |
+| 颜色 | `currentColor`（继承父元素文字色）或对应 Token 色值 |
+| 写法 | `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" ...>` 直接内嵌 |
+
+---
 
 ### 第五步：应用设计变量与样式
 
@@ -238,12 +278,14 @@ get_image(itemId) — 生成节点预览图，确认视觉结果
 
 ## 注意事项
 
+- 当你准备使用某一个组件来生成设计稿时，你应该读取 opendesign-components 的 skill，来看他对应的组件开发 skill 中说明的传参是否足以支持你的想法
 - 所有 `itemId` 格式为 `"数字:数字"`，例如 `"123:456"`
 - 若未指定 itemId，工具默认操作当前 Pixso 画布中已选中的节点
 - 导出图片时使用 `get_export_image` 并配置 exportSettings（PNG/SVG/PDF 等）
 - **组件文档中所有色值、字号、间距必须匹配上游 Token 的变量名**，禁止使用硬编码值
-- **图标规则**：含图标的 UI 组件必须通过 `create_instance` 插入，禁止在 `code_to_design` HTML 中内嵌 SVG 图标路径
-- **跨文件图标**：`svgSha` 引用的图标在 Pixso 渲染时自动从组件库解析；若图标不显示，指引用户从组件库文件复制粘贴组件
+- **图标规则**：两种模式均直接内嵌 `<svg>` 路径，禁止使用色块占位符或 `<img src>` 引用
+- **SVG 颜色**：使用 `currentColor` 继承父元素，或直接填写对应 Token 的 CSS 变量值
+- **禁止自定义（最终兜底）**：模式 A / 模式 B 生成时，凡未在组件规范文档、硬约束白名单、上游 Token 真源中找到依据的样式值，**一律禁止输出**。不得以"常见默认值""经验估算""视觉近似"为由跳过读取规范直接生成。
 
 ## componentKey 速查
 
