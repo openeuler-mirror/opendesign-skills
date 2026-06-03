@@ -105,6 +105,17 @@ OLoading small（HORIZONTAL，垂直居中，gap: 4px）
 
 ## Part B：规格速查参考
 
+### 关联资产
+
+| 资产用途 | 文件路径 |
+|---------|---------|
+| 加载图标（轨道环 + 活跃弧，viewBox 24×24） | `references/assets/public icons/icon-loading 加载.svg` |
+
+> **生成 HTML 时必须优先内联此 SVG**，通过 `width`/`height` 属性缩放至目标尺寸（large=96px / medium=64px / small=16px），禁止用 CSS 重画。
+> Dark 模式覆盖规则：活跃弧第二段 `<path>` 的 `fill` 改为 `rgb(73,122,248)`；轨道环第一段 `<path>` 的 `fill` 改为 `rgb(255,255,255)`，`fill-opacity` 改为 `0.15`。
+
+---
+
 ### 变体索引表
 
 | 变体属性 | 可选值 | 默认值 | 视觉差异 |
