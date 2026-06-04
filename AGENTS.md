@@ -6,7 +6,7 @@
 
 ## 仓库用途
 
-**OpenDesign Skills** 是为 AI 编码助手（opencode 等）生成和维护的知识库。它包含 OpenDesign 生态（Vue 3 组件库、CLI 构建工具、设计令牌、Pixso 设计协作）的完整参考文档，用于：
+**OpenDesign Skills** 是为 AI 编码工具（opencode 等）生成和维护的知识库。它包含 OpenDesign 生态（Vue 3 组件库、CLI 构建工具、设计令牌、Pixso 设计协作）的完整参考文档，用于：
 
 1. 帮助开发者使用 OpenDesign 组件库搭建 Vue 页面
 2. 帮助开发者配置和使用构建工具
@@ -19,7 +19,7 @@
 .
 ├── README.md                      ← 总入口，包含所有 Skill 的索引和概览
 ├── LICENSE
-├── AGENT.md                       ← 本文件，AI 编码助手工作指导（第一层：生产指导）
+├── AGENTS.md                      ← 本文件，AI 编码工具工作指导（第一层：生产指导）
 ├── SKILL-GEN-GUIDE.md             ← 代码 Skill 生成详细流程（第一层：生产指导）
 ├── DESIGN-SKILL-GEN-GUIDE.md      ← 设计 Skill 生成详细流程（第一层：生产指导）
 ├── SKILL-REVIEW-GUIDE.md          ← 自评与进度管理（含代码 + 设计两类维度，第一层）
@@ -68,9 +68,9 @@
 
 | 层级 | 名称 | 受众 | 典型文件 |
 |------|------|------|---------|
-| **第一层** | 生产指导 | AI 编码助手（写作者） | `AGENT.md`、`SKILL-GEN-GUIDE.md`、`SKILL-REVIEW-GUIDE.md`、`*.review.md`、`_skill-gen-status.md` |
+| **第一层** | 生产指导 | AI 编码工具（写作者） | `AGENTS.md`、`SKILL-GEN-GUIDE.md`、`SKILL-REVIEW-GUIDE.md`、`*.review.md`、`_skill-gen-status.md` |
 | **第二层** | 共享约定 | Skill 调用者（跨 Skill 公共上下文） | `skills/*/SKILL.md` |
-| **第三层** | Skill 本体 | Skill 调用者（AI 助手 / 开发者） | `skills/*/references/{name}.md` |
+| **第三层** | Skill 本体 | Skill 调用者（AI 工具 / 开发者） | `skills/*/references/{name}.md` |
 
 **判断标准：这段内容是否需要随 Skill 一起分发给使用者？**
 
@@ -174,4 +174,4 @@ A: 如果有多个相关的 sub-component（如 OFormItem 是 OForm 的子组件
 
 ---
 
-**最后更新**：2026-05-27
+**最后更新**：2026-06-04

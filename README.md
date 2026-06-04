@@ -1,12 +1,12 @@
 # OpenDesign Skills
 
-OpenDesign 生态的 AI Skill 集合，为 AI 编码助手提供 OpenDesign 组件库、构建工具、设计令牌和前端开发规范的完整知识。
+OpenDesign 生态的 AI Skill 集合，为 AI 编码工具提供 OpenDesign 组件库、构建工具、设计令牌和前端开发规范的完整知识。
 
 ---
 
 ## 安装
 
-使用 [`skills` CLI](https://skills.sh/) 一键安装到你的 AI 编码助手：
+使用 [`skills` CLI](https://skills.sh/) 一键安装到你的 AI 编码工具：
 
 ```bash
 # 安装全部 skill（推荐）
@@ -22,7 +22,7 @@ pnpx skills add https://atomgit.com/openeuler/opendesign-skills.git --skill open
 
 > opendesign-components / scripts / tokens 生产 Vue 代码；opendesign-design 生产 Pixso 设计稿；opendesign-codegen 让 AI 从设计意图直出合规的 Vue+OpenDesign 代码（面向设计师）。各 skill 互补，可按需安装。
 
-安装后，skill 会自动注入到支持的 AI 编码助手。
+安装后，skill 会自动注入到支持的 AI 编码工具。
 
 ### 团队成员拉取后恢复安装
 
