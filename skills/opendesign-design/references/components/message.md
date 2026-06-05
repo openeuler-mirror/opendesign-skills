@@ -70,43 +70,55 @@ OMessage-全局提示（FRAME，HORIZONTAL，自适应宽度）
 ```
 OMessage-内联提示1（FRAME，HORIZONTAL，自适应宽高）
 │  cornerRadius: 4px
-│  fill: 对应 status color + 5% 透明度（如 color-success1 opacity 5%）
-│  stroke-left: 4px · 颜色跟随 status color（如 color-success1）
-│  padding: 上 4px · 下 8px · 左右 12px
-│  itemSpacing: 8px
+│  fill: 无（由子层承载背景）
+│  overflow: hidden
 │
-├── [状态图标 Icon INSTANCE]（24×24px）
+├── [左侧色条 RECT]（width: 4px，height: 100%）
 │     fill: 对应 status color（如 color-success1）
 │
-└── [提示文字 PARAGRAPH]
-      font: Body-14/Regular
-      fill: color-info1
+└── [内容区 FRAME，HORIZONTAL]
+    │  fill: 对应 status color + 5% 透明度
+    │  padding: 上下 4px · 左右 12px   ← 从色条右边缘算起
+    │  itemSpacing: 8px
+    │  flex: 1
+    │
+    ├── [状态图标 Icon INSTANCE]（24×24px，assets/message/）
+    ├── [提示文字 PARAGRAPH]
+    │     font: Body-14/Regular
+    │     fill: color-info1（rgba(0,0,0,1)）
+    │     flex: 1
+    └── [关闭图标 INSTANCE]（24×24px，assets/public icons/关闭.svg）
+          fill: color-info2（rgba(0,0,0,0.8)）
 ```
 
 **type=内联提示2 布局**
 
 ```
-OMessage-内联提示2（FRAME，VERTICAL，自适应宽高）
+OMessage-内联提示2（FRAME，HORIZONTAL，自适应宽高）
 │  cornerRadius: 4px
-│  fill: 对应 status color + 5% 透明度（如 color-success1 opacity 5%）
-│  stroke-left: 4px · 颜色跟随 status color（如 color-success1）
-│  padding: 上下 4px · 左右 16px
-│  itemSpacing: 8px
+│  fill: 无（由子层承载背景）
+│  overflow: hidden
 │
-├── [顶部行 FRAME，HORIZONTAL]
-│   │  itemSpacing: 8px
-│   ├── [状态图标 Icon INSTANCE]（24×24px）
-│   │     fill: 对应 status color
-│   ├── [标题文字 PARAGRAPH]
-│   │     font: Body-14/SemiBold
-│   │     fill: color-info1
-│   └── [关闭图标 Icon INSTANCE]（24×24px，可选）
-│         fill: color-info2
+├── [左侧色条 RECT]（width: 4px，height: 100%）
+│     fill: 对应 status color（如 color-success1）
 │
-└── [描述文字 PARAGRAPH]（可选）
-      font: Body-14/Regular
-      fill: color-info2
-      paddingLeft: 24px（与标题对齐）
+└── [内容区 FRAME，VERTICAL]
+    │  fill: 对应 status color + 5% 透明度
+    │  padding: 上 4px · 下 8px · 左右 12px   ← 从色条右边缘算起
+    │  itemSpacing: 4px   ← 顶部行与描述文字之间
+    │  flex: 1
+    │
+    ├── [顶部行 FRAME，HORIZONTAL]
+    │   │  itemSpacing: 8px
+    │   ├── [状态图标 Icon INSTANCE]（24×24px，assets/message/）
+    │   └── [标题文字 PARAGRAPH]
+    │         font: Body-14/SemiBold
+    │         fill: color-info1（rgba(0,0,0,1)）
+    │
+    └── [描述文字 PARAGRAPH]
+          font: Body-14/Regular
+          fill: color-info2（rgba(0,0,0,0.8)）
+          paddingLeft: 32px（图标24px + 间距8px，与标题对齐）
 ```
 
 ---
@@ -175,8 +187,8 @@ OMessage-内联提示2（FRAME，VERTICAL，自适应宽高）
 | 左侧竖线 | 无 | 4px · 状态色 | 4px · 状态色 |
 | 阴影 | 有（shadow） | 无 | 无 |
 | 内边距（上） | 12px | 4px | 4px |
-| 内边距（下） | 12px | 8px | 4px |
-| 内边距（左右） | 16px | 12px | 16px |
+| 内边距（下） | 12px | 4px | 8px |
+| 内边距（左右） | 16px | 12px | 12px |
 | 图标尺寸 | 24px | 24px | 24px |
 | 图标与文字间距 | 8px | 8px | 8px |
 
@@ -186,20 +198,21 @@ OMessage-内联提示2（FRAME，VERTICAL，自适应宽高）
 
 **浅色模式（Dark=off）**
 
-| 区域/状态 | Token | 说明 |
-|---------|-------|------|
-| 全局提示背景 | `color-fill2` | 白色背景 |
-| success 图标色 | `color-success1` | 绿色 |
-| success 背景（内联） | `color-success1` opacity 5% | 状态色 5% 透明度 |
-| info 图标色 | `color-primary1` | 蓝色 |
-| info 背景（内联） | `color-primary1` opacity 5% | 状态色 5% 透明度 |
-| danger 图标色 | `color-danger1` | 红色 |
-| danger 背景（内联） | `color-danger1` opacity 5% | 状态色 5% 透明度 |
-| warning 图标色 | `color-warning1` | 黄/橙色 |
-| warning 背景（内联） | `color-warning1` opacity 5% | 状态色 5% 透明度 |
-| 提示文字（主） | `color-info1` | 主文字色 |
-| 提示文字（辅） | `color-info2` | 描述文字色 |
-| 关闭图标 | `color-info2` | 辅助图标色 |
+| 区域/状态 | Token | 实际值（浅色） | 说明 |
+|---------|-------|-------------|------|
+| 全局提示背景 | `color-fill2` | `#ffffff` | 白色背景 |
+| success 图标 | `assets/message/成功.svg` | SVG 原始色 | 内联 SVG，**禁止覆盖颜色** |
+| success 背景（内联）/ 左边框 | `color-success1` opacity 5% / solid | `rgba(11, 177, 81, 0.05)` / `rgb(11, 177, 81)` | CSS 属性，使用 Token |
+| info 图标 | `assets/message/提示.svg` | SVG 原始色 | 内联 SVG，**禁止覆盖颜色** |
+| info 背景（内联）/ 左边框 | `color-primary1` opacity 5% / solid | `rgba(0, 47, 167, 0.05)` / `rgb(0, 47, 167)` | CSS 属性，使用 Token |
+| danger 图标 | `assets/message/错误.svg` | SVG 原始色 | 内联 SVG，**禁止覆盖颜色** |
+| danger 背景（内联）/ 左边框 | `color-danger1` opacity 5% / solid | `rgba(230, 0, 18, 0.05)` / `rgb(230, 0, 18)` | CSS 属性，使用 Token |
+| warning 图标 | `assets/message/警示.svg` | SVG 原始色 | 内联 SVG，**禁止覆盖颜色** |
+| warning 背景（内联）/ 左边框 | `color-warning1` opacity 5% / solid | `rgba(250, 115, 5, 0.05)` / `rgb(250, 115, 5)` | CSS 属性，使用 Token |
+| loading 图标 | `assets/public icons/icon-loading 加载.svg` | SVG 原始色 | 内联 SVG，**禁止覆盖颜色** |
+| 提示文字（主） | `color-info1` | `rgba(0, 0, 0, 1)` | 纯黑，一级文字 |
+| 提示文字（辅） | `color-info2` | `rgba(0, 0, 0, 0.8)` | 80% 黑，二级文字 |
+| 关闭图标 | `color-info2` | `rgba(0, 0, 0, 0.8)` | 80% 黑，辅助图标 |
 
 **深色模式（Dark=on）**
 
@@ -250,46 +263,52 @@ OMessage-全局提示（FRAME，HORIZONTAL，自适应宽度）
 **内联提示1**
 
 ```
-OMessage-内联提示1（FRAME，HORIZONTAL，自适应宽高）
+OMessage-内联提示1（FRAME，HORIZONTAL，overflow:hidden）
 │  cornerRadius: 4px（radius_control-m）
-│  fill: color-{status}1 opacity 5%
-│  strokeLeft: 4px · color-{status}1（左侧竖线）
-│  autoLayoutPadding: 上 4px · 下 8px · 左右 12px
-│  autoLayoutItemSpacing: 8px
+│  fill: 无
 │
-├── [Icon 状态图标 INSTANCE]
-│     width/height: 24px
+├── [左侧色条 RECT]（width: 4px）
 │     fill: color-{status}1
 │
-└── [文字 PARAGRAPH]
-      fill: color-info1
-      font: Body-14/Regular（14px · 22px）
+└── [内容区 FRAME，HORIZONTAL]
+    │  fill: color-{status}1 opacity 5%
+    │  autoLayoutPadding: 上下 4px · 左右 12px
+    │  autoLayoutItemSpacing: 8px
+    │
+    ├── [Icon 状态图标 INSTANCE]（assets/message/，24×24px）
+    ├── [文字 PARAGRAPH]（flex:1）
+    │     fill: color-info1 = rgba(0,0,0,1)
+    │     font: Body-14/Regular（14px · 22px）
+    └── [关闭图标 INSTANCE]（assets/public icons/关闭.svg，24×24px）
+          fill: color-info2 = rgba(0,0,0,0.8)
 ```
 
 **内联提示2**
 
 ```
-OMessage-内联提示2（FRAME，VERTICAL，自适应宽高）
+OMessage-内联提示2（FRAME，HORIZONTAL，overflow:hidden）
 │  cornerRadius: 4px（radius_control-m）
-│  fill: color-{status}1 opacity 5%
-│  strokeLeft: 4px · color-{status}1（左侧竖线）
-│  autoLayoutPadding: 上下 4px · 左右 16px
-│  autoLayoutItemSpacing: 8px
+│  fill: 无
 │
-├── [顶部行 FRAME，HORIZONTAL]
-│   │  autoLayoutItemSpacing: 8px
-│   ├── [Icon 状态图标 INSTANCE]（24×24px）
-│   │     fill: color-{status}1
-│   ├── [标题 PARAGRAPH]
-│   │     fill: color-info1
-│   │     font: Body-14/SemiBold（14px · 22px）
-│   └── [关闭图标 INSTANCE]（24×24px，可选）
-│         fill: color-info2
+├── [左侧色条 RECT]（width: 4px）
+│     fill: color-{status}1
 │
-└── [描述 PARAGRAPH]
-      fill: color-info2
-      font: Body-14/Regular（14px · 22px）
-      paddingLeft: 24px
+└── [内容区 FRAME，VERTICAL]
+    │  fill: color-{status}1 opacity 5%
+    │  autoLayoutPadding: 上 4px · 下 8px · 左右 12px
+    │  autoLayoutItemSpacing: 4px
+    │
+    ├── [顶部行 FRAME，HORIZONTAL]
+    │   │  autoLayoutItemSpacing: 8px
+    │   ├── [Icon 状态图标 INSTANCE]（assets/message/，24×24px）
+    │   └── [标题 PARAGRAPH]
+    │         fill: color-info1 = rgba(0,0,0,1)
+    │         font: Body-14/SemiBold（14px · 22px）
+    │
+    └── [描述 PARAGRAPH]
+          fill: color-info2 = rgba(0,0,0,0.8)
+          font: Body-14/Regular（14px · 22px）
+          paddingLeft: 32px（图标24px + 间距8px）
 ```
 
 ---
@@ -430,16 +449,16 @@ OMessage-内联提示2（FRAME，VERTICAL，自适应宽高）
 
 | 文件名 | 对应 status | 使用位置 |
 |--------|-------------|---------|
-| `成功.svg` | `success` | 全局提示 / 内联提示1 / 内联提示2 左侧状态图标，fill: `color-success1` |
-| `提示.svg` | `info` | 全局提示 / 内联提示1 / 内联提示2 左侧状态图标，fill: `color-primary1` |
-| `警示.svg` | `warning` | 全局提示 / 内联提示1 / 内联提示2 左侧状态图标，fill: `color-warning1` |
-| `错误.svg` | `danger` | 全局提示 / 内联提示1 / 内联提示2 左侧状态图标，fill: `color-danger1` |
+| `成功.svg` | `success` | 全局提示 / 内联提示1 / 内联提示2 左侧状态图标 |
+| `提示.svg` | `info` | 全局提示 / 内联提示1 / 内联提示2 左侧状态图标 |
+| `警示.svg` | `warning` | 全局提示 / 内联提示1 / 内联提示2 左侧状态图标 |
+| `错误.svg` | `danger` | 全局提示 / 内联提示1 / 内联提示2 左侧状态图标 |
+| `icon-loading 加载.svg` | `loading` | 全局提示 loading 状态图标（路径：`references/assets/public icons/`） |
 
 **使用规则**
 - 图标尺寸固定为 24×24px
-- fill 颜色跟随 status 的 Token（见上表），深色模式使用同名 Token 深色值
-- `loading` 状态无独立图标文件，使用旋转动效的加载图标（`icon-加载.svg` from `public icons`），fill: `color-info2`
-- 生成 HTML 时内联 SVG 路径：`references/assets/message/<文件名>`
+- 所有图标**颜色、路径均来自 SVG 文件本身，禁止用 CSS/fill 属性覆盖**，保持 assets 原始配色
+- 生成 HTML 时直接内联 SVG 原始内容，路径：`references/assets/message/<文件名>` 或 `references/assets/public icons/<文件名>`
 
 ---
 
