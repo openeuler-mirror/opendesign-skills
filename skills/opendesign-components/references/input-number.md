@@ -117,27 +117,27 @@ import { OInputNumber } from '@opensig/opendesign';
 
 ### Props 表
 
-| 参数名 | 类型 | 必填 | 可选值 | 默认值 | 说明 |
-|--------|------|------|--------|--------|------|
-| modelValue | `number` | 否 | — | — | 数值（v-model） |
-| defaultValue | `number` | 否 | — | — | 非受控默认值 |
-| step | `number` | 否 | — | `1` | 按钮步长 |
-| min | `number` | 否 | — | — | 最小值 |
-| max | `number` | 否 | — | — | 最大值 |
-| controls | `InputNumberControlT` | 否 | `'both'` / `'right'` / `'left'` / `'none'` | `'both'` | 控制按钮位置 |
-| clearable | `boolean` | 否 | — | `false` | 可清空 |
-| size | `SizeT` | 否 | `'small'` / `'medium'` / `'large'` | `'medium'` | 尺寸 |
-| round | `RoundT` | 否 | `'pill'` / CSS 值 | — | 圆角 |
-| color | `Color2T` | 否 | `'normal'` / `'success'` / `'warning'` / `'danger'` | `'normal'` | 颜色状态 |
-| variant | `VariantT` | 否 | `'solid'` / `'outline'` / `'text'` | `'outline'` | 样式 |
-| placeholder | `string` | 否 | — | — | 占位文本 |
-| disabled | `boolean` | 否 | — | `false` | 禁用 |
-| readonly | `boolean` | 否 | — | `false` | 只读 |
-| autoWidth | `boolean` | 否 | — | `false` | 宽度自适应 |
-| format | `(value: string) => string` | 否 | — | — | 格式化显示函数 |
-| validate | `(value: number) => boolean` | 否 | — | — | 自定义值有效性判断 |
-| inputId | `string` | 否 | — | — | input 元素 id |
-| clearValue | `number` | 否 | — | — | 清空时的回退值 |
+| 参数名 | 类型 | 必填 | 可选值 | 默认值 | 说明 | 引入版本 |
+|--------|------|------|--------|--------|------|--------|
+| modelValue | `number` | 否 | — | — | 数值（v-model） | — |
+| defaultValue | `number` | 否 | — | — | 非受控默认值 | — |
+| step | `number` | 否 | — | `1` | 按钮步长 | — |
+| min | `number` | 否 | — | — | 最小值 | — |
+| max | `number` | 否 | — | — | 最大值 | — |
+| controls | `InputNumberControlT` | 否 | `'both'` / `'right'` / `'left'` / `'none'` | `'both'` | 控制按钮位置 | — |
+| clearable | `boolean` | 否 | — | `false` | 可清空 | — |
+| size | `SizeT` | 否 | `'small'` / `'medium'` / `'large'` | `'medium'` | 尺寸 | — |
+| round | `RoundT` | 否 | `'pill'` / CSS 值 | — | 圆角 | — |
+| color | `Color2T` | 否 | `'normal'` / `'success'` / `'warning'` / `'danger'` | `'normal'` | 颜色状态 | — |
+| variant | `VariantT` | 否 | `'solid'` / `'outline'` / `'text'` | `'outline'` | 样式 | — |
+| placeholder | `string` | 否 | — | — | 占位文本 | — |
+| disabled | `boolean` | 否 | — | `false` | 禁用 | — |
+| readonly | `boolean` | 否 | — | `false` | 只读 | — |
+| autoWidth | `boolean` | 否 | — | `false` | 宽度自适应 | — |
+| format | `(value: string) => string` | 否 | — | — | 格式化显示函数 | — |
+| validate | `(value: number) => boolean` | 否 | — | — | 自定义值有效性判断 | — |
+| inputId | `string` | 否 | — | — | input 元素 id | — |
+| clearValue | `number` | 否 | — | — | 清空时的回退值 | @since 1.1.0 |
 
 ### Events 表
 
@@ -435,3 +435,12 @@ layout:
 | OInputNumber | OInput | OInputNumber 有加减控制按钮且仅接受数字，OInput 接受任意文本 |
 | OInputNumber | OSlider | OSlider 有滑轨和拖拽手柄，OInputNumber 是输入框 + 按钮形式 |
 | OInputNumber（controls="none"） | OInput | 外观近似，但 OInputNumber 仅接受数字输入（only-numeric-input），且值类型为 number |
+
+---
+
+## 版本变更记录
+
+| 版本 | 变更内容 |
+|------|---------|
+| v1.1.0 | 新增 `clearValue` prop，用于指定清空输入时的默认回退值 |
+| v0.0.79 | 修复加减按钮宽度问题 |

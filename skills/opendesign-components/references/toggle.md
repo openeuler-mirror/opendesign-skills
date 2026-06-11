@@ -64,13 +64,13 @@ import { OToggle } from '@opensig/opendesign';
 
 ### Props 表
 
-| 参数名 | 类型 | 可选值 | 默认值 | 说明 |
-|--------|------|--------|--------|------|
-| checked | `boolean` | — | `undefined` | 是否选中（v-model:checked） |
-| defaultChecked | `boolean` | — | `false` | 默认选中 |
-| round | `RoundT` | `'pill'` / CSS 值 | — | 圆角 |
-| icon | `Component` | — | — | 前缀图标组件 |
-| disabled | `boolean` | — | `false` | 禁用 |
+| 参数名 | 类型 | 可选值 | 默认值 | 说明 | 引入版本 |
+|--------|------|--------|--------|------|--------|
+| checked | `boolean` | — | `undefined` | 是否选中（v-model:checked） | — |
+| defaultChecked | `boolean` | — | `false` | 默认选中 | — |
+| round | `RoundT` | `'pill'` / CSS 值 | — | 圆角 | — |
+| icon | `Component` | — | — | 前缀图标组件 | — |
+| disabled | `boolean` | — | `false` | 禁用 | — |
 
 ### Events 表
 
@@ -256,3 +256,11 @@ layout:
 | OToggle | OSwitch | OSwitch 是滑动开关形态（椭圆轨道+圆形滑块），OToggle 是矩形按钮形态 |
 | OToggle | OTag | OTag 是静态标签无选中状态交互，OToggle 可切换选中状态 |
 | OToggle | OCheckbox | OCheckbox 是勾选框形态（方框+勾号），OToggle 是按钮块形态；OToggle 可作为 OCheckbox 的子组件渲染 |
+
+---
+
+## 版本变更记录
+
+| 版本 | 变更内容 |
+|------|---------|
+| v1.1.0 | 刷新笔记本/平板竖屏尺寸；round prop 支持非 pill 值 |

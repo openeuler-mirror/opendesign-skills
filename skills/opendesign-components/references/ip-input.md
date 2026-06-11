@@ -77,16 +77,16 @@ import { OIpInput } from '@opensig/opendesign';
 
 ### Props 表
 
-| 参数名 | 类型 | 必填 | 可选值 | 默认值 | 说明 |
-|--------|------|------|--------|--------|------|
-| modelValue | `string` | 否 | — | — | IP 地址值（v-model），格式如 `"192.168.1.1"` |
-| disabled | `boolean` | 否 | — | `false` | 是否禁用 |
-| segmentsLen | `number` | 否 | — | `4` | IP 分段数量 |
-| size | `SizeT` | 否 | `'small'` / `'medium'` / `'large'` | — | 尺寸 |
-| round | `RoundT` | 否 | `'pill'` / CSS 值 | — | 圆角 |
-| color | `Color2T` | 否 | `'normal'` / `'success'` / `'warning'` / `'danger'` | `'normal'` | 颜色状态 |
-| readonly | `boolean` | 否 | — | `false` | 是否只读 |
-| variant | `VariantT` | 否 | `'solid'` / `'outline'` / `'text'` | `'outline'` | 外框样式 |
+| 参数名 | 类型 | 必填 | 可选值 | 默认值 | 说明 | 引入版本 |
+|--------|------|------|--------|--------|------|--------|
+| modelValue | `string` | 否 | — | — | IP 地址值（v-model），格式如 `"192.168.1.1"` | — |
+| disabled | `boolean` | 否 | — | `false` | 是否禁用 | — |
+| segmentsLen | `number` | 否 | — | `4` | IP 分段数量 | — |
+| size | `SizeT` | 否 | `'small'` / `'medium'` / `'large'` | — | 尺寸 | — |
+| round | `RoundT` | 否 | `'pill'` / CSS 值 | — | 圆角 | — |
+| color | `Color2T` | 否 | `'normal'` / `'success'` / `'warning'` / `'danger'` | `'normal'` | 颜色状态 | — |
+| readonly | `boolean` | 否 | — | `false` | 是否只读 | — |
+| variant | `VariantT` | 否 | `'solid'` / `'outline'` / `'text'` | `'outline'` | 外框样式 | — |
 
 ### Events 表
 
@@ -278,3 +278,11 @@ layout:
 | OIpInput | OInput | OIpInput 内部有圆点分隔的多段数字区域，OInput 是单一连续输入区域 |
 | OIpInput | 多个 OInput 并排 | OIpInput 共享一个外框，段间有内置圆点分隔符且自动跳转焦点 |
 | OIpInput | OInputNumber | OInputNumber 有增减按钮，OIpInput 无增减按钮且为多段结构 |
+
+---
+
+## 版本变更记录
+
+| 版本 | 变更内容 |
+|------|---------|
+| v1.2.0 | 新增 OIpInput 组件 |

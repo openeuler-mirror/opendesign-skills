@@ -137,13 +137,13 @@ type TextareaResizeT = 'both' | 'horizontal' | 'h' | 'vertical' | 'v' | 'none';
 | disabled | `boolean` | — | `false` | 禁用 |
 | readonly | `boolean` | — | `false` | 只读 |
 | clearable | `boolean` | — | `false` | 可清空 |
-| rows | `number` | — | `4` | 行数 |
+| rows | `number` | — | `4` | 行数 | v1.1.0（默认值从无改为4） |
 | cols | `number` | — | — | 列数 |
 | autoSize | `boolean` | — | `false` | 自动高度 |
 | resize | `TextareaResizeT` | `'both'` / `'horizontal'` / `'vertical'` / `'none'` | `'vertical'` | 拖拽调整 |
 | maxLength | `number` | — | — | 最大字符长度 |
 | minLength | `number` | — | — | 最小字符长度 |
-| showLength | `string` | `'always'` / `'auto'` / `'never'` | `'auto'` | 显示字符计数 |
+| showLength | `string` | `'always'` / `'auto'` / `'never'` | `'auto'` | 显示字符计数 | v1.1.0 |
 | getLength | `(val: string) => number` | — | — | 自定义长度计算 |
 | inputOnOutlimit | `boolean` | — | `true` | 超限仍允许输入 |
 | format | `(value: string) => string` | — | — | 格式化函数 |
@@ -331,4 +331,11 @@ layout:
 | OTextarea | OInput | OInput 是单行输入框（高度约 28–40px），OTextarea 是多行（高度 ≥ 116px） |
 | OTextarea | 纯 HTML textarea | OTextarea 有 InBox 外壳提供统一边框、颜色、圆角等样式主题 |
 | OTextarea | OInput（textarea 模式） | OTextarea 是独立组件，非 OInput 的变体 |
+
+### 版本变更记录
+
+| 版本 | 变更类型 | 变更内容 |
+|------|---------|---------|
+| v1.2.4 | 修复 | 宽度显示问题已修复 |
+| v1.1.0 | 新增 | 新增 `showLength` prop 和 `length` 插槽；rows 默认值改为 4；移除 min-height 样式 |
 

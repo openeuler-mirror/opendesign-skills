@@ -76,20 +76,20 @@ import { OLayer } from '@opensig/opendesign';
 
 ### Props 表
 
-| 参数名 | 类型 | 可选值 | 默认值 | 说明 |
-|--------|------|--------|--------|------|
-| visible | `boolean` | — | `false` | 是否显示（v-model） |
-| wrapper | `string \| HTMLElement \| null` | — | `'body'` | 挂载容器 |
-| unmountOnHide | `boolean` | — | `true` | 隐藏时销毁 DOM |
-| mainClass | `string \| object \| array` | — | — | 内容容器类名 |
-| mainTransition | `string` | — | `'o-zoom-fade2'` | 内容过渡动画 |
-| maskTransition | `string` | — | `'o-fade-in'` | 遮罩过渡动画 |
-| transitionOrign | `string` | `'mouse'` / `'css'` | `'mouse'` | 动画变换原点 |
-| mask | `boolean` | — | `true` | 显示遮罩 |
-| maskClose | `boolean` | — | `true` | 点击遮罩关闭 |
-| buttonClose | `boolean` | — | `false` | 显示关闭按钮 |
-| beforeShow | `() => Promise<boolean> \| boolean` | — | — | 打开前拦截 |
-| beforeHide | `() => Promise<boolean> \| boolean` | — | — | 关闭前拦截 |
+| 参数名 | 类型 | 可选值 | 默认值 | 说明 | 引入版本 |
+|--------|------|--------|--------|------|--------|
+| visible | `boolean` | — | `false` | 是否显示（v-model） | — |
+| wrapper | `string \| HTMLElement \| null` | — | `'body'` | 挂载容器 | — |
+| unmountOnHide | `boolean` | — | `true` | 隐藏时销毁 DOM | — |
+| mainClass | `string \| object \| array` | — | — | 内容容器类名 | — |
+| mainTransition | `string` | — | `'o-zoom-fade2'` | 内容过渡动画 | — |
+| maskTransition | `string` | — | `'o-fade-in'` | 遮罩过渡动画 | — |
+| transitionOrign | `string` | `'mouse'` / `'css'` | `'mouse'` | 动画变换原点 | — |
+| mask | `boolean` | — | `true` | 显示遮罩 | — |
+| maskClose | `boolean` | — | `true` | 点击遮罩关闭 | — |
+| buttonClose | `boolean` | — | `false` | 显示关闭按钮 | @since 0.0.72（默认值曾为 true，v0.0.73 改为 false） |
+| beforeShow | `() => Promise<boolean> \| boolean` | — | — | 打开前拦截 | — |
+| beforeHide | `() => Promise<boolean> \| boolean` | — | — | 关闭前拦截 | — |
 
 ### Events 表
 
@@ -257,3 +257,13 @@ layout:
 | OLayer | ODialog | ODialog 有预设的标题栏+内容区+操作栏结构，OLayer 是纯容器无预设布局 |
 | OLayer | OLoading | OLoading 继承 OLayer 但固定显示加载图标+文字，OLayer 内容完全自定义 |
 | OLayer | OPopup/OPopover | Popup/Popover 定位在触发元素附近（跟随定位），OLayer 居中覆盖整个视口 |
+
+---
+
+## 版本变更记录
+
+| 版本 | 变更内容 |
+|------|---------|
+| v1.1.0 | 新增 `toggle` 方法注入 |
+| v0.0.73 | 导出 form provide key；`buttonClose` prop 默认值从 `true` 改为 `false` |
+| v0.0.72 | 新增 `buttonClose` prop |

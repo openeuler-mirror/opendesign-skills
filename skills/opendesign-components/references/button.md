@@ -285,3 +285,11 @@ layout:
 | OButton（icon-only） | OIcon | OIcon 是纯展示图标无交互容器，OButton icon-only 有 hover/active 态 |
 | OButton | OLink（表格操作列） | 表格操作列推荐使用 OLink（主要操作 primary，危险操作 danger），OButton 适用于工具栏图标按钮或批量操作按钮 |
 
+### 版本变更记录
+
+| 版本 | 变更类型 | 变更内容 |
+|------|---------|---------|
+| v1.2.4 | 样式 | 文字按钮 hover 颜色从 primary1 改为 primary2；纯图标按钮新增 hover 状态颜色和边框颜色；移除 brand 模式 disabled 边框 |
+| v1.2.3-sp1 | 修复 | 昇腾/鲲鹏主题运营色样式、solid 字体颜色、disabled 选项样式修正 |
+| v1.1.0 | 样式 | 文字按钮移除 hover 背景；图标按钮新增 hover 背景 |
+

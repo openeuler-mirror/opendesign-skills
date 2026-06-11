@@ -476,3 +476,10 @@ layout:
 | OSlider | OInputNumber | OInputNumber 是独立数字输入控件，OSlider 以拖拽轨道为核心，输入框为辅助 |
 | OSlider（range） | 双 OInputNumber | 范围滑动条有轨道+两个滑块，双输入框无轨道 |
 
+### 版本变更记录
+
+| 版本 | 变更类型 | 变更内容 |
+|------|---------|---------|
+| v1.2.4 | 样式 | 滑块按钮（o-slider-btn）新增阴影 |
+| v1.2.0 | 新增 | OSlider 为新增组件 |
+

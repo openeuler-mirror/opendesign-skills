@@ -73,17 +73,17 @@ type RateItemStatusT = 'full' | 'half' | 'empty';
 
 ### Props 表
 
-| 参数名 | 类型 | 可选值 | 默认值 | 说明 |
-|--------|------|--------|--------|------|
-| count | `number` | — | `5` | 评分总数 |
-| modelValue | `number` | — | — | 选中值（v-model） |
-| defaultValue | `number` | — | `0` | 默认值 |
-| size | `RateSizeT` | `'large'` / `'medium'` | — | 尺寸 |
-| color | `ColorT` | `'normal'` / `'primary'` / `'success'` / `'warning'` / `'danger'` | `'normal'` | 颜色 |
-| readonly | `boolean` | — | `false` | 只读 |
-| allowHalf | `boolean` | — | `false` | 半星 |
-| clearable | `boolean` | — | `false` | 可清空 |
-| labels | `string[]` | — | — | 提示文字（长度=count） |
+| 参数名 | 类型 | 可选值 | 默认值 | 说明 | 引入版本 |
+|--------|------|--------|--------|------|--------|
+| count | `number` | — | `5` | 评分总数 | — |
+| modelValue | `number` | — | — | 选中值（v-model） | — |
+| defaultValue | `number` | — | `0` | 默认值 | — |
+| size | `RateSizeT` | `'large'` / `'medium'` | — | 尺寸 | — |
+| color | `ColorT` | `'normal'` / `'primary'` / `'success'` / `'warning'` / `'danger'` | `'normal'` | 颜色 | — |
+| readonly | `boolean` | — | `false` | 只读 | — |
+| allowHalf | `boolean` | — | `false` | 半星 | — |
+| clearable | `boolean` | — | `false` | 可清空 | — |
+| labels | `string[]` | — | — | 提示文字（长度=count） | — |
 
 ### Events 表
 
@@ -264,5 +264,14 @@ layout:
 |--------|-----------|-------------|
 | ORate | OSlider | ORate 是离散图标点选（星星），OSlider 是连续轨道拖拽 |
 | ORate | 图标列表 | ORate 图标有填充/未填充关联状态且可交互，纯图标列表无此联动 |
-| ORate（readonly） | 静态图标展示 | ORate readonly 仍是组件渲染有语义结构，纯展示通常为静态 SVG/img |
+| ORate（readonly） | 静态图标展示 | ORate readonly 仍是组件渲染有语义结构，纯展示通常为静态 SVG/img -->
+
+---
+
+## 版本变更记录
+
+| 版本 | 变更内容 |
+|------|---------|
+| v1.1.0 | 优化星级图标，主色使用 `--o-color-main1` |
+| v1.0.1-sp1 | 空星样式改为空心星 |
 

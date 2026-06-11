@@ -52,10 +52,10 @@ import { OConfigProvider } from '@opensig/opendesign';
 
 ### Props 表
 
-| 参数名 | 类型 | 必填 | 可选值 | 默认值 | 说明 |
-|--------|------|------|--------|--------|------|
-| locale | `i18nLanguagesT` | 否 | `{ locale: string; [k: string]: string }` | `undefined` | 语言词条配置，优先级高于全局 useLocale 设置的语言 |
-| link | `LinkConfigT` | 否 | `{ click: (e: MouseEvent, params: LinkPropsT, attrs: Record<string, any>) => void }` | `undefined` | OLink 组件全局点击回调配置 |
+| 参数名 | 类型 | 必填 | 可选值 | 默认值 | 说明 | 引入版本 |
+|--------|------|------|--------|--------|------|--------|
+| locale | `i18nLanguagesT` | 否 | `{ locale: string; [k: string]: string }` | `undefined` | 语言词条配置，优先级高于全局 useLocale 设置的语言 | — |
+| link | `LinkConfigT` | 否 | `{ click: (e: MouseEvent, params: LinkPropsT, attrs: Record<string, any>) => void }` | `undefined` | OLink 组件全局点击回调配置 | 0.0.68 |
 
 ### Events 表
 
@@ -282,3 +282,11 @@ root: 无DOM元素  # 模板仅为 <slot></slot>，不生成包裹元素
 | OConfigProvider | OLayout / OContainer | ConfigProvider 不产生 DOM，纯逻辑注入；布局组件会产生实际 DOM 容器 |
 | OConfigProvider (locale) | useLocale() | ConfigProvider 是局部范围注入，可嵌套覆盖；useLocale 是全局设置 |
 | OConfigProvider (link) | OLink @click | ConfigProvider 的 link.click 是全局统一回调；OLink 的 @click 是单个链接的事件 |
+
+---
+
+## 版本变更记录
+
+| 版本 | 变更内容 |
+|------|---------|
+| v0.0.68 | 新增 `link` 属性，支持全局 Link 点击回调配置；新增 `tag` 属性（已移除） |

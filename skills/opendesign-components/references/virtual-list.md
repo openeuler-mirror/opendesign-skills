@@ -77,14 +77,14 @@ interface RenderIndexInfo {
 
 ### Props 表
 
-| 参数名 | 类型 | 可选值 | 默认值 | 说明 |
-|--------|------|--------|--------|------|
-| list | `Array<unknown>` | — | `[]` | 列表数据（必填，需含 id） |
-| itemSize | `number` | — | — | 固定项高度 |
-| defaultItemSize | `number` | — | `80` | 不定高默认高度 |
-| defaultStartIndex | `number` | — | `0` | 初始滚动位置 |
-| buffer | `number` | — | `1` | 前后预留项数 |
-| scrollbar | `boolean \| Partial<BaseScrollerPropsT>` | — | `true` | 滚动条配置 |
+| 参数名 | 类型 | 可选值 | 默认值 | 说明 | 引入版本 |
+|--------|------|--------|--------|------|--------|
+| list | `Array<unknown>` | — | `[]` | 列表数据（必填，需含 id） | — |
+| itemSize | `number` | — | — | 固定项高度 | — |
+| defaultItemSize | `number` | — | `80` | 不定高默认高度 | — |
+| defaultStartIndex | `number` | — | `0` | 初始滚动位置 | — |
+| buffer | `number` | — | `1` | 前后预留项数 | — |
+| scrollbar | `boolean \| Partial<BaseScrollerPropsT>` | — | `true` | 滚动条配置 | — |
 
 ### Events 表
 
@@ -258,3 +258,11 @@ layout:
 | OVirtualList | 普通 v-for 列表 | 数据量大（百条以上）时用 OVirtualList 优化性能，少量数据用普通列表 |
 | OVirtualList | OScrollbar | OVirtualList 包含虚拟滚动逻辑 + 内置滚动条，OScrollbar 仅提供自定义滚动条样式 |
 | OVirtualList | OTable（虚拟滚动） | OTable 是表格组件有列定义和表头，OVirtualList 是通用列表无表格结构 |
+
+---
+
+## 版本变更记录
+
+| 版本 | 变更内容 |
+|------|---------|
+| v0.0.70 | 新增 OVirtualList 组件；支持动态追加数据、renderChange 事件、defaultItemSize；scrollToIndex 更名为 scrollToView |

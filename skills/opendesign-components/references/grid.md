@@ -58,33 +58,33 @@ import { ORow, OCol } from '@opensig/opendesign';
 
 ### ORow Props 表
 
-| 参数名 | 类型 | 可选值 | 默认值 | 说明 |
-|--------|------|--------|--------|------|
-| inline | `boolean` | — | `false` | 是否 inline-flex |
-| align | `string` | `'center'` / `'flex-start'` / `'flex-end'` / `'stretch'` / `'baseline'` / `'inherit'` / `'initial'` | — | 交叉轴对齐 |
-| justify | `string` | `'center'` / `'flex-start'` / `'flex-end'` / `'space-between'` / `'space-around'` / `'space-evenly'` / `'inherit'` / `'initial'` | — | 主轴对齐 |
-| wrap | `string` | `'nowrap'` / `'wrap'` / `'wrap-reverse'` / `'initial'` / `'inherit'` | `'wrap'` | 换行方式 |
-| direction | `string` | `'row'` / `'row-reverse'` / `'column'` / `'column-reverse'` | — | 排列方向 |
-| gap | `string` | CSS 值 | — | 间距（横纵） |
-| gapX | `string` | CSS 值 | — | 横向间距 |
-| gapY | `string` | CSS 值 | — | 纵向间距 |
-| pcS | `RowMediaT` | `{ gap?, gapX?, gapY? }` | — | ≤1680px 间距 |
-| laptop | `RowMediaT` | `{ gap?, gapX?, gapY? }` | — | ≤1440px 间距 |
-| pad | `RowMediaT` | `{ gap?, gapX?, gapY? }` | — | ≤1200px 间距 |
-| padV | `RowMediaT` | `{ gap?, gapX?, gapY? }` | — | ≤840px 间距 |
-| phone | `RowMediaT` | `{ gap?, gapX?, gapY? }` | — | ≤600px 间距 |
+| 参数名 | 类型 | 可选值 | 默认值 | 说明 | 引入版本 |
+|--------|------|--------|--------|------|--------|
+| inline | `boolean` | — | `false` | 是否 inline-flex | — |
+| align | `string` | `'center'` / `'flex-start'` / `'flex-end'` / `'stretch'` / `'baseline'` / `'inherit'` / `'initial'` | — | 交叉轴对齐 | — |
+| justify | `string` | `'center'` / `'flex-start'` / `'flex-end'` / `'space-between'` / `'space-around'` / `'space-evenly'` / `'inherit'` / `'initial'` | — | 主轴对齐 | — |
+| wrap | `string` | `'nowrap'` / `'wrap'` / `'wrap-reverse'` / `'initial'` / `'inherit'` | `'wrap'` | 换行方式 | — |
+| direction | `string` | `'row'` / `'row-reverse'` / `'column'` / `'column-reverse'` | — | 排列方向 | — |
+| gap | `string` | CSS 值 | — | 间距（横纵） | — |
+| gapX | `string` | CSS 值 | — | 横向间距 | — |
+| gapY | `string` | CSS 值 | — | 纵向间距 | — |
+| pcS | `RowMediaT` | `{ gap?, gapX?, gapY? }` | — | ≤1680px 间距 | @since 1.1.0 |
+| laptop | `RowMediaT` | `{ gap?, gapX?, gapY? }` | — | ≤1440px 间距 | — |
+| pad | `RowMediaT` | `{ gap?, gapX?, gapY? }` | — | ≤1200px 间距 | — |
+| padV | `RowMediaT` | `{ gap?, gapX?, gapY? }` | — | ≤840px 间距 | — |
+| phone | `RowMediaT` | `{ gap?, gapX?, gapY? }` | — | ≤600px 间距 | — |
 
 ### OCol Props 表
 
-| 参数名 | 类型 | 可选值 | 默认值 | 说明 |
-|--------|------|--------|--------|------|
-| flex | `string` | CSS flex 值 | `'1 0 auto'` | 弹性布局值 |
-| align | `string` | `'center'` / `'flex-start'` / `'flex-end'` / `'stretch'` / `'baseline'` / `'inherit'` / `'initial'` | — | 自身交叉轴对齐 |
-| pcS | `ColMediaT` | `{ flex: string }` | — | ≤1680px flex |
-| laptop | `ColMediaT` | `{ flex: string }` | — | ≤1440px flex |
-| pad | `ColMediaT` | `{ flex: string }` | — | ≤1200px flex |
-| padV | `ColMediaT` | `{ flex: string }` | — | ≤840px flex |
-| phone | `ColMediaT` | `{ flex: string }` | — | ≤600px flex |
+| 参数名 | 类型 | 可选值 | 默认值 | 说明 | 引入版本 |
+|--------|------|--------|--------|------|--------|
+| flex | `string` | CSS flex 值 | `'1 0 auto'` | 弹性布局值 | — |
+| align | `string` | `'center'` / `'flex-start'` / `'flex-end'` / `'stretch'` / `'baseline'` / `'inherit'` / `'initial'` | — | 自身交叉轴对齐 | — |
+| pcS | `ColMediaT` | `{ flex: string }` | — | ≤1680px flex | @since 1.1.0 |
+| laptop | `ColMediaT` | `{ flex: string }` | — | ≤1440px flex | — |
+| pad | `ColMediaT` | `{ flex: string }` | — | ≤1200px flex | — |
+| padV | `ColMediaT` | `{ flex: string }` | — | ≤840px flex | — |
+| phone | `ColMediaT` | `{ flex: string }` | — | ≤600px flex | — |
 
 ### Events 表
 
@@ -314,3 +314,11 @@ media-queries:
 | OForm (layout=h) | 都可实现左右排列 | Grid 是通用多列栅格系统，无表单语义；Form 专用于标签-控件对齐，有校验系统和 submit 事件 |
 | CSS Grid / Flexbox | 都实现多列布局 | OGrid 封装了断点响应式 prop（pcS/laptop/pad/padV/phone），无需手写媒体查询；纯 CSS 需自行处理 |
 | ORow + 普通 div | 都可包含子元素 | OCol 提供断点级 flex 覆盖，普通 div 无内置响应式切换能力 |
+
+---
+
+## 版本变更记录
+
+| 版本 | 变更内容 |
+|------|---------|
+| v1.1.0 | 新增 1680px 断点支持，ORow/OCol 新增 `pcS` prop |

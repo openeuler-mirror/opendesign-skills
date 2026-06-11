@@ -150,26 +150,26 @@ interface UploadRequestT {
 
 ### Props 表
 
-| 参数名 | 类型 | 可选值 | 默认值 | 说明 |
-|--------|------|--------|--------|------|
-| modelValue | `UploadFileT[]` | — | — | 文件列表（v-model） |
-| defaultFileList | `UploadFileT[]` | — | — | 默认文件列表 |
-| accept | `string` | — | — | MIME 类型限制 |
-| disabled | `boolean` | — | `false` | 禁用 |
-| multiple | `boolean` | — | `false` | 多文件 |
-| beforeSelect | `(value: UploadFileT[]) => Promise<boolean> \| boolean` | — | — | 选择前拦截 |
-| onAfterSelect | `(fileList: FileList) => Promise<UploadFileT[]>` | — | — | 选择后处理 |
-| btnLabel | `string` | — | — | 按钮文字 |
-| uploadRequest | `(options: UploadRequestOptionT) => UploadRequestT` | — | — | 自定义上传 |
-| lazyUpload | `boolean` | — | `false` | 手动上传 |
-| onBeforeUpload | `(file: UploadFileT) => Promise<boolean \| File>` | — | — | 上传前拦截 |
-| onBeforeRemove | `(file: UploadFileT) => Promise<boolean>` | — | — | 删除前拦截 |
-| draggable | `boolean` | — | `false` | 拖拽上传 |
-| dragLabel | `string` | — | — | 拖拽提示 |
-| dragHoverLabel | `string` | — | — | 拖拽中提示 |
-| listType | `UploadListTypeT` | `'text'` / `'picture'` / `'picture-card'` | `'text'` | 列表展示模式 |
-| createThumbnail | `(file: File) => Promise<string>` | — | — | 缩略图生成 |
-| showProgress | `boolean` | — | `false` | 显示进度条 |
+| 参数名 | 类型 | 可选值 | 默认值 | 说明 | 引入版本 |
+|--------|------|--------|--------|------|--------|
+| modelValue | `UploadFileT[]` | — | — | 文件列表（v-model） | — |
+| defaultFileList | `UploadFileT[]` | — | — | 默认文件列表 | — |
+| accept | `string` | — | — | MIME 类型限制 | — |
+| disabled | `boolean` | — | `false` | 禁用 | — |
+| multiple | `boolean` | — | `false` | 多文件 | — |
+| beforeSelect | `(value: UploadFileT[]) => Promise<boolean> \| boolean` | — | — | 选择前拦截 | — |
+| onAfterSelect | `(fileList: FileList) => Promise<UploadFileT[]>` | — | — | 选择后处理 | — |
+| btnLabel | `string` | — | — | 按钮文字 | — |
+| uploadRequest | `(options: UploadRequestOptionT) => UploadRequestT` | — | — | 自定义上传 | — |
+| lazyUpload | `boolean` | — | `false` | 手动上传 | — |
+| onBeforeUpload | `(file: UploadFileT) => Promise<boolean \| File>` | — | — | 上传前拦截 | — |
+| onBeforeRemove | `(file: UploadFileT) => Promise<boolean>` | — | — | 删除前拦截 | — |
+| draggable | `boolean` | — | `false` | 拖拽上传 | — |
+| dragLabel | `string` | — | — | 拖拽提示 | — |
+| dragHoverLabel | `string` | — | — | 拖拽中提示 | — |
+| listType | `UploadListTypeT` | `'text'` / `'picture'` / `'picture-card'` | `'text'` | 列表展示模式 | — |
+| createThumbnail | `(file: File) => Promise<string>` | — | — | 缩略图生成 | — |
+| showProgress | `boolean` | — | `false` | 显示进度条 | @since 1.2.0 |
 
 ### Events 表
 
@@ -456,4 +456,14 @@ layout:
 | OUpload | OButton | 上传按钮只是 OUpload 的子元素，完整组件还包含文件列表和拖拽区域 |
 | OUpload（picture-card） | OFigure/OImage | OUpload 的卡片包含上传管理功能（删除/重试/进度），OFigure 是纯图片展示 |
 | OUpload（draggable） | 自定义拖拽区域 | OUpload 拖拽区域有完整的文件选择、上传、列表管理功能 |
-| OUpload（text） | 普通文件列表 | OUpload 文件列表项有上传状态、进度条和操作按钮（删除/重试） |
+| OUpload（text） | 普通文件列表 | OUpload 文件列表项有上传状态、进度条和操作按钮（删除/重试） -->
+
+---
+
+## 版本变更记录
+
+| 版本 | 变更内容 |
+|------|---------|
+| v1.2.1 | 新增 `downloadFile` 函数 |
+| v1.2.0 | 新增 `showProgress` prop |
+| v1.1.0 | 新增 item 系列事件（itemRemove/itemRetry/itemReplace/itemPreview/itemClick）；新增暴露方法（replaceById/replaceByIndex/removeById/removeByIndex/removeAll/previewItemById/previewItemByIndex） |

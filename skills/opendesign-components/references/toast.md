@@ -104,15 +104,15 @@ enum Duration {
 
 ### OToast Props 表
 
-| 参数名 | 类型 | 可选值 | 默认值 | 说明 |
-|--------|------|--------|--------|------|
-| visible | `boolean` | — | `undefined` | 是否可见（v-model） |
-| defaultVisible | `boolean` | — | `true` | 默认可见 |
-| message | `string` | — | — | 提示信息文字 |
-| duration | `number` | — | — | 自动消失时间（ms），不传或 ≤0 不自动消失 |
-| long | `boolean` | — | — | 长提示模式（命令式调用时默认 3500ms） |
-| position | `ToastPositionT` | `'top'` / `'center'` / `'bottom'` | `'bottom'` | 定位方向 |
-| beforeClose | `() => Promise<boolean> \| boolean` | — | — | 关闭前钩子 |
+| 参数名 | 类型 | 可选值 | 默认值 | 说明 | 引入版本 |
+|--------|------|--------|--------|------|--------|
+| visible | `boolean` | — | `undefined` | 是否可见（v-model） | — |
+| defaultVisible | `boolean` | — | `true` | 默认可见 | — |
+| message | `string` | — | — | 提示信息文字 | — |
+| duration | `number` | — | — | 自动消失时间（ms），不传或 ≤0 不自动消失 | — |
+| long | `boolean` | — | — | 长提示模式（命令式调用时默认 3500ms） | — |
+| position | `ToastPositionT` | `'top'` / `'center'` / `'bottom'` | `'bottom'` | 定位方向 | — |
+| beforeClose | `() => Promise<boolean> \| boolean` | — | — | 关闭前钩子 | — |
 
 ### Events 表
 
@@ -369,3 +369,11 @@ layout:
 | OToast | OMessage | OMessage 固定在页面顶部、有颜色语义（success/warning/danger 等）、可关闭；OToast 是深色背景轻提示、默认底部显示、自动消失 |
 | OToast | ONotification | ONotification 是右上角弹出的通知卡片有标题和操作按钮；OToast 是简短的一行提示无复杂交互 |
 | OToast | OPopover | OPopover 是相对于目标元素的气泡弹出层有箭头指向；OToast 是全局浮动提示无箭头 |
+
+---
+
+## 版本变更记录
+
+| 版本 | 变更内容 |
+|------|---------|
+| v1.2.0 | 新增 OToast 组件 |

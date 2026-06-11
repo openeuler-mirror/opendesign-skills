@@ -2,6 +2,8 @@
 
 # OCascader 级联选择
 
+> ⚠️ **v1.2.4 新增 OCascaderV2（PC端重构版），旧版 OCascader 仍可用但建议迁移至 v2。**
+
 ## Part A：设计理解卡
 
 OCascader 是级联选择器组件，让用户从一组树形结构的选项中逐层选择。选项以多列面板形式展开，每选择一级后自动展开下一级。包含 OCascader（完整选择器）和 OCascaderPanel（纯面板，可嵌入自定义容器）。
@@ -56,7 +58,7 @@ regions: [OSelect(触发按钮), cascader-panel(弹出面板 → 横向多列)]
 🔍 **设计稿识别指南**：
 - **视觉特征指纹**：下拉触发按钮 + 弹出面板内横向并排多列选项列表，每列由竖线分隔，非叶子选项右侧有 `>` 箭头图标
 - **Token → Prop 映射**：按钮边框样式 → variant（outline/solid/text）；按钮圆角为半圆 → round="pill"；按钮高度 → size（small/medium/large）；面板弹出方向 → optionPosition
-- **易混淆组件区分**：与 OSelect（普通选择器）区分——OCascader 弹出面板是多列逐级展开，OSelect 只有单列下拉列表；与 OTreeSelect 区分——OCascader 以平铺多列展示层级，TreeSelect 以缩进树形展示
+- **易混淆组件区分**：与 OSelect（普通选择器）区分——OCascader 弹出面板是多列逐级展开，OSelect 只有单列下拉列表
 - **⚠️ 错误状态 / 必填星号 → 用 OFormItem 包裹**：设计稿中级联选择器边框变红（错误态）或标签旁有红色星号（必填），应将 OCascader 放入 `<OFormItem>` 实现，**不要**手写星号。详见 form.md。
 
 ---
@@ -97,7 +99,7 @@ type CascaderOptionT = {
 | size | `SizeT` | `'small'` / `'medium'` / `'large'` | `'large'` | 尺寸 |
 | placeholder | `string` | — | — | 占位文本 |
 | trigger | `PopupTriggerT` | `'click'` / `'hover'` 等 | `'click'` | 弹出触发方式 |
-| expandTrigger | `string` | `'click'` / `'hover'` | `'click'` | 子菜单展开触发方式 |
+| expandTrigger | `string` | `'click'` / `'hover'` | `'click'` | 子菜单展开触发方式 | v1.0.2 |
 | optionPosition | `PopupPositionT` | `'bl'` / `'br'` / `'tl'` / `'tr'` 等 | `'bl'` | 选项面板位置 |
 | optionWrapClass | `string \| object \| array` | — | — | 选项容器类名 |
 | unmountOnHide | `boolean` | — | `true` | 隐藏时销毁 DOM |
@@ -110,7 +112,7 @@ type CascaderOptionT = {
 | modelValue | `CascaderValueT` | — | `''` | 选中值（v-model） |
 | options | `CascaderOptionT[]` | — | — | 选项数据 |
 | pathMode | `boolean` | — | `false` | 路径模式 |
-| expandTrigger | `string` | `'click'` / `'hover'` | `'click'` | 子菜单展开触发 |
+| expandTrigger | `string` | `'click'` / `'hover'` | `'click'` | 子菜单展开触发 | v1.0.2 |
 
 ### Events 表
 
@@ -296,6 +298,12 @@ breakpoints:
 | 本组件 | 易混淆组件 | 关键区分依据 |
 |--------|-----------|------------|
 | OCascader | OSelect（选择器） | OCascader 弹出面板是横向多列逐级展开，OSelect 只有单列下拉列表 |
-| OCascader | OTreeSelect（树选择） | OCascader 以平铺多列展示层级关系，OTreeSelect 以缩进树形结构展示 |
 | OCascader | ODropdown（下拉菜单） | OCascader 面板多列带级联选择逻辑，ODropdown 为单列操作菜单 |
+
+### 版本变更记录
+
+| 版本 | 变更类型 | 变更内容 |
+|------|---------|---------|
+| v1.2.4 | 新增 | 新增 OCascaderV2（PC端重构版），含 OCascaderV2Panel 和 OCascaderV2Label，旧版 OCascader 仍可用 |
+| v1.0.2 | 新增 | 新增 `expandTrigger` prop，支持 hover 触发子菜单展开；修复触发和数据回显 bug；修复 CSS 变量拼写错误 |
 

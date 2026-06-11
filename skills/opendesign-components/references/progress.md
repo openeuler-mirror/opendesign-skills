@@ -74,17 +74,17 @@ type ProgressColorT = 'primary' | 'success' | 'warning' | 'danger';
 
 ### Props 表
 
-| 参数名 | 类型 | 可选值 | 默认值 | 说明 |
-|--------|------|--------|--------|------|
-| variant | `ProgressVariantT` | `'line'` / `'circle'` | `'line'` | 类型 |
-| percentage | `number` | 0-100 | `0` | 百分比 |
-| strokeWidth | `number` | — | medium:8, small:4 | 线宽 |
-| size | `ProgressSizeT` | `'medium'` / `'small'` | `'medium'` | 尺寸 |
-| color | `ProgressColorT` | `'primary'` / `'success'` / `'warning'` / `'danger'` | `'primary'` | 颜色 |
-| trackWidth | `number \| string` | — | line:auto, circle:medium:120/small:60 | 轨道宽度 |
-| format | `(percentage: number) => string` | — | `(p) => p + '%'` | 格式化函数 |
-| showLabel | `boolean` | — | `true` | 显示文字 |
-| labelInside | `boolean` | — | `false` | 文字在内部（仅 circle） |
+| 参数名 | 类型 | 可选值 | 默认值 | 说明 | 引入版本 |
+|--------|------|--------|--------|------|--------|
+| variant | `ProgressVariantT` | `'line'` / `'circle'` | `'line'` | 类型 | — |
+| percentage | `number` | 0-100 | `0` | 百分比 | — |
+| strokeWidth | `number` | — | medium:8, small:4 | 线宽 | — |
+| size | `ProgressSizeT` | `'medium'` / `'small'` | `'medium'` | 尺寸 | — |
+| color | `ProgressColorT` | `'primary'` / `'success'` / `'warning'` / `'danger'` | `'primary'` | 颜色 | — |
+| trackWidth | `number \| string` | — | line:auto, circle:medium:120/small:60 | 轨道宽度 | — |
+| format | `(percentage: number) => string` | — | `(p) => p + '%'` | 格式化函数 | — |
+| showLabel | `boolean` | — | `true` | 显示文字 | — |
+| labelInside | `boolean` | — | `false` | 文字在内部（仅 circle） | — |
 
 ### Slots 表
 
@@ -287,4 +287,10 @@ layout:
 | OProgress（line） | OSlider | OSlider 有可拖拽手柄是输入控件，OProgress 是只读进度展示无交互手柄 |
 | OProgress（circle） | 环形 loading | OProgress 显示具体百分比有明确进度值，loading 是不确定进度的持续旋转动画 |
 | OProgress | 自定义 SVG 图表 | OProgress 是标准化组件支持 percentage/color/size 等 prop，自定义图表无统一 API |
+
+---
+
+## 版本变更记录
+
+本组件近期无重大版本变更。
 

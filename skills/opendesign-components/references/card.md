@@ -115,7 +115,7 @@ import { OCard } from '@opensig/opendesign';
 | detail | `string` | — | — | 正文内容 |
 | detailRow | `number` | — | — | 正文固定行数 |
 | detailMaxRow | `number` | — | — | 正文最大行数（超出渐隐/省略） |
-| textOverflow | `TexTOverflowT` | `'fade'` / `'ellipsis'` | `'fade'` | 正文溢出效果 |
+| textOverflow | `TexTOverflowT` | `'fade'` / `'ellipsis'` | `'fade'` | 正文溢出效果 | v1.1.0 |
 | hoverable | `boolean` | — | `false` | 悬停阴影效果 |
 | cursor | `CardHoverCursorT` | `'auto'` / `'pointer'` | `'auto'` | 鼠标样式 |
 | href | `string` | — | — | 跳转链接（渲染为 `<a>` 标签） |
@@ -256,6 +256,7 @@ card（使用后内部全部失效）
 | `--card-main-padding-h` | `32px`（无封面）/ `24px`（有封面） | 内容区左右内边距 |
 | `--card-content-gap` | `12px` | 标题与描述之间的间距 |
 | `--card-header-text-size` | `var(--o-font_size-h3)` | 标题字号 |
+| `--card-header-text-weight` | `600` | 标题字重（v1.2.4 从硬编码 500 提升为 CSS 变量） |
 | `--card-content-text-size` | `var(--o-font_size-text1)` | 描述文字字号 |
 | `--card-footer-gap` | `24px` | footer 内元素间距 |
 | `--card-icon-gap` | `16px` | 图标与内容的间距 |
@@ -404,4 +405,11 @@ breakpoints:
 | OContainer / OPanel | 都是圆角矩形容器 | Card 有封面图/图标 + 标题 + 正文的固定语义分区和插槽；Container/Panel 是通用容器无固定内部结构 |
 | OBanner | 都可含图文内容 | Card 用于列表/网格中的展示项，尺寸较小；Banner 用于页面顶部大幅宣传区，通常全宽 |
 | OList / OListItem | 都可展示多条内容 | Card 是独立的卡片容器，有封面图和圆角阴影；ListItem 是列表中的行级元素，无封面图和独立容器样式 |
+
+### 版本变更记录
+
+| 版本 | 变更类型 | 变更内容 |
+|------|---------|---------|
+| v1.2.4 | 样式 | 标题文字字重从 500 改为 600；`--card-header-text-weight` 提升为 CSS 变量 |
+| v1.1.0 | 新增 | 新增 `textOverflow` prop，支持正文溢出效果（fade/ellipsis） |
 

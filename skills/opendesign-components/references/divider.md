@@ -49,12 +49,12 @@ import { ODivider } from '@opensig/opendesign';
 
 ### Props 表
 
-| 参数名 | 类型 | 可选值 | 默认值 | 说明 |
-|--------|------|--------|--------|------|
-| variant | `DividerVariantT` | `'solid'` / `'dashed'` / `'dotted'` | `'solid'` | 分割线样式 |
-| direction | `DirectionT` | `'h'` / `'v'` | `'h'` | 分割线方向 |
-| labelPosition | `string` | `'left'` / `'center'` / `'right'` | `'center'` | 标签位置（仅水平） |
-| darker | `boolean` | — | `false` | 是否深色 |
+| 参数名 | 类型 | 可选值 | 默认值 | 说明 | 引入版本 |
+|--------|------|--------|--------|------|--------|
+| variant | `DividerVariantT` | `'solid'` / `'dashed'` / `'dotted'` | `'solid'` | 分割线样式 | — |
+| direction | `DirectionT` | `'h'` / `'v'` | `'h'` | 分割线方向 | — |
+| labelPosition | `string` | `'left'` / `'center'` / `'right'` | `'center'` | 标签位置（仅水平） | — |
+| darker | `boolean` | — | `false` | 是否深色 | — |
 
 ### Events 表
 
@@ -231,3 +231,9 @@ layout:
 | ODivider（垂直） | 竖线字符 `\|` | ODivider 是 DOM 元素有设计 Token 控制颜色和粗细，字符竖线无法自适应 |
 | ODivider | OGrid gap | OGrid 的 gap 是不可见间距，ODivider 是可见的分隔线条 |
 | ODivider（带标签） | 标题+下划线 | ODivider 标签是线条中间的嵌入文字，标题+下划线是文字下方的装饰线 |
+
+---
+
+## 版本变更记录
+
+本组件近期无重大版本变更。

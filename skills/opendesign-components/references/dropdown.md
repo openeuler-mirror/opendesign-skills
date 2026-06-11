@@ -354,3 +354,10 @@ layout:
 | ODropdown | OPopover | OPopover 展示富文本提示信息（文字、图片等），ODropdown 展示可逐项点击的操作列表 |
 | ODropdown | OMenu | OMenu 是导航菜单有层级嵌套和选中高亮，ODropdown 是扁平的操作列表 |
 | ODropdown | OPopup | OPopup 是底层弹出定位容器，ODropdown 是基于 OPopup 的上层组件自带列表样式和选项交互 |
+
+### 版本变更记录
+
+| 版本 | 变更类型 | 变更内容 |
+|------|---------|---------|
+| v1.2.4 | 修复 | 移除 brand 模式 disabled 状态下的边框（与 Button 共享修复） |
+| v1.2.3-sp1 | 修复 | 昇腾/鲲鹏主题运营色样式、solid 字体颜色、disabled 选项样式修正 |

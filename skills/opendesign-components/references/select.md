@@ -156,34 +156,35 @@ type SelectValueT = string | number | string[] | number[] | (string | number)[];
 
 ### OSelect Props 表
 
-| 参数名 | 类型 | 可选值 | 默认值 | 说明 |
-|--------|------|--------|--------|------|
-| modelValue | `SelectValueT` | — | — | 选中值（v-model） |
-| defaultValue | `SelectValueT` | — | — | 默认值 |
-| size | `SizeT` | `'small'` / `'medium'` / `'large'` | — | 尺寸 |
-| round | `RoundT` | `'pill'` / CSS 值 | — | 圆角 |
-| color | `Color2T` | `'normal'` / `'success'` / `'warning'` / `'danger'` | `'normal'` | 颜色 |
-| variant | `VariantT` | `'solid'` / `'outline'` / `'text'` | `'outline'` | 样式 |
-| placeholder | `string` | — | — | 占位文本 |
-| multiple | `boolean` | — | `false` | 多选 |
-| maxTagCount | `number` | — | — | 最大标签数 |
-| clearable | `boolean` | — | `false` | 可清空 |
-| disabled | `boolean` | — | `false` | 禁用 |
-| loading | `boolean` | — | `false` | 加载中 |
-| trigger | `PopupTriggerT` | — | `'click'` | 触发方式 |
-| optionPosition | `PopupPositionT` | — | `'bl'` | 面板位置 |
-| optionWidthMode | `OptionWidthModeT` | `'auto'` / `'min-width'` / `'width'` | `'min-width'` | 面板宽度模式 |
-| optionWrapClass | `string \| object \| array` | — | — | 面板类名 |
-| unmountOnHide | `boolean` | — | `true` | 隐藏时卸载 |
-| optionsWrapper | `string \| HTMLElement` | — | `'body'` | 面板挂载容器 |
-| foldLabel | `(tags: SelectOptionT[]) => string` | — | — | 折叠标签文字 |
-| showFoldTags | `boolean \| 'hover' \| 'click'` | — | `'hover'` | 折叠标签显示 |
-| optionTitle | `string` | — | — | 移动端面板标题 |
-| noResponsive | `boolean` | — | `false` | 禁用响应式 |
-| beforeSelect | `Function` | — | — | 选择前回调 |
-| beforeOptionsShow | `Function` | — | — | 显示前回调 |
-| beforeOptionsHide | `Function` | — | — | 隐藏前回调 |
-| transition | `string` | — | — | 过渡动画名称 |
+| 参数名 | 类型 | 可选值 | 默认值 | 说明 | 引入版本 |
+|--------|------|--------|--------|------|--------|
+| modelValue | `SelectValueT` | — | — | 选中值（v-model） | — |
+| defaultValue | `SelectValueT` | — | — | 默认值 | — |
+| size | `SizeT` | `'small'` / `'medium'` / `'large'` | — | 尺寸 | — |
+| round | `RoundT` | `'pill'` / CSS 值 | — | 圆角 | — |
+| color | `Color2T` | `'normal'` / `'success'` / `'warning'` / `'danger'` | `'normal'` | 颜色 | — |
+| variant | `VariantT` | `'solid'` / `'outline'` / `'text'` | `'outline'` | 样式 | — |
+| placeholder | `string` | — | — | 占位文本 | — |
+| multiple | `boolean` | — | `false` | 多选 | — |
+| maxTagCount | `number` | — | — | 最大标签数 | — |
+| clearable | `boolean` | — | `false` | 可清空 | — |
+| disabled | `boolean` | — | `false` | 禁用 | — |
+| loading | `boolean` | — | `false` | 加载中 | — |
+| trigger | `PopupTriggerT` | — | `'click'` | 触发方式 | — |
+| optionPosition | `PopupPositionT` | — | `'bl'` | 面板位置 | — |
+| optionWidthMode | `OptionWidthModeT` | `'auto'` / `'min-width'` / `'width'` | `'min-width'` | 面板宽度模式 | — |
+| optionWrapClass | `string \| object \| array` | — | — | 面板类名 | — |
+| unmountOnHide | `boolean` | — | `true` | 隐藏时卸载 | — |
+| scrollbar | `Partial<BaseScrollerPropsT>` | — | — | 滚动条配置（原名 scroller，v0.0.69 改名） | @since 0.0.69（改名） |
+| optionsWrapper | `string \| HTMLElement` | — | `'body'` | 面板挂载容器 | — |
+| foldLabel | `(tags: SelectOptionT[]) => string` | — | — | 折叠标签文字 | — |
+| showFoldTags | `boolean \| 'hover' \| 'click'` | — | `'hover'` | 折叠标签显示 | — |
+| optionTitle | `string` | — | — | 移动端面板标题 | — |
+| noResponsive | `boolean` | — | `false` | 禁用响应式 | — |
+| beforeSelect | `Function` | — | — | 选择前回调 | — |
+| beforeOptionsShow | `Function` | — | — | 显示前回调 | — |
+| beforeOptionsHide | `Function` | — | — | 隐藏前回调 | — |
+| transition | `string` | — | — | 过渡动画名称 | — |
 
 ### OOption Props 表
 
@@ -500,4 +501,14 @@ layout:
 | OSelect | OCascader | OCascader 为多级联动面板（分列滚动）；OSelect 为单层扁平列表 |
 | OSelect（multiple） | OCheckboxGroup | OSelect 多选以标签形式收纳在输入框内；OCheckboxGroup 勾选框平铺展示 |
 | OSelect（text） | ODropdown | OSelect text 变体有选中值回显；ODropdown 是菜单触发器不回显选中值 |
+
+---
+
+## 版本变更记录
+
+| 版本 | 变更内容 |
+|------|---------|
+| v0.0.69 | scrollbar 参数从 `scroller` 改名为 `scrollbar` |
+| v0.0.64 | 修复多选 v-model 绑定问题 |
+| v0.0.63 | 新增下拉分组（OOptionGroup） |
 

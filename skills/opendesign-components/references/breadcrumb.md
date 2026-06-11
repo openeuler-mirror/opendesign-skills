@@ -56,19 +56,19 @@ import { OBreadcrumb, OBreadcrumbItem } from '@opensig/opendesign';
 
 ### OBreadcrumb Props 表
 
-| 参数名 | 类型 | 可选值 | 默认值 | 说明 |
-|--------|------|--------|--------|------|
-| separator | `string \| number` | — | — | 全局分隔符字符，不传时显示默认箭头图标 |
+| 参数名 | 类型 | 可选值 | 默认值 | 说明 | 引入版本 |
+|--------|------|--------|--------|------|--------|
+| separator | `string \| number` | — | — | 全局分隔符字符，不传时显示默认箭头图标 | — |
 
 ### OBreadcrumbItem Props 表
 
-| 参数名 | 类型 | 可选值 | 默认值 | 说明 |
-|--------|------|--------|--------|------|
-| href | `string` | — | — | 链接跳转地址，设置后渲染为 `<a>` 标签 |
-| target | `string` | `'_blank'` / `'_parent'` / `'_self'` / `'_top'` | `'_self'` | 链接打开方式 |
-| to | `string \| object` | — | — | Vue Router 路由对象，设置后渲染为 `<router-link>` |
-| replace | `boolean` | — | `false` | 路由跳转时是否替换历史记录 |
-| separator | `string \| number` | — | — | 分隔符字符，覆盖父级设置 |
+| 参数名 | 类型 | 可选值 | 默认值 | 说明 | 引入版本 |
+|--------|------|--------|--------|------|--------|
+| href | `string` | — | — | 链接跳转地址，设置后渲染为 `<a>` 标签 | — |
+| target | `string` | `'_blank'` / `'_parent'` / `'_self'` / `'_top'` | `'_self'` | 链接打开方式 | — |
+| to | `string \| object` | — | — | Vue Router 路由对象，设置后渲染为 `<router-link>` | — |
+| replace | `boolean` | — | `false` | 路由跳转时是否替换历史记录 | — |
+| separator | `string \| number` | — | — | 分隔符字符，覆盖父级设置 | — |
 
 ### Events 表
 
@@ -252,4 +252,13 @@ breakpoints:
 | OTab 标签页 | 都是水平排列的文字项 | 面包屑有分隔符箭头且表示层级路径；Tab 表示同级切换且有下划线/背景选中态 |
 | ONav 导航 | 都用于页面导航 | 面包屑是辅助导航显示当前位置路径；Nav 是主导航条含菜单项 |
 | 纯文字链接列表 | 都是水平链接 | 面包屑有统一分隔符、固定路径语义、最后一项为当前页 |
+
+---
+
+## 版本变更记录
+
+| 版本 | 变更内容 |
+|------|---------|
+| v1.1.0 | 调整 hover/active 颜色变量（`--breadcrumb-color-hover`、`--breadcrumb-color-active`） |
+| v1.0.2 | 修复 CSS 变量拼写：`--breadcrumb-seperator-size` 更正为 `--breadcrumb-separator-size` |
 

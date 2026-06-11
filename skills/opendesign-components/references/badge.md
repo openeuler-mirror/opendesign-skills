@@ -52,13 +52,13 @@ import { OBadge } from '@opensig/opendesign';
 
 ### Props 表
 
-| 参数名 | 类型 | 可选值 | 默认值 | 说明 |
-|--------|------|--------|--------|------|
-| value | `string \| number` | — | `''` | 徽标内容 |
-| max | `number` | — | `99` | 最大值，超过显示 max+（仅 value 为数字时生效） |
-| color | `BadgeColorT` | `'primary'` / `'success'` / `'warning'` / `'danger'` | `'primary'` | 徽标颜色 |
-| dot | `boolean` | — | `false` | 是否显示为小红点 |
-| offset | `Array<number \| string>` | — | `[]` | 位置偏移 `[x, y]`，数字为 px，字符串如 `'50%'` |
+| 参数名 | 类型 | 可选值 | 默认值 | 说明 | 引入版本 |
+|--------|------|--------|--------|------|--------|
+| value | `string \| number` | — | `''` | 徽标内容 | — |
+| max | `number` | — | `99` | 最大值，超过显示 max+（仅 value 为数字时生效） | — |
+| color | `BadgeColorT` | `'primary'` / `'success'` / `'warning'` / `'danger'` | `'primary'` | 徽标颜色 | — |
+| dot | `boolean` | — | `false` | 是否显示为小红点 | — |
+| offset | `Array<number \| string>` | — | `[]` | 位置偏移 `[x, y]`，数字为 px，字符串如 `'50%'` | — |
 
 ### Events 表
 
@@ -240,4 +240,10 @@ breakpoints:
 | OTag | 都是小型彩色标签 | Badge 定位在宿主右上角，高度仅 12px；Tag 是独立行内元素，高度更大，有边框变体 |
 | OStatus（状态点） | 都可显示为小圆点 | Badge 叠加在其他元素上方且可含数字；Status 是独立状态指示器 |
 | 自定义通知红点 | 视觉相似 | Badge 组件化且支持 value/max/color，非纯 CSS 红点 |
+
+---
+
+## 版本变更记录
+
+本组件近期无重大版本变更。
 

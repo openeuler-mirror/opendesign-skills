@@ -320,3 +320,10 @@ root: .o-collapse
 | OCollapse (accordion) | OCollapse (默认) | 手风琴模式同时只展开一项；默认模式可同时展开多项 |
 | OCollapse | ODetails (HTML原生) | OCollapse 提供统一容器管理多面板状态；原生 details 各自独立、无法联动 |
 
+### 版本变更记录
+
+| 版本 | 变更类型 | 变更内容 |
+|------|---------|---------|
+| v1.2.4 | 修复 | 折叠动画卡顿/滞后问题已修复，现在过渡平滑 |
+| v1.1.0 | 破坏性变更 | CSS 变量 `--collapse-item` 定义从 `.o-collapse-item` 移至 `.o-collapse`；重构支持受控模式 |
+

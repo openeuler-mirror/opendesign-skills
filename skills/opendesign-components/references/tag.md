@@ -74,16 +74,16 @@ type SizeT = 'large' | 'medium' | 'small';
 
 ### Props 表
 
-| 参数名 | 类型 | 可选值 | 默认值 | 说明 |
-|--------|------|--------|--------|------|
-| color | `TagColorT` | `'normal'` / `'info'` / `'primary'` / `'success'` / `'warning'` / `'danger'` | `'normal'` | 颜色 |
-| variant | `TagVariantT` | `'solid'` / `'outline'` | `'solid'` | 样式 |
-| size | `SizeT` | `'large'` / `'medium'` / `'small'` | `'large'` | 尺寸 |
-| round | `RoundT` | `'pill'` / CSS 值 | — | 圆角。`pill` 时组件 JS 注入 `--tag-radius: 100vh` 内联样式（完全圆形） |
-| closable | `boolean` | — | `false` | 可关闭 |
-| visible | `boolean` | — | `undefined` | 是否可见（v-model） |
-| defaultVisible | `boolean` | — | `true` | 默认可见 |
-| beforeClose | `() => Promise<boolean> \| boolean` | — | — | 关闭前拦截 |
+| 参数名 | 类型 | 可选值 | 默认值 | 说明 | 引入版本 |
+|--------|------|--------|--------|------|--------|
+| color | `TagColorT` | `'normal'` / `'info'` / `'primary'` / `'success'` / `'warning'` / `'danger'` | `'normal'` | 颜色 | — |
+| variant | `TagVariantT` | `'solid'` / `'outline'` | `'solid'` | 样式 | — |
+| size | `SizeT` | `'large'` / `'medium'` / `'small'` | `'large'` | 尺寸 | — |
+| round | `RoundT` | `'pill'` / CSS 值 | — | 圆角。`pill` 时组件 JS 注入 `--tag-radius: 100vh` 内联样式（完全圆形） | — |
+| closable | `boolean` | — | `false` | 可关闭 | — |
+| visible | `boolean` | — | `undefined` | 是否可见（v-model） | — |
+| defaultVisible | `boolean` | — | `true` | 默认可见 | — |
+| beforeClose | `() => Promise<boolean> \| boolean` | — | — | 关闭前拦截 | — |
 
 ### Events 表
 
@@ -300,4 +300,12 @@ layout:
 | OTag | OBadge | OBadge 附着在其他元素右上角作为角标，OTag 是独立的标签元素 |
 | OTag | OToggle | OToggle 有选中/未选中交互状态切换，OTag 无选中状态（仅展示或可关闭） |
 | OTag（closable） | OTag（非 closable） | 有 × 图标表示可移除，需设置 closable |
+
+---
+
+## 版本变更记录
+
+| 版本 | 变更内容 |
+|------|---------|
+| v1.1.0 | 修复受控模式下的问题 |
 

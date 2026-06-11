@@ -76,19 +76,19 @@ import { OLoading } from '@opensig/opendesign';
 
 ### Props 表
 
-| 参数名 | 类型 | 可选值 | 默认值 | 说明 |
-|--------|------|--------|--------|------|
-| visible | `boolean` | — | `false` | 是否显示（v-model） |
-| size | `SizeT \| 'mini'` | `'mini'` / `'small'` / `'medium'` / `'large'` | `'small'` | 尺寸 |
-| label | `string` | — | — | 加载文字 |
-| icon | `Component` | — | — | 自定义图标 |
-| iconRotating | `boolean` | — | — | 自定义图标是否旋转 |
-| wrapper | `string \| HTMLElement \| null` | `'body'` / CSS 选择器 / `null` | `'body'` | 挂载位置 |
-| mask | `boolean` | — | `true` | 是否显示遮罩 |
-| unmountOnHide | `boolean` | — | `true` | 隐藏时销毁 DOM |
-| mainClass | `string \| object \| array` | — | — | 主内容类名 |
-| mainTransition | `string` | — | `'o-zoom-fade2'` | 主内容过渡动画 |
-| maskTransition | `string` | — | `'o-fade-in'` | 遮罩过渡动画 |
+| 参数名 | 类型 | 可选值 | 默认值 | 说明 | 引入版本 |
+|--------|------|--------|--------|------|--------|
+| visible | `boolean` | — | `false` | 是否显示（v-model） | — |
+| size | `SizeT \| 'mini'` | `'mini'` / `'small'` / `'medium'` / `'large'` | `'small'` | 尺寸 | @since 1.1.0（新增 mini/medium/large 尺寸） |
+| label | `string` | — | — | 加载文字 | — |
+| icon | `Component` | — | — | 自定义图标 | — |
+| iconRotating | `boolean` | — | — | 自定义图标是否旋转 | — |
+| wrapper | `string \| HTMLElement \| null` | `'body'` / CSS 选择器 / `null` | `'body'` | 挂载位置 | — |
+| mask | `boolean` | — | `true` | 是否显示遮罩 | — |
+| unmountOnHide | `boolean` | — | `true` | 隐藏时销毁 DOM | — |
+| mainClass | `string \| object \| array` | — | — | 主内容类名 | — |
+| mainTransition | `string` | — | `'o-zoom-fade2'` | 主内容过渡动画 | — |
+| maskTransition | `string` | — | `'o-fade-in'` | 遮罩过渡动画 | — |
 
 ### Events 表
 
@@ -442,3 +442,11 @@ layout:
 | OLoading | ODialog | ODialog 有标题栏/内容区/操作栏，OLoading 仅有居中的图标+文字 |
 | OLoading | OButton loading | OButton loading 是按钮内的小图标状态，OLoading 是覆盖区域的遮罩加载 |
 | OLoading | OSkeleton | OSkeleton 是占位骨架屏（灰色块状），OLoading 是旋转图标+遮罩层 |
+
+---
+
+## 版本变更记录
+
+| 版本 | 变更内容 |
+|------|---------|
+| v1.1.0 | 新增 `size` prop 支持 large/medium/small/mini 四种尺寸；响应式优化；新增 CSS 变量（`--loading-label-*`）；vLoading 指令支持属性对象 |

@@ -77,19 +77,19 @@ type PaginationLayoutT = Array<'total' | 'pagesize' | 'pager' | 'jumper'>;
 
 ### Props 表
 
-| 参数名 | 类型 | 可选值 | 默认值 | 说明 |
-|--------|------|--------|--------|------|
-| layout | `PaginationLayoutT` | `'total'` / `'pagesize'` / `'pager'` / `'jumper'` 组合 | `['pagesize', 'pager', 'jumper']` | 布局控件 |
-| variant | `PaginationVariantT` | `'solid'` / `'outline'` | `'outline'` | 按钮样式 |
-| round | `RoundT` | `'pill'` / CSS 值 | — | 圆角 |
-| pageSizes | `number[]` | — | `[6, 12, 24, 48]` | 每页条数选项 |
-| pageSize | `number` | — | `6`（pageSizes[0]） | 每页条数（v-model） |
-| total | `number` | — | `0` | 数据总数 |
-| page | `number` | — | `1` | 当前页码（v-model） |
-| showPageCount | `number` | — | `9` | 最多显示页码数 |
-| showMore | `boolean` | — | `true` | 省略号弹出页码 |
-| showTotal | `boolean` | — | — | 是否显示总数据量（已废弃，请在 layout 中配置 'total'） |
-| simple | `boolean` | — | `false` | 简洁模式 |
+| 参数名 | 类型 | 可选值 | 默认值 | 说明 | 引入版本 |
+|--------|------|--------|--------|------|--------|
+| layout | `PaginationLayoutT` | `'total'` / `'pagesize'` / `'pager'` / `'jumper'` 组合 | `['pagesize', 'pager', 'jumper']` | 布局控件 | — |
+| variant | `PaginationVariantT` | `'solid'` / `'outline'` | `'outline'` | 按钮样式 | — |
+| round | `RoundT` | `'pill'` / CSS 值 | — | 圆角 | — |
+| pageSizes | `number[]` | — | `[6, 12, 24, 48]` | 每页条数选项 | — |
+| pageSize | `number` | — | `6`（pageSizes[0]） | 每页条数（v-model） | — |
+| total | `number` | — | `0` | 数据总数 | — |
+| page | `number` | — | `1` | 当前页码（v-model） | — |
+| showPageCount | `number` | — | `9` | 最多显示页码数 | — |
+| showMore | `boolean` | — | `true` | 省略号弹出页码 | — |
+| showTotal | `boolean` | — | — | 是否显示总数据量（已废弃，请在 layout 中配置 'total'） | @deprecated 1.2.2 |
+| simple | `boolean` | — | `false` | 洁模式 | — |
 
 ### Events 表
 
@@ -288,4 +288,15 @@ layout:
 | OPagination | OTabs | OTabs 是内容面板切换标签，OPagination 是数据分页导航，含页码计算逻辑 |
 | OPagination | 手动 OButton 组 | OPagination 内置分页逻辑（页码计算、跳转、每页条数），无需手动实现 |
 | OPagination（simple） | 输入框+箭头 | simple 模式是完整分页组件的极简形态，仍含分页逻辑 |
+
+---
+
+## 版本变更记录
+
+| 版本 | 变更内容 |
+|------|---------|
+| v1.2.2 | `showTotal` prop 废弃，推荐使用 layout 中配置 'total' |
+| v1.1.0 | total 插槽新增 `pageCount` 参数 |
+| v0.0.73 | change 事件参数改为对象格式 `{ page, pageSize }` |
+| v0.0.72 | 修复首页 change 回调问题 |
 

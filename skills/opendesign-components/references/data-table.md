@@ -2,6 +2,8 @@
 
 # ODataTable 数据表格
 
+> ⚠️ **OTable 已标记为 deprecated，推荐使用 ODataTable 替代。**
+
 ## Part A：设计理解卡
 
 ODataTable 是数据驱动的表格组件，通过列配置和行数据自动渲染表格内容。支持列固定、行选择、行展开、树形数据、单元格合并、列宽拖拽调整、嵌套表头、溢出气泡等功能。
@@ -58,7 +60,7 @@ ODataTable 是数据驱动的表格组件，通过列配置和行数据自动渲
 
 ⚠️ **推荐优先使用 `formatter`，不推荐 `td_{columnKey}` 插槽**：formatter 将渲染逻辑内聚在列配置中，便于复用和测试；`td_` 插槽仅适合确实需要在模板中使用 `v-model` 双向绑定的场景（如内联表单控件）。即便是内联输入框，也可通过 `formatter` 返回函数式组件实现响应式更新（见代码参考场景 12），因此 `td_` 插槽应视为最后手段。
 
-列配置的 showOverflowToolTip 属性控制溢出文本显示气泡提示，传入数字可设定最大行数。
+列配置的 showHeaderOverflowToolTip 属性控制表头溢出文本显示气泡提示，默认 1 行，传入数字可设定最大行数。列配置的 showOverflowToolTip 属性控制表体溢出文本显示气泡提示，传入数字可设定最大行数。
 
 ### 表头渲染
 
@@ -249,19 +251,18 @@ interface DataTableColumnFormatterOptions {
 // 单元格渲染方法
 type DataTableColumnFormatter = (options: DataTableColumnFormatterOptions) => Component | VNode | string;
 
-// 合并单元格方法
+// 合并单元格方法（v1.2.2 新增）
 type DataTableSpanMethod = (options: DataTableColumnFormatterOptions) => { colSpan?: number; rowSpan?: number } | void;
 
-// 行展开方法
+// 行展开方法（v1.2.2 新增）
 type DataTableExpandMethod = (row: any, rowIndex: number) => Component | VNode | string | false;
 
 // 行数据类型
-interface TableRowT {
+type TableRowT = {
   key?: string | number;
   hasChildren?: boolean;  // 懒加载标记
   children?: TableRowT[];
-  [key: string]: unknown;
-}
+} & Record<string, unknown>;
 ```
 
 ### Props 表
@@ -276,44 +277,45 @@ interface TableRowT {
 | minTableWidth | `number \| string` | 否 | — | — | 内部 table 最小宽度，超出时横向滚动 |
 | rowKey | `string \| ((row: TableRowT) => string)` | 否 | — | `'id'` | 行唯一标识字段名或计算函数 |
 | border | `TableBorderT` | 否 | `'all'` / `'row'` / `'column'` / `'frame'` / `'row-column'` / `'row-frame'` / `'column-frame'` / `'none'` | `'row'` | 边框样式 |
-| stripe | `boolean` | 否 | — | `false` | 斑马纹（无纵向合并时生效） |
-| headerStyle | `DataTableHeaderStyleT` | 否 | `'fill'` / `'split-line'` | `'fill'` | 表头风格 |
-| showHeader | `boolean` | 否 | — | `true` | 是否显示表头 |
+| stripe | `boolean` | 否 | — | `false` | 斑马纹（无纵向合并时生效） | v1.2.0 |
+| headerStyle | `DataTableHeaderStyleT` | 否 | `'fill'` / `'split-line'` | `'fill'` | 表头风格 | v1.2.2 |
+| showHeader | `boolean` | 否 | — | `true` | 是否显示表头 | v1.2.2 |
 | highlightCurrentRow | `boolean` | 否 | — | `false` | 鼠标悬停高亮行 |
 | columnResizable | `boolean` | 否 | — | `false` | 是否可拖拽调整列宽 |
-| selection | `boolean` | 否 | — | `false` | 是否开启行选择 |
-| disabledProp | `string` | 否 | — | `'disabled'` | 行数据中控制禁用选择的字段名 |
-| checkStrictly | `boolean` | 否 | — | `true` | 树形选择时父子是否不关联 |
+| selection | `boolean` | 否 | — | `false` | 是否开启行选择 | v1.2.2 |
+| disabledProp | `string` | 否 | — | `'disabled'` | 行数据中控制禁用选择的字段名 | v1.2.2 |
+| checkStrictly | `boolean` | 否 | — | `true` | 树形选择时父子是否不关联 | v1.2.2 |
 | defaultEmptyCellText | `string` | 否 | — | `'--'` | 空单元格占位文案 |
 | emptyLabel | `string` | 否 | — | — | 空数据提示文案 |
 | loading | `boolean` | 否 | — | `false` | 加载中状态 |
 | loadingLabel | `string` | 否 | — | — | 加载中提示文案 |
-| spanMethod | `DataTableSpanMethod` | 否 | — | `() => undefined` | 合并单元格方法 |
-| expandMethod | `DataTableExpandMethod` | 否 | — | — | 行展开方法，返回 false 则不可展开 |
+| spanMethod | `DataTableSpanMethod` | 否 | — | `() => undefined` | 合并单元格方法 | v1.2.2 |
+| expandMethod | `DataTableExpandMethod` | 否 | — | — | 行展开方法，返回 false 则不可展开 | v1.2.2 |
 | v-model:conditions | `Record<string, unknown>` | 否 | — | `reactive({})` | 筛选排序条件对象 |
 | v-model:selected-keys | `DataTableRowKeyValue[]` | 否 | — | `reactive([])` | 已选中行的 rowKey 数组 |
 | v-model:expanded-row-keys | `DataTableRowKeyValue[]` | 否 | — | `reactive([])` | 已展开行的 rowKey 数组 |
 
 ### DataTableColumnT 列配置
 
-| 属性 | 类型 | 必填 | 说明 |
-|------|------|------|------|
-| key | `string` | 是 | 列数据字段名，对应行数据对象的 key，支持路径如 `'a.b'` |
-| label | `string \| Component \| VNode` | 否 | 表头文本，支持字符串、VNode、组件或函数式组件 |
-| description | `string \| Component \| VNode` | 否 | 表头描述气泡文案 |
-| formatter | `DataTableColumnFormatter` | 否 | 单元格自定义渲染方法 |
-| fixed | `true \| 'left' \| 'right'` | 否 | 列固定方向，`true` 等同 `'left'`。iOS 不支持多列固定 |
-| asHeader | `boolean` | 否 | 是否作为竖向表头列，默认 false |
-| width | `number \| string` | 否 | 列宽，支持像素数字或百分比字符串 |
-| minWidth | `number \| string` | 否 | 最小列宽 |
-| maxWidth | `number \| string` | 否 | 最大列宽 |
-| showOverflowToolTip | `boolean \| number` | 否 | 溢出时显示气泡，传数字设定最大行数 |
-| sortKey | `string` | 否 | 排序条件字段 key，仅支持单列排序 |
-| filter | `DataTableColumnFilterT` | 否 | 筛选配置 |
-| customColSpan | `number` | 否 | 表头单元格自定义 colspan，仅支持同级合并 |
-| children | `DataTableColumnT[]` | 否 | 嵌套子列配置，形成分组表头 |
+| 属性 | 类型 | 必填 | 说明 | 版本 |
+|------|------|------|------|------|
+| key | `string` | 是 | 列数据字段名，对应行数据对象的 key，支持路径如 `'a.b'` | |
+| label | `string \| Component \| VNode` | 否 | 表头文本，支持字符串、VNode、组件或函数式组件 | |
+| description | `string \| Component \| VNode` | 否 | 表头描述气泡文案 | v1.2.2 |
+| formatter | `DataTableColumnFormatter` | 否 | 单元格自定义渲染方法 | |
+| fixed | `true \| 'left' \| 'right'` | 否 | 列固定方向，`true` 等同 `'left'`。iOS 不支持多列固定 | |
+| asHeader | `boolean` | 否 | 是否作为竖向表头列，默认 false | v1.2.2 |
+| width | `number \| string` | 否 | 列宽，支持像素数字或百分比字符串 | |
+| minWidth | `number \| string` | 否 | 最小列宽 | |
+| maxWidth | `number \| string` | 否 | 最大列宽 | |
+| showHeaderOverflowToolTip | `boolean \| number` | 否 | 表头溢出时显示气泡，传数字设定最大行数，默认 1 | v1.2.2 |
+| showOverflowToolTip | `boolean \| number` | 否 | 表体溢出时显示气泡，传数字设定最大行数 | v1.2.2 |
+| sortKey | `string` | 否 | 排序条件字段 key，仅支持单列排序 | v1.2.2 |
+| filter | `DataTableColumnFilterT` | 否 | 筛选配置 | v1.2.2 |
+| customColSpan | `number` | 否 | 表头单元格自定义 colspan，仅支持同级合并 | v1.2.2 |
+| children | `DataTableColumnT[]` | 否 | 嵌套子列配置，形成分组表头 | |
 
-### DataTableColumnFilterT 筛选配置
+### DataTableColumnFilterT 筛选配置（v1.2.2 新增）
 
 | 属性 | 类型 | 必填 | 说明 |
 |------|------|------|------|
@@ -394,16 +396,16 @@ interface DataTableLoadChildrenPayload {
 
 ### Expose 方法表
 
-| 方法名 | 类型 | 说明 |
-|--------|------|------|
-| selectAll | `() => void` | 全选（不含禁用行） |
-| clearAll | `() => void` | 清空全部选择 |
-| expandAll | `() => void` | 展开所有行 |
-| foldAll | `() => void` | 收起所有行 |
-| getRowKey | `(row: TableRowT, rowIndex: number) => DataTableRowKeyValue` | 计算行的 rowKey |
-| dataColumnMap | `Map<string, EffectiveDataTableColumnT>` | 列配置的 key-value 映射 |
-| dataColumns | `Ref<EffectiveDataTableColumnT[]>` | 扁平化的所有叶子列数组 |
-| groupColumns | `Ref<EffectiveDataTableColumnT[][]>` | 按层级分组的列二维数组 |
+| 方法名 | 类型 | 说明 | 版本 |
+|--------|------|------|------|
+| selectAll | `() => void` | 全选（不含禁用行） | v1.2.2 |
+| clearAll | `() => void` | 清空全部选择 | v1.2.2 |
+| expandAll | `() => void` | 展开所有行 | v1.2.2 |
+| foldAll | `() => void` | 收起所有行 | v1.2.2 |
+| getRowKey | `(row: TableRowT, rowIndex: number) => DataTableRowKeyValue` | 计算行的 rowKey | |
+| dataColumnMap | `Map<string, EffectiveDataTableColumnT>` | 列配置的 key-value 映射 | |
+| dataColumns | `Ref<EffectiveDataTableColumnT[]>` | 扁平化的所有叶子列数组 | |
+| groupColumns | `Ref<EffectiveDataTableColumnT[][]>` | 按层级分组的列二维数组 | |
 
 ### 插槽层级关系
 
@@ -898,6 +900,8 @@ const columns: DataTableColumnT[] = [
 | 加载中 | `loading` + `loading-label` | 加载遮罩 + 提示文案 | 异步加载数据中 |
 | 空数据 | `empty-label` 或 `#empty` | 数据为空时的提示 | 需提示空数据状态 |
 | 单元格合并 | `:span-method` | 合并单元格 | 报表、统计表格 |
+| 表头溢出提示 | 列配置 `showHeaderOverflowToolTip` | 表头文字超长省略 + 悬停气泡（默认 1 行） | 表头文本较长 |
+| 表体溢出提示 | 列配置 `showOverflowToolTip` | 表体文字超长省略 + 悬停气泡 | 单元格文本较长 |
 | 空值占位 | `default-empty-cell-text="N/A"` | 自定义空值文案（默认 "--"） | 需特殊展示空值 |
 | **操作列（文字）** | column `formatter` 返回 **OLink** | 主要操作 `color="primary"`，危险操作 `color="danger"` | 表格行操作（编辑、删除等） |
 | **操作列（图标）** | column `formatter` 返回 **OButton**（icon-only） | 纯图标按钮 | 工具栏图标操作 |
@@ -1019,6 +1023,7 @@ root: .o-data-table.o-table
                             - icon-placeholder (条件: isFirstCol && 有展开列)
                             - span.o-table-cell__inner-content
                               overflow: hidden; text-overflow: ellipsis
+                              max-lines: showHeaderOverflowToolTip (默认 1 行, 超出显示气泡)
                               children: slot th_{key} 或 column.label
                             - TableColumnFilter (条件: column.filter)
                             - TableColumnSorter (条件: column.sortKey)
@@ -1154,7 +1159,8 @@ filter-panel:
 | 某列背景色同表头 | 列配置 `asHeader: true` | 竖向表头列 |
 | 多级分组表头（上下分层） | 列配置 `children` 嵌套 | 嵌套表头 |
 | 拖拽调整列宽手柄 | `columnResizable` | 列宽拖拽 |
-| 单元格文字省略 + 悬停气泡 | 列配置 `showOverflowToolTip` | 溢出提示 |
+| 表头单元格文字省略 + 悬停气泡 | 列配置 `showHeaderOverflowToolTip` | 表头溢出提示（默认启用） |
+| 表体单元格文字省略 + 悬停气泡 | 列配置 `showOverflowToolTip` | 表体溢出提示 |
 | 紧凑行高 | `size="small"` | 小尺寸模式 |
 | **操作列文字链接** | formatter 返回 OLink | 主要操作蓝色（primary），危险操作红色（danger） |
 
@@ -1173,6 +1179,15 @@ filter-panel:
 |--------|--------|---------|
 | ODataTable | OTable | DataTable 通过 `columns` + `data` 数据驱动自动渲染；OTable 需手写 `<tr><td>` 模板 |
 | ODataTable | OList | DataTable 是多列表格（含表头）；OList 是单列无表头的列表 |
-| ODataTable (树形) | OTree | DataTable 树形是表格行的层级嵌套，有多列数据；OTree 是纯树形控件，单列节点 |
+| ODataTable (树形) | ODataTable (普通) | 树形模式下表格行有层级缩进嵌套，适用于父子级数据；普通模式为平铺列表 |
 | ODataTable (headerStyle=fill) | ODataTable (headerStyle=split-line) | fill 模式表头有填充背景色；split-line 模式表头与表体同色，仅有底部分割线 |
 | ODataTable (selection) | ODataTable (expand) | selection 在行首显示复选框用于多选；expand 在行首显示箭头用于展开详情 |
+
+### 版本变更记录
+
+| 版本 | 变更类型 | 变更内容 |
+|------|---------|---------|
+| v1.2.4 | 修复 | `TableRowT` 类型改为交叉类型 `& Record<string, unknown>`，不再强制索引签名 |
+| v1.2.2 | 新增 | 行选择(`selection`)、行展开(`expandMethod`)、列筛选(`filter`)、列排序(`sortKey`)、表头合并(`customColSpan`)、树形数据、溢出气泡(`showOverflowToolTip`/`showHeaderOverflowToolTip`)、竖向表头(`asHeader`)、表头描述(`description`)、表头风格(`headerStyle`)、隐藏表头(`showHeader`)、行禁用(`disabledProp`)、父子不关联(`checkStrictly`) |
+| v1.2.0 | 新增 | 新增 `stripe` prop，支持斑马纹显示 |
+| v1.1.0 | 破坏性变更 | CSS 类名变更：`tr.last` → `tr.o-row-last`，`td.last` → `td.o-cell-last` |

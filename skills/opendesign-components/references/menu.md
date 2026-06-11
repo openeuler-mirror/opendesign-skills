@@ -438,7 +438,6 @@ layout:
 | OMenu | OCollapse | OMenu 有选中高亮状态和导航语义(ul/li)，OCollapse 是纯内容展开收起无选中态 |
 | OMenu | OTab | OTab 是水平排列的选项卡切换面板，OMenu 是垂直排列的层级导航列表 |
 | OMenu | ODropdown | ODropdown 是弹出式浮层菜单，OMenu 是页面内嵌的固定侧边栏导航 |
-| OMenu | OTree | OTree 有复选框和节点连线，OMenu 无复选框仅有选中高亮 |
 
 **DSL 识别规则（避免遗漏）**
 
@@ -460,3 +459,11 @@ layout:
   // ✅ 正确
   await expect(menu.locator('.o-sub-menu-children').first()).toBeVisible()
   ```
+
+### 版本变更记录
+
+| 版本 | 变更类型 | 变更内容 |
+|------|---------|---------|
+| v1.2.4 | 修复 | 点击子菜单空白区域不再关闭整个菜单 |
+| v1.2.3-sp1 | 修复 | SSR 场景下溢出 tooltip 内容为空的问题 |
+| v1.1.0 | 破坏性变更 | Menu 重构：新增引导线样式、arrowPosition；移除 levelIndent；CSS 变量按层级而非按 item/sub 重组 |

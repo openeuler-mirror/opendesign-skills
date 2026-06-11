@@ -103,30 +103,30 @@ type PopupTriggerT = 'none' | 'click' | 'click-outclick' | 'hover' | 'hover-outc
 
 ### Props 表
 
-| 参数名 | 类型 | 可选值 | 默认值 | 说明 |
-|--------|------|--------|--------|------|
-| visible | `boolean` | — | — | 是否可见（v-model） |
-| position | `PopupPositionT` | 12 个方向 | `'top'` | 弹出位置 |
-| trigger | `PopupTriggerT \| PopupTriggerT[]` | 7 种触发方式 | `'hover'` | 触发方式 |
-| target | `string \| ComponentPublicInstance \| HTMLElement` | — | `null` | 触发元素 |
-| disabled | `boolean` | — | `false` | 禁用 |
-| wrapper | `string \| HTMLElement` | — | `'body'` | 挂载位置 |
-| offset | `number` | — | `8` | 偏移距离 |
-| edgeOffset | `number` | — | `0` | 屏幕边缘偏移 |
-| hoverDelay | `number` | — | `100` | hover 延迟（ms） |
-| anchor | `boolean` | — | `true` | 显示锚点箭头 |
-| anchorClass | `string \| object \| array` | — | — | 锚点类名 |
-| unmountOnHide | `boolean` | — | `true` | 隐藏时卸载 |
-| wrapClass | `string \| object \| array` | — | — | 容器类名 |
-| bodyClass | `string \| object \| array` | — | — | 内容体类名 |
-| adjustMinWidth | `boolean` | — | `true` | 最小宽度适配 |
-| adjustWidth | `boolean` | — | `true` | 宽度适配 |
-| transition | `string` | — | `'o-zoom-fade'` | 过渡动画 |
-| autoHide | `boolean` | — | `true` | 自动隐藏 |
-| adaptive | `boolean` | — | `true` | 自适应边缘 |
-| beforeShow | `() => Promise<boolean> \| boolean` | — | — | 显示前回调 |
-| beforeHide | `() => Promise<boolean> \| boolean` | — | — | 隐藏前回调 |
-| hideWhenTargetInvisible | `boolean` | — | `true` | 目标不可见时隐藏 |
+| 参数名 | 类型 | 可选值 | 默认值 | 说明 | 引入版本 |
+|--------|------|--------|--------|------|--------|
+| visible | `boolean` | — | — | 是否可见（v-model） | — |
+| position | `PopupPositionT` | 12 个方向 | `'top'` | 弹出位置 | — |
+| trigger | `PopupTriggerT \| PopupTriggerT[]` | 7 种触发方式 | `'hover'` | 触发方式 | — |
+| target | `string \| ComponentPublicInstance \| HTMLElement` | — | `null` | 触发元素 | — |
+| disabled | `boolean` | — | `false` | 禁用 | — |
+| wrapper | `string \| HTMLElement` | — | `'body'` | 挂载位置 | — |
+| offset | `number` | — | `8` | 偏移距离 | — |
+| edgeOffset | `number` | — | `0` | 屏幕边缘偏移 | — |
+| hoverDelay | `number` | — | `100` | hover 延迟（ms） | — |
+| anchor | `boolean` | — | `true` | 显示锚点箭头 | — |
+| anchorClass | `string \| object \| array` | — | — | 锚点类名 | — |
+| unmountOnHide | `boolean` | — | `true` | 隐藏时卸载 | — |
+| wrapClass | `string \| object \| array` | — | — | 容器类名 | — |
+| bodyClass | `string \| object \| array` | — | — | 内容体类名 | — |
+| adjustMinWidth | `boolean` | — | `true` | 最小宽度适配 | — |
+| adjustWidth | `boolean` | — | `true` | 宽度适配 | — |
+| transition | `string` | — | `'o-zoom-fade'` | 过渡动画 | — |
+| autoHide | `boolean` | — | `true` | 自动隐藏 | — |
+| adaptive | `boolean` | — | `true` | 自适应边缘 | @since 0.0.75 |
+| beforeShow | `() => Promise<boolean> \| boolean` | — | — | 显示前回调 | — |
+| beforeHide | `() => Promise<boolean> \| boolean` | — | — | 隐藏前回调 | — |
+| hideWhenTargetInvisible | `boolean` | — | `true` | 目标不可见时隐藏 | — |
 
 ### Events 表
 
@@ -338,4 +338,14 @@ layout:
 | OPopover | OTooltip | OPopover 可承载富文本和交互元素，OTooltip 仅纯文字提示且样式更简单 |
 | OPopover | ODropdown | ODropdown 是下拉菜单列表（含 OOption），OPopover 是自由内容气泡卡片 |
 | OPopover | ODialog | ODialog 是居中模态弹窗有遮罩，OPopover 是非模态的目标元素附近浮层 |
+
+---
+
+## 版本变更记录
+
+| 版本 | 变更内容 |
+|------|---------|
+| v1.2.2 | 修复目标元素更新时浮层位置未同步的问题 |
+| v1.1.0 | 调整 ≤1680px 断点下字号 |
+| v0.0.75 | 新增 `adaptive` prop，空间不足时自动翻转弹出方向 |
 

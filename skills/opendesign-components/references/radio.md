@@ -72,22 +72,22 @@ import { ORadio, ORadioGroup } from '@opensig/opendesign';
 
 ### ORadio Props 表
 
-| 参数名 | 类型 | 可选值 | 默认值 | 说明 |
-|--------|------|--------|--------|------|
-| value | `string \| number \| boolean` | — | — | 单选框值（必填） |
-| modelValue | `string \| number \| boolean` | — | — | 绑定值（v-model） |
-| defaultChecked | `boolean` | — | `false` | 默认选中 |
-| disabled | `boolean` | — | `false` | 禁用 |
-| inputId | `string` | — | 自动生成 | input 元素 id |
+| 参数名 | 类型 | 可选值 | 默认值 | 说明 | 引入版本 |
+|--------|------|--------|--------|------|--------|
+| value | `string \| number \| boolean` | — | — | 单选框值（必填） | — |
+| modelValue | `string \| number \| boolean` | — | — | 绑定值（v-model） | — |
+| defaultChecked | `boolean` | — | `false` | 默认选中 | — |
+| disabled | `boolean` | — | `false` | 禁用 | — |
+| inputId | `string` | — | 自动生成 | input 元素 id | — |
 
 ### ORadioGroup Props 表
 
-| 参数名 | 类型 | 可选值 | 默认值 | 说明 |
-|--------|------|--------|--------|------|
-| modelValue | `string \| number \| boolean` | — | — | 绑定值（v-model） |
-| defaultValue | `string \| number \| boolean` | — | `''` | 默认值 |
-| disabled | `boolean` | — | `false` | 整组禁用 |
-| direction | `DirectionT` | `'h'` / `'v'` | `'h'` | 排列方向 |
+| 参数名 | 类型 | 可选值 | 默认值 | 说明 | 引入版本 |
+|--------|------|--------|--------|------|--------|
+| modelValue | `string \| number \| boolean` | — | — | 绑定值（v-model） | — |
+| defaultValue | `string \| number \| boolean` | — | `''` | 默认值 | — |
+| disabled | `boolean` | — | `false` | 整组禁用 | — |
+| direction | `DirectionT` | `'h'` / `'v'` | `'h'` | 排列方向 | — |
 
 ### ORadio Events 表
 
@@ -310,4 +310,12 @@ layout:
 | ORadio | OCheckbox | ORadio 圆形指示器、互斥单选；OCheckbox 方形带勾号、可多选 |
 | ORadioGroup | OSelect | ORadioGroup 所有选项同时可见平铺展示；OSelect 选项隐藏在下拉面板中 |
 | ORadio（自定义插槽） | OToggle | OToggle 是独立分段切换器；ORadio #radio 插槽自定义后也可呈现卡片式但语义仍为单选 |
+
+---
+
+## 版本变更记录
+
+| 版本 | 变更内容 |
+|------|---------|
+| v1.2.2 | 调整图标中心颜色变量 |
 

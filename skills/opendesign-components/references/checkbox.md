@@ -84,25 +84,25 @@ import { OCheckbox, OCheckboxGroup } from '@opensig/opendesign';
 
 ### OCheckbox Props 表
 
-| 参数名 | 类型 | 可选值 | 默认值 | 说明 |
-|--------|------|--------|--------|------|
-| value | `string \| number` | — | — | 多选框的值（必填） |
-| modelValue | `Array<string \| number>` | — | — | 选中值数组（v-model） |
-| defaultChecked | `boolean` | — | `false` | 非受控时默认是否选中 |
-| disabled | `boolean` | — | `false` | 是否禁用 |
-| indeterminate | `boolean` | — | `false` | 是否半选状态 |
-| inputId | `string` | — | 自动生成 | 内部 input 元素的 id |
+| 参数名 | 类型 | 可选值 | 默认值 | 说明 | 引入版本 |
+|--------|------|--------|--------|------|--------|
+| value | `string \| number` | — | — | 多选框的值（必填） | — |
+| modelValue | `Array<string \| number>` | — | — | 选中值数组（v-model） | — |
+| defaultChecked | `boolean` | — | `false` | 非受控时默认是否选中 | — |
+| disabled | `boolean` | — | `false` | 是否禁用 | — |
+| indeterminate | `boolean` | — | `false` | 是否半选状态 | — |
+| inputId | `string` | — | 自动生成 | 内部 input 元素的 id | — |
 
 ### OCheckboxGroup Props 表
 
-| 参数名 | 类型 | 可选值 | 默认值 | 说明 |
-|--------|------|--------|--------|------|
-| modelValue | `Array<string \| number>` | — | — | 选中值数组（v-model） |
-| defaultValue | `Array<string \| number>` | — | `[]` | 非受控时默认值 |
-| disabled | `boolean` | — | `false` | 禁用整个多选框组 |
-| direction | `DirectionT` | `'h'` / `'v'` | `'h'` | 排列方向 |
-| min | `number` | — | — | 最少选择数量 |
-| max | `number` | — | — | 最多选择数量 |
+| 参数名 | 类型 | 可选值 | 默认值 | 说明 | 引入版本 |
+|--------|------|--------|--------|------|--------|
+| modelValue | `Array<string \| number>` | — | — | 选中值数组（v-model） | — |
+| defaultValue | `Array<string \| number>` | — | `[]` | 非受控时默认值 | — |
+| disabled | `boolean` | — | `false` | 禁用整个多选框组 | — |
+| direction | `DirectionT` | `'h'` / `'v'` | `'h'` | 排列方向 | — |
+| min | `number` | — | — | 最少选择数量 | — |
+| max | `number` | — | — | 最多选择数量 | — |
 
 ### Events 表
 
@@ -375,4 +375,12 @@ breakpoints:
 | OCheckbox | ORadio（单选框） | OCheckbox 为方形可多选，ORadio 为圆形只能单选 |
 | OCheckbox | OSwitch（开关） | OCheckbox 是方形带勾号，OSwitch 是椭圆形滑块切换 |
 | OCheckbox | OTag（标签）可选模式 | OCheckbox 有明显的方形勾选框图标，OTag 为文字标签带背景色 |
+
+---
+
+## 版本变更记录
+
+| 版本 | 变更内容 |
+|------|---------|
+| v1.2.2 | 调整勾选框图标中心颜色变量 |
 

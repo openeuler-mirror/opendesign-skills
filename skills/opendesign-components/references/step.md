@@ -86,19 +86,19 @@ type StepItemStatusT = 'finished' | 'processing' | 'waiting' | 'failed';
 
 ### OStep Props 表
 
-| 参数名 | 类型 | 必填 | 可选值 | 默认值 | 说明 |
-|--------|------|------|--------|--------|------|
-| direction | `DirectionT` | 否 | `'h'` / `'v'` | `'h'` | 步骤条方向，h 水平、v 垂直 |
+| 参数名 | 类型 | 必填 | 可选值 | 默认值 | 说明 | 引入版本 |
+|--------|------|------|--------|--------|------|--------|
+| direction | `DirectionT` | 否 | `'h'` / `'v'` | `'h'` | 步骤条方向，h 水平、v 垂直 | — |
 
 ### OStepItem Props 表
 
-| 参数名 | 类型 | 必填 | 可选值 | 默认值 | 说明 |
-|--------|------|------|--------|--------|------|
-| stepIndex | `number` | 是 | — | — | 步骤序号，从 0 开始，需连续 |
-| status | `StepItemStatusT` | 否 | `'finished'` / `'processing'` / `'waiting'` / `'failed'` | `'finished'` | 步骤状态 |
-| title | `string` | 否 | — | — | 步骤标题 |
-| description | `string` | 否 | — | — | 步骤描述 |
-| icon | `boolean \| Component` | 否 | — | — | 步骤图标；true 为状态默认图标，传组件则渲染该组件，false/不传则显示序号 |
+| 参数名 | 类型 | 必填 | 可选值 | 默认值 | 说明 | 引入版本 |
+|--------|------|------|--------|--------|------|--------|
+| stepIndex | `number` | 是 | — | — | 步骤序号，从 0 开始，需连续 | — |
+| status | `StepItemStatusT` | 否 | `'finished'` / `'processing'` / `'waiting'` / `'failed'` | `'finished'` | 步骤状态 | — |
+| title | `string` | 否 | — | — | 步骤标题 | — |
+| description | `string` | 否 | — | — | 步骤描述 | — |
+| icon | `boolean \| Component` | 否 | — | — | 步骤图标；true 为状态默认图标，传组件则渲染该组件，false/不传则显示序号 | — |
 
 ### Events 表
 
@@ -414,4 +414,20 @@ layout:
 | OStep | OTimeline | OTimeline 是时间线事件列表（无状态色圆形标识），OStep 有明确的步骤序号和状态色圆形 |
 | OStep | OBreadcrumb | OBreadcrumb 是路径导航面包屑（文字+分隔符），OStep 有圆形标识和连接线 |
 | OStep | ONav / 导航菜单 | 导航菜单是页面路由切换，OStep 是流程进度展示，有 finished/processing/waiting 状态 |
+
+---
+
+## 版本变更记录
+
+| 版本 | 变更内容 |
+|------|---------|
+| v1.2.0 | 新增 OStep / OStepItem 组件 |
+
+---
+
+## 版本变更记录
+
+| 版本 | 变更内容 |
+|------|---------|
+| v1.2.0 | 新增 OStep / OStepItem 组件 |
 

@@ -81,17 +81,17 @@ type SwitchSizeT = 'medium' | 'small';
 
 ### Props 表
 
-| 参数名 | 类型 | 可选值 | 默认值 | 说明 |
-|--------|------|--------|--------|------|
-| modelValue | `string \| number \| boolean` | — | `undefined` | 绑定值（v-model） |
-| defaultChecked | `boolean` | — | `false` | 默认开启 |
-| checkedValue | `string \| number \| boolean` | — | `true` | 开启状态值 |
-| uncheckedValue | `string \| number \| boolean` | — | `false` | 关闭状态值 |
-| size | `SwitchSizeT` | `'medium'` / `'small'` | `'medium'` | 尺寸 |
-| round | `RoundT` | `'pill'` / CSS 值 | — | 圆角 |
-| disabled | `boolean` | — | `false` | 禁用 |
-| loading | `boolean` | — | `false` | 加载中 |
-| beforeChange | `(val: boolean) => Promise<boolean> \| boolean` | — | — | 切换前拦截 |
+| 参数名 | 类型 | 可选值 | 默认值 | 说明 | 引入版本 |
+|--------|------|--------|--------|------|--------|
+| modelValue | `string \| number \| boolean` | — | `undefined` | 绑定值（v-model） | — |
+| defaultChecked | `boolean` | — | `false` | 默认开启 | — |
+| checkedValue | `string \| number \| boolean` | — | `true` | 开启状态值 | — |
+| uncheckedValue | `string \| number \| boolean` | — | `false` | 关闭状态值 | — |
+| size | `SwitchSizeT` | `'medium'` / `'small'` | `'medium'` | 尺寸 | — |
+| round | `RoundT` | `'pill'` / CSS 值 | — | 圆角 | — |
+| disabled | `boolean` | — | `false` | 禁用 | — |
+| loading | `boolean` | — | `false` | 加载中 | — |
+| beforeChange | `(val: boolean) => Promise<boolean> \| boolean` | — | — | 切换前拦截 | — |
 
 ### Events 表
 
@@ -317,4 +317,22 @@ layout:
 | OSwitch | OCheckbox | OCheckbox 是方形勾选框+右侧文字标签，OSwitch 是圆角矩形轨道+滑动圆形滑块 |
 | OSwitch | ORadio | ORadio 是圆形单选按钮组（多选一），OSwitch 是单个二态切换器 |
 | OSwitch | OButton（toggle） | OButton 是矩形按钮点击交互，OSwitch 有滑动轨道和圆形滑块的特征视觉 |
+
+---
+
+## 版本变更记录
+
+| 版本 | 变更内容 |
+|------|---------|
+| v1.2.2 | 调整 medium 尺寸 CSS 变量 |
+| v1.1.0 | 新增 `active`/`inactive` 插槽用于滑块图标切换；修复非受控模式 modelValue 问题 |
+
+---
+
+## 版本变更记录
+
+| 版本 | 变更内容 |
+|------|---------|
+| v1.2.2 | 调整 medium 尺寸 CSS 变量 |
+| v1.1.0 | 新增 `active`/`inactive` 插槽用于滑块图标切换；修复非受控模式 modelValue 问题 |
 

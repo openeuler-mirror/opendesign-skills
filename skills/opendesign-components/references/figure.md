@@ -102,21 +102,21 @@ import { OFigure } from '@opensig/opendesign';
 
 ### Props 表
 
-| 参数名 | 类型 | 可选值 | 默认值 | 说明 |
-|--------|------|--------|--------|------|
-| src | `string` | — | — | 图片地址（必填） |
-| ratio | `number` | — | — | 宽高比（宽/高） |
-| fit | `string` | `'cover'` / `'contain'` / `'fill'` / `'none'` / `'scale-down'` | — | 填充方式 |
-| alt | `string` | — | — | 图片描述 |
-| background | `boolean` | — | `false` | 以背景图渲染 |
-| hoverable | `boolean` | — | `false` | 悬停放大效果 |
-| href | `string` | — | — | 点击跳转链接 |
-| colorful | `boolean` | — | `false` | 加载前彩色背景 |
-| preview | `boolean` | — | `false` | 点击预览 |
-| lazyPreview | `boolean` | — | `false` | 手动控制预览 |
-| videoPoster | `boolean` | — | `false` | 视频海报模式 |
-| previewClose | `string \| string[]` | `'none'` / `'button'` / `'mask'` / `'body'` | PC: `['mask','button']`；移动: `['mask','button','body']` | 预览关闭方式 |
-| lazy | `boolean \| IntersectionObserverInit` | — | `false` | 懒加载 |
+| 参数名 | 类型 | 可选值 | 默认值 | 说明 | 引入版本 |
+|--------|------|--------|--------|------|--------|
+| src | `string` | — | — | 图片地址（必填） | — |
+| ratio | `number` | — | — | 宽高比（宽/高） | — |
+| fit | `string` | `'cover'` / `'contain'` / `'fill'` / `'none'` / `'scale-down'` | — | 填充方式 | — |
+| alt | `string` | — | — | 图片描述 | — |
+| background | `boolean` | — | `false` | 以背景图渲染 | — |
+| hoverable | `boolean` | — | `false` | 悬停放大效果 | — |
+| href | `string` | — | — | 点击跳转链接 | — |
+| colorful | `boolean` | — | `false` | 加载前彩色背景 | — |
+| preview | `boolean` | — | `false` | 点击预览 | — |
+| lazyPreview | `boolean` | — | `false` | 手动控制预览 | — |
+| videoPoster | `boolean` | — | `false` | 视频海报模式 | — |
+| previewClose | `string \| string[]` | `'none'` / `'button'` / `'mask'` / `'body'` | PC: `['mask','button']`；移动: `['mask','button','body']` | 预览关闭方式 | @since v0.0.70 |
+| lazy | `boolean \| IntersectionObserverInit` | — | `false` | 懒加载 | @since v0.0.70 |
 
 ### Events 表
 
@@ -427,4 +427,14 @@ breakpoints:
 | OCard (cover) | 都可展示图片 | Figure 是纯图片容器，无标题/正文/底部等语义分区和插槽；Card 有封面+标题+正文+底部的完整卡片结构 |
 | img 标签 | 都渲染图片 | Figure 提供宽高比控制、懒加载、彩色占位、悬停放大、全屏预览、视频海报等增强功能 |
 | OCarousel | 都展示图片内容 | Figure 是单张图片容器；Carousel 是多张图片的轮播切换组件 |
+
+---
+
+## 版本变更记录
+
+| 版本 | 变更内容 |
+|------|---------|
+| v1.1.0 | 修复暗色模式下文字溢出问题；修复移动端 previewClose body 值；修复百度浏览器预览问题 |
+| v1.0.2 | 修复 `lazyPreiew` 拼写为 `lazyPreview`；修复 background 模式 DOM 位置 |
+| v0.0.70 | 新增 `previewClose` prop 和 `lazy` 懒加载功能 |
 

@@ -65,11 +65,11 @@ type ResultStatusT = 'info' | 'success' | 'warning' | 'danger';
 
 ### Props 表
 
-| 参数名 | 类型 | 可选值 | 默认值 | 说明 |
-|--------|------|--------|--------|------|
-| status | `ResultStatusT` | `'info'` / `'success'` / `'warning'` / `'danger'` | — | 状态 |
-| title | `string` | — | — | 标题 |
-| description | `string` | — | — | 描述 |
+| 参数名 | 类型 | 可选值 | 默认值 | 说明 | 引入版本 |
+|--------|------|--------|--------|------|--------|
+| status | `ResultStatusT` | `'info'` / `'success'` / `'warning'` / `'danger'` | — | 状态 | — |
+| title | `string` | — | — | 标题 | — |
+| description | `string` | — | — | 描述 | — |
 
 ### Slots 表
 
@@ -278,4 +278,10 @@ layout:
 | OResult | 空数据页 | OResult 有状态语义（成功/失败/警告），空数据页通常只展示插画和简单文案 |
 | OResult | ODialog | OResult 是页面级结果展示占据内容区，ODialog 是浮层弹窗 |
 | OResult | 自定义错误页 | OResult 有固定的图标+标题+描述+操作布局结构，自定义错误页布局不固定 |
+
+---
+
+## 版本变更记录
+
+本组件近期无重大版本变更。
 

@@ -103,16 +103,16 @@ type MessageParamsT = Partial<MessagePropsT & {
 
 ### OMessage Props 表
 
-| 参数名 | 类型 | 可选值 | 默认值 | 说明 |
-|--------|------|--------|--------|------|
-| visible | `boolean` | — | `undefined` | 是否可见（v-model） |
-| defaultVisible | `boolean` | — | `true` | 默认可见 |
-| status | `MessageStatusT` | `'info'` / `'success'` / `'warning'` / `'danger'` / `'loading'` | `'info'` | 状态 |
-| colorful | `boolean` | — | `false` | 彩色背景 |
-| duration | `number` | — | — | 自动关闭时间（ms） |
-| closable | `boolean` | — | `false` | 可手动关闭 |
-| beforeClose | `() => Promise<boolean> \| boolean` | — | — | 关闭前钩子 |
-| title | `string` | — | — | 标题 |
+| 参数名 | 类型 | 可选值 | 默认值 | 说明 | 引入版本 |
+|--------|------|--------|--------|------|--------|
+| visible | `boolean` | — | `undefined` | 是否可见（v-model） | — |
+| defaultVisible | `boolean` | — | `true` | 默认可见 | — |
+| status | `MessageStatusT` | `'info'` / `'success'` / `'warning'` / `'danger'` / `'loading'` | `'info'` | 状态 | — |
+| colorful | `boolean` | — | `false` | 彩色背景 | — |
+| duration | `number` | — | — | 自动关闭时间（ms） | — |
+| closable | `boolean` | — | `false` | 可手动关闭 | — |
+| beforeClose | `() => Promise<boolean> \| boolean` | — | — | 关闭前钩子 | — |
+| title | `string` | — | — | 标题 | — |
 
 ### Events 表
 
@@ -452,4 +452,13 @@ layout:
 | OMessage | OAlert | OMessage 是临时浮层通知可自动消失，OAlert 是静态内嵌提示区域不会自动消失 |
 | OMessage | ONotification | OMessage 是简短消息条居中/顶部显示，ONotification 是带标题+详情的通知卡片通常右上角弹出 |
 | OMessage（内联） | OAlert | 内联 OMessage 固定在页面中时外观类似 OAlert，但 OMessage 支持 duration 自动关闭和命令式调用 |
+
+---
+
+## 版本变更记录
+
+| 版本 | 变更内容 |
+|------|---------|
+| v1.1.0 | 新增 `--message-list-top-offset` 和 `--message-list-bottom-offset` CSS 变量；`showMessage` 返回关闭函数；OMessageList 新增 `close` 方法 |
+| v0.0.70 | 支持指定目标元素附近显示消息 |
 

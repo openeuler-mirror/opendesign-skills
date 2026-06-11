@@ -56,12 +56,12 @@ import { OIconAdd, OIconEdit, OIconDelete, OIconRefresh } from '@opensig/opendes
 
 ### Props 表
 
-| 参数名 | 类型 | 必填 | 可选值 | 默认值 | 说明 |
-|--------|------|------|--------|--------|------|
-| icon | `Component` | 否 | 任意图标组件 | — | 要展示的图标组件 |
-| button | `boolean` | 否 | — | `false` | 是否作为图标按钮（可交互） |
-| disabled | `boolean` | 否 | — | `false` | 禁用状态（配合 button 使用） |
-| loading | `boolean` | 否 | — | `false` | 加载状态，显示旋转加载动画 |
+| 参数名 | 类型 | 必填 | 可选值 | 默认值 | 说明 | 引入版本 |
+|--------|------|------|--------|--------|------|--------|
+| icon | `Component` | 否 | 任意图标组件 | — | 要展示的图标组件 | — |
+| button | `boolean` | 否 | — | `false` | 是否作为图标按钮（可交互） | — |
+| disabled | `boolean` | 否 | — | `false` | 禁用状态（配合 button 使用） | — |
+| loading | `boolean` | 否 | — | `false` | 加载状态，显示旋转加载动画 | — |
 
 ### Events 表
 
@@ -229,3 +229,11 @@ layout:
 | OIcon | OButton（icon-only） | OButton 有矩形容器、padding、hover 背景变化；OIcon 无容器背景，仅图标本身变色 |
 | OIcon（button） | OButton（icon-only） | OIcon button 无 padding 无背景，OButton 有固定宽高和背景色 |
 | OIcon | 内联 SVG | OIcon 提供 loading、button 交互能力，内联 SVG 无这些封装 |
+
+---
+
+## 版本变更记录
+
+| 版本 | 变更内容 |
+|------|---------|
+| v1.1.0 | 新增 zoom 类图标（放大/缩小/还原等） |

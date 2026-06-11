@@ -73,30 +73,30 @@ import { OScrollbar, OScroller } from '@opensig/opendesign';
 
 ### OScrollbar Props 表
 
-| 参数名 | 类型 | 可选值 | 默认值 | 说明 |
-|--------|------|--------|--------|------|
-| target | `HTMLElement \| ComponentPublicInstance \| string` | — | `null` | 关联的滚动容器 |
-| size | `ScrollerSizeT` | `'medium'` / `'small'` | `'medium'` | 尺寸 |
-| showType | `string` | `'auto'` / `'always'` / `'hover'` / `'never'` | `'auto'` | 显示模式 |
-| duration | `number` | — | `600` | 滚动停止后持续显示时间（ms） |
-| disabledX | `boolean` | — | `false` | 隐藏横向滚动条 |
-| disabledY | `boolean` | — | `false` | 隐藏纵向滚动条 |
-| autoUpdateOnScrollSize | `boolean` | — | `false` | 自动刷新（always 模式） |
-| barClass | `string \| object \| array` | — | — | 自定义类名 |
+| 参数名 | 类型 | 可选值 | 默认值 | 说明 | 引入版本 |
+|--------|------|--------|--------|------|--------|
+| target | `HTMLElement \| ComponentPublicInstance \| string` | — | `null` | 关联的滚动容器 | — |
+| size | `ScrollerSizeT` | `'medium'` / `'small'` | `'medium'` | 尺寸 | — |
+| showType | `string` | `'auto'` / `'always'` / `'hover'` / `'never'` | `'auto'` | 显示模式 | — |
+| duration | `number` | — | `600` | 滚动停止后持续显示时间（ms） | — |
+| disabledX | `boolean` | — | `false` | 隐藏横向滚动条 | — |
+| disabledY | `boolean` | — | `false` | 隐藏纵向滚动条 | — |
+| autoUpdateOnScrollSize | `boolean` | — | `false` | 自动刷新（always 模式） | — |
+| barClass | `string \| object \| array` | — | — | 自定义类名 | @since 1.2.0 |
 
 ### OScroller Props 表
 
 OScroller 继承 OScrollbar 的所有 props（除 target），额外支持：
 
-| 参数名 | 类型 | 可选值 | 默认值 | 说明 |
-|--------|------|--------|--------|------|
-| wrapClass | `string \| object \| array` | — | — | 滚动容器类名 |
+| 参数名 | 类型 | 可选值 | 默认值 | 说明 | 引入版本 |
+|--------|------|--------|--------|------|--------|
+| wrapClass | `string \| object \| array` | — | — | 滚动容器类名 | — |
 
 ### OScroller Events 表
 
-| 事件名 | 参数 | 触发时机 |
-|--------|------|---------|
-| scroll | `(event: Event)` | 滚动容器滚动时 |
+| 事件名 | 参数 | 触发时机 | 引入版本 |
+|--------|------|---------|--------|
+| scroll | `(event: Event)` | 滚动容器滚动时 | @since 1.2.0 |
 
 ### OScrollbar Slots 表
 
@@ -124,6 +124,7 @@ OScroller 继承 OScrollbar 的所有 props（除 target），额外支持：
 | 方法名 | 参数 | 返回值 | 说明 |
 |--------|------|--------|------|
 | scrollTo(options?) | `ScrollToOptions` | — | 滚动到指定位置 |
+| scrollBy(options) | `ScrollToOptions` | — | 按偏移量滚动（@since 1.2.4） |
 | getContainerEl() | — | `HTMLElement \| null` | 获取滚动容器 DOM 元素 |
 
 ### 典型使用场景与调用模板
@@ -313,4 +314,14 @@ layout:
 | OScrollbar | 浏览器原生滚动条 | OScrollbar 为自定义圆角细条，支持显隐控制；原生为系统默认粗条不可定制 |
 | OScrollbar | OSlider | OScrollbar 跟随容器滚动位置联动，OSlider 是独立的值选择控件有刻度 |
 | OScroller | 带 overflow:auto 的 div | OScroller 自带美化滚动条组件，普通 div 使用原生滚动条 |
+
+---
+
+## 版本变更记录
+
+| 版本 | 变更内容 |
+|------|---------|
+| v1.2.4 | OScroller 新增 `scrollBy` 暴露方法，支持按偏移量滚动 |
+| v1.2.0 | OScrollbar 新增 `barClass` prop；OScroller 新增 `scroll` 事件 |
+| v1.0.0 | OScrollbar 暴露 `update()` 方法；OScroller 暴露 `scrollTo()` 和 `getContainerEl()` 方法 |
 

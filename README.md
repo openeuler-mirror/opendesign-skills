@@ -184,7 +184,7 @@ skills/opendesign-tokens/
 - 含图标场景下采用两阶段生成（`code_to_design` + `create_instance`）
 
 **覆盖范围**：
-- **21 个组件设计规范**：OAnchor / OBreadcrumb / OButton / OCard / OCheckbox / ODivider / ODropdown / OInput / OLink / OLoading / OMessage / ONavigation / OPagination / ORadio / OScrollbar / OSearch / OStep / OSwitch / OTab / OTag / OToggle
+- **20 个组件设计规范**：OAnchor / OBreadcrumb / OButton / OCard / OCheckbox / ODivider / ODropdown / OInput / OLink / OLoading / OMessage / ONavigation / OPagination / ORadio / OScrollbar / OStep / OSwitch / OTab / OTag / OToggle
 - **536 个 UI 组件变体**的 `componentKey` 索引
 - **187 个图标**的 `componentKey` 索引（独立图标库 `kbqInwBrCTGnM0MsPJDgvA`）
 

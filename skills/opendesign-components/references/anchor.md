@@ -42,7 +42,7 @@ OAnchor 是一个页面内导航组件，让用户快速跳转到页面指定区
 
 **item-click**（事件）：点击锚点项时触发。
 
-📱 **响应式行为**：在笔记本尺寸及以下（≤1200px），锚点项文字变小、间距缩小；水平模式下项间距从 32px 缩至 24px。在平板竖屏及以下（≤840px），水平模式项间距进一步缩至 16px。
+📱 **响应式行为**：在笔记本尺寸及以下（≤1200px），锚点项文字变小、间距缩小；水平模式下项间距从 32px 缩至 24px。在平板竖屏及以下（≤840px），水平模式项间距进一步缩至 16px。v1.2.4 起，水平模式增加了 ResizeObserver 监听，窗口宽度改变后会自动更新高亮指示器位置和溢出遮罩状态，不再出现高亮错位问题。
 
 🧩 **布局结构**：垂直模式下，根容器水平排列，左侧是一条竖线（含滑动指示器），右侧是锚点项列表区。每个锚点项内部水平排列：左侧是连接线与圆点装饰，右侧是标题文字。子项通过缩进体现层级。水平模式下，根容器为单行水平排列，项之间有 32px 间距，溢出时左右出现渐隐遮罩可横向滚动。
 ```yaml
@@ -74,21 +74,22 @@ import { OAnchor, OAnchorItem } from '@opensig/opendesign';
 
 ### OAnchor Props 表
 
-| 参数名 | 类型 | 可选值 | 默认值 | 说明 |
-|--------|------|--------|--------|------|
-| layout | `AnchorDirectionT` | `'h'` / `'v'` | `'v'` | 锚点方向，水平或垂直 |
-| size | `AnchorSizeT` | `'medium'` / `'small'` / `'menu'` | `'medium'` | 尺寸风格，仅垂直模式支持 |
-| container | `string \| HTMLElement \| Window` | CSS 选择器 / DOM 元素 / Window | `window` | 滚动监听容器 |
-| bounds | `number` | — | `5` | 锚点激活判定边界（px） |
-| targetOffset | `number` | — | `0` | 目标元素距容器顶部偏移量（px） |
-| changeHash | `boolean` | — | `true` | 点击锚点时是否改变浏览器 hash |
+| 参数名 | 类型 | 可选值 | 默认值 | 引入版本 | 说明 |
+|--------|------|--------|--------|---------|------|
+| layout | `AnchorDirectionT` | `'h'` / `'v'` | `'v'` | — | 锚点方向，水平或垂直 |
+| layout=`h` | — | — | — | 1.2.0 | 水平模式新增 |
+| size | `AnchorSizeT` | `'medium'` / `'small'` / `'menu'` | `'medium'` | — | 尺寸风格，仅垂直模式支持 |
+| container | `string \| HTMLElement \| Window` | CSS 选择器 / DOM 元素 / Window | `window` | — | 滚动监听容器 |
+| bounds | `number` | — | `5` | — | 锚点激活判定边界（px） |
+| targetOffset | `number` | — | `0` | — | 目标元素距容器顶部偏移量（px） |
+| changeHash | `boolean` | — | `true` | — | 点击锚点时是否改变浏览器 hash |
 
 ### OAnchor Events 表
 
 | 事件名 | 参数 | 触发时机 |
 |--------|------|---------|
 | change | `(link: string)` | 激活的锚点项变化时 |
-| ~~click~~ | `(ev: MouseEvent, link?: string)` | ~~已废弃，计划 1.2.0 移除~~ |
+| ~~click~~ | `(ev: MouseEvent, link?: string)` | ~~已废弃，请使用 `item-click` 替代，将在 v2.0.0 移除~~ |
 
 ### OAnchor Slots 表
 
@@ -98,13 +99,13 @@ import { OAnchor, OAnchorItem } from '@opensig/opendesign';
 
 ### OAnchorItem Props 表
 
-| 参数名 | 类型 | 可选值 | 默认值 | 说明 |
-|--------|------|--------|--------|------|
-| title | `string` | — | `''` | 锚点标题 |
-| href | `string` | — | **必填** | 跳转目标（带 # 前缀，如 `#section1`） |
-| observeHref | `string` | — | — | 滚动监听目标（带 # 前缀），不传则监听 href |
-| target | `AnchorTargetT` | `'_blank'` / `'_parent'` / `'_self'` / `'_top'` | `'_self'` | 链接打开方式 |
-| disabled | `boolean` | — | `false` | 是否禁用 |
+| 参数名 | 类型 | 可选值 | 默认值 | 引入版本 | 说明 |
+|--------|------|--------|--------|---------|------|
+| title | `string` | — | `''` | — | 锚点标题 |
+| href | `string` | — | **必填** | — | 跳转目标（带 # 前缀，如 `#section1`） |
+| observeHref | `string` | — | — | — | 滚动监听目标（带 # 前缀），不传则监听 href |
+| target | `AnchorTargetT` | `'_blank'` / `'_parent'` / `'_self'` / `'_top'` | `'_self'` | — | 链接打开方式 |
+| disabled | `boolean` | — | `false` | — | 是否禁用 |
 
 ### OAnchorItem Events 表
 
@@ -356,4 +357,13 @@ layout:
 | OAnchor（水平） | OTab | OTab 底部有指示器下划线且切换面板内容；OAnchor 无面板，仅页内锚点跳转 |
 | OAnchor（垂直） | OMenu | OMenu 有子菜单弹出/展开箭头，支持多级导航路由；OAnchor 仅做页内定位，通过圆点+竖线装饰 |
 | OAnchor（垂直） | OStep | OStep 有步骤编号/图标、有完成/进行中/等待状态；OAnchor 仅高亮当前位置 |
+
+### 版本变更记录
+
+| 版本 | 变更类型 | 变更内容 |
+|------|---------|---------|
+| 1.2.4 | 修复 | 水平模式增加 ResizeObserver，修复窗口宽度改变后高亮选中项错位问题 |
+| 1.2.0 | 新增 | 水平模式 `layout="h"` 新增；`click` 事件标记为废弃，推荐使用 `item-click`（将在 v2.0.0 移除） |
+| 1.1.0 | 重构 | 重构 OAnchor：新增尺寸（small/medium/menu）、一级圆点指示器、溢出气泡提示、外部链跳转、item disabled 属性 |
+| 1.0.1-sp1 | 修复 | 修复初始化时元素在视口内但 anchor 未被选中的问题（需正确配置 bounds） |
 
