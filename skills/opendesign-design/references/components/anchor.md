@@ -201,6 +201,58 @@ OAnchor（VERTICAL，固定宽，自适应高）
 
 ---
 
+### 交互状态规格
+
+#### 纵向布局锚点交互状态
+
+| 状态 | 一级锚点 | 二级锚点 |
+|------|---------|---------|
+| **默认（未选中）** | 字号: 14px (Regular)<br>色值: color-info2 | 二级字号: 12px (Regular)<br>二级色值: color-info2 |
+| **未选中·悬浮** | 悬浮: color-primary2<br>字号: 14px (Regular) | — |
+| **已选中·悬浮** | 一级字号: 14px (SemiBold)<br>一级色值: color-primary1<br>二级锚点(选中): 二级字号: 12px (SemiBold)<br>二级色值: color-primary1 | — |
+| **未选中·按下** | 点击: color-primary3<br>字号: 14px (Regular) | — |
+| **已选中·按下** | 一级字号: 14px (SemiBold)<br>一级色值: color-primary3<br>二级锚点(选中): 二级字号: 12px (SemiBold)<br>二级色值: color-primary3 | — |
+| **选中** | 选中: color-primary1<br>字号: 14px (SemiBold) | — |
+| **禁用** | 一级字号: 14px (Regular)<br>一级色值: color-info4<br>二级锚点(选中): 二级字号: 12px (Regular)<br>二级色值: color-info4 | — |
+
+#### 横向布局锚点交互状态
+
+| 状态 | 锚点选项 | 锚点选中 |
+|------|---------|---------|
+| **默认（未选中）** | 字号: 16px (Regular)<br>色值: color-info3 | — |
+| **未选中·悬浮** | 色值: color-primary2<br>字号: 16px (Regular) | — |
+| **已选中·悬浮** | — | 字号: 16px (SemiBold)<br>色值: color-primary1 |
+| **未选中·按下** | 字号: 16px (SemiBold)<br>色值: color-primary3 | — |
+| **已选中·按下** | — | 字号: 16px (SemiBold)<br>色值: color-primary1 |
+| **选中** | — | 字号: 16px (SemiBold)<br>色值: color-primary1 |
+| **禁用** | 字号: 16px (Regular)<br>色值: color-info4 | — |
+
+---
+
+### 交互状态说明
+
+- **默认**：组件初始状态，未选中时使用辅助信息色（info系列）
+- **悬浮（Hover）**：鼠标悬停时的反馈状态
+  - 未选中项悬浮：使用 `color-primary2`
+  - 已选中项悬浮：保持选中态样式不变
+- **按下（Active/Pressed）**：鼠标点击按下时的反馈状态
+  - 未选中项按下：使用 `color-primary3`，字重可能加粗
+  - 已选中项按下：保持选中态样式或加深至 `color-primary3`
+- **选中（Selected）**：当前激活的锚点项，使用品牌主色 `color-primary1` + SemiBold 字重
+- **禁用（Disabled）**：不可交互状态，使用 `color-info4` 禁用色，字重 Regular
+
+#### 颜色Token速查
+
+| Token名称 | 用途 | 出现状态 |
+|----------|------|---------|
+| `color-info2` | 默认未选中文字色 | 默认态（竖向） |
+| `color-info3` | 默认未选中文字色 | 默认态（横向） |
+| `color-info4` | 禁用态文字色 | 禁用态 |
+| `color-primary1` | 选中态/已选中悬浮/已选中按下 | 选中、已选中悬浮、已选中按下 |
+| `color-primary2` | 未选中悬浮态 | 未选中·悬浮 |
+| `color-primary3` | 按下态（未选中/已选中） | 未选中·按下、已选中·按下 |
+---
+
 ### 组件层级结构
 
 **横向布局（Group3）**

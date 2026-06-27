@@ -158,6 +158,48 @@ OButton（HORIZONTAL，自适应宽度，固定高度）
 | 文字 | Disabled | `grey-14` @ 40% | `grey-14` @ 40% | 透明度降至 40%，不使用单独 token |
 | 背景 / 边框 | — | 无 | 无 | — |
 
+### 交互状态详细规格
+
+#### 强调按钮 (Solid) - 以L尺寸为例
+
+| 状态 | 填充色 | 文本样式 | 文字颜色 |
+|------|--------|---------|----------|
+| 默认 | `color-primary1` | 鸿蒙黑体 (Regular)，16px | `color-white` |
+| 悬浮 | `color-primary2` | 鸿蒙黑体 (Regular)，16px | `color-white` |
+| 按下 | `color-primary3` | 鸿蒙黑体 (Regular)，16px | `color-white` |
+| 选中 | `color-primary1` | 鸿蒙黑体 (Regular)，16px | `color-white` |
+| 禁用 | `color-primary4` | 鸿蒙黑体 (Regular)，16px | `color-white` |
+
+#### 普通按钮 (Outline) - 以L尺寸为例
+
+| 状态 | 描边色 | 文本样式 | 文字颜色 |
+|------|--------|---------|----------|
+| 默认 | `color-primary1` | 鸿蒙黑体 (Regular)，16px | `color-primary1` |
+| 悬浮 | `color-primary2` | 鸿蒙黑体 (Regular)，16px | `color-primary2` |
+| 按下 | `color-primary3` | 鸿蒙黑体 (Regular)，16px | `color-primary3` |
+| 选中 | `color-primary1` | 鸿蒙黑体 (Regular)，16px | `color-primary1` |
+| 禁用 | `color-primary4` | 鸿蒙黑体 (Regular)，16px | `color-primary4` |
+
+#### 文本按钮 (Text) - 以L尺寸为例
+
+| 状态 | 图标颜色/尺寸 | 文本样式 | 文字颜色 |
+|------|-------------|---------|----------|
+| 默认 | 24×24px，`color-info1` | 鸿蒙黑体 (Regular)，16px | `color-info1` |
+| 悬浮 | 24×24px，`color-primary2` | 鸿蒙黑体 (Regular)，16px | `color-primary2` |
+| 按下 | 24×24px，`color-primary3` | 鸿蒙黑体 (Regular)，16px | `color-primary3` |
+| 选中 | 24×24px，`color-primary1` | 鸿蒙黑体 (Regular)，16px | `color-primary1` |
+| 禁用 | 24×24px，`color-info4` | 鸿蒙黑体 (Regular)，16px | `color-info4` |
+
+#### 图标按钮 (Icon Only) - 以L尺寸为例
+
+| 状态 | 图标颜色/尺寸 | 背景色/尺寸 | 说明 |
+|------|-------------|------------|------|
+| 默认 | 24×24px，`color-info2` | 无背景 | 仅图标显示 |
+| 悬浮 | 24×24px，`color-primary2` | 24×24px，`color-control2-light` | 显示浅色背景浮层 |
+| 按下 | 24×24px，`color-primary3` | 24×24px，`color-control2-light` | 显示浅色背景浮层 |
+| 选中 | 24×24px，`color-primary1` | 无背景 | 高亮品牌色 |
+| 禁用 | 24×24px，`color-info4` | 无背景 | 使用禁用色 |
+
 ---
 
 ### 字体样式映射

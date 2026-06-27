@@ -323,3 +323,41 @@ OTab button Group（HORIZONTAL，自适应宽，固定高）
 - `Group 反色` 变体用于深色背景（如 Banner 图上），颜色方案与普通 Group 相反，使用前确认背景色是否匹配
 - Actived 态的字重加粗（Medium/SemiBold）会导致文字宽度略微变化，若标签宽度为自适应，切换选中态时可能出现轻微布局偏移——对于固定宽度布局建议手动设置标签项最小宽度
 - `small` 尺寸的选中指示器为 16px 宽短线（非全宽），视觉上类似"点状"指示，与 large/medium 全宽指示线风格不同
+---
+
+## Part C：交互状态
+
+### text 变体交互状态
+
+| 交互状态 | 标签类型 | 字号 | 字重 | 色值 | 下划线 |
+|---------|---------|------|------|------|--------|
+| Default | 非选中 | 18px | Regular | `color-info2` | 无 |
+| Default | 选中 | 18px | **SemiBold** | `color-primary1` | 2px 高, `color-primary1` |
+| Hover | 非选中 | 18px | **SemiBold** | `color-primary2` | 无 |
+| Hover | 选中 | 18px | **SemiBold** | `color-primary1` | 2px 高, `color-primary1` |
+| Press | 非选中 | 18px | **SemiBold** | `color-primary3` | 2px 高, `color-primary3` |
+| Press | 选中 | 18px | **SemiBold** | `color-primary3` | 2px 高, `color-primary3` |
+| Actived | 非选中 | 18px | **SemiBold** | `color-primary1` | 2px 高, `color-primary1` |
+| Actived | 选中 | 18px | **SemiBold** | `color-primary1` | 2px 高, `color-primary1` |
+| Disabled | 非选中 | 18px | Regular | `color-info4` | 无 |
+| Disabled | 选中 | 18px | Regular | `color-info4` | 无 |
+
+### button 变体交互状态
+
+| 交互状态 | 字号 | 字重 | 色值 | 图标尺寸及颜色 | 底色/背景色 |
+|---------|------|------|------|-------------|------------|
+| Default | 16px | Regular | `color-info2` | 16×16, `color-info2` | — |
+| Hover | 16px | Regular | `color-primary2` | 16×16, `color-primary2` | — |
+| Press | 16px | Regular | `color-primary3` | 16×16, `color-primary3` | `color-fill2` |
+| Actived | 16px | Regular | `color-primary1` | 16×16, `color-primary1` | `color-fill2` |
+| Disabled | 16px | Regular | `color-info4` | 16×16, `color-info4` | — |
+
+### 交互行为说明
+
+- **Default（默认）**：标签的基础显示态，非选中项使用常规字重和 info 色；选中项使用 SemiBold 字重、品牌主色和底部指示线
+- **Hover（悬浮）**：鼠标悬停时，文字颜色提升至 primary2（较浅的品牌色），字重加粗为 SemiBold 提示可交互性；选中项保持 primary1 不变
+- **Press（按下）**：鼠标按下瞬间，颜色加深至 primary3（深品牌色）；text 变体此时显示同色下划线；button 变体增加 fill2 背景色
+- **Actived（选中）**：当前激活标签的稳定态，使用最强的视觉强调（primary1 + 指示线/背景）；同一时刻仅一个标签处于此状态
+- **Disabled（禁用）**：不可交互状态，退化为 info4 弱化色，字重恢复 Regular，移除所有指示器和特殊背景
+
+> **注意**：text 变体的下划线仅在 Actived 和 Press 状态下的非选中标签上出现（表示正在操作的目标）；button 变体的背景色仅在 Press 和 Actived 状态下生效

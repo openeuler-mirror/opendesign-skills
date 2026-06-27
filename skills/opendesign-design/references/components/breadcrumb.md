@@ -57,6 +57,49 @@ OBreadcrumb (HORIZONTAL auto-layout, gap=4)
 ```
 
 ---
+## 交互状态
+
+| 状态 | 非当前层级 | 当前层级 |
+|------|-----------|---------|
+| **默认** | 首页 > 一级页面 > **当前页面**<br>字号: 14px (Regular)<br>色值: color-info3 | 首页 > 一级页面 > **当前页面**<br>字号: 14px (SemiBold)<br>色值: color-primary1 |
+| **悬浮** | 首页 > <u>一级页面</u> > **当前页面**<br>字号: 14px (Regular)<br>色值: color-primary2 | 首页 > 一级页面 > **当前页面**<br>字号: 14px (SemiBold)<br>色值: color-primary1 |
+| **按下** | 首页 > 一级页面 > **当前页面**<br>字号: 14px (Regular)<br>色值: color-primary3 | 首页 > 一级页面 > **当前页面**<br>字号: 14px (SemiBold)<br>色值: color-primary1 |
+| **选中** | 首页 > **一级页面** > **当前页面**<br>字号: 14px (SemiBold)<br>色值: color-primary1 | 首页 > 一级页面 > **当前页面**<br>字号: 14px (SemiBold)<br>色值: color-primary1 |
+| **禁用** | 首页 > 一级页面 > **当前页面**<br>字号: 14px (Regular)<br>色值: color-info4 | 首页 > 一级页面 > ~~当前页面~~<br>字号: 14px (SemiBold)<br>色值: color-primary4 |
+
+### 状态说明
+
+- **非当前层级**：可点击的导航项（首页、一级页面等）
+- **当前层级**：当前位置项（不可点击）
+- **悬浮**：鼠标悬停时显示下划线，颜色变为主色调
+- **按下**：点击时颜色加深
+- **选中**：被选中的导航项加粗并高亮
+- **禁用**：文字变灰，当前层级文字添加删除线效果
+
+### 交互状态字体规范
+
+| 状态 | 元素 | 字号 | 字重 |
+|------|------|------|------|
+| 默认 | 导航层级 | 14px | Regular (400) |
+| 默认 | 当前页面 | 14px | SemiBold (600) |
+| 悬浮/按下 | 导航层级 | 14px | Regular (400) |
+| 选中 | 导航层级 | 14px | SemiBold (600) |
+| 禁用 | 导航层级 | 14px | Regular (400) |
+| 禁用 | 当前页面 | 14px | SemiBold (600) |
+
+### 交互状态颜色 Token
+
+| 状态 | 元素 | 色值 Token |
+|------|------|-----------|
+| 默认 | 导航层级 | color-info3 |
+| 默认 | 当前页面 | color-primary1 |
+| 悬浮 | 导航层级 | color-primary2 |
+| 按下 | 导航层级 | color-primary3 |
+| 选中 | 导航层级/当前页面 | color-primary1 |
+| 禁用 | 导航层级 | color-info4 |
+| 禁用 | 当前页面 | color-primary4 |
+
+---
 
 ## 样式规范
 

@@ -495,6 +495,65 @@ ONavigation Footer Mb（SYMBOL）
 - PC 页脚导航列使用绝对定位，6 列左起 x 坐标：0 / 221.5 / 409.5 / 646.5 / 834.5 / 1022.5px
 - 移动端页脚平台 Logo 分两行排列（第一行 3 个，第二行 2 个），注意保持间距对齐
 
+### 用户操作区交互状态（登录后）
+
+> 适用场景：PC 顶导右侧已登录用户区域（type=PC）
+> 
+> 该区域为**下拉菜单触发器**，包含：头像 + 用户名称 + 下拉箭头
+
+#### 触发器规格（用户名区域）
+
+| 属性 | 值 |
+|------|---|
+| 头像尺寸 | 20×20px（圆形裁剪） |
+| 用户名称 | 字号 14px，文本限宽 96px（超出显示省略号） |
+| 箭头图标 | 16×16px |
+| 组成结构 | 头像 + 用户名称 + 下拉箭头 |
+
+#### 触发器状态明细
+
+| 状态 | 字号 | 字重 | 文字色值 | 背景色 | 下拉菜单 |
+|------|------|------|---------|--------|---------|
+| **默认态** | 14px | Regular | #000000 100% (color-info1) | 透明 | 不显示 |
+| **悬浮态(Hover)** | 14px | Regular | #000000 80% (color-info2) | 透明 | 显示 |
+| **按下态(Press)** | 14px | Semibold | #002FA7 (color-primary1) | #EBF1FA (color-control3-light) | 显示 |
+| **选中态(Selected)**<br>（菜单展开时） | 14px | Semibold | #002FA7 (color-primary1) | #EBF1FA (color-control3-light) | 显示 |
+| **禁用态(Disabled)** | 14px | Regular | #000000 40% (color-info4) | 透明 | 不显示 |
+
+#### 下拉菜单（悬浮/按下/选中态时弹出）
+
+##### 菜单容器样式
+
+| 属性 | 值 |
+|------|---|
+| 背景色 | #FFFFFF (color-control5-light) |
+| 阴影 | X: 0, Y: 2, Blur: 24px, 颜色: #000000 15% |
+
+##### 菜单项列表
+
+1. **个人中心**
+2. **消息中心**（未读时显示红点提示）
+3. **退出登录**
+
+##### 菜单项样式
+
+| 状态 | 字号 | 字重 | 文字色值 | 背景色 |
+|------|------|------|---------|--------|
+| 默认态 | 14px | Regular | #000000 80% (color-info2) | 透明 |
+| 悬浮态 | 14px | Regular | #000000 80% (color-info2) | #EBF1FA (color-control2-light) |
+
+#### 未登录状态
+
+当用户未登录时，该区域显示为**用户图标**：
+
+| 属性 | 值 |
+|------|---|
+| 图标尺寸 | 24×24px |
+| 图标资源 | `header-pc-头像.svg`（位于 `references/assets/navigation/`） |
+| 使用方式 | CSS mask（可着色） |
+| 点击行为 | 跳转至登录页面 |
+
+> 📌 **参考位置**：PC 顶导布局结构中的 `[用户图标 FRAME]`（[第 82 行](file:///Users/lixuan/opendesign-skills/skills/opendesign-design/references/components/navigation.md#L82)），以及 [Part G 资源表](file:///Users/lixuan/opendesign-skills/skills/opendesign-design/references/components/navigation.md#L680) 中的「顶导用户图标」条目。
 ---
 
 ## Part F：Logo 自定义（仅顶导）
