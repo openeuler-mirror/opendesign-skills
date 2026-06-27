@@ -1,6 +1,6 @@
 # 工程落地约束（直出 Vue 代码）
 
-AI 直接生成的 Vue + OpenDesign 代码应满足的工程子集，与具体社区无关。落地到某社区工程时**另需遵循该工程自身的 `rules/`**（路径别名、i18n 方案、排版 mixin、SSR 等）。
+AI 直接生成的 Vue + OpenDesign 代码应满足的工程子集，与具体社区无关。落地到某社区工程前，先读目标仓根 `AGENTS.md`（AI 工具唯一入口，遵循 [agents.md](https://agents.md) 标准）+ 其索引的 `rules/*.md`，按其**框架族**（VitePress 显式 import / Nuxt 自动导入 + SSR 安全）、路径别名、i18n 方案、SEO/GEO 机制（TDK 由 portal-workflow geo-fix 链路负责，组件内勿重复注入）、排版 mixin 等适配。注意：**并非所有 portal 仓都用 OpenDesign**（如 hifloat 用 shadcn-vue + Tailwind）——非 opendesign 仓不适用本文件。
 
 ---
 
