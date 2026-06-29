@@ -445,7 +445,7 @@ layout:
 
 **DSL 识别规则（避免遗漏）**
 
-- **图标判断**：M size 变体（属性3=ic_Enabled/ic_Actived）中的图标是 ODesign 内置图标（如 OIconFilter）。**不要**用项目自定义图标替代，应从 `@opensig/opendesign` 导入
+- **图标判断**：M size 变体（属性3=ic_Enabled/ic_Actived）中的图标是 OpenDesign 内置图标（如 OIconFilter）。**不要**用项目自定义图标替代，应从 `@opensig/opendesign` 导入
 - **S size 无图标**：S size 所有变体均无图标，不要添加 icon 插槽
 - **多 OMenu 识别**：DSL 同一列中出现**多个独立的 assembled Group**（各自有完整菜单结构，且 top 坐标相差 > 100px），应渲染为多个独立 `<OMenu>` 实例，而不是一个带 Group 标签的 OMenu
 - **渐变选中背景**：DSL 的 `fill` 中若有 `GRADIENT_LINEAR`（非纯色），选中态背景需用 `:deep()` 覆盖 `background`（见上方"可覆盖的 CSS 变量"一节）

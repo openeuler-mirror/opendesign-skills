@@ -62,7 +62,7 @@ regions: [toast-list(提示列表容器) > toast-item(单条提示内容)]
 🔍 **设计稿识别指南**：
 - **视觉特征指纹**：页面底部/顶部/居中浮动的深色（近黑色）圆角条状提示，白色文字，有阴影，短暂显示后消失 → 匹配 OToast；与 OMessage 类似但 OToast 定位更灵活且默认出现在底部
 - **Token → Prop 映射**：出现在页面顶部 → position="top"；出现在页面居中 → position="center"；出现在页面底部 → position="bottom"（默认）；提示文字内容 → message 属性或 default 插槽；有自动消失行为 → duration 属性；提示时间较长 → long=true
-- **易混淆组件区分**：与 OMessage 区分——OMessage 是固定在页面顶部的消息条带有颜色语义（success/warning/danger），OToast 是轻量级的底部/居中/顶部浮动提示无颜色语义；与 ONotification 区分——ONotification 是右上角弹出的通知卡片可交互，OToast 是短暂的轻提示不可操作
+- **易混淆组件区分**：与 OMessage 区分——OMessage 是固定在页面顶部的消息条带有颜色语义（success/warning/danger），OToast 是轻量级的底部/居中/顶部浮动提示无颜色语义；与 OPopover 区分——OPopover 是相对于目标元素的气泡弹出层有箭头指向，OToast 是全局浮动提示无箭头
 
 ---
 
@@ -367,7 +367,7 @@ layout:
 | 本组件 | 易混淆组件 | 关键区分依据 |
 |--------|-----------|-------------|
 | OToast | OMessage | OMessage 固定在页面顶部、有颜色语义（success/warning/danger 等）、可关闭；OToast 是深色背景轻提示、默认底部显示、自动消失 |
-| OToast | ONotification | ONotification 是右上角弹出的通知卡片有标题和操作按钮；OToast 是简短的一行提示无复杂交互 |
+| OToast | ODialog | ODialog 是模态对话框可承载标题和操作按钮、需用户处理；OToast 是简短的一行提示无复杂交互、自动消失 |
 | OToast | OPopover | OPopover 是相对于目标元素的气泡弹出层有箭头指向；OToast 是全局浮动提示无箭头 |
 
 ---

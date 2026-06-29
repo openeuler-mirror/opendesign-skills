@@ -193,7 +193,7 @@ regions:
 🔍 **设计稿识别指南**：
 - **视觉特征指纹**：带有填充色表头（蓝灰背景）或分割线表头的多列数据表格；表头可含筛选漏斗图标、排序箭头、描述气泡图标；行首可有复选框或展开箭头；固定列滚动时有侧边阴影
 - **Token → Prop 映射**：表头背景 `--o-color-control3-light` 对应 `headerStyle="fill"`；行底分割线对应默认 `border="row"`；全边框对应 `border="all"`；表头筛选图标对应列配置 `filter`；排序图标对应列配置 `sortKey`
-- **易混淆组件区分**：与 OTable 区分——OTable 是纯展示表格（手写 tr/td），ODataTable 是数据驱动表格（通过 columns+data 自动渲染）；与 OList 区分——List 是单列列表，DataTable 是多列表格
+- **易混淆组件区分**：与 OTable 区分——OTable 是纯展示表格（手写 tr/td），ODataTable 是数据驱动表格（通过 columns+data 自动渲染）
 
 ---
 
@@ -1178,7 +1178,7 @@ filter-panel:
 | 组件 A | 组件 B | 区分标准 |
 |--------|--------|---------|
 | ODataTable | OTable | DataTable 通过 `columns` + `data` 数据驱动自动渲染；OTable 需手写 `<tr><td>` 模板 |
-| ODataTable | OList | DataTable 是多列表格（含表头）；OList 是单列无表头的列表 |
+| ODataTable | OTable（单列模式） | DataTable 是多列表格（含表头）；单列 OTable 是单列无表头的列表 |
 | ODataTable (树形) | ODataTable (普通) | 树形模式下表格行有层级缩进嵌套，适用于父子级数据；普通模式为平铺列表 |
 | ODataTable (headerStyle=fill) | ODataTable (headerStyle=split-line) | fill 模式表头有填充背景色；split-line 模式表头与表体同色，仅有底部分割线 |
 | ODataTable (selection) | ODataTable (expand) | selection 在行首显示复选框用于多选；expand 在行首显示箭头用于展开详情 |

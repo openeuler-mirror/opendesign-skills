@@ -80,7 +80,7 @@ regions: [target(触发元素), popup-body(气泡内容+锚点箭头)]
 🔍 **设计稿识别指南**：
 - **视觉特征指纹**：元素附近弹出的小型浮层卡片 + 带三角箭头指向目标元素 + 有边框和阴影 → 匹配 OPopover；悬停触发的轻量提示浮层 → 优先考虑 OPopover
 - **Token → Prop 映射**：浮层在目标上方+箭头朝下 → position="top"（默认）；下方 → position="bottom"；左/右 → position="left"/"right"；无箭头 → anchor=false；点击触发 → trigger="click"
-- **易混淆组件区分**：与 OPopup 区分——OPopover 默认 hover 触发、有箭头、有 8px 偏移，适合轻量提示；OPopup 默认 click 触发、无箭头、无偏移，适合复杂弹出内容。与 OTooltip 区分——OPopover 可承载富文本/交互内容，OTooltip 仅纯文字提示
+- **易混淆组件区分**：与 OPopup 区分——OPopover 默认 hover 触发、有箭头、有 8px 偏移，适合轻量提示；OPopup 默认 click 触发、无箭头、无偏移，适合复杂弹出内容
 
 ---
 
@@ -335,7 +335,6 @@ layout:
 | 本组件 | 易混淆组件 | 关键区分依据 |
 |--------|-----------|-------------|
 | OPopover | OPopup | OPopover 默认 hover 触发+有箭头+8px 偏移，适合轻量提示；OPopup 默认 click 触发+无箭头+0 偏移，是底层通用弹出层 |
-| OPopover | OTooltip | OPopover 可承载富文本和交互元素，OTooltip 仅纯文字提示且样式更简单 |
 | OPopover | ODropdown | ODropdown 是下拉菜单列表（含 OOption），OPopover 是自由内容气泡卡片 |
 | OPopover | ODialog | ODialog 是居中模态弹窗有遮罩，OPopover 是非模态的目标元素附近浮层 |
 

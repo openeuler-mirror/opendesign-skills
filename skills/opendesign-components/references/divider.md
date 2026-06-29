@@ -33,7 +33,7 @@ vertical: inline-block, width=1px, height=1em
 🔍 **设计稿识别指南**：
 - **视觉特征指纹**：一条水平或垂直的细线（1px），颜色为浅灰色（control4 色阶），横跨容器宽度 → 匹配 ODivider（水平）；两段文字之间的短竖线 → 匹配 ODivider（垂直）；线条中间有文字标签 → 匹配 ODivider（带 label）
 - **Token → Prop 映射**：实线 → variant="solid"（默认）；虚线段 → variant="dashed"；点状线 → variant="dotted"；竖线 → direction="v"；线上文字靠左 → labelPosition="left"；线上文字居中 → labelPosition="center"（默认）；线条颜色较深（control1 色阶） → darker
-- **易混淆组件区分**：与 CSS border-bottom 区分——ODivider 有语义化 role="separator"，且支持标签和响应式变细；与 OGrid 间距区分——OGrid 用 gap 控制间距无可见线条，ODivider 是可见的分隔线
+- **易混淆组件区分**：与 CSS border-bottom 区分——ODivider 有语义化 role="separator"，且支持标签和响应式变细；与 ORow/OCol 间距区分——ORow/OCol 用 gap 控制间距无可见线条，ODivider 是可见的分隔线
 
 ---
 
@@ -229,7 +229,7 @@ layout:
 |--------|-----------|-------------|
 | ODivider | CSS border | ODivider 有 role="separator" 语义，支持标签文字和响应式变细，border 仅是装饰线 |
 | ODivider（垂直） | 竖线字符 `\|` | ODivider 是 DOM 元素有设计 Token 控制颜色和粗细，字符竖线无法自适应 |
-| ODivider | OGrid gap | OGrid 的 gap 是不可见间距，ODivider 是可见的分隔线条 |
+| ODivider | ORow/OCol gap | ORow/OCol 的 gap 是不可见间距，ODivider 是可见的分隔线条 |
 | ODivider（带标签） | 标题+下划线 | ODivider 标签是线条中间的嵌入文字，标题+下划线是文字下方的装饰线 |
 
 ---

@@ -36,7 +36,7 @@ regions: [slot:default]  # 透传子组件，无包裹元素
 🔍 **设计稿识别指南**：
 - **视觉特征指纹**：本组件无视觉表现，不可从设计稿中直接识别。当设计稿标注了多语言切换或全局链接行为时，应在代码中使用此组件包裹应用
 - **Token → Prop 映射**：无视觉 Token。设计稿中的语言标注（如"中文/English"切换器）暗示需要配置 `locale`；全局链接行为需求暗示需要配置 `link`
-- **易混淆组件区分**：与 OLayout 等布局容器区分——ConfigProvider 不渲染任何 DOM 元素，仅注入配置
+- **易混淆组件区分**：与 ORow/OCol 等布局容器区分——ConfigProvider 不渲染任何 DOM 元素，仅注入配置
 
 ---
 
@@ -279,7 +279,7 @@ root: 无DOM元素  # 模板仅为 <slot></slot>，不生成包裹元素
 
 | 组件 A | 组件 B | 区分标准 |
 |--------|--------|---------|
-| OConfigProvider | OLayout / OContainer | ConfigProvider 不产生 DOM，纯逻辑注入；布局组件会产生实际 DOM 容器 |
+| OConfigProvider | ORow / OCol | ConfigProvider 不产生 DOM，纯逻辑注入；ORow/OCol 布局组件会产生实际 DOM 容器 |
 | OConfigProvider (locale) | useLocale() | ConfigProvider 是局部范围注入，可嵌套覆盖；useLocale 是全局设置 |
 | OConfigProvider (link) | OLink @click | ConfigProvider 的 link.click 是全局统一回调；OLink 的 @click 是单个链接的事件 |
 

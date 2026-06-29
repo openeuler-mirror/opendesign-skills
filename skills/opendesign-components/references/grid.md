@@ -1,10 +1,10 @@
 > ← [组件索引](../SKILL.md#组件索引) · [README](../../../README.md)
 
-# OGrid 栅格布局
+# ORow/OCol 栅格布局
 
 ## Part A：设计理解卡
 
-OGrid 是基于 Flex 布局的栅格系统，用于页面内容的多列排版和响应式布局。包含 ORow（行容器）和 OCol（列容器）。核心特点是支持按断点设置不同的间距和列宽。
+OpenDesign 栅格系统基于 Flex 布局，用于页面内容的多列排版和响应式布局，由 ORow（行容器）和 OCol（列容器）组成。核心特点是支持按断点设置不同的间距和列宽。
 
 ### ORow 行容器
 
@@ -42,7 +42,7 @@ OCol: flex: --col-flex, 断点覆盖 --col-{bp}-flex
 🔍 **设计稿识别指南**：
 - **视觉特征指纹**：多列等分或不等分排列的内容区域，列间有均匀间距，不同屏幕宽度下列数和间距变化
 - **Token → Prop 映射**：等分三列=flex:"0 0 33.33%"、等分两列=flex:"0 0 50%"、自适应=flex:"1"；列间距=gap/gapX、行间距=gapY；小屏变单列=phone:{flex:"0 0 100%"}
-- **易混淆组件区分**：与 OForm(layout=h) 区别——Grid 是通用多列栅格系统无语义，Form 专用于表单标签-控件对齐；与 CSS Grid 区别——OGrid 基于 Flex 实现，通过 prop 控制断点响应式，无需手写媒体查询
+- **易混淆组件区分**：与 OForm(layout=h) 区别——ORow/OCol 是通用多列栅格系统无语义，Form 专用于表单标签-控件对齐；与 CSS Grid 区别——ORow/OCol 基于 Flex 实现，通过 prop 控制断点响应式，无需手写媒体查询
 
 ---
 
@@ -312,7 +312,7 @@ media-queries:
 | 对比组件 | 相似点 | 区分方法 |
 |---------|-------|---------|
 | OForm (layout=h) | 都可实现左右排列 | Grid 是通用多列栅格系统，无表单语义；Form 专用于标签-控件对齐，有校验系统和 submit 事件 |
-| CSS Grid / Flexbox | 都实现多列布局 | OGrid 封装了断点响应式 prop（pcS/laptop/pad/padV/phone），无需手写媒体查询；纯 CSS 需自行处理 |
+| CSS Grid / Flexbox | 都实现多列布局 | ORow/OCol 封装了断点响应式 prop（pcS/laptop/pad/padV/phone），无需手写媒体查询；纯 CSS 需自行处理 |
 | ORow + 普通 div | 都可包含子元素 | OCol 提供断点级 flex 覆盖，普通 div 无内置响应式切换能力 |
 
 ---

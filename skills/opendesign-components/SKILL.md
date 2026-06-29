@@ -422,7 +422,7 @@ export default defineNuxtConfig({
 - [ODropdown](#odropdown) — 下拉菜单 · [参考文档](references/dropdown.md)
 - [OFigure](#ofigure) — 图片 · [参考文档](references/figure.md)
 - [OForm / OFormItem](#oform--oformitem) — 表单 · [参考文档](references/form.md)
-- [OGrid / ORow / OCol](#ogrid--orow--ocol) — 栅格布局 · [参考文档](references/grid.md)
+- [ORow / OCol](#orow--ocol) — 栅格布局 · [参考文档](references/grid.md)
 - [OIcon](#oicon) — 图标 · [参考文档](references/icon.md)
 - [OInput](#oinput) — 输入框 · [参考文档](references/input.md)
 - [OInputNumber](#oinputnumber) — 数字输入框 · [参考文档](references/input-number.md)
@@ -527,7 +527,7 @@ Pixso 图层或组件实例名通常含有以下关键词，可直接映射：
 | scrollbar / scroller / 滚动 | OScrollbar | references/scrollbar.md |
 | virtual-list / 虚拟列表 | OVirtualList | references/virtual-list.md |
 | data-table / 表格 / table | ODataTable | references/data-table.md |
-| row / col / grid / 栅格 | OGrid/ORow/OCol | references/grid.md |
+| row / col / grid / 栅格 | ORow/OCol | references/grid.md |
 | form / 表单 | OForm | references/form.md |
 
 ---
@@ -590,7 +590,7 @@ Pixso 图层或组件实例名通常含有以下关键词，可直接映射：
 | 通用弹出层容器（自身无样式，定位在触发元素附近） | OPopup | references/popup.md |
 | 通用蒙层/全屏浮层容器（无固定内部结构） | OLayer | references/layer.md |
 | 可展开/收起的内容面板，**标题区可点击切换** | OCollapse | references/collapse.md |
-| 横向或垂直**弹性列**布局容器（flex 排列子元素） | OGrid/ORow/OCol | references/grid.md |
+| 横向或垂直**弹性列**布局容器（flex 排列子元素） | ORow/OCol | references/grid.md |
 | 表单容器，内部为**标签 + 控件**成对排列 | OForm | references/form.md |
 
 #### 媒体 / 其他
@@ -1214,7 +1214,7 @@ const linkConfig = {
 
 ---
 
-## OGrid / ORow / OCol
+## ORow / OCol
 
 **ORow 属性**：
 - `align` — 辅轴对齐方式

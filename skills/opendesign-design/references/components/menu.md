@@ -415,7 +415,7 @@ OMenu 菜单项支持以下状态：
 - 设计稿 URL：https://pixso.cn/app/design/JZkjW0mhmT61Mtd98dCfBw?item-id=1042:13181
 - 生成日期：2026-06-02
 - 变体总数：32（size×层级×状态×Dark）
-- medium 图标：ODesign 内置图标（从 `@opensig/opendesign` 导入），非自定义 SVG
+- medium 图标：OpenDesign 内置图标（从 `@opensig/opendesign` 导入），非自定义 SVG
 - small 无图标：所有 small 变体均无前缀图标
 - level3 限 small：三级层级仅存在于 small 尺寸变体
 - 选中背景：`color-control3-light`（纯色），渐变需 `:deep()` 覆盖

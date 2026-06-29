@@ -71,7 +71,7 @@ regions: [sidebar(彩色侧边条,仅colorful), icon(状态图标), main(标题+
 🔍 **设计稿识别指南**：
 - **视觉特征指纹**：页面顶部或指定区域出现的水平通知条，左侧带状态图标（信息/成功/警告/错误/加载），右侧可能有关闭按钮；有阴影或彩色背景变体 → 匹配 OMessage
 - **Token → Prop 映射**：蓝色信息图标 → status="info"；绿色勾号 → status="success"；橙色感叹号 → status="warning"；红色叉号 → status="danger"；旋转加载图标 → status="loading"；左侧彩色边条+彩色背景 → colorful；右侧 X 按钮 → closable
-- **易混淆组件区分**：与 OAlert 区分——OMessage 是临时通知可自动消失，通常浮于内容上方；OAlert 是静态内嵌提示不自动消失。与 ONotification 区分——OMessage 是简短单行消息居中显示，ONotification 是更丰富的通知卡片
+- **易混淆组件区分**：与 OToast 区分——OMessage 通常位于顶部、带状态颜色语义（success/warning/danger），OToast 是深色背景轻提示、默认底部显示、无颜色语义；与 ODialog 区分——OMessage 是非模态轻量提示不阻断操作，ODialog 是模态对话框需用户处理后才能继续
 
 ---
 
@@ -449,9 +449,8 @@ layout:
 
 | 本组件 | 易混淆组件 | 关键区分依据 |
 |--------|-----------|-------------|
-| OMessage | OAlert | OMessage 是临时浮层通知可自动消失，OAlert 是静态内嵌提示区域不会自动消失 |
-| OMessage | ONotification | OMessage 是简短消息条居中/顶部显示，ONotification 是带标题+详情的通知卡片通常右上角弹出 |
-| OMessage（内联） | OAlert | 内联 OMessage 固定在页面中时外观类似 OAlert，但 OMessage 支持 duration 自动关闭和命令式调用 |
+| OMessage | OToast | OMessage 通常位于顶部、带状态颜色语义（success/warning/danger）、可关闭；OToast 是深色背景轻提示、默认底部、无颜色语义 |
+| OMessage | ODialog | OMessage 是非模态轻量提示不阻断操作；ODialog 是模态对话框需用户处理后才能继续 |
 
 ---
 

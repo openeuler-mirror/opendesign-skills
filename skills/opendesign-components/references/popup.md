@@ -344,7 +344,6 @@ layout:
 |--------|-----------|-------------|
 | OPopup | OPopover | OPopup 是底层组件（click 触发、无箭头、0 偏移），OPopover 是封装组件（hover 触发、有箭头、8px 偏移），适合轻量提示 |
 | OPopup | ODialog | ODialog 是居中模态弹窗有遮罩层覆盖全屏，OPopup 是定位到目标元素附近的非模态浮层 |
-| OPopup | ODrawer | ODrawer 是从屏幕边缘滑出的面板，OPopup 是相对目标元素定位的浮层 |
 | OPopup | ODropdown | ODropdown 基于 OPopup 封装，专用于下拉菜单列表（含 OOption），OPopup 是通用容器 |
 
 ---

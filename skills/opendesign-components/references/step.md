@@ -63,7 +63,7 @@ regions: [OStepItem(head(symbol+line) + main(title+desc)), ...]
   - 绿色圆形+**数字** → status="finished"（**不传 icon，默认显示序号**）
   - ⚠️ **finished 状态圆圈内是数字还是对勾，必须看设计图！** 两种情况都是绿色圆形，不能默认用 icon=true
   - 蓝色圆形+加粗标题 → status="processing"；灰色/浅色圆形 → status="waiting"；红色圆形+感叹号图标 → status="failed" + icon=true；圆内显示数字 → 不传 icon（默认）；水平排列 → direction="h"；垂直排列 → direction="v"
-- **易混淆组件区分**：与 OTimeline 区分——OTimeline 是时间线事件记录，OStep 是流程步骤导航，OStep 有明确的状态色（finished/processing/waiting/failed）且每步有圆形数字标识；与 OBreadcrumb 区分——OBreadcrumb 是导航路径面包屑，没有圆形标识和连接线
+- **易混淆组件区分**：与 OBreadcrumb 区分——OBreadcrumb 是导航路径面包屑，没有圆形标识和连接线；OStep 是流程步骤导航，有明确的状态色（finished/processing/waiting/failed）且每步有圆形数字标识
 
 ---
 
@@ -411,9 +411,8 @@ layout:
 
 | 本组件 | 易混淆组件 | 关键区分依据 |
 |--------|-----------|-------------|
-| OStep | OTimeline | OTimeline 是时间线事件列表（无状态色圆形标识），OStep 有明确的步骤序号和状态色圆形 |
 | OStep | OBreadcrumb | OBreadcrumb 是路径导航面包屑（文字+分隔符），OStep 有圆形标识和连接线 |
-| OStep | ONav / 导航菜单 | 导航菜单是页面路由切换，OStep 是流程进度展示，有 finished/processing/waiting 状态 |
+| OStep | OMenu / 导航菜单 | OMenu 是页面路由切换，OStep 是流程进度展示，有 finished/processing/waiting 状态 |
 
 ---
 

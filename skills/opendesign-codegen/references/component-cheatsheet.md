@@ -18,7 +18,7 @@ AI 直出代码时，按设计意图选用真实组件（从 `@opensig/opendesig
 | 单选 / 复选 / 开关 | `ORadioGroup`+`ORadio` / `OCheckbox` / `OSwitch` | `v-model` |
 | 数据表格 | `OTable` | `:columns`(`{label,key}`)、`:data`；单元格 `#td_<key>="{ row }"`、表头 `#header` |
 | 分页 | `OPagination` | `:total`、`:page`、`:page-size`、`:page-sizes`、`@change` |
-| 标签页 | `OTabs` + `OTabPane` | `v-model`；`<OTabPane :value :label>` |
+| 标签页 | `OTab` + `OTabPane` | `v-model`；`<OTabPane :value :label>` |
 | 弹窗 | `ODialog` | `v-model:visible`、`#header`/`#footer` |
 | 图标 | `OIcon` | `<OIcon><IconXxx /></OIcon>`，图标来自工程的 `~icons/...` 或 svg 导入 |
 | 分割线 | `ODivider` | `direction`、`align` |
