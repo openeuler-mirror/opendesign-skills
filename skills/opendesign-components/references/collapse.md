@@ -316,9 +316,9 @@ root: .o-collapse
 
 | 组件 A | 组件 B | 区分标准 |
 |--------|--------|---------|
-| OCollapse | OTabs | Collapse 纵向折叠展开，标题在每项顶部；Tabs 横向标签页切换，标签在顶部/底部统一排列 |
+| OCollapse | OTab | Collapse 纵向折叠展开，标题在每项顶部；Tabs 横向标签页切换，标签在顶部/底部统一排列 |
 | OCollapse (accordion) | OCollapse (默认) | 手风琴模式同时只展开一项；默认模式可同时展开多项 |
-| OCollapse | ODetails (HTML原生) | OCollapse 提供统一容器管理多面板状态；原生 details 各自独立、无法联动 |
+| OCollapse | `<details>`（HTML 原生） | OCollapse 提供统一容器管理多面板状态；原生 `<details>` 各自独立、无法联动 |
 
 ### 版本变更记录
 

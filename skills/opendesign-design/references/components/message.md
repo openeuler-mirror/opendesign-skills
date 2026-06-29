@@ -155,7 +155,7 @@ OMessage-内联提示2（FRAME，HORIZONTAL，自适应宽高）
 > 🔄 **易混淆组件**：
 > - 与 **OTag 标签** 的区别：Tag 是状态标注标签，Message 是完整提示条，宽度和语义不同
 > - 与 **OToast** 的区别：OMessage 全局提示位于顶部居中，OToast 通常位于底部或角落
-> - 与 **OAlert 警告框** 的区别：Alert 通常为模态，Message 为非模态轻量提示
+> - 与 **ODialog 对话框** 的区别：ODialog 是模态对话框需用户处理后才能继续，Message 为非模态轻量提示不阻断操作
 
 ---
 

@@ -86,7 +86,7 @@ OInput（SYMBOL，自适应宽度，固定高度）
 ### 组合搭配
 
 > 🔗 **常见搭配**：
-> - **表单组合**：OInput + OLabel + OButton，构成完整表单
+> - **表单组合**：OForm + OFormItem（内含 OInput/OButton），构成完整表单
 > - **搜索组合**：OInput（带搜索图标）+ OButton（搜索按钮）
 > - **登录表单**：用户名输入框 + 密码输入框 + 提交按钮
 > - **筛选输入**：OInput + OSelect + OToggle，构成筛选栏

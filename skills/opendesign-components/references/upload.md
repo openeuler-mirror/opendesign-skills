@@ -102,7 +102,7 @@ regions: [select-wrap(选择区域+拖拽区域), file-list(文件列表)]
 🔍 **设计稿识别指南**：
 - **视觉特征指纹**：带有"点击上传"按钮或虚线边框拖拽区域的文件上传组件 → 匹配 OUpload；卡片网格 + 添加按钮（+号） → 匹配 OUpload（picture-card 模式）；文件名列表 + 各文件有删除/重试图标 → 匹配 OUpload（text/picture 模式）
 - **Token → Prop 映射**：虚线边框大区域 + 拖拽提示文字 → draggable=true；网格卡片布局 + 带缩略图 → listType="picture-card"；行列表 + 小缩略图 → listType="picture"；纯文件名行列表 → listType="text"（默认）；有"+ 点击上传"蓝色胶囊按钮 → 默认选择按钮；卡片尺寸 120px 方形 → picture-card 默认；进度条 → showProgress=true
-- **易混淆组件区分**：与 OButton 区分——上传按钮只是 OUpload 的触发子元素，完整的上传组件还包含文件列表和拖拽区域；与 OFigure/OImage 区分——OUpload 的 picture-card 模式包含缩略图但主要目的是上传管理，OFigure 是纯图片展示
+- **易混淆组件区分**：与 OButton 区分——上传按钮只是 OUpload 的触发子元素，完整的上传组件还包含文件列表和拖拽区域；与 OFigure 区分——OUpload 的 picture-card 模式包含缩略图但主要目的是上传管理，OFigure 是纯图片展示
 
 ---
 
@@ -454,7 +454,7 @@ layout:
 | 本组件 | 易混淆组件 | 关键区分依据 |
 |--------|-----------|-------------|
 | OUpload | OButton | 上传按钮只是 OUpload 的子元素，完整组件还包含文件列表和拖拽区域 |
-| OUpload（picture-card） | OFigure/OImage | OUpload 的卡片包含上传管理功能（删除/重试/进度），OFigure 是纯图片展示 |
+| OUpload（picture-card） | OFigure | OUpload 的卡片包含上传管理功能（删除/重试/进度），OFigure 是纯图片展示 |
 | OUpload（draggable） | 自定义拖拽区域 | OUpload 拖拽区域有完整的文件选择、上传、列表管理功能 |
 | OUpload（text） | 普通文件列表 | OUpload 文件列表项有上传状态、进度条和操作按钮（删除/重试） -->
 

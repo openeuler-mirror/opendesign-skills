@@ -76,7 +76,7 @@ item: [label(symbol+text), main(control+message+extra)]
 - **⚠️ 多列表单布局**：设计稿中表单项并排显示时，使用 `OForm layout="h"`（保持单列堆叠，标签左置）。OForm 提供 `--form-item-main-box-width-standard`/`--form-item-main-box-width-wide` 等响应式变量，**推荐在项目全局样式中统一应用**（见「全局调用建议」），模板中无需对每个控件单独设 width（OButton 除外）。
   - 若项目设计稿与默认值不符，全局覆盖变量即可：`.o-form { --form-item-main-box-width-standard: xxx; --form-item-main-box-width-wide: xxx; }`
   - 标签宽度最小值：`label-width="96px"`（PC 多列表单），实际宽度以设计图为准
-- **易混淆组件区分**：与普通 div 排列区别——Form 有 `<form>` 语义标签、内置校验系统和 submit 事件；与 OGrid 区别——Form 专用于表单项的标签-控件对齐布局，Grid 是通用多列栅格布局
+- **易混淆组件区分**：与普通 div 排列区别——Form 有 `<form>` 语义标签、内置校验系统和 submit 事件；与 ORow/OCol 区别——Form 专用于表单项的标签-控件对齐布局，ORow/OCol 是通用多列栅格布局
 - **⚠️ 输入类控件的错误状态 / 必填星号 → 统一用 OFormItem 包裹**（适用于所有输入类控件：OInput、OSelect、OTextarea、OInputNumber、OCheckbox、ORadio、OSlider、OSwitch、OCascader、ORate 等）：
   - 设计稿中标签前有红色星号（必填）→ `<OFormItem required>` ，表单整体加 `hasRequired`（预留星号空间保持对齐）
   - 设计稿中控件有红色边框 / 错误状态 → 将控件放入 `<OFormItem :rules="[...]">` ，校验触发后自动驱动控件 color
@@ -539,7 +539,7 @@ breakpoints:
 
 | 对比组件 | 相似点 | 区分方法 |
 |---------|-------|---------|
-| OGrid (ORow+OCol) | 都可实现左右排列布局 | Form 专用于标签-控件对齐的表单场景，有校验系统和 submit 事件；Grid 是通用多列栅格系统，无表单语义 |
+| ORow/OCol | 都可实现左右排列布局 | Form 专用于标签-控件对齐的表单场景，有校验系统和 submit 事件；ORow/OCol 是通用多列栅格系统，无表单语义 |
 | div + flex 手动排列 | 都可排列元素 | Form 是 `<form>` 语义标签，内置校验系统（rules/validate/resetFields），支持全局标签配置继承 |
 | OInput / OSelect 等 | 常一起使用 | Form/FormItem 是容器和布局组件，管理标签对齐和校验；Input/Select 是具体的输入控件，放在 FormItem 的默认插槽内 |
 
