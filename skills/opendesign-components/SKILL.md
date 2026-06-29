@@ -106,7 +106,7 @@ initRound('pill') // 'pill'代表全圆角，通常在Ascend社区使用
 
 ```typescript
 // main.ts
-import '@opensig/opendesign-token/fonts/font-harmony.css' // 鸿蒙字体
+import '@opensig/opendesign-token/fonts/css' // 鸿蒙字体
 ```
 
 ---
