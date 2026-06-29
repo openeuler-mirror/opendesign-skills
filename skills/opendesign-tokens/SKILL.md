@@ -1,6 +1,6 @@
 ---
 name: opendesign-tokens
-description: OpenDesign 设计 Token 指南。当需要使用 @opensig/opendesign-token 包中的 CSS 变量时使用此 skill。包含六套主题（openEuler/Ascend/Kunpeng/Mindspore/openGauss/openUBMC）的完整 token 体系，支持颜色、间距、圆角、字体、阴影、响应式排版、栅格系统等所有设计令牌。使用场景：(1) 查找颜色值对应的语义 token，(2) 获取间距/圆角/字体的 token 名称，(3) 了解六套主题的差异，(4) 代码中使用 CSS 变量替代硬编码值，(5) 使用响应式 token 实现多断点适配
+description: OpenDesign 设计 Token 指南。当需要使用 @opensig/opendesign-token 包中的 CSS 变量时使用此 skill。包含六套主题（openEuler/Ascend/Kunpeng/Mindspore/openGauss/openUBMC）的完整 token 体系，支持颜色、间距、圆角、字体、阴影、响应式排版、栅格系统等所有设计令牌。使用场景：(1) 查找颜色值对应的语义 token，(2) 获取间距/圆角/字体的 token 名称，(3) 了解六套主题的差异，(4) 代码中使用 CSS 变量替代硬编码值，(5) 使用响应式 token 实现多断点适配，(6) 引入鸿蒙字体文件并使用字体族 token
 ---
 
 # OpenDesign 设计 Token 指南
@@ -12,6 +12,8 @@ description: OpenDesign 设计 Token 指南。当需要使用 @opensig/opendesig
 ---
 
 ## 各社区主题的使用方式
+
+每个社区项目在初始化时选定一套主题，在入口文件（`main.ts`）引入对应的主题 CSS。如需启用鸿蒙字体（HarmonyOS Sans SC），需在主题 CSS 之后引入字体 CSS（`@opensig/opendesign-token/fonts/css`），具体见第 6 节「字体 Token」。
 
 ### openEuler 主题（`e`）
 
@@ -630,9 +632,35 @@ Pad及以下 (≤1200px):  grid-padding               | grid-full | grid-padding
 
 ---
 
-## 6. 字体 Token（Font）— 静态值
+## 6. 字体 Token（Font）
 
 > **页面级文字推荐使用响应式 token `--o-r-font_size-*` / `--o-r-line_height-*`**（见第 2 节），以下静态 token 适用于不随视口变化的固定字号场景。
+
+### 字体族（Font Family）— 鸿蒙字体
+
+OpenDesign 默认使用 **HarmonyOS Sans SC**（鸿蒙黑体简体）作为主字体族。字体文件随 `@opensig/opendesign-token` 包发布，需在入口文件显式引入后，`--o-font_family` 才会真正指向鸿蒙字体。
+
+```typescript
+// main.ts（在主题 CSS 之后引入）
+import '@opensig/opendesign-token/themes/e.token.css' // 主题 CSS
+import '@opensig/opendesign-token/fonts/css'          // 鸿蒙字体
+```
+
+| Token | 值 | 说明 |
+|-------|-----|------|
+| `--o-font_family` | `HarmonyOS, Inter, -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', Arial, sans-serif` | 默认字体族（HarmonyOS Sans SC） |
+| `--o-font_family-code` | `SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace` | 等宽代码字体族 |
+
+```css
+body {
+  font-family: var(--o-font_family);
+}
+code, pre {
+  font-family: var(--o-font_family-code);
+}
+```
+
+> ⚠️ 仅设置 `font-family: var(--o-font_family)` 不会自动加载字体文件，必须在入口文件 `import '@opensig/opendesign-token/fonts/css'`
 
 ### 字体大小（Font Size）
 
