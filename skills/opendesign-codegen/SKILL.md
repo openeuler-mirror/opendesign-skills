@@ -1,6 +1,7 @@
 ---
 name: opendesign-codegen
 description: OpenDesign 代码直出指南。当设计师（尤其各社区体验/设计团队）让 AI 工具把需求/设计意图直接做成页面或组件时使用此 skill——AI 应**直接生成符合工程规范的 Vue 3 + OpenDesign 代码**（真实 O 组件 + --o- 设计 token + scoped SCSS + BEM + i18n），渲染出来即设计稿，无需"先出 HTML 再转代码"的中间步骤。提供四大约束（视觉 Token / 组件用法 / 布局响应式 / 工程落地）、合规 SFC 起手模板、组件选用速查、生成后自检清单。仅适用于 UI 库为 @opensig/opendesign 的目标仓——生成前先读目标仓根 AGENTS.md + rules/ 按其框架族/i18n/别名/SEO 约定适配。复用 opendesign-tokens 与 opendesign-components，不重复其内容。
+last_update: 2026-06-29
 ---
 
 # OpenDesign 代码直出指南

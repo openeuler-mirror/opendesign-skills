@@ -1,6 +1,7 @@
 ---
 name: opendesign-design
 description: OpenDesign Pixso 设计稿生产指南。当需要在 Pixso 中创建/编辑 UI 组件（按钮、输入框、卡片、导航等）、应用设计规范（栅格/颜色/字号/间距/圆角）、搭建页面框架、调用 Pixso 组件库（Symbol）或读取设计变量（Tokens）时使用此 skill。包含 PC/MB 双断点的变量映射硬约束（字号/行高/间距/栅格/图标尺寸的合法取值白名单），覆盖 23 个组件设计规范、536 个 componentKey 变体与 187 个图标 componentKey。本 skill 仅生产 Pixso 设计稿，不输出代码。
+last_update: 2026-06-30
 ---
 
 # Design Skill · Pixso 组件系统
