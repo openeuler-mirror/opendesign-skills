@@ -149,8 +149,8 @@ OToggle（SYMBOL，自适应宽度，固定高度）
 
 | 区域 | Light 模式 | Dark 模式 | Token | RGB 值 |
 |------|-----------|----------|-------|--------|
-| 按钮背景 | `grey-2` | `grey-3` | `color-fill1` | rgb(243,243,245) → rgb(26,26,28) |
-| 文字 | `grey-14` | `grey-14` | `color-info1` | rgb(0,0,0) → rgb(255,255,255) |
+| 按钮背景 | `grey-2` | `grey-3` | `--o-color-fill1` | rgb(243,243,245) → rgb(26,26,28) |
+| 文字 | `grey-14` | `grey-14` | `--o-color-info1` | rgb(0,0,0) → rgb(255,255,255) |
 | 描边 | 无 | 无 | — | — |
 
 #### Actived（选中）状态
@@ -158,8 +158,8 @@ OToggle（SYMBOL，自适应宽度，固定高度）
 | 区域 | Light 模式 | Dark 模式 | Token | RGB 值 |
 |------|-----------|----------|-------|--------|
 | 按钮背景 | transparent | transparent | — | 无填充 |
-| 描边 | `brand-6` | `brand-6` | `color-primary1` | rgb(0,47,167) → rgb(73,122,248) |
-| 文字 | `brand-6` | `brand-6` | `color-primary1` | rgb(0,47,167) → rgb(73,122,248) |
+| 描边 | `brand-6` | `brand-6` | `--o-color-primary1` | rgb(0,47,167) → rgb(73,122,248) |
+| 文字 | `brand-6` | `brand-6` | `--o-color-primary1` | rgb(0,47,167) → rgb(73,122,248) |
 
 > **说明**：Actived 状态按钮背景透明，仅通过描边和文字颜色区分选中状态。描边宽度 1px INSIDE。
 
@@ -184,11 +184,11 @@ OToggle（SYMBOL）
 │        1042:17516（small Enabled Light）/ 1042:17510（small Actived Light）
 │  Width: 自适应（示例 124px medium / 68px small）| Height: 32px（medium）/ 28px（small）
 │  cornerRadius: 4px
-│  fill: rgb(243,243,245) → Token: `color-fill1`（Enabled Light）
-│        rgb(26,26,28) → Token: `color-fill1`（Enabled Dark）
+│  fill: rgb(243,243,245) → Token: `--o-color-fill1`（Enabled Light）
+│        rgb(26,26,28) → Token: `--o-color-fill1`（Enabled Dark）
 │        transparent（Actived）
-│  stroke: 无（Enabled）/ rgba(0,47,167,1) → Token: `color-primary1`（Actived Light）
-│           rgba(73,122,248,1) → Token: `color-primary1`（Actived Dark）
+│  stroke: 无（Enabled）/ rgba(0,47,167,1) → Token: `--o-color-primary1`（Actived Light）
+│           rgba(73,122,248,1) → Token: `--o-color-primary1`（Actived Dark）
 │  strokeWeight: 1px INSIDE（仅 Actived）
 │  strokeAlign: INSIDE
 │
@@ -197,10 +197,10 @@ OToggle（SYMBOL）
     Width: 自适应 | Height: 24px（medium）/ 16px（small）
     fontSize: 16px（medium）/ 12px（small）
     fontFamily: HarmonyHeiTi | fontStyle: Regular
-    fill: rgb(0,0,0) → Token: `color-info1`（Enabled Light）
-          rgb(255,255,255) → Token: `color-info1`（Enabled Dark）
-          rgb(0,47,167) → Token: `color-primary1`（Actived Light）
-          rgb(73,122,248) → Token: `color-primary1`（Actived Dark）
+    fill: rgb(0,0,0) → Token: `--o-color-info1`（Enabled Light）
+          rgb(255,255,255) → Token: `--o-color-info1`（Enabled Dark）
+          rgb(0,47,167) → Token: `--o-color-primary1`（Actived Light）
+          rgb(73,122,248) → Token: `--o-color-primary1`（Actived Dark）
     nodeText: "筛选条件"（示例）
 ```
 
@@ -254,10 +254,10 @@ OToggle（SYMBOL）
 
 | 元素 | 状态 | 视觉表现 |
 |------|------|---------|
-| 按钮 | Enabled | 背景：`color-fill1`，无描边，文字：`color-info1` |
-| 按钮 | Actived | 背景：transparent，描边：`color-primary1`（1px INSIDE），文字：`color-primary1` |
-| 文字 | Enabled | fill：`color-info1`（grey-14） |
-| 文字 | Actived | fill：`color-primary1`（brand-6） |
+| 按钮 | Enabled | 背景：`--o-color-fill1`，无描边，文字：`--o-color-info1` |
+| 按钮 | Actived | 背景：transparent，描边：`--o-color-primary1`（1px INSIDE），文字：`--o-color-primary1` |
+| 文字 | Enabled | fill：`--o-color-info1`（grey-14） |
+| 文字 | Actived | fill：`--o-color-primary1`（brand-6） |
 
 ---
 
@@ -274,8 +274,8 @@ OToggle（SYMBOL）
 
 | 元素 | Hover 视觉表现 |
 |------|---------------|
-| 按钮（Enabled） | 背景颜色切换为 `color-control2-light`（brand-1） |
-| 按钮（Actived） | 描边颜色切换为 `color-primary2`（brand-4） |
+| 按钮（Enabled） | 背景颜色切换为 `--o-color-control2-light`（brand-1） |
+| 按钮（Actived） | 描边颜色切换为 `--o-color-primary2`（brand-4） |
 | 文字 | 颜色不变 |
 
 ---
@@ -286,10 +286,10 @@ OToggle（SYMBOL）
 
 | 元素 | 属性 | 推荐变量 Token |
 |------|------|---------------|
-| 按钮背景（Enabled） | fill | `color-fill1` |
-| 按钮描边（Actived） | stroke | `color-primary1` |
-| 文字（Enabled） | fill | `color-info1` |
-| 文字（Actived） | fill | `color-primary1` |
+| 按钮背景（Enabled） | fill | `--o-color-fill1` |
+| 按钮描边（Actived） | stroke | `--o-color-primary1` |
+| 文字（Enabled） | fill | `--o-color-info1` |
+| 文字（Actived） | fill | `--o-color-primary1` |
 | 按钮圆角 | cornerRadius | `radius_control-xs`（4px） |
 | 按钮高度（medium） | height | `control_size-m`（32px） |
 | 文字字号（medium） | fontSize | `font_size-text1`（16px） |
@@ -331,8 +331,8 @@ OToggle（SYMBOL）
 
 | checked 状态 | 图标颜色 Token |
 |-------------|--------------|
-| Enabled | `color-info1`（grey-14） |
-| Actived | `color-primary1`（brand-6） |
+| Enabled | `--o-color-info1`（grey-14） |
+| Actived | `--o-color-primary1`（brand-6） |
 
 > 图标颜色始终与文字颜色一致，深色模式下同名 Token 自动切换为深色值。替换图标时进入实例修改图标内容，颜色无需手动调整。
 

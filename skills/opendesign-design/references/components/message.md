@@ -127,11 +127,11 @@ OMessage-内联提示2（FRAME，HORIZONTAL，自适应宽高）
 
 | status | 图标颜色 Token | 背景色（内联提示） | 背景色（全局提示） | 含义 |
 |--------|--------------|-----------------|-----------------|------|
-| success | `color-success1` | `color-success1` opacity 5% | `color-fill2` | 操作成功 |
-| info | `color-primary1` | `color-primary1` opacity 5% | `color-fill2` | 一般信息 |
-| danger | `color-danger1` | `color-danger1` opacity 5% | `color-fill2` | 错误/危险 |
-| warning | `color-warning1` | `color-warning1` opacity 5% | `color-fill2` | 警告提醒 |
-| loading | `color-info2` | — | `color-fill2` | 加载中（仅全局提示） |
+| success | `--o-color-success1` | `--o-color-success1` opacity 5% | `--o-color-fill2` | 操作成功 |
+| info | `--o-color-primary1` | `--o-color-primary1` opacity 5% | `--o-color-fill2` | 一般信息 |
+| danger | `--o-color-danger1` | `--o-color-danger1` opacity 5% | `--o-color-fill2` | 错误/危险 |
+| warning | `--o-color-warning1` | `--o-color-warning1` opacity 5% | `--o-color-fill2` | 警告提醒 |
+| loading | `--o-color-info2` | — | `--o-color-fill2` | 加载中（仅全局提示） |
 
 ---
 
@@ -183,7 +183,7 @@ OMessage-内联提示2（FRAME，HORIZONTAL，自适应宽高）
 |--------|---------|---------|---------|
 | 圆角 | 4px | 4px | 4px |
 | Token（圆角） | `radius_control-m` | `radius_control-m` | `radius_control-m` |
-| 背景 | `color-fill2` | 状态色 opacity 5% | 状态色 opacity 5% |
+| 背景 | `--o-color-fill2` | 状态色 opacity 5% | 状态色 opacity 5% |
 | 左侧竖线 | 无 | 4px · 状态色 | 4px · 状态色 |
 | 阴影 | 有（shadow） | 无 | 无 |
 | 内边距（上） | 12px | 4px | 4px |
@@ -200,29 +200,29 @@ OMessage-内联提示2（FRAME，HORIZONTAL，自适应宽高）
 
 | 区域/状态 | Token | 实际值（浅色） | 说明 |
 |---------|-------|-------------|------|
-| 全局提示背景 | `color-fill2` | `#ffffff` | 白色背景 |
+| 全局提示背景 | `--o-color-fill2` | `#ffffff` | 白色背景 |
 | success 图标 | `assets/message/成功.svg` | SVG 原始色 | 内联 SVG，**禁止覆盖颜色** |
-| success 背景（内联）/ 左边框 | `color-success1` opacity 5% / solid | `rgba(11, 177, 81, 0.05)` / `rgb(11, 177, 81)` | CSS 属性，使用 Token |
+| success 背景（内联）/ 左边框 | `--o-color-success1` opacity 5% / solid | `rgba(11, 177, 81, 0.05)` / `rgb(11, 177, 81)` | CSS 属性，使用 Token |
 | info 图标 | `assets/message/提示.svg` | SVG 原始色 | 内联 SVG，**禁止覆盖颜色** |
-| info 背景（内联）/ 左边框 | `color-primary1` opacity 5% / solid | `rgba(0, 47, 167, 0.05)` / `rgb(0, 47, 167)` | CSS 属性，使用 Token |
+| info 背景（内联）/ 左边框 | `--o-color-primary1` opacity 5% / solid | `rgba(0, 47, 167, 0.05)` / `rgb(0, 47, 167)` | CSS 属性，使用 Token |
 | danger 图标 | `assets/message/错误.svg` | SVG 原始色 | 内联 SVG，**禁止覆盖颜色** |
-| danger 背景（内联）/ 左边框 | `color-danger1` opacity 5% / solid | `rgba(230, 0, 18, 0.05)` / `rgb(230, 0, 18)` | CSS 属性，使用 Token |
+| danger 背景（内联）/ 左边框 | `--o-color-danger1` opacity 5% / solid | `rgba(230, 0, 18, 0.05)` / `rgb(230, 0, 18)` | CSS 属性，使用 Token |
 | warning 图标 | `assets/message/警示.svg` | SVG 原始色 | 内联 SVG，**禁止覆盖颜色** |
-| warning 背景（内联）/ 左边框 | `color-warning1` opacity 5% / solid | `rgba(250, 115, 5, 0.05)` / `rgb(250, 115, 5)` | CSS 属性，使用 Token |
+| warning 背景（内联）/ 左边框 | `--o-color-warning1` opacity 5% / solid | `rgba(250, 115, 5, 0.05)` / `rgb(250, 115, 5)` | CSS 属性，使用 Token |
 | loading 图标 | `assets/public icons/icon-loading 加载.svg` | SVG 原始色 | 内联 SVG，**禁止覆盖颜色** |
-| 提示文字（主） | `color-info1` | `rgba(0, 0, 0, 1)` | 纯黑，一级文字 |
-| 提示文字（辅） | `color-info2` | `rgba(0, 0, 0, 0.8)` | 80% 黑，二级文字 |
-| 关闭图标 | `color-info2` | `rgba(0, 0, 0, 0.8)` | 80% 黑，辅助图标 |
+| 提示文字（主） | `--o-color-info1` | `rgba(0, 0, 0, 1)` | 纯黑，一级文字 |
+| 提示文字（辅） | `--o-color-info2` | `rgba(0, 0, 0, 0.8)` | 80% 黑，二级文字 |
+| 关闭图标 | `--o-color-info2` | `rgba(0, 0, 0, 0.8)` | 80% 黑，辅助图标 |
 
 **深色模式（Dark=on）**
 
 | 区域/状态 | Token | 说明 |
 |---------|-------|------|
-| 全局提示背景 | `color-fill2`（深色值） | 深色背景 |
-| success 图标色 | `color-success1`（深色值） | 深色模式绿色 |
-| info 图标色 | `color-primary1`（深色值） | 深色模式蓝色 |
-| danger 图标色 | `color-danger1`（深色值） | 深色模式红色 |
-| warning 图标色 | `color-warning1`（深色值） | 深色模式橙色 |
+| 全局提示背景 | `--o-color-fill2`（深色值） | 深色背景 |
+| success 图标色 | `--o-color-success1`（深色值） | 深色模式绿色 |
+| info 图标色 | `--o-color-primary1`（深色值） | 深色模式蓝色 |
+| danger 图标色 | `--o-color-danger1`（深色值） | 深色模式红色 |
+| warning 图标色 | `--o-color-warning1`（深色值） | 深色模式橙色 |
 
 ---
 
@@ -405,20 +405,20 @@ OMessage-内联提示2（FRAME，HORIZONTAL，overflow:hidden）
 
 | 元素 | 属性 | 推荐变量 Token |
 |------|------|---------------|
-| 全局提示背景 | fill | `color-fill2` |
+| 全局提示背景 | fill | `--o-color-fill2` |
 | 全局提示阴影 | effects | shadow 样式 |
-| 内联提示背景（success） | fill | `color-success1-light` |
-| 内联提示背景（info） | fill | `color-primary1-light` |
-| 内联提示背景（danger） | fill | `color-danger1-light` |
-| 内联提示背景（warning） | fill | `color-warning1-light` |
-| 状态图标（success） | fill | `color-success1` |
-| 状态图标（info） | fill | `color-primary1` |
-| 状态图标（danger） | fill | `color-danger1` |
-| 状态图标（warning） | fill | `color-warning1` |
+| 内联提示背景（success） | fill | `--o-color-success1-light` |
+| 内联提示背景（info） | fill | `--o-color-primary1-light` |
+| 内联提示背景（danger） | fill | `--o-color-danger1-light` |
+| 内联提示背景（warning） | fill | `--o-color-warning1-light` |
+| 状态图标（success） | fill | `--o-color-success1` |
+| 状态图标（info） | fill | `--o-color-primary1` |
+| 状态图标（danger） | fill | `--o-color-danger1` |
+| 状态图标（warning） | fill | `--o-color-warning1` |
 | 圆角 | cornerRadius | `radius_control-m`（4px） |
-| 主文字 | fill | `color-info1` |
-| 描述文字 | fill | `color-info2` |
-| 关闭图标 | fill | `color-info2` |
+| 主文字 | fill | `--o-color-info1` |
+| 描述文字 | fill | `--o-color-info2` |
+| 关闭图标 | fill | `--o-color-info2` |
 | 字号 | fontSize | `font_size-tip1`（14px） |
 | 行高 | lineHeight | `line_height-tip1`（22px） |
 

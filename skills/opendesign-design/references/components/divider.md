@@ -27,8 +27,8 @@
 ### 变体说明
 
 **Style（样式）**
-- `light` — 浅色分割线，使用 `color-control4`，用于同级内容分隔、列表行间分隔
-- `dark` — 深色分割线，使用 `color-control1`，用于跨级内容分隔、区块边界
+- `light` — 浅色分割线，使用 `--o-color-control4`，用于同级内容分隔、列表行间分隔
+- `dark` — 深色分割线，使用 `--o-color-control1`，用于跨级内容分隔、区块边界
 
 **Theme（主题）**
 - `off` — 浅色模式（默认）
@@ -65,8 +65,8 @@ ODivider（水平 LINE）
 
 > 🔍 **识别特征**：
 > - 水平线条元素（LINE），宽度自适应，高度为 1px
-> - 浅色分割线颜色为 `color-control4`（rgba(0,0,0,0.1)）
-> - 深色分割线颜色为 `color-control1`（rgba(0,0,0,0.25)）
+> - 浅色分割线颜色为 `--o-color-control4`（rgba(0,0,0,0.1)）
+> - 深色分割线颜色为 `--o-color-control1`（rgba(0,0,0,0.25)）
 > - 实线样式（solid）
 > - 无背景、无圆角、纯线条元素
 
@@ -98,7 +98,7 @@ ODivider（水平 LINE）
 | 规格项 | light（浅色） | dark（深色） |
 |--------|--------------|-------------|
 | 线条粗细 | 1px | 1px |
-| 线条颜色 | `color-control4` | `color-control1` |
+| 线条颜色 | `--o-color-control4` | `--o-color-control1` |
 | 线型样式 | solid | solid |
 | 宽度 | 自适应 | 自适应 |
 | 推荐间距（上下） | 8px（gap-2） | 16px（gap-4） |
@@ -111,8 +111,8 @@ ODivider（水平 LINE）
 
 | 样式 | 区域 | Light 模式 Token | Dark 模式 Token | RGB 值 |
 |------|------|-----------------|----------------|--------|
-| light | 线条 | `color-control4` | `color-control4` | rgba(0,0,0,0.1) → rgba(255,255,255,0.15) |
-| dark | 线条 | `color-control1` | `color-control1` | rgba(0,0,0,0.25) → rgba(255,255,255,0.25) |
+| light | 线条 | `--o-color-control4` | `--o-color-control4` | rgba(0,0,0,0.1) → rgba(255,255,255,0.15) |
+| dark | 线条 | `--o-color-control1` | `--o-color-control1` | rgba(0,0,0,0.25) → rgba(255,255,255,0.25) |
 
 ---
 
@@ -156,8 +156,8 @@ ODivider（水平 LINE）
 ### 注意事项
 
 - **线条粗细**：固定 1px，不建议修改
-- **浅色分割线**：用于同级分隔，颜色 `color-control4`，视觉权重较轻
-- **深色分割线**：用于跨级分隔，颜色 `color-control1`，视觉权重较强
+- **浅色分割线**：用于同级分隔，颜色 `--o-color-control4`，视觉权重较轻
+- **深色分割线**：用于跨级分隔，颜色 `--o-color-control1`，视觉权重较强
 - **间距控制**：分割线本身无内置间距，上下间距由使用场景决定
 - **深色模式**：线条颜色自动切换为深色值，确保在深色背景上可见
 
@@ -175,8 +175,8 @@ ODivider 为纯展示元素，无交互状态。
 
 | 元素 | 属性 | 推荐变量 Token |
 |------|------|---------------|
-| 线条颜色（浅色） | stroke | `color-control4` |
-| 线条颜色（深色） | stroke | `color-control1` |
+| 线条颜色（浅色） | stroke | `--o-color-control4` |
+| 线条颜色（深色） | stroke | `--o-color-control1` |
 | 线条粗细 | strokeWeight | 1px |
 | 线型样式 | strokeStyle | solid |
 | 上下间距（浅色） | — | `gap-2`（8px） |

@@ -61,11 +61,11 @@ OBreadcrumb (HORIZONTAL auto-layout, gap=4)
 
 | 状态 | 非当前层级 | 当前层级 |
 |------|-----------|---------|
-| **默认** | 首页 > 一级页面 > **当前页面**<br>字号: 14px (Regular)<br>色值: color-info3 | 首页 > 一级页面 > **当前页面**<br>字号: 14px (SemiBold)<br>色值: color-primary1 |
-| **悬浮** | 首页 > <u>一级页面</u> > **当前页面**<br>字号: 14px (Regular)<br>色值: color-primary2 | 首页 > 一级页面 > **当前页面**<br>字号: 14px (SemiBold)<br>色值: color-primary1 |
-| **按下** | 首页 > 一级页面 > **当前页面**<br>字号: 14px (Regular)<br>色值: color-primary3 | 首页 > 一级页面 > **当前页面**<br>字号: 14px (SemiBold)<br>色值: color-primary1 |
-| **选中** | 首页 > **一级页面** > **当前页面**<br>字号: 14px (SemiBold)<br>色值: color-primary1 | 首页 > 一级页面 > **当前页面**<br>字号: 14px (SemiBold)<br>色值: color-primary1 |
-| **禁用** | 首页 > 一级页面 > **当前页面**<br>字号: 14px (Regular)<br>色值: color-info4 | 首页 > 一级页面 > ~~当前页面~~<br>字号: 14px (SemiBold)<br>色值: color-primary4 |
+| **默认** | 首页 > 一级页面 > **当前页面**<br>字号: 14px (Regular)<br>色值: --o-color-info3 | 首页 > 一级页面 > **当前页面**<br>字号: 14px (SemiBold)<br>色值: --o-color-primary1 |
+| **悬浮** | 首页 > <u>一级页面</u> > **当前页面**<br>字号: 14px (Regular)<br>色值: --o-color-primary2 | 首页 > 一级页面 > **当前页面**<br>字号: 14px (SemiBold)<br>色值: --o-color-primary1 |
+| **按下** | 首页 > 一级页面 > **当前页面**<br>字号: 14px (Regular)<br>色值: --o-color-primary3 | 首页 > 一级页面 > **当前页面**<br>字号: 14px (SemiBold)<br>色值: --o-color-primary1 |
+| **选中** | 首页 > **一级页面** > **当前页面**<br>字号: 14px (SemiBold)<br>色值: --o-color-primary1 | 首页 > 一级页面 > **当前页面**<br>字号: 14px (SemiBold)<br>色值: --o-color-primary1 |
+| **禁用** | 首页 > 一级页面 > **当前页面**<br>字号: 14px (Regular)<br>色值: --o-color-info4 | 首页 > 一级页面 > ~~当前页面~~<br>字号: 14px (SemiBold)<br>色值: --o-color-primary4 |
 
 ### 状态说明
 
@@ -91,13 +91,13 @@ OBreadcrumb (HORIZONTAL auto-layout, gap=4)
 
 | 状态 | 元素 | 色值 Token |
 |------|------|-----------|
-| 默认 | 导航层级 | color-info3 |
-| 默认 | 当前页面 | color-primary1 |
-| 悬浮 | 导航层级 | color-primary2 |
-| 按下 | 导航层级 | color-primary3 |
-| 选中 | 导航层级/当前页面 | color-primary1 |
-| 禁用 | 导航层级 | color-info4 |
-| 禁用 | 当前页面 | color-primary4 |
+| 默认 | 导航层级 | --o-color-info3 |
+| 默认 | 当前页面 | --o-color-primary1 |
+| 悬浮 | 导航层级 | --o-color-primary2 |
+| 按下 | 导航层级 | --o-color-primary3 |
+| 选中 | 导航层级/当前页面 | --o-color-primary1 |
+| 禁用 | 导航层级 | --o-color-info4 |
+| 禁用 | 当前页面 | --o-color-primary4 |
 
 ---
 
@@ -114,9 +114,9 @@ OBreadcrumb (HORIZONTAL auto-layout, gap=4)
 
 | 元素 | Token | Dark=off（浅色） | Dark=on（深色） |
 |------|-------|-----------------|-----------------|
-| 导航层级文字 | `color-info3` | `rgba(var(--o-grey-14), 0.6)` | `rgba(var(--o-grey-1), 0.6)` |
-| 当前页面文字 | `color-primary1` | `rgb(var(--o-brand-6))` | `rgb(var(--o-brand-6))` |
-| 分隔图标（右箭头） | `color-info3` | 继承父层颜色 | 继承父层颜色 |
+| 导航层级文字 | `--o-color-info3` | `rgba(var(--o-grey-14), 0.6)` | `rgba(var(--o-grey-1), 0.6)` |
+| 当前页面文字 | `--o-color-primary1` | `rgb(var(--o-brand-6))` | `rgb(var(--o-brand-6))` |
+| 分隔图标（右箭头） | `--o-color-info3` | 继承父层颜色 | 继承父层颜色 |
 
 ### 布局
 

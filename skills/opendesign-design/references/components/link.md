@@ -47,17 +47,17 @@
 
 | 状态 | 视觉表现 | 图标 | 文本 |
 |------|---------|------|------|
-| **默认** | 🔗 文字链接 | 尺寸：20×20px<br>颜色：color-link1 | 字体：鸿蒙黑体-常规<br>字号：16px<br>颜色：color-link1 |
-| **悬浮（Hover）** | 🔗 <u>文字链接</u> | 尺寸：20×20px<br>颜色：color-link2 | 字体：鸿蒙黑体-常规<br>字号：16px<br>颜色：color-link2<br>✅ 显示下划线 |
-| **按下（Active）** | 🔗 <u>文字链接</u> | 尺寸：20×20px<br>颜色：color-link3 | 字体：鸿蒙黑体-常规<br>字号：16px<br>颜色：color-link3<br>✅ 显示下划线 |
-| **选中（已访问）** | 🔗 <u>文字链接</u> | 尺寸：20×20px<br>颜色：color-link1 | 字体：鸿蒙黑体-常规<br>字号：16px<br>颜色：color-link1<br>✅ 显示下划线 |
-| **禁用（Disabled）** | 🚫 文字链接（灰色） | 尺寸：20×20px<br>颜色：color-link4 | 字体：鸿蒙黑体-常规<br>字号：16px<br>颜色：color-link4 |
+| **默认** | 🔗 文字链接 | 尺寸：20×20px<br>颜色：--o-color-link1 | 字体：鸿蒙黑体-常规<br>字号：16px<br>颜色：--o-color-link1 |
+| **悬浮（Hover）** | 🔗 <u>文字链接</u> | 尺寸：20×20px<br>颜色：--o-color-link2 | 字体：鸿蒙黑体-常规<br>字号：16px<br>颜色：--o-color-link2<br>✅ 显示下划线 |
+| **按下（Active）** | 🔗 <u>文字链接</u> | 尺寸：20×20px<br>颜色：--o-color-link3 | 字体：鸿蒙黑体-常规<br>字号：16px<br>颜色：--o-color-link3<br>✅ 显示下划线 |
+| **选中（已访问）** | 🔗 <u>文字链接</u> | 尺寸：20×20px<br>颜色：--o-color-link1 | 字体：鸿蒙黑体-常规<br>字号：16px<br>颜色：--o-color-link1<br>✅ 显示下划线 |
+| **禁用（Disabled）** | 🚫 文字链接（灰色） | 尺寸：20×20px<br>颜色：--o-color-link4 | 字体：鸿蒙黑体-常规<br>字号：16px<br>颜色：--o-color-link4 |
 默认 → 悬浮（鼠标移入） 悬浮 → 默认（鼠标移出） 悬浮 → 按下（鼠标点击） 按下 → 选中/已访问（点击完成后） 选中 → 悬浮（再次鼠标移入） 任何状态 → 禁用（通过属性控制）
 
 #### 关键设计要点
 
 - ✅ **下划线反馈**：悬浮、按下、选中状态下显示下划线，提供明确的视觉反馈
-- ✅ **颜色层级**：使用 color-link1~4 的语义化颜色系统，保持一致性
+- ✅ **颜色层级**：使用 --o-color-link1~4 的语义化颜色系统，保持一致性
 - ✅ **图标同步**：图标颜色始终与文本颜色保持一致
 - ✅ **尺寸统一**：所有状态下图标固定为 20×20px，文本固定为 16px
 
@@ -79,11 +79,11 @@ OLink（HORIZONTAL，自适应宽度，固定高度）
 ├── autoLayoutCounterAlign: center（垂直居中）
 │
 ├── [text PARAGRAPH]（自适应宽度，固定行高）
-│     fill: color-link1（Enabled）/ color-link4（Disabled）
+│     fill: --o-color-link1（Enabled）/ --o-color-link4（Disabled）
 │     font: large=16px/24px, medium/small=14px/22px
 │
 └── [图标 Icon/跳出 INSTANCE]（24×24，可选）
-      fill: color-link1（Enabled）/ color-link4（Disabled）
+      fill: --o-color-link1（Enabled）/ --o-color-link4（Disabled）
       与文字颜色一致
 ```
 
@@ -154,17 +154,17 @@ OLink（HORIZONTAL，自适应宽度，固定高度）
 
 | 区域 | Light 模式 Token | Dark 模式 Token | RGB 值 |
 |------|-----------------|----------------|--------|
-| 文字 | `color-link1` | `color-link1` | rgb(0,47,167) → rgb(73,122,248) |
-| 后缀图标 | `color-link1` | `color-link1` | 与文字颜色一致 |
+| 文字 | `--o-color-link1` | `--o-color-link1` | rgb(0,47,167) → rgb(73,122,248) |
+| 后缀图标 | `--o-color-link1` | `--o-color-link1` | 与文字颜色一致 |
 
 #### Disabled 状态
 
 | 区域 | Light 模式 Token | Dark 模式 Token | RGB 值 |
 |------|-----------------|----------------|--------|
-| 文字 | `color-link4` | `color-link4` | rgb(132,161,220) → rgb(29,51,120) |
-| 后缀图标 | `color-link4` | `color-link4` | 与文字颜色一致 |
+| 文字 | `--o-color-link4` | `--o-color-link4` | rgb(132,161,220) → rgb(29,51,120) |
+| 后缀图标 | `--o-color-link4` | `--o-color-link4` | 与文字颜色一致 |
 
-> **说明**：`color-link1` = brand-6，`color-link4` = brand-3。链接色与品牌色系一致。
+> **说明**：`--o-color-link1` = brand-6，`--o-color-link4` = brand-3。链接色与品牌色系一致。
 
 ---
 
@@ -242,11 +242,11 @@ OLink（HORIZONTAL，自适应宽度，固定高度 30/34/40px）
 
 ### 注意事项
 
-- **链接颜色**：使用链接色 Token（`color-link1`/`color-link4`），与品牌色系（brand-6/brand-3）一致
+- **链接颜色**：使用链接色 Token（`--o-color-link1`/`--o-color-link4`），与品牌色系（brand-6/brand-3）一致
 - **Auto Layout Padding**：上下 Padding 控制文字/图标在容器内的垂直位置（large=8px, medium=5px, small=3px），左右 Padding 为 0
 - **图标颜色一致**：后缀图标颜色与文字颜色相同，不使用独立颜色
 - **图标尺寸固定**：所有尺寸的图标均为 24×24px，不随 size 变化
-- **禁用状态**：禁用时颜色切换为 `color-link4`（brand-3），无其他视觉变化
+- **禁用状态**：禁用时颜色切换为 `--o-color-link4`（brand-3），无其他视觉变化
 - **后缀图标语义**：跳出图标指示链接将打开新窗口或跳转至外部页面
 - **深色模式**：品牌色自动切换为 rgb(73,122,248)，禁用色切换为 rgb(29,51,120)
 
@@ -258,12 +258,12 @@ OLink（HORIZONTAL，自适应宽度，固定高度 30/34/40px）
 
 | 元素 | 状态 | 视觉表现 |
 |------|------|---------|
-| 文字 | Enabled | 颜色：`color-link1`（brand-6），可点击 |
-| 文字 | Disabled | 颜色：`color-link4`（brand-3），不可点击 |
-| 文字 | Hover | 颜色：`color-link2`（brand-4），悬浮提示 |
-| 文字 | Active | 颜色：`color-link3`（brand-7），点击反馈 |
-| 后缀图标 | Enabled | 颜色：与文字一致（`color-link1`） |
-| 后缀图标 | Disabled | 颜色：与文字一致（`color-link4`） |
+| 文字 | Enabled | 颜色：`--o-color-link1`（brand-6），可点击 |
+| 文字 | Disabled | 颜色：`--o-color-link4`（brand-3），不可点击 |
+| 文字 | Hover | 颜色：`--o-color-link2`（brand-4），悬浮提示 |
+| 文字 | Active | 颜色：`--o-color-link3`（brand-7），点击反馈 |
+| 后缀图标 | Enabled | 颜色：与文字一致（`--o-color-link1`） |
+| 后缀图标 | Disabled | 颜色：与文字一致（`--o-color-link4`） |
 
 ---
 
@@ -282,8 +282,8 @@ OLink（HORIZONTAL，自适应宽度，固定高度 30/34/40px）
 
 | 元素 | 属性 | 推荐变量 Token |
 |------|------|---------------|
-| 文字颜色（Enabled） | fill | `color-link1` |
-| 文字颜色（Disabled） | fill | `color-link4` |
+| 文字颜色（Enabled） | fill | `--o-color-link1` |
+| 文字颜色（Disabled） | fill | `--o-color-link4` |
 | 图标颜色 | fill | 与文字一致 |
 | 文字字号（large） | fontSize | `font_size-text1`（16px） |
 | 文字字号（medium/small） | fontSize | `font_size-tip1`（14px） |
@@ -334,8 +334,8 @@ OLink（HORIZONTAL，自适应宽度，固定高度 30/34/40px）
 
 | state | 图标颜色 Token |
 |-------|--------------|
-| Enabled | `color-link1` |
-| Disabled | `color-link4` |
+| Enabled | `--o-color-link1` |
+| Disabled | `--o-color-link4` |
 
 > 图标颜色始终与文字颜色一致，深色模式下同名 Token 自动切换为深色值。
 

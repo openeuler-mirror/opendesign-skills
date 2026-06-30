@@ -54,7 +54,7 @@ ORadio（HORIZONTAL，自适应宽度，固定高度 24px）
 │   │     fill: 选中=color-primary1 / 未选中=color-fill2
 │   │     stroke: 未选中=color-control1 / 选中=无
 │   └── [内圈选中指示 ELLIPSE]（8×8，仅选中状态显示）
-│         fill: `color-fill2`
+│         fill: `--o-color-fill2`
 │
 └── [text PARAGRAPH]（自适应宽度，固定高度 24px）
       fill: Enabled=color-info1 / Disabled=color-info4
@@ -127,26 +127,26 @@ ORadio（HORIZONTAL，自适应宽度，固定高度 24px）
 
 | 区域 | Light 模式 | Dark 模式 | Token | RGB 值 |
 |------|-----------|----------|-------|--------|
-| 外圈背景（Enabled） | `grey-1` | `grey-4` | `color-fill2` | rgb(255,255,255) → rgb(36,36,39) |
-| 外圈描边（Enabled） | `grey-14 @ 0.25` | `grey-14 @ 0.25` | `color-control1` | rgba(0,0,0,0.25) → rgba(255,255,255,0.25) |
-| 外圈背景（Disabled Light） | `brand-1` | — | `color-control2-light` | rgb(235,241,250) |
-| 外圈背景（Disabled Dark） | — | `grey-5` | `color-control2-light` | rgb(43,43,47) |
-| 外圈描边（Disabled） | `grey-14 @ 0.1` | `grey-14 @ 0.15` | `color-control4` | rgba(0,0,0,0.1) → rgba(255,255,255,0.15) |
-| 文字（Enabled） | `grey-14` | `grey-14` | `color-info1` | rgb(0,0,0) → rgb(255,255,255) |
-| 文字（Disabled） | `grey-14 @ 0.4` | `grey-14 @ 0.4` | `color-info4` | rgba(0,0,0,0.4) → rgba(255,255,255,0.4) |
+| 外圈背景（Enabled） | `grey-1` | `grey-4` | `--o-color-fill2` | rgb(255,255,255) → rgb(36,36,39) |
+| 外圈描边（Enabled） | `grey-14 @ 0.25` | `grey-14 @ 0.25` | `--o-color-control1` | rgba(0,0,0,0.25) → rgba(255,255,255,0.25) |
+| 外圈背景（Disabled Light） | `brand-1` | — | `--o-color-control2-light` | rgb(235,241,250) |
+| 外圈背景（Disabled Dark） | — | `grey-5` | `--o-color-control2-light` | rgb(43,43,47) |
+| 外圈描边（Disabled） | `grey-14 @ 0.1` | `grey-14 @ 0.15` | `--o-color-control4` | rgba(0,0,0,0.1) → rgba(255,255,255,0.15) |
+| 文字（Enabled） | `grey-14` | `grey-14` | `--o-color-info1` | rgb(0,0,0) → rgb(255,255,255) |
+| 文字（Disabled） | `grey-14 @ 0.4` | `grey-14 @ 0.4` | `--o-color-info4` | rgba(0,0,0,0.4) → rgba(255,255,255,0.4) |
 
 #### Selected 状态
 
 | 区域 | Light 模式 | Dark 模式 | Token | RGB 值 |
 |------|-----------|----------|-------|--------|
-| 外圈背景（Enabled） | `brand-6` | `brand-6` | `color-primary1` | rgb(0,47,167) → rgb(73,122,248) |
-| 外圈背景（Disabled） | `brand-3` | `brand-3` | `color-primary4` | rgb(132,161,220) → rgb(29,51,120) |
-| 内圈指示点（Enabled） | `white` | `grey-4` | `color-fill2` | rgb(255,255,255) → rgb(36,36,39) |
-| 内圈指示点（Disabled） | `white` | `grey-4` | `color-fill2` | rgb(255,255,255) → rgb(36,36,39) |
-| 文字（Enabled） | `grey-14` | `grey-14` | `color-info1` | rgb(0,0,0) → rgb(255,255,255) |
-| 文字（Disabled） | `grey-14 @ 0.4` | `grey-14 @ 0.4` | `color-info4` | rgba(0,0,0,0.4) → rgba(255,255,255,0.4) |
+| 外圈背景（Enabled） | `brand-6` | `brand-6` | `--o-color-primary1` | rgb(0,47,167) → rgb(73,122,248) |
+| 外圈背景（Disabled） | `brand-3` | `brand-3` | `--o-color-primary4` | rgb(132,161,220) → rgb(29,51,120) |
+| 内圈指示点（Enabled） | `white` | `grey-4` | `--o-color-fill2` | rgb(255,255,255) → rgb(36,36,39) |
+| 内圈指示点（Disabled） | `white` | `grey-4` | `--o-color-fill2` | rgb(255,255,255) → rgb(36,36,39) |
+| 文字（Enabled） | `grey-14` | `grey-14` | `--o-color-info1` | rgb(0,0,0) → rgb(255,255,255) |
+| 文字（Disabled） | `grey-14 @ 0.4` | `grey-14 @ 0.4` | `--o-color-info4` | rgba(0,0,0,0.4) → rgba(255,255,255,0.4) |
 
-> **说明**：选中状态外圈使用品牌色填充，无描边；内圈指示点使用 `color-fill2`（Light=white，Dark=grey-4）。
+> **说明**：选中状态外圈使用品牌色填充，无描边；内圈指示点使用 `--o-color-fill2`（Light=white，Dark=grey-4）。
 
 ---
 
@@ -193,30 +193,30 @@ ORadio（HORIZONTAL，自适应宽度，固定高度 24px）
 │   ├── [外圈 ELLIPSE]（未选中状态）
 │   │   GUID: 1042:16977
 │   │   Width: 16px | Height: 16px
-│   │   fill: rgb(255,255,255) → rgb(36,36,39) → Token: `color-fill2`
-│   │         rgb(235,241,250) / rgb(43,43,47) → Token: `color-control2-light`
-│   │   stroke: rgba(0,0,0,0.25) → rgba(255,255,255,0.25) → Token: `color-control1`
-│   │           rgba(0,0,0,0.1) → rgba(255,255,255,0.15) → Token: `color-control4`
+│   │   fill: rgb(255,255,255) → rgb(36,36,39) → Token: `--o-color-fill2`
+│   │         rgb(235,241,250) / rgb(43,43,47) → Token: `--o-color-control2-light`
+│   │   stroke: rgba(0,0,0,0.25) → rgba(255,255,255,0.25) → Token: `--o-color-control1`
+│   │           rgba(0,0,0,0.1) → rgba(255,255,255,0.15) → Token: `--o-color-control4`
 │   │   strokeWeight: 1px INSIDE
 │   │
 │   └── [外圈 ELLIPSE]（选中状态）
 │   │   GUID: 1042:16985（Light）/ 1042:16988（Dark）
 │   │   Width: 16px | Height: 16px
-│   │   fill: rgb(0,47,167) → rgb(73,122,248) → Token: `color-primary1`
-│   │         rgb(132,161,220) → rgb(29,51,120) → Token: `color-primary4`
+│   │   fill: rgb(0,47,167) → rgb(73,122,248) → Token: `--o-color-primary1`
+│   │         rgb(132,161,220) → rgb(29,51,120) → Token: `--o-color-primary4`
 │   │   stroke: 无（隐藏）
 │   │
 │   └── [内圈指示点 ELLIPSE]（仅选中状态显示）
 │       GUID: 1042:16986（Light）/ 1042:16989（Dark）
 │       Width: 8px | Height: 8px
 │       top: 4px | left: 4px（居中于外圈内）
-│       fill: rgb(255,255,255) → rgb(36,36,39) → Token: `color-fill2`
+│       fill: rgb(255,255,255) → rgb(36,36,39) → Token: `--o-color-fill2`
 │
 └── [text PARAGRAPH]
     GUID: 1080:9895
     Width: 自适应（示例 32px）| Height: 24px
-    fill: rgb(0,0,0) → rgb(255,255,255) → Token: `color-info1`
-          rgba(0,0,0,0.4) → rgba(255,255,255,0.4) → Token: `color-info4`
+    fill: rgb(0,0,0) → rgb(255,255,255) → Token: `--o-color-info1`
+          rgba(0,0,0,0.4) → rgba(255,255,255,0.4) → Token: `--o-color-info4`
     fontFamily: HarmonyHeiTi
     fontStyle: Regular
     fontSize: 16px → Token: `font_size-text1`
@@ -256,13 +256,13 @@ ORadio（HORIZONTAL，自适应宽度，固定高度 24px）
 
 ### 注意事项
 
-- **选中状态识别**：选中时外圈使用品牌色填充（`color-primary1`），内圈显示指示点
-- **未选中状态识别**：未选中时外圈使用 `color-fill2` 背景 + `color-control1` 描边，无内圈指示点
-- **内圈指示点**：仅 `Selected` 状态显示，尺寸 8×8px，居中于外圈内（top/left 各 4px），使用 `color-fill2`
+- **选中状态识别**：选中时外圈使用品牌色填充（`--o-color-primary1`），内圈显示指示点
+- **未选中状态识别**：未选中时外圈使用 `--o-color-fill2` 背景 + `--o-color-control1` 描边，无内圈指示点
+- **内圈指示点**：仅 `Selected` 状态显示，尺寸 8×8px，居中于外圈内（top/left 各 4px），使用 `--o-color-fill2`
 - **外圈描边**：仅 `Unselected` 状态有描边（strokeWeight: 1px INSIDE），`Selected` 状态无描边
-- **禁用状态背景**：Unselected Disabled 使用 `color-control2-light`
-- **禁用状态描边**：Unselected Disabled 使用 `color-control4` 描边
-- **文字颜色**：Enabled 状态使用 `color-info1`（一级文字色），Disabled 状态使用 `color-info4`（禁用文字色）
+- **禁用状态背景**：Unselected Disabled 使用 `--o-color-control2-light`
+- **禁用状态描边**：Unselected Disabled 使用 `--o-color-control4` 描边
+- **文字颜色**：Enabled 状态使用 `--o-color-info1`（一级文字色），Disabled 状态使用 `--o-color-info4`（禁用文字色）
 - **Dark 模式差异**：选中状态内圈指示点在 Dark 模式下为 grey-4（而非 white），确保在深色背景下可识别
 - **单选组逻辑**：多个 Radio 组合使用时，同一组内只能选中一个，需在交互层面实现互斥
 
@@ -274,23 +274,23 @@ ORadio（HORIZONTAL，自适应宽度，固定高度 24px）
 
 | 元素 | 状态 | 视觉表现 |
 |------|------|---------|
-| 外圈 | Unselected Enabled | 背景：`color-fill2`，描边：`color-control1` |
-| 外圈 | Unselected Disabled Light | 背景：`color-control2-light`，描边：`color-control4` |
-| 外圈 | Unselected Disabled Dark | 背景：`color-control2-light`，描边：`color-control4` |
-| 外圈 | Selected Enabled | 背景：`color-primary1`，无描边 |
-| 外圈 | Selected Disabled | 背景：`color-primary4`，无描边 |
-| 内圈 | Selected | 显示，fill：`color-fill2` |
+| 外圈 | Unselected Enabled | 背景：`--o-color-fill2`，描边：`--o-color-control1` |
+| 外圈 | Unselected Disabled Light | 背景：`--o-color-control2-light`，描边：`--o-color-control4` |
+| 外圈 | Unselected Disabled Dark | 背景：`--o-color-control2-light`，描边：`--o-color-control4` |
+| 外圈 | Selected Enabled | 背景：`--o-color-primary1`，无描边 |
+| 外圈 | Selected Disabled | 背景：`--o-color-primary4`，无描边 |
+| 内圈 | Selected | 显示，fill：`--o-color-fill2` |
 | 内圈 | Unselected | 隐藏 |
-| 文字 | Enabled | 颜色：`color-info1` |
-| 文字 | Disabled | 颜色：`color-info4` |
+| 文字 | Enabled | 颜色：`--o-color-info1` |
+| 文字 | Disabled | 颜色：`--o-color-info4` |
 
 ---
 
 ### 状态切换逻辑
 
-- **Unselected → Selected**：外圈背景切换为 `color-primary1`，描边隐藏，内圈指示点显示
-- **Selected → Unselected**：外圈背景切换为 `color-fill2`，描边显示（`color-control1`），内圈指示点隐藏
-- **Enabled → Disabled**：颜色降级为禁用 Token（Selected 用 `color-primary4`，Unselected 用 `color-control2-light`），不可交互
+- **Unselected → Selected**：外圈背景切换为 `--o-color-primary1`，描边隐藏，内圈指示点显示
+- **Selected → Unselected**：外圈背景切换为 `--o-color-fill2`，描边显示（`--o-color-control1`），内圈指示点隐藏
+- **Enabled → Disabled**：颜色降级为禁用 Token（Selected 用 `--o-color-primary4`，Unselected 用 `--o-color-control2-light`），不可交互
 - **Light → Dark**：背景色、品牌色、文字色同步切换为深色主题对应值
 
 ---
@@ -299,8 +299,8 @@ ORadio（HORIZONTAL，自适应宽度，固定高度 24px）
 
 | 元素 | Hover 视觉表现 |
 |------|---------------|
-| 外圈（Unselected） | 描边颜色切换为 `color-control2`（brand-6），背景不变 |
-| 外圈（Selected） | 背景颜色切换为 `color-primary2`（brand-4），内圈不变 |
+| 外圈（Unselected） | 描边颜色切换为 `--o-color-control2`（brand-6），背景不变 |
+| 外圈（Selected） | 背景颜色切换为 `--o-color-primary2`（brand-4），内圈不变 |
 | 文字 | 颜色不变 |
 
 ---
@@ -311,16 +311,16 @@ ORadio（HORIZONTAL，自适应宽度，固定高度 24px）
 
 | 元素 | 属性 | 推荐变量 Token |
 |------|------|---------------|
-| 外圈背景（Selected Enabled） | fill | `color-primary1` |
-| 外圈背景（Selected Disabled） | fill | `color-primary4` |
-| 外圈背景（Unselected Enabled） | fill | `color-fill2` |
-| 外圈背景（Unselected Disabled Light） | fill | `color-control2-light` |
-| 外圈背景（Unselected Disabled Dark） | fill | `color-control2-light` |
-| 外圈描边（Unselected Enabled） | stroke | `color-control1` |
-| 外圈描边（Unselected Disabled） | stroke | `color-control4` |
-| 内圈指示点 | fill | `color-fill2` |
-| 文字（Enabled） | fill | `color-info1` |
-| 文字（Disabled） | fill | `color-info4` |
+| 外圈背景（Selected Enabled） | fill | `--o-color-primary1` |
+| 外圈背景（Selected Disabled） | fill | `--o-color-primary4` |
+| 外圈背景（Unselected Enabled） | fill | `--o-color-fill2` |
+| 外圈背景（Unselected Disabled Light） | fill | `--o-color-control2-light` |
+| 外圈背景（Unselected Disabled Dark） | fill | `--o-color-control2-light` |
+| 外圈描边（Unselected Enabled） | stroke | `--o-color-control1` |
+| 外圈描边（Unselected Disabled） | stroke | `--o-color-control4` |
+| 内圈指示点 | fill | `--o-color-fill2` |
+| 文字（Enabled） | fill | `--o-color-info1` |
+| 文字（Disabled） | fill | `--o-color-info4` |
 | 文字字号 | fontSize | `font_size-text1`（16px） |
 | 文字行高 | lineHeight | `line_height-text1`（24px） |
 | 选择器↔文字间距 | autoLayoutItemSpacing | `gap-2`（8px） |
@@ -340,7 +340,7 @@ ORadio（HORIZONTAL，自适应宽度，固定高度 24px）
 ### 设计提示
 
 - 单选框左侧选择器 + 右侧文字是标准布局，不建议反向排列
-- 选中状态内圈指示点使用 `color-fill2`（Light=white，Dark=grey-4），确保在深色背景下可识别
+- 选中状态内圈指示点使用 `--o-color-fill2`（Light=white，Dark=grey-4），确保在深色背景下可识别
 - 单选框整体高度固定 24px，与文字行高一致，确保视觉对齐
 - 同一组单选框应保持一致的尺寸和间距
 - 禁用状态应同时禁用外圈和文字的交互

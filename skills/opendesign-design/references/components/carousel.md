@@ -127,8 +127,8 @@ OCarousel 指示器（HORIZONTAL，自适应宽度，固定高度）
 
 | 状态 | Token 名称 | Light RGB | Dark RGB |
 |------|-----------|----------|----------|
-| 活跃指示块 | `color-primary1` | rgb(0, 47, 167) | rgb(73, 122, 248) |
-| 非活跃指示块 | `color-control1` | rgba(0, 0, 0, 0.251) | rgba(255, 255, 255, 0.251) |
+| 活跃指示块 | `--o-color-primary1` | rgb(0, 47, 167) | rgb(73, 122, 248) |
+| 非活跃指示块 | `--o-color-control1` | rgba(0, 0, 0, 0.251) | rgba(255, 255, 255, 0.251) |
 
 ---
 
@@ -175,7 +175,7 @@ OCarousel（HORIZONTAL，自适应宽，固定高）
 2. **切换尺寸**：右侧面板 → size 属性 → 选择 `small` / `medium`
 3. **切换主题**：右侧面板 → Dark 属性 → 选择 `off` / `on`
 4. **调整指示块数量**：进入组件实例 → 增减矩形子层，保持 gap 一致
-5. **切换活跃位置**：修改目标矩形的 fill 为 `color-primary1`，原活跃项改为 `color-control1`
+5. **切换活跃位置**：修改目标矩形的 fill 为 `--o-color-primary1`，原活跃项改为 `--o-color-control1`
 
 ---
 
@@ -213,8 +213,8 @@ OCarousel（HORIZONTAL，自适应宽，固定高）
 
 | 元素 | 属性 | 推荐变量 Token |
 |------|------|---------------|
-| 活跃指示块填充 | fill | `color-primary1` |
-| 非活跃指示块填充 | fill | `color-control1` |
+| 活跃指示块填充 | fill | `--o-color-primary1` |
+| 非活跃指示块填充 | fill | `--o-color-control1` |
 | 指示块圆角（small） | cornerRadius | 3px（无对应 Token，直接填值） |
 | 指示块圆角（medium） | cornerRadius | 6px（无对应 Token，直接填值） |
 | 指示块高度（small） | height | 2px |

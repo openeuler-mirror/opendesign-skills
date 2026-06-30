@@ -155,20 +155,20 @@ OInput（SYMBOL，自适应宽度，固定高度）
 
 | 区域 | Light 模式 | Dark 模式 | Token | RGB 值 |
 |------|-----------|----------|-------|--------|
-| 输入框背景 | `grey-1` | `grey-4` | `color-fill2` | rgb(255,255,255) → rgb(36,36,39) |
-| 输入框描边 | `grey-14 @ 0.25` | `grey-14 @ 0.25` | `color-control1` | rgba(0,0,0,0.25) → rgba(255,255,255,0.25) |
-| 提示文字（输入框外） | `grey-14 @ 0.6` | `grey-14 @ 0.6` | `color-info3` | rgba(0,0,0,0.6) → rgba(255,255,255,0.6) |
-| 占位文字（输入框内） | `grey-14 @ 0.4` | `grey-14 @ 0.4` | `color-info4` | rgba(0,0,0,0.4) → rgba(255,255,255,0.4) |
+| 输入框背景 | `grey-1` | `grey-4` | `--o-color-fill2` | rgb(255,255,255) → rgb(36,36,39) |
+| 输入框描边 | `grey-14 @ 0.25` | `grey-14 @ 0.25` | `--o-color-control1` | rgba(0,0,0,0.25) → rgba(255,255,255,0.25) |
+| 提示文字（输入框外） | `grey-14 @ 0.6` | `grey-14 @ 0.6` | `--o-color-info3` | rgba(0,0,0,0.6) → rgba(255,255,255,0.6) |
+| 占位文字（输入框内） | `grey-14 @ 0.4` | `grey-14 @ 0.4` | `--o-color-info4` | rgba(0,0,0,0.4) → rgba(255,255,255,0.4) |
 
 #### 输入区域（Error 状态）
 
 | 区域 | Light 模式 | Dark 模式 | Token | RGB 值 |
 |------|-----------|----------|-------|--------|
-| 输入框背景 | `grey-1` | `grey-4` | `color-fill2` | rgb(255,255,255) → rgb(36,36,39) |
-| 输入框描边 | `red-6` | `red-6` | `color-danger1` | rgb(230,0,18) → rgb(235,35,45) |
-| 提示文字（输入框外） | `grey-14 @ 0.6` | `grey-14 @ 0.6` | `color-info3` | rgba(0,0,0,0.6) → rgba(255,255,255,0.6) |
-| 错误提示文字（输入框外） | `red-6` | `red-6` | `color-danger1` | rgb(230,0,18) → rgb(235,35,45) |
-| 占位文字（输入框内） | `grey-14` | `grey-14` | `color-info1` | rgb(0,0,0) → rgb(255,255,255) |
+| 输入框背景 | `grey-1` | `grey-4` | `--o-color-fill2` | rgb(255,255,255) → rgb(36,36,39) |
+| 输入框描边 | `red-6` | `red-6` | `--o-color-danger1` | rgb(230,0,18) → rgb(235,35,45) |
+| 提示文字（输入框外） | `grey-14 @ 0.6` | `grey-14 @ 0.6` | `--o-color-info3` | rgba(0,0,0,0.6) → rgba(255,255,255,0.6) |
+| 错误提示文字（输入框外） | `red-6` | `red-6` | `--o-color-danger1` | rgb(230,0,18) → rgb(235,35,45) |
+| 占位文字（输入框内） | `grey-14` | `grey-14` | `--o-color-info1` | rgb(0,0,0) → rgb(255,255,255) |
 
 #### 输入区域（Complete 状态）
 
@@ -176,10 +176,10 @@ Complete 状态视觉上与 Enabled 状态相同，无特殊颜色差异。
 
 | 区域 | Light 模式 | Dark 模式 | Token | RGB 值 |
 |------|-----------|----------|-------|--------|
-| 输入框背景 | `grey-1` | `grey-4` | `color-fill2` | rgb(255,255,255) → rgb(36,36,39) |
-| 输入框描边 | `grey-14 @ 0.25` | `grey-14 @ 0.25` | `color-control1` | rgba(0,0,0,0.25) → rgba(255,255,255,0.25) |
-| 提示文字（输入框外） | `grey-14 @ 0.6` | `grey-14 @ 0.6` | `color-info3` | rgba(0,0,0,0.6) → rgba(255,255,255,0.6) |
-| 占位文字（输入框内） | `grey-14` | `grey-14` | `color-info1` | rgb(0,0,0) → rgb(255,255,255) |
+| 输入框背景 | `grey-1` | `grey-4` | `--o-color-fill2` | rgb(255,255,255) → rgb(36,36,39) |
+| 输入框描边 | `grey-14 @ 0.25` | `grey-14 @ 0.25` | `--o-color-control1` | rgba(0,0,0,0.25) → rgba(255,255,255,0.25) |
+| 提示文字（输入框外） | `grey-14 @ 0.6` | `grey-14 @ 0.6` | `--o-color-info3` | rgba(0,0,0,0.6) → rgba(255,255,255,0.6) |
+| 占位文字（输入框内） | `grey-14` | `grey-14` | `--o-color-info1` | rgb(0,0,0) → rgb(255,255,255) |
 
 ---
 
@@ -212,27 +212,27 @@ OInput（SYMBOL）
 │   └── [提示文字 PARAGRAPH]
 │       Width: 268px | Height: 22px
 │       fontSize: 14px → Token: `font_size-tip1`
-│       fill: rgba(0,0,0,0.6) → Token: `color-info3`（Light）
-│             rgba(255,255,255,0.6) → Token: `color-info3`（Dark）
+│       fill: rgba(0,0,0,0.6) → Token: `--o-color-info3`（Light）
+│             rgba(255,255,255,0.6) → Token: `--o-color-info3`（Dark）
 │       nodeText: "提示语"
 │
 └── [输入区域 FRAME]
     GUID: 内部节点（属性 1=L,属性 2=Enabled）
     Width: 320px | Height: 40px
     cornerRadius: 4px → Token: `radius_control-xs`
-    fill: rgb(255,255,255) → Token: `color-fill2`（Light）
-          rgb(36,36,39) → Token: `color-fill2`（Dark）
-    stroke: rgba(0,0,0,0.25) → Token: `color-control1`（Light Enabled）
-            rgba(255,255,255,0.25) → Token: `color-control1`（Dark Enabled）
-            rgba(230,0,18,1) → Token: `color-danger1`（Light Error）
-            rgba(235,35,45,1) → Token: `color-danger1`（Dark Error）
+    fill: rgb(255,255,255) → Token: `--o-color-fill2`（Light）
+          rgb(36,36,39) → Token: `--o-color-fill2`（Dark）
+    stroke: rgba(0,0,0,0.25) → Token: `--o-color-control1`（Light Enabled）
+            rgba(255,255,255,0.25) → Token: `--o-color-control1`（Dark Enabled）
+            rgba(230,0,18,1) → Token: `--o-color-danger1`（Light Error）
+            rgba(235,35,45,1) → Token: `--o-color-danger1`（Dark Error）
     strokeWeight: 1px | strokeAlign: INSIDE
     │
     └── [输入文字 PARAGRAPH]
         Width: 自适应 | Height: 24px
         fontSize: 16px → Token: `font_size-text1`
-        fill: rgba(0,0,0,0.4) → Token: `color-info4`（Light）
-              rgba(255,255,255,0.4) → Token: `color-info4`（Dark）
+        fill: rgba(0,0,0,0.4) → Token: `--o-color-info4`（Light）
+              rgba(255,255,255,0.4) → Token: `--o-color-info4`（Dark）
         nodeText: "Hint"（占位文字示例）
 ```
 
@@ -251,8 +251,8 @@ OInput（SYMBOL）
 └── [输入区域 FRAME]
     Width: 320px | Height: 32px
     cornerRadius: 4px
-    fill: rgb(255,255,255) → Token: `color-fill2`
-    stroke: rgba(0,0,0,0.25) → Token: `color-control1`
+    fill: rgb(255,255,255) → Token: `--o-color-fill2`
+    stroke: rgba(0,0,0,0.25) → Token: `--o-color-control1`
     strokeWeight: 1px INSIDE
     │
     └── [输入文字]
@@ -276,8 +276,8 @@ OInput（SYMBOL）
 └── [输入区域 FRAME]
     Width: 312px | Height: 40px
     cornerRadius: 4px
-    fill: rgb(255,255,255) → Token: `color-fill2`
-    stroke: rgba(0,0,0,0.25) → Token: `color-control1`
+    fill: rgb(255,255,255) → Token: `--o-color-fill2`
+    stroke: rgba(0,0,0,0.25) → Token: `--o-color-control1`
     strokeWeight: 1px INSIDE
     │
     └── [输入文字]
@@ -333,9 +333,9 @@ OInput（SYMBOL）
 - **提示字号**：large=14px，medium/small=12px
 - **圆角统一**：所有尺寸圆角均为 4px（`radius_control-xs`）
 - **背景颜色**：Light=grey-1（white），Dark=grey-4
-- **描边颜色**：Enabled=grey-14@0.25（`color-control1`），Error=red-6（`color-danger1`）
-- **Complete 状态**：视觉与 Enabled 相同，描边使用 `color-control1`，无图标
-- **占位文字颜色差异**：Enabled=grey-14@0.4（`color-info4`），Error/Complete=grey-14@1（`color-info1`）
+- **描边颜色**：Enabled=grey-14@0.25（`--o-color-control1`），Error=red-6（`--o-color-danger1`）
+- **Complete 状态**：视觉与 Enabled 相同，描边使用 `--o-color-control1`，无图标
+- **占位文字颜色差异**：Enabled=grey-14@0.4（`--o-color-info4`），Error/Complete=grey-14@1（`--o-color-info1`）
 - **宽度自适应**：输入框宽度随容器自适应，无固定宽度
 - **Group 变体**：组合示例，展示带标题、按钮、数字输入的完整输入框组合
 - **提示区域**：可选，默认不显示，需要时可手动添加或使用 Group 变体
@@ -348,20 +348,20 @@ OInput（SYMBOL）
 
 | 元素 | 状态 | 视觉表现 |
 |------|------|---------|
-| 输入框 | Enabled | 背景：`color-fill2`，描边：`color-control1` |
-| 输入框 | Error | 背景：`color-fill2`，描边：`color-danger1`（red-6） |
-| 输入框 | Complete | 背景：`color-fill2`，描边：`color-control1`（与 Enabled 相同） |
-| 提示文字（输入框外） | Enabled | fill：`color-info3`（grey-14 @ 0.6） |
-| 提示文字（输入框外） | Error/Complete | fill：`color-info3`（grey-14 @ 0.6） |
-| 占位文字（输入框内） | Enabled | fill：`color-info4`（grey-14 @ 0.4） |
-| 占位文字（输入框内） | Error/Complete | fill：`color-info1`（grey-14 @ 1） |
+| 输入框 | Enabled | 背景：`--o-color-fill2`，描边：`--o-color-control1` |
+| 输入框 | Error | 背景：`--o-color-fill2`，描边：`--o-color-danger1`（red-6） |
+| 输入框 | Complete | 背景：`--o-color-fill2`，描边：`--o-color-control1`（与 Enabled 相同） |
+| 提示文字（输入框外） | Enabled | fill：`--o-color-info3`（grey-14 @ 0.6） |
+| 提示文字（输入框外） | Error/Complete | fill：`--o-color-info3`（grey-14 @ 0.6） |
+| 占位文字（输入框内） | Enabled | fill：`--o-color-info4`（grey-14 @ 0.4） |
+| 占位文字（输入框内） | Error/Complete | fill：`--o-color-info1`（grey-14 @ 1） |
 
 ---
 
 ### 状态切换逻辑
 
-- **Enabled → Error**：描边颜色切换为 `color-danger1`（red-6），显示错误提示文字
-- **Error → Enabled**：描边颜色切换为 `color-control1`（grey-14 @ 0.25），隐藏错误提示
+- **Enabled → Error**：描边颜色切换为 `--o-color-danger1`（red-6），显示错误提示文字
+- **Error → Enabled**：描边颜色切换为 `--o-color-control1`（grey-14 @ 0.25），隐藏错误提示
 - **Enabled → Complete**：视觉不变，仅作为语义状态标记输入已完成
 - **Complete → Enabled**：恢复 Enabled 状态（视觉无差异）
 - **Light → Dark**：背景色切换 grey-1 → grey-4，描边和文字颜色同步切换为深色值
@@ -372,9 +372,9 @@ OInput（SYMBOL）
 
 | 元素 | Hover 视觉表现 |
 |------|---------------|
-| 输入框（Enabled） | 描边颜色切换为 `color-control2`（brand-6） |
+| 输入框（Enabled） | 描边颜色切换为 `--o-color-control2`（brand-6） |
 | 输入框（Error） | 描边颜色不变 |
-| 输入框（Complete） | 描边颜色切换为 `color-control2`（brand-6）（与 Enabled 相同） |
+| 输入框（Complete） | 描边颜色切换为 `--o-color-control2`（brand-6）（与 Enabled 相同） |
 
 ---
 
@@ -382,7 +382,7 @@ OInput（SYMBOL）
 
 | 元素 | Focus 视觉表现 |
 |------|---------------|
-| 输入框 | 描边颜色切换为 `color-control2`（brand-6），显示光标 |
+| 输入框 | 描边颜色切换为 `--o-color-control2`（brand-6），显示光标 |
 
 ---
 
@@ -392,13 +392,13 @@ OInput（SYMBOL）
 
 | 元素 | 属性 | 推荐变量 Token |
 |------|------|---------------|
-| 输入框背景 | fill | `color-fill2` |
-| 输入框描边（Enabled） | stroke | `color-control1` |
-| 输入框描边（Error） | stroke | `color-danger1` |
-| 提示文字（输入框外） | fill | `color-info3` |
-| 错误提示文字（输入框外） | fill | `color-danger1` |
-| 占位文字（输入框内） Enabled | fill | `color-info4` |
-| 占位文字（输入框内） Error/Complete | fill | `color-info1` |
+| 输入框背景 | fill | `--o-color-fill2` |
+| 输入框描边（Enabled） | stroke | `--o-color-control1` |
+| 输入框描边（Error） | stroke | `--o-color-danger1` |
+| 提示文字（输入框外） | fill | `--o-color-info3` |
+| 错误提示文字（输入框外） | fill | `--o-color-danger1` |
+| 占位文字（输入框内） Enabled | fill | `--o-color-info4` |
+| 占位文字（输入框内） Error/Complete | fill | `--o-color-info1` |
 | 输入框高度（large/small） | height | `control_size-l`（40px） |
 | 输入框高度（medium） | height | `control_size-m`（32px） |
 | 输入框圆角 | cornerRadius | `radius_control-xs`（4px） |

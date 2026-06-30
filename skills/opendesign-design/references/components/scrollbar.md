@@ -10,7 +10,7 @@
 
 ### 组件概览
 
-**OScrollbar 滚动条**：用于展示和控制可滚动内容的当前位置。通过滑块（thumb）在轨道中滑动，传达当前可见区域在整体内容中的位置比例。支持水平和垂直方向，以及两种尺寸（small/medium）。轨道透明，滑块使用 `color-control1`（grey-14 @ 0.25）填充。
+**OScrollbar 滚动条**：用于展示和控制可滚动内容的当前位置。通过滑块（thumb）在轨道中滑动，传达当前可见区域在整体内容中的位置比例。支持水平和垂直方向，以及两种尺寸（small/medium）。轨道透明，滑块使用 `--o-color-control1`（grey-14 @ 0.25）填充。
 
 ---
 
@@ -64,7 +64,7 @@ OScrollbar（SYMBOL，宽度固定，高度自适应）
     └── [滑块 RECTANGLE]（显示滚动位置）
           Width: 6px（medium）/ 4px（small）
           Height: 自适应（示例 120px medium / 80px small）
-          fill: `color-control1`（Light/Dark）
+          fill: `--o-color-control1`（Light/Dark）
           位置：根据滚动比例在轨道中定位
 ```
 
@@ -79,7 +79,7 @@ OScrollbar（SYMBOL，高度固定，宽度自适应）
 └── [滑块 RECTANGLE]（进度线条）
       Width: 自适应（根据内容比例）
       Height: 6px（medium）/ 3px（small）
-      fill: `color-control1`（Light/Dark）
+      fill: `--o-color-control1`（Light/Dark）
       位置：根据滚动比例在轨道中定位
 ```
 
@@ -125,7 +125,7 @@ OScrollbar（SYMBOL，高度固定，宽度自适应）
 |---------|--------|--------|---------|
 | size | `medium` / `small` | `medium` | 轨道宽度/高度 16/12px，滑块宽度/高度 6/4px |
 | Direction | `Y` / `X` | `Y` | 垂直/水平方向 |
-| Dark | `off` / `on` | `off` | 滑块颜色 `color-control1` |
+| Dark | `off` / `on` | `off` | 滑块颜色 `--o-color-control1` |
 
 ---
 
@@ -159,7 +159,7 @@ OScrollbar（SYMBOL，高度固定，宽度自适应）
 
 | 区域 | Light 模式 | Dark 模式 | Token | RGB 值 |
 |------|-----------|----------|-------|--------|
-| 滑块 | `grey-14 @ 0.25` | `grey-14 @ 0.25` | `color-control1` | rgba(0,0,0,0.25) → rgba(255,255,255,0.25) |
+| 滑块 | `grey-14 @ 0.25` | `grey-14 @ 0.25` | `--o-color-control1` | rgba(0,0,0,0.25) → rgba(255,255,255,0.25) |
 
 #### 轨道（track）
 
@@ -167,7 +167,7 @@ OScrollbar（SYMBOL，高度固定，宽度自适应）
 |------|-----------|----------|-------|------|
 | 轨道背景 | transparent | transparent | — | 无填充色，透明 |
 
-> **说明**：滚动条轨道是透明的，不显示背景色，仅通过滑块传达滚动位置。滑块颜色使用 `color-control1`（grey-14 @ 0.25），Light 和 Dark 模式下均一致。
+> **说明**：滚动条轨道是透明的，不显示背景色，仅通过滑块传达滚动位置。滑块颜色使用 `--o-color-control1`（grey-14 @ 0.25），Light 和 Dark 模式下均一致。
 
 ---
 
@@ -188,8 +188,8 @@ OScrollbar（SYMBOL，垂直）
     └── [滑块 RECTANGLE]
         GUID: 1042:17349
         Width: 6px | Height: 自适应（示例 120px）
-        fill: rgba(0,0,0,0.25) → Token: `color-control1`（Light）
-              rgba(255,255,255,0.25) → Token: `color-control1`（Dark）
+        fill: rgba(0,0,0,0.25) → Token: `--o-color-control1`（Light）
+              rgba(255,255,255,0.25) → Token: `--o-color-control1`（Dark）
 ```
 
 **Direction=Y，size=small**
@@ -209,7 +209,7 @@ OScrollbar（SYMBOL，垂直）
     │
     └── [滑块 RECTANGLE]
         Width: 4px | Height: 自适应（示例 80px）
-        fill: `color-control1`
+        fill: `--o-color-control1`
 ```
 
 **Direction=X，size=medium**
@@ -223,7 +223,7 @@ OScrollbar（SYMBOL，水平）
 └── [滑块 RECTANGLE]
     GUID: 1042:17343
     Width: 自适应（示例 600px）| Height: 6px
-    fill: `color-control1`
+    fill: `--o-color-control1`
 ```
 
 **Direction=X，size=small**
@@ -239,7 +239,7 @@ OScrollbar（SYMBOL，水平）
     │
     └── [滑块 RECTANGLE]
         Width: 自适应（示例 600px）| Height: 3px
-        fill: `color-control1`
+        fill: `--o-color-control1`
 ```
 
 ---
@@ -276,13 +276,13 @@ OScrollbar（SYMBOL，水平）
 
 - **无 Disabled 状态**：OScrollbar 没有 Disabled（禁用）变体，所有状态均为 Enabled
 - **轨道透明**：轨道背景是透明的（visible=False, opacity=0），无填充色
-- **滑块颜色**：Light/Dark 模式均使用 `color-control1`（grey-14 @ 0.25）
+- **滑块颜色**：Light/Dark 模式均使用 `--o-color-control1`（grey-14 @ 0.25）
 - **滑块长度自适应**：滑块长度根据内容比例计算，示例值（120px/80px）仅为演示
 - **滑块最小尺寸**：建议滑块最小不低于 30-40px，确保可识别和可操作
 - **尺寸选择**：medium 适合大多数场景，small 适合紧凑布局或精细内容（如代码编辑器）
 - **方向选择**：Y 方向用于纵向滚动内容，X 方向用于横向滚动内容
 - **滚动比例计算**：滑块长度 = 轨道长度 × (可见区域 / 总内容长度)
-- **Dark 模式差异**：滑块颜色使用 `color-control1`（grey-14 @ 0.25），Light 和 Dark 模式下颜色值不同但透明度一致
+- **Dark 模式差异**：滑块颜色使用 `--o-color-control1`（grey-14 @ 0.25），Light 和 Dark 模式下颜色值不同但透明度一致
 
 ---
 
@@ -292,8 +292,8 @@ OScrollbar（SYMBOL，水平）
 
 | 元素 | 状态 | 视觉表现 |
 |------|------|---------|
-| 滑块 | Light | fill：`color-control1`（rgba(0,0,0,0.25)） |
-| 滑块 | Dark | fill：`color-control1`（rgba(255,255,255,0.25)） |
+| 滑块 | Light | fill：`--o-color-control1`（rgba(0,0,0,0.25)） |
+| 滑块 | Dark | fill：`--o-color-control1`（rgba(255,255,255,0.25)） |
 | 轨道 | 所有状态 | transparent（透明，无填充） |
 
 ---
@@ -325,7 +325,7 @@ OScrollbar（SYMBOL，水平）
 
 | 元素 | 属性 | 推荐变量 Token |
 |------|------|---------------|
-| 滑块 | fill | `color-control1` |
+| 滑块 | fill | `--o-color-control1` |
 | 轨道宽度（Y medium） | width | 16px |
 | 轨道宽度（Y small） | width | 12px |
 | 轨道高度（X medium） | height | 16px |
@@ -348,7 +348,7 @@ OScrollbar（SYMBOL，水平）
 
 ### 设计提示
 
-- 滚动条轨道透明，滑块颜色使用 `color-control1`（grey-14 @ 0.25）
+- 滚动条轨道透明，滑块颜色使用 `--o-color-control1`（grey-14 @ 0.25）
 - small 尺寸适合代码编辑器、侧边栏等精细内容滚动
 - medium 尺寸适合表格、列表等常规内容滚动
 - 滚动条应与容器边缘保持一定间距（通常 4-8px）
@@ -366,4 +366,4 @@ OScrollbar（SYMBOL，水平）
 - 轨道尺寸：Y medium=16px宽，Y small=12px宽；X medium=16px高，X small=12px高
 - 滑块尺寸：Y medium=6px宽，Y small=4px宽；X medium=6px高，X small=3px高
 - 轨道背景：transparent（透明）
-- 滑块颜色：使用 `color-control1`（grey-14 @ 0.25）
+- 滑块颜色：使用 `--o-color-control1`（grey-14 @ 0.25）

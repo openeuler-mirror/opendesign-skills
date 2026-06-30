@@ -132,37 +132,37 @@ OCheckbox（HORIZONTAL，自适应宽度，固定高度 24px）
 
 | 区域 | Light 模式 | Dark 模式 | Token | RGB 值 |
 |------|-----------|----------|-------|--------|
-| 框体背景（Enabled） | `grey-1` | `grey-4` | `color-fill2` | rgb(255,255,255) → rgb(36,36,39) |
-| 框体描边（Enabled） | `grey-14 @ 0.25` | `grey-14 @ 0.25` | `color-control1` | rgba(0,0,0,0.25) → rgba(255,255,255,0.25) |
-| 框体背景（Disabled Light） | `brand-1` | — | `color-control2-light` | rgb(235,241,250) |
-| 框体背景（Disabled Dark） | — | `grey-5` | `color-control2-light` | rgb(43,43,47) |
-| 框体描边（Disabled） | `grey-14 @ 0.1` | `grey-14 @ 0.15` | `color-control4` | rgba(0,0,0,0.1) → rgba(255,255,255,0.15) |
-| 文字（Enabled） | `grey-14` | `grey-14` | `color-info1` | rgb(0,0,0) → rgb(255,255,255) |
-| 文字（Disabled） | `grey-14 @ 0.4` | `grey-14 @ 0.4` | `color-info4` | rgba(0,0,0,0.4) → rgba(255,255,255,0.4) |
+| 框体背景（Enabled） | `grey-1` | `grey-4` | `--o-color-fill2` | rgb(255,255,255) → rgb(36,36,39) |
+| 框体描边（Enabled） | `grey-14 @ 0.25` | `grey-14 @ 0.25` | `--o-color-control1` | rgba(0,0,0,0.25) → rgba(255,255,255,0.25) |
+| 框体背景（Disabled Light） | `brand-1` | — | `--o-color-control2-light` | rgb(235,241,250) |
+| 框体背景（Disabled Dark） | — | `grey-5` | `--o-color-control2-light` | rgb(43,43,47) |
+| 框体描边（Disabled） | `grey-14 @ 0.1` | `grey-14 @ 0.15` | `--o-color-control4` | rgba(0,0,0,0.1) → rgba(255,255,255,0.15) |
+| 文字（Enabled） | `grey-14` | `grey-14` | `--o-color-info1` | rgb(0,0,0) → rgb(255,255,255) |
+| 文字（Disabled） | `grey-14 @ 0.4` | `grey-14 @ 0.4` | `--o-color-info4` | rgba(0,0,0,0.4) → rgba(255,255,255,0.4) |
 
 #### Selected 状态
 
 | 区域 | Light 模式 | Dark 模式 | Token | RGB 值 |
 |------|-----------|----------|-------|--------|
-| 框体背景（Enabled） | `brand-6` | `brand-6` | `color-primary1` | rgb(0,47,167) → rgb(73,122,248) |
-| 框体背景（Disabled） | `brand-3` | `brand-3` | `color-primary4` | rgb(132,161,220) → rgb(29,51,120) |
-| 勾号图标（Enabled） | `white` | `white` | `color-fill2` | rgb(255,255,255) |
-| 勾号图标（Disabled） | `white` | `white` | `color-fill2` | rgb(255,255,255) |
-| 文字（Enabled） | `grey-14` | `grey-14` | `color-info1` | rgb(0,0,0) → rgb(255,255,255) |
-| 文字（Disabled） | `grey-14 @ 0.4` | `grey-14 @ 0.4` | `color-info4` | rgba(0,0,0,0.4) → rgba(255,255,255,0.4) |
+| 框体背景（Enabled） | `brand-6` | `brand-6` | `--o-color-primary1` | rgb(0,47,167) → rgb(73,122,248) |
+| 框体背景（Disabled） | `brand-3` | `brand-3` | `--o-color-primary4` | rgb(132,161,220) → rgb(29,51,120) |
+| 勾号图标（Enabled） | `white` | `white` | `--o-color-fill2` | rgb(255,255,255) |
+| 勾号图标（Disabled） | `white` | `white` | `--o-color-fill2` | rgb(255,255,255) |
+| 文字（Enabled） | `grey-14` | `grey-14` | `--o-color-info1` | rgb(0,0,0) → rgb(255,255,255) |
+| 文字（Disabled） | `grey-14 @ 0.4` | `grey-14 @ 0.4` | `--o-color-info4` | rgba(0,0,0,0.4) → rgba(255,255,255,0.4) |
 
 #### Indeterminate 状态（半选）
 
 | 区域 | Light 模式 | Dark 模式 | Token | RGB 值 |
 |------|-----------|----------|-------|--------|
-| 框体背景（Enabled） | `brand-6` | `brand-6` | `color-primary1` | rgb(0,47,167) → rgb(73,122,248) |
-| 框体背景（Disabled） | `brand-3` | `brand-3` | `color-primary4` | rgb(132,161,220) → rgb(29,51,120) |
-| 减号图标（Enabled） | `white` | `white` | `color-fill2` | rgb(255,255,255) |
-| 减号图标（Disabled） | `white` | `white` | `color-fill2` | rgb(255,255,255) |
-| 文字（Enabled） | `grey-14` | `grey-14` | `color-info1` | rgb(0,0,0) → rgb(255,255,255) |
-| 文字（Disabled） | `grey-14 @ 0.4` | `grey-14 @ 0.4` | `color-info4` | rgba(0,0,0,0.4) → rgba(255,255,255,0.4) |
+| 框体背景（Enabled） | `brand-6` | `brand-6` | `--o-color-primary1` | rgb(0,47,167) → rgb(73,122,248) |
+| 框体背景（Disabled） | `brand-3` | `brand-3` | `--o-color-primary4` | rgb(132,161,220) → rgb(29,51,120) |
+| 减号图标（Enabled） | `white` | `white` | `--o-color-fill2` | rgb(255,255,255) |
+| 减号图标（Disabled） | `white` | `white` | `--o-color-fill2` | rgb(255,255,255) |
+| 文字（Enabled） | `grey-14` | `grey-14` | `--o-color-info1` | rgb(0,0,0) → rgb(255,255,255) |
+| 文字（Disabled） | `grey-14 @ 0.4` | `grey-14 @ 0.4` | `--o-color-info4` | rgba(0,0,0,0.4) → rgba(255,255,255,0.4) |
 
-> **说明**：选中状态和半选状态框体使用品牌色填充，无描边；勾号和减号图标使用 `color-fill2`（white）。
+> **说明**：选中状态和半选状态框体使用品牌色填充，无描边；勾号和减号图标使用 `--o-color-fill2`（white）。
 
 ---
 
@@ -215,26 +215,26 @@ OCheckbox（HORIZONTAL，自适应宽度，固定高度 24px）
 │   │   │   GUID: 1042:17371（Selected Enabled Light）
 │   │   │   Width: 16px | Height: 16px
 │   │   │   cornerRadius: 4px
-│   │   │   fill: rgb(0,47,167) → rgb(73,122,248) → Token: `color-primary1`
-│   │   │         rgb(132,161,220) → rgb(29,51,120) → Token: `color-primary4`
+│   │   │   fill: rgb(0,47,167) → rgb(73,122,248) → Token: `--o-color-primary1`
+│   │   │         rgb(132,161,220) → rgb(29,51,120) → Token: `--o-color-primary4`
 │   │   │   stroke: 无（选中/半选状态）
 │   │   │
 │   │   └── [勾号图标 GROUP]（仅 Selected 状态显示）
 │   │       GUID: 1042:17372
 │   │       Width: ~10.23px | Height: ~10.40px
-│   │       fill: rgb(255,255,255) → Token: `color-fill2`
+│   │       fill: rgb(255,255,255) → Token: `--o-color-fill2`
 │   │       包含 Path 元素（勾号形状）
 │   │
 │   │   └── [减号图标 RECTANGLE]（仅 Indeterminate 状态显示）
 │   │       GUID: 1042:17394
 │   │       Width: 8px | Height: 8px
-│   │       fill: rgb(255,255,255) → Token: `color-fill2`
+│   │       fill: rgb(255,255,255) → Token: `--o-color-fill2`
 │   │
 │   └── [text PARAGRAPH]
        GUID: 1080:9210
        Width: 自适应（示例 32px）| Height: 24px
-       fill: rgb(0,0,0) → rgb(255,255,255) → Token: `color-info1`
-             rgba(0,0,0,0.4) → rgba(255,255,255,0.4) → Token: `color-info4`
+       fill: rgb(0,0,0) → rgb(255,255,255) → Token: `--o-color-info1`
+             rgba(0,0,0,0.4) → rgba(255,255,255,0.4) → Token: `--o-color-info4`
        fontFamily: HarmonyHeiTi
        fontStyle: Regular
        fontSize: 16px → Token: `font_size-text1`
@@ -278,15 +278,15 @@ OCheckbox（HORIZONTAL，自适应宽度，固定高度 24px）
 
 ### 注意事项
 
-- **选中状态识别**：选中时框体使用品牌色填充（`color-primary1`），显示白色勾号图标
-- **半选状态识别**：半选时框体使用品牌色填充（`color-primary1`），显示白色减号图标（8×8px）
-- **未选中状态识别**：未选中时框体使用 `color-fill2` 背景 + `color-control1` 描边，无图标
+- **选中状态识别**：选中时框体使用品牌色填充（`--o-color-primary1`），显示白色勾号图标
+- **半选状态识别**：半选时框体使用品牌色填充（`--o-color-primary1`），显示白色减号图标（8×8px）
+- **未选中状态识别**：未选中时框体使用 `--o-color-fill2` 背景 + `--o-color-control1` 描边，无图标
 - **勾号图标**：仅 `Selected` 状态显示，尺寸约 10×10px，白色填充
 - **减号图标**：仅 `indeterminate` 状态显示，尺寸 8×8px，白色填充
 - **框体描边**：仅 `Unselected` 状态有描边（strokeWeight: 1px INSIDE），`Selected` 和 `indeterminate` 状态无描边
-- **禁用状态背景**：Unselected Disabled Light/Dark 使用 `color-control2-light`
-- **禁用状态描边**：Unselected Disabled 使用 `color-control4` 描边
-- **文字颜色**：Enabled 状态使用 `color-info1`（一级文字色），Disabled 状态使用 `color-info4`（禁用文字色）
+- **禁用状态背景**：Unselected Disabled Light/Dark 使用 `--o-color-control2-light`
+- **禁用状态描边**：Unselected Disabled 使用 `--o-color-control4` 描边
+- **文字颜色**：Enabled 状态使用 `--o-color-info1`（一级文字色），Disabled 状态使用 `--o-color-info4`（禁用文字色）
 - **半选状态语义**：用于表示部分选中（如父级节点下部分子节点已选中），需在交互层面实现
 - **多选逻辑**：多个 Checkbox 组合使用时，同一组内可选中多个，无互斥限制
 
@@ -298,29 +298,29 @@ OCheckbox（HORIZONTAL，自适应宽度，固定高度 24px）
 
 | 元素 | 状态 | 视觉表现 |
 |------|------|---------|
-| 框体 | Unselected Enabled | 背景：`color-fill2`，描边：`color-control1` |
-| 框体 | Unselected Disabled Light | 背景：`color-control2-light`，描边：`color-control4` |
-| 框体 | Unselected Disabled Dark | 背景：`color-control2-light`，描边：`color-control4` |
-| 框体 | Selected Enabled | 背景：`color-primary1`，无描边，显示勾号 |
-| 框体 | Selected Disabled | 背景：`color-primary4`，无描边，显示勾号 |
-| 框体 | Indeterminate Enabled | 背景：`color-primary1`，无描边，显示减号 |
-| 框体 | Indeterminate Disabled | 背景：`color-primary4`，无描边，显示减号 |
-| 勾号 | Selected | 显示，fill：`color-fill2` |
-| 减号 | Indeterminate | 显示，fill：`color-fill2` |
+| 框体 | Unselected Enabled | 背景：`--o-color-fill2`，描边：`--o-color-control1` |
+| 框体 | Unselected Disabled Light | 背景：`--o-color-control2-light`，描边：`--o-color-control4` |
+| 框体 | Unselected Disabled Dark | 背景：`--o-color-control2-light`，描边：`--o-color-control4` |
+| 框体 | Selected Enabled | 背景：`--o-color-primary1`，无描边，显示勾号 |
+| 框体 | Selected Disabled | 背景：`--o-color-primary4`，无描边，显示勾号 |
+| 框体 | Indeterminate Enabled | 背景：`--o-color-primary1`，无描边，显示减号 |
+| 框体 | Indeterminate Disabled | 背景：`--o-color-primary4`，无描边，显示减号 |
+| 勾号 | Selected | 显示，fill：`--o-color-fill2` |
+| 减号 | Indeterminate | 显示，fill：`--o-color-fill2` |
 | 图标 | Unselected | 隐藏 |
-| 文字 | Enabled | 颜色：`color-info1` |
-| 文字 | Disabled | 颜色：`color-info4` |
+| 文字 | Enabled | 颜色：`--o-color-info1` |
+| 文字 | Disabled | 颜色：`--o-color-info4` |
 
 ---
 
 ### 状态切换逻辑
 
-- **Unselected → Selected**：框体背景切换为 `color-primary1`，描边隐藏，勾号图标显示
-- **Selected → Unselected**：框体背景切换为 `color-fill2`，描边显示（`color-control1`），勾号图标隐藏
-- **Unselected → Indeterminate**：框体背景切换为 `color-primary1`，描边隐藏，减号图标显示
+- **Unselected → Selected**：框体背景切换为 `--o-color-primary1`，描边隐藏，勾号图标显示
+- **Selected → Unselected**：框体背景切换为 `--o-color-fill2`，描边显示（`--o-color-control1`），勾号图标隐藏
+- **Unselected → Indeterminate**：框体背景切换为 `--o-color-primary1`，描边隐藏，减号图标显示
 - **Indeterminate → Selected**：减号图标切换为勾号图标
-- **Indeterminate → Unselected**：框体背景切换为 `color-fill2`，描边显示，减号图标隐藏
-- **Enabled → Disabled**：颜色降级为禁用 Token（Selected/Indeterminate 用 `color-primary4`，Unselected 用 `color-control2-light`），不可交互
+- **Indeterminate → Unselected**：框体背景切换为 `--o-color-fill2`，描边显示，减号图标隐藏
+- **Enabled → Disabled**：颜色降级为禁用 Token（Selected/Indeterminate 用 `--o-color-primary4`，Unselected 用 `--o-color-control2-light`），不可交互
 - **Light → Dark**：背景色、品牌色、文字色同步切换为深色主题对应值
 
 ---
@@ -338,9 +338,9 @@ OCheckbox（HORIZONTAL，自适应宽度，固定高度 24px）
 
 | 元素 | Hover 视觉表现 |
 |------|---------------|
-| 框体（Unselected） | 描边颜色切换为 `color-control2`（brand-6），背景不变 |
-| 框体（Selected） | 背景颜色切换为 `color-primary2`（brand-4），图标不变 |
-| 框体（Indeterminate） | 背景颜色切换为 `color-primary2`（brand-4），图标不变 |
+| 框体（Unselected） | 描边颜色切换为 `--o-color-control2`（brand-6），背景不变 |
+| 框体（Selected） | 背景颜色切换为 `--o-color-primary2`（brand-4），图标不变 |
+| 框体（Indeterminate） | 背景颜色切换为 `--o-color-primary2`（brand-4），图标不变 |
 | 文字 | 颜色不变 |
 
 ---
@@ -351,16 +351,16 @@ OCheckbox（HORIZONTAL，自适应宽度，固定高度 24px）
 
 | 元素 | 属性 | 推荐变量 Token |
 |------|------|---------------|
-| 框体背景（Selected/Indeterminate Enabled） | fill | `color-primary1` |
-| 框体背景（Selected/Indeterminate Disabled） | fill | `color-primary4` |
-| 框体背景（Unselected Enabled） | fill | `color-fill2` |
-| 框体背景（Unselected Disabled Light/Dark） | fill | `color-control2-light` |
-| 框体描边（Unselected Enabled） | stroke | `color-control1` |
-| 框体描边（Unselected Disabled） | stroke | `color-control4` |
-| 勾号图标 | fill | `color-fill2` |
-| 减号图标 | fill | `color-fill2` |
-| 文字（Enabled） | fill | `color-info1` |
-| 文字（Disabled） | fill | `color-info4` |
+| 框体背景（Selected/Indeterminate Enabled） | fill | `--o-color-primary1` |
+| 框体背景（Selected/Indeterminate Disabled） | fill | `--o-color-primary4` |
+| 框体背景（Unselected Enabled） | fill | `--o-color-fill2` |
+| 框体背景（Unselected Disabled Light/Dark） | fill | `--o-color-control2-light` |
+| 框体描边（Unselected Enabled） | stroke | `--o-color-control1` |
+| 框体描边（Unselected Disabled） | stroke | `--o-color-control4` |
+| 勾号图标 | fill | `--o-color-fill2` |
+| 减号图标 | fill | `--o-color-fill2` |
+| 文字（Enabled） | fill | `--o-color-info1` |
+| 文字（Disabled） | fill | `--o-color-info4` |
 | 文字字号 | fontSize | `font_size-text1`（16px） |
 | 文字行高 | lineHeight | `line_height-text1`（24px） |
 | 选择器↔文字间距 | autoLayoutItemSpacing | `gap-2`（8px） |
@@ -381,7 +381,7 @@ OCheckbox（HORIZONTAL，自适应宽度，固定高度 24px）
 ### 设计提示
 
 - 复选框左侧选择器 + 右侧文字是标准布局，不建议反向排列
-- 勾号和减号图标使用 `color-fill2`（white），确保在品牌色背景下可识别
+- 勾号和减号图标使用 `--o-color-fill2`（white），确保在品牌色背景下可识别
 - 复选框整体高度固定 24px，与文字行高一致，确保视觉对齐
 - 同一组复选框应保持一致的尺寸和间距
 - 禁用状态应同时禁用框体和文字的交互

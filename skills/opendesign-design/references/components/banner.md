@@ -124,5 +124,5 @@ Banner 内按钮直接使用 OButton 组件（见 [button.md](button.md)），�
 
 | 元素 | 字重 | 颜色 Token | Dark=off | Dark=on |
 |------|------|-----------|---------|---------|
-| 标题 | SemiBold | `color-info1` | `#000000` | `#FFFFFF` |
-| 正文 | Regular | `color-info2` | `rgba(0,0,0,0.8)` | `rgba(255,255,255,0.8)` |
+| 标题 | SemiBold | `--o-color-info1` | `#000000` | `#FFFFFF` |
+| 正文 | Regular | `--o-color-info2` | `rgba(0,0,0,0.8)` | `rgba(255,255,255,0.8)` |

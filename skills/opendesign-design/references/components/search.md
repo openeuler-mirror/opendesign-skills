@@ -176,21 +176,21 @@ OSearch（SYMBOL，自适应宽度，固定高度）
 
 | 区域 | Light 模式 | Dark 模式 | Token | RGB 值 |
 |------|-----------|----------|-------|--------|
-| 搜索框背景 | `grey-1` | `grey-4` | `color-fill2` | rgb(255,255,255) → rgb(36,36,39) |
-| 搜索框描边 | `grey-14 @ 0.25` | `grey-14 @ 0.25` | `color-control1` | rgba(0,0,0,0.25) → rgba(255,255,255,0.25) |
-| 搜索图标 | `grey-14` | `grey-14` | `color-info1` | rgb(0,0,0) → rgb(255,255,255) |
-| 占位文字 | `grey-14 @ 0.4` | `grey-14 @ 0.4` | `color-info4` | rgba(0,0,0,0.4) → rgba(255,255,255,0.4) |
+| 搜索框背景 | `grey-1` | `grey-4` | `--o-color-fill2` | rgb(255,255,255) → rgb(36,36,39) |
+| 搜索框描边 | `grey-14 @ 0.25` | `grey-14 @ 0.25` | `--o-color-control1` | rgba(0,0,0,0.25) → rgba(255,255,255,0.25) |
+| 搜索图标 | `grey-14` | `grey-14` | `--o-color-info1` | rgb(0,0,0) → rgb(255,255,255) |
+| 占位文字 | `grey-14 @ 0.4` | `grey-14 @ 0.4` | `--o-color-info4` | rgba(0,0,0,0.4) → rgba(255,255,255,0.4) |
 
 #### Actived 状态
 
 | 区域 | Light 模式 | Dark 模式 | Token | RGB 值 |
 |------|-----------|----------|-------|--------|
-| 搜索框背景 | `grey-1` | `grey-4` | `color-fill2` | rgb(255,255,255) → rgb(36,36,39) |
-| 搜索框描边 | `brand-6` | `brand-6` | `color-primary1` | rgb(0,47,167) → rgb(110,148,243) |
-| 搜索图标 | `grey-14` | `grey-14` | `color-info1` | rgb(0,0,0) → rgb(255,255,255) |
-| 输入文字 | `grey-14` | `grey-14` | `color-info1` | rgb(0,0,0) → rgb(255,255,255) |
-| 光标 | `grey-14` | `grey-14` | `color-info1` | rgb(0,0,0) → rgb(255,255,255) |
-| 清除图标 | `grey-14` | `grey-14` | `color-info1` | rgb(0,0,0) → rgb(255,255,255) |
+| 搜索框背景 | `grey-1` | `grey-4` | `--o-color-fill2` | rgb(255,255,255) → rgb(36,36,39) |
+| 搜索框描边 | `brand-6` | `brand-6` | `--o-color-primary1` | rgb(0,47,167) → rgb(110,148,243) |
+| 搜索图标 | `grey-14` | `grey-14` | `--o-color-info1` | rgb(0,0,0) → rgb(255,255,255) |
+| 输入文字 | `grey-14` | `grey-14` | `--o-color-info1` | rgb(0,0,0) → rgb(255,255,255) |
+| 光标 | `grey-14` | `grey-14` | `--o-color-info1` | rgb(0,0,0) → rgb(255,255,255) |
+| 清除图标 | `grey-14` | `grey-14` | `--o-color-info1` | rgb(0,0,0) → rgb(255,255,255) |
 
 > **说明**：Actived 状态描边颜色 Light 模式为 rgb(0,47,167)（brand-6），Dark 模式为 rgb(110,148,243)（brand-6 Dark 值）。
 
@@ -216,29 +216,29 @@ OSearch（SYMBOL）
 │  GUID: 1042:18113
 │  Width: 320px | Height: 48px
 │  cornerRadius: 4px → Token: `radius_control-xs`
-│  fill: rgb(255,255,255) → Token: `color-fill2`（Light）
-│        rgb(36,36,39) → Token: `color-fill2`（Dark）
-│  stroke: rgba(0,0,0,0.25) → Token: `color-control1`（Light Enabled）
-│          rgba(255,255,255,0.25) → Token: `color-control1`（Dark Enabled）
-│          rgba(0,47,167,1) → Token: `color-primary1`（Light Actived）
-│          rgba(110,148,243,1) → Token: `color-primary1`（Dark Actived）
+│  fill: rgb(255,255,255) → Token: `--o-color-fill2`（Light）
+│        rgb(36,36,39) → Token: `--o-color-fill2`（Dark）
+│  stroke: rgba(0,0,0,0.25) → Token: `--o-color-control1`（Light Enabled）
+│          rgba(255,255,255,0.25) → Token: `--o-color-control1`（Dark Enabled）
+│          rgba(0,47,167,1) → Token: `--o-color-primary1`（Light Actived）
+│          rgba(110,148,243,1) → Token: `--o-color-primary1`（Dark Actived）
 │  strokeWeight: 1px | strokeAlign: INSIDE
 │
 ├── [搜索图标 Icon/搜索]
 │   Width: 24px（large/medium）/ 16px（small/Mb）| Height: 同 Width
 │   Token: `icon_size_control-m`（large/medium）/ `icon_size_control-s`（small/Mb）
-│   fill: rgb(0,0,0) → Token: `color-info1`（Light）
-│         rgb(255,255,255) → Token: `color-info1`（Dark）
+│   fill: rgb(0,0,0) → Token: `--o-color-info1`（Light）
+│         rgb(255,255,255) → Token: `--o-color-info1`（Dark）
 │   位置：左侧（Auto Layout）
 │
 └── [占位文字 PARAGRAPH]
     Width: 自适应（256px）| Height: 24px
     fontSize: 16px → Token: `font_size-text1`
     lineHeight: 24px → Token: `line_height-text1`
-    fill: rgba(0,0,0,0.4) → Token: `color-info4`（Light Enabled）
-          rgba(255,255,255,0.4) → Token: `color-info4`（Dark Enabled）
-          rgb(0,0,0) → Token: `color-info1`（Light Actived）
-          rgb(255,255,255) → Token: `color-info1`（Dark Actived）
+    fill: rgba(0,0,0,0.4) → Token: `--o-color-info4`（Light Enabled）
+          rgba(255,255,255,0.4) → Token: `--o-color-info4`（Dark Enabled）
+          rgb(0,0,0) → Token: `--o-color-info1`（Light Actived）
+          rgb(255,255,255) → Token: `--o-color-info1`（Dark Actived）
     nodeText: "搜索"
 ```
 
@@ -248,30 +248,30 @@ OSearch（SYMBOL）
 OSearch（SYMBOL）
 │  GUID: 1042:18119
 │  Width: 320px | Height: 48px
-│  stroke: rgba(0,47,167,1) → Token: `color-primary1`
+│  stroke: rgba(0,47,167,1) → Token: `--o-color-primary1`
 │
 ├── [搜索图标 Icon/搜索]
 │   Width: 24px（large/medium）/ 16px（small/Mb）| Height: 同 Width
 │   Token: `icon_size_control-m`（large/medium）/ `icon_size_control-s`（small/Mb）
-│   fill: rgb(0,0,0) → Token: `color-info1`
+│   fill: rgb(0,0,0) → Token: `--o-color-info1`
 │
 ├── [输入文字 PARAGRAPH]
 │   fontSize: 16px → Token: `font_size-text1`
-│   fill: rgb(0,0,0) → Token: `color-info1`
+│   fill: rgb(0,0,0) → Token: `--o-color-info1`
 │
 ├── [光标组合 FRAME]
 │   Width: 自适应 | Height: 24px
 │   │
 │   └── [光标 RECTANGLE]
 │       Width: 1.5px | Height: 24px
-│       fill: rgb(0,0,0) → Token: `color-info1`（Light）
-│             rgb(255,255,255) → Token: `color-info1`（Dark）
+│       fill: rgb(0,0,0) → Token: `--o-color-info1`（Light）
+│             rgb(255,255,255) → Token: `--o-color-info1`（Dark）
 │
 └── [清除图标 Icon/关闭]
     Width: 24px（large/medium/Mb）/ 16px（small）| Height: 同 Width
     Token: `icon_size_control-m`（large/medium/Mb）/ `icon_size_control-s`（small）
-    fill: rgb(0,0,0) → Token: `color-info1`（Light）
-          rgb(255,255,255) → Token: `color-info1`（Dark）
+    fill: rgb(0,0,0) → Token: `--o-color-info1`（Light）
+          rgb(255,255,255) → Token: `--o-color-info1`（Dark）
 ```
 
 ---
@@ -320,7 +320,7 @@ OSearch（SYMBOL）
 - **文字字号**：large/medium=16px，small/Mb=14px
 - **圆角统一**：所有尺寸圆角均为 4px（`radius_control-xs`）
 - **背景颜色**：Light=grey-1（white），Dark=grey-4
-- **描边颜色**：Enabled=grey-14@0.25（`color-control1`），Actived=brand-6（`color-primary1`）
+- **描边颜色**：Enabled=grey-14@0.25（`--o-color-control1`），Actived=brand-6（`--o-color-primary1`）
 - **图标数量**：Enabled 仅显示搜索图标，Actived 显示搜索图标 + 光标 + 清除图标
 - **搜索图标尺寸**：large/medium=24×24px，small/Mb=16×16px
 - **清除图标尺寸**：large/medium/Mb=24×24px，small=16×16px
@@ -337,20 +337,20 @@ OSearch（SYMBOL）
 
 | 元素 | 状态 | 视觉表现 |
 |------|------|---------|
-| 搜索框 | Enabled | 背景：`color-fill2`，描边：`color-control1`，仅搜索图标 |
-| 搜索框 | Actived | 背景：`color-fill2`，描边：`color-primary1`，搜索图标 + 光标 + 清除图标 |
-| 搜索图标 | 所有状态 | fill：`color-info1`（grey-14），尺寸：large/medium=24px，small/Mb=16px |
-| 清除图标 | Actived | fill：`color-info1`（grey-14），尺寸：large/medium/Mb=24px，small=16px |
-| 光标 | Actived | fill：`color-info1`（grey-14），宽度 1.5px |
-| 占位文字 | Enabled | fill：`color-info4`（grey-14 @ 0.4） |
-| 输入文字 | Actived | fill：`color-info1`（grey-14 @ 1） |
+| 搜索框 | Enabled | 背景：`--o-color-fill2`，描边：`--o-color-control1`，仅搜索图标 |
+| 搜索框 | Actived | 背景：`--o-color-fill2`，描边：`--o-color-primary1`，搜索图标 + 光标 + 清除图标 |
+| 搜索图标 | 所有状态 | fill：`--o-color-info1`（grey-14），尺寸：large/medium=24px，small/Mb=16px |
+| 清除图标 | Actived | fill：`--o-color-info1`（grey-14），尺寸：large/medium/Mb=24px，small=16px |
+| 光标 | Actived | fill：`--o-color-info1`（grey-14），宽度 1.5px |
+| 占位文字 | Enabled | fill：`--o-color-info4`（grey-14 @ 0.4） |
+| 输入文字 | Actived | fill：`--o-color-info1`（grey-14 @ 1） |
 
 ---
 
 ### 状态切换逻辑
 
-- **Enabled → Actived**：描边颜色切换为 `color-primary1`（brand-6），显示光标和清除图标
-- **Actived → Enabled**：描边颜色切换为 `color-control1`（grey-14 @ 0.25），隐藏光标和清除图标
+- **Enabled → Actived**：描边颜色切换为 `--o-color-primary1`（brand-6），显示光标和清除图标
+- **Actived → Enabled**：描边颜色切换为 `--o-color-control1`（grey-14 @ 0.25），隐藏光标和清除图标
 - **Light → Dark**：背景色切换 grey-1 → grey-4，描边和图标颜色同步切换为深色值
 
 ---
@@ -359,7 +359,7 @@ OSearch（SYMBOL）
 
 | 元素 | Hover 视觉表现 |
 |------|---------------|
-| 搜索框（Enabled） | 描边颜色切换为 `color-control2`（brand-6） |
+| 搜索框（Enabled） | 描边颜色切换为 `--o-color-control2`（brand-6） |
 | 搜索框（Actived） | 描边颜色不变 |
 | 清除图标 | 显示悬浮提示，颜色不变 |
 
@@ -377,18 +377,18 @@ Focus 状态即 Actived 状态，显示光标和清除图标。
 
 | 元素 | 属性 | 推荐变量 Token |
 |------|------|---------------|
-| 搜索框背景 | fill | `color-fill2` |
-| 搜索框描边（Enabled） | stroke | `color-control1` |
-| 搜索框描边（Actived） | stroke | `color-primary1` |
-| 搜索图标 | fill | `color-info1` |
+| 搜索框背景 | fill | `--o-color-fill2` |
+| 搜索框描边（Enabled） | stroke | `--o-color-control1` |
+| 搜索框描边（Actived） | stroke | `--o-color-primary1` |
+| 搜索图标 | fill | `--o-color-info1` |
 | 搜索图标尺寸（large/medium） | width/height | `icon_size_control-m`（24px） |
 | 搜索图标尺寸（small/Mb） | width/height | `icon_size_control-s`（16px） |
-| 清除图标 | fill | `color-info1` |
+| 清除图标 | fill | `--o-color-info1` |
 | 清除图标尺寸（large/medium/Mb） | width/height | `icon_size_control-m`（24px） |
 | 清除图标尺寸（small） | width/height | `icon_size_control-s`（16px） |
-| 光标 | fill | `color-info1` |
-| 占位文字（Enabled） | fill | `color-info4` |
-| 输入文字（Actived） | fill | `color-info1` |
+| 光标 | fill | `--o-color-info1` |
+| 占位文字（Enabled） | fill | `--o-color-info4` |
+| 输入文字（Actived） | fill | `--o-color-info1` |
 | 搜索框高度（large） | height | `control_size-xl`（48px） |
 | 搜索框高度（medium/Mb） | height | `control_size-l`（40px） |
 | 搜索框高度（small） | height | `control_size-m`（32px） |
@@ -445,7 +445,7 @@ Focus 状态即 Actived 状态，显示光标和清除图标。
 
 | state | 图标颜色 Token |
 |-------|--------------|
-| Enabled / Actived（两个图标均同） | `color-info1`（grey-14） |
+| Enabled / Actived（两个图标均同） | `--o-color-info1`（grey-14） |
 
 > 图标颜色在所有状态下保持一致，深色模式下同名 Token 自动切换为深色值（rgb(255,255,255)）。
 

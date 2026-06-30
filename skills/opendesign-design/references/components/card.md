@@ -99,7 +99,7 @@ OCard（HORIZONTAL，自适应宽高）
 
 > 🔍 **识别特征**：
 > - 容器节点（FRAME），圆角 4px，无边框描边
-> - 背景为 `color-fill2`（浅灰填充色）
+> - 背景为 `--o-color-fill2`（浅灰填充色）
 > - 悬浮时显示阴影 `shadow-2`
 > - 内部结构分为 Header、Body、Footer 三部分（可选）
 > - Header 包含封面图片（cover）或图标（icon）+ 标题
@@ -134,7 +134,7 @@ OCard（HORIZONTAL，自适应宽高）
 |--------|-------|------|
 | 圆角 | 4px | 4px |
 | Token（圆角） | `radius_control-m` | `radius_control-m` |
-| 背景 | `color-fill2` | `color-fill2` |
+| 背景 | `--o-color-fill2` | `--o-color-fill2` |
 | 边框 | 无 | 无 |
 | 阴影（悬浮） | `shadow-2` | `shadow-2` |
 | Header 内边距 | 见下表 | 见下表 |
@@ -186,8 +186,8 @@ OCard（HORIZONTAL，自适应宽高）
 |--------|----------|------------|
 | 图标尺寸 | 32px | 32px |
 | Token（图标尺寸） | `icon_size-l` | `icon_size-l` |
-| 图标颜色 | `color-primary1` | `color-primary1` |
-| 图标背景 | `color-primary1-light` | `color-primary1-light` |
+| 图标颜色 | `--o-color-primary1` | `--o-color-primary1` |
+| 图标背景 | `--o-color-primary1-light` | `--o-color-primary1-light` |
 | 图标圆角 | 4px | 4px |
 
 ---
@@ -196,11 +196,11 @@ OCard（HORIZONTAL，自适应宽高）
 
 | 区域 | Light 模式 Token | Dark 模式 Token | RGB 值 |
 |------|-----------------|----------------|--------|
-| 卡片背景 | `color-fill2` | `color-fill2` | rgb(255,255,255) → rgb(36,36,39) |
+| 卡片背景 | `--o-color-fill2` | `--o-color-fill2` | rgb(255,255,255) → rgb(36,36,39) |
 | 悬浮阴影 | `shadow-2` | `shadow-2` | 0 2px 24px rgba(0,0,0,0.15) → 0 2px 24px rgba(255,255,255,0.15) |
-| 标题文字 | `color-info1` | `color-info1` | rgb(0,0,0) → rgb(255,255,255) |
-| 内容文字 | `color-info3` | `color-info3` | rgba(0,0,0,0.6) → rgba(255,255,255,0.6) |
-| 图标颜色 | `color-info1` | `color-info1` | rgb(0,0,0) → rgb(255,255,255) |
+| 标题文字 | `--o-color-info1` | `--o-color-info1` | rgb(0,0,0) → rgb(255,255,255) |
+| 内容文字 | `--o-color-info3` | `--o-color-info3` | rgba(0,0,0,0.6) → rgba(255,255,255,0.6) |
+| 图标颜色 | `--o-color-info1` | `--o-color-info1` | rgb(0,0,0) → rgb(255,255,255) |
 
 ---
 
@@ -296,7 +296,7 @@ OCard（FRAME，自适应宽高）
 - **三段式结构**：Header、Body、Footer 可根据场景选择性使用，不必全部包含
 - ⚠️ **Footer 操作按钮排列顺序（硬约束）**：Footer 内多个元素并排时，**操作按钮（OButton / 链接）必须排在左侧，辅助信息（版本号、日期、meta 等）排在右侧**。禁止将操作按钮放在右侧，无论 justify-content 如何设置。
 - ⚠️ **Footer 左右边距须与 Body 对齐（硬约束）**：Footer 的左右内边距必须与 Body 保持一致——在"容器 8px + Body 额外 8px = 总计 16px"的模型下，Footer 也需要额外 `padding: 0 8px`，使操作按钮与正文文字左右对齐。禁止 Footer 左右无内边距导致内容顶到容器边缘。
-- ⚠️ **Footer 操作按钮使用 OButton medium text 变体（硬约束）**：卡片 Footer 内的操作按钮必须使用 **OButton size=medium, Variant=text**。关键规格：高度 32px、padding=0（无水平内边距）、文字色 `grey-14`（Light: `rgb(0,0,0)` **黑色**）、无背景无边框。**禁止使用品牌蓝 `#002FA7` / `color-primary1` 作为 text 变体文字色**——蓝色是 outline/solid 变体的颜色，text 变体始终为黑色。
+- ⚠️ **Footer 操作按钮使用 OButton medium text 变体（硬约束）**：卡片 Footer 内的操作按钮必须使用 **OButton size=medium, Variant=text**。关键规格：高度 32px、padding=0（无水平内边距）、文字色 `grey-14`（Light: `rgb(0,0,0)` **黑色**）、无背景无边框。**禁止使用品牌蓝 `#002FA7` / `--o-color-primary1` 作为 text 变体文字色**——蓝色是 outline/solid 变体的颜色，text 变体始终为黑色。
 
 ---
 
@@ -325,13 +325,13 @@ OCard（FRAME，自适应宽高）
 
 | 元素 | 属性 | 推荐变量 Token |
 |------|------|---------------|
-| 卡片背景 | fill | `color-fill2` |
+| 卡片背景 | fill | `--o-color-fill2` |
 | 悬浮阴影 | effects | `shadow-2` |
 | 圆角 | cornerRadius | `radius_control-m`（4px） |
-| 标题文字 | fill | `color-info1` |
-| 内容文字 | fill | `color-info2` |
-| 图标颜色 | fill | `color-primary1` |
-| 图标背景 | fill | `color-primary1-light` |
+| 标题文字 | fill | `--o-color-info1` |
+| 内容文字 | fill | `--o-color-info2` |
+| 图标颜色 | fill | `--o-color-primary1` |
+| 图标背景 | fill | `--o-color-primary1-light` |
 | 图标尺寸 | width/height | `icon_size-l`（32px） |
 | Header 内边距 | autoLayoutPadding | 待确认 |
 | Body 内边距 | autoLayoutPadding | 待确认 |

@@ -38,7 +38,7 @@
 
 **Disabled（禁用）**
 - `off` — 启用状态（默认）
-- `on` — 禁用状态，solid/outline 变体使用 `color-primary4`，不可交互
+- `on` — 禁用状态，solid/outline 变体使用 `--o-color-primary4`，不可交互
 
 **Dark（主题）**
 - `off` — 浅色模式（默认）
@@ -80,7 +80,7 @@ ODropdown-Panel（FRAME，浮层）
 ├── Height: 4px（上内边距）+ N × 40px（large）/ N × 32px（medium）+ 4px（下内边距）
 │          示例 5 项 × large = 208px；5 项 × medium = 168px
 ├── cornerRadius: 4px → Token: `radius_control-xs`
-├── fill: rgb(255,255,255) → Token: `color-fill2`（Light）/ rgb(36,36,39) → Dark
+├── fill: rgb(255,255,255) → Token: `--o-color-fill2`（Light）/ rgb(36,36,39) → Dark
 ├── boxShadow: DROP_SHADOW x=0 y=6 blur=24 spread=0 rgba(18,20,23,0.08)
 ├── padding: 4px（四周）
 ├── autoLayout: VERTICAL，子项自适应宽度
@@ -131,7 +131,7 @@ ODropdown-Panel（FRAME，浮层）
 |---------|--------|--------|---------|
 | size | `large` / `medium` / `small` | `medium` | 高度 40/32/28px，字号和 Padding 有差异 |
 | Variant | `solid` / `outline` / `text` | `solid` | 实心/描边/纯文字，颜色规则不同 |
-| Disabled | `off` / `on` | `off` | 禁用状态，solid/outline 使用 `color-primary4` |
+| Disabled | `off` / `on` | `off` | 禁用状态，solid/outline 使用 `--o-color-primary4` |
 | Dark | `off` / `on` | `off` | 品牌色切换为深色主题对应值 |
 
 ---
@@ -168,10 +168,10 @@ ODropdown-Panel（FRAME，浮层）
 | 菜单项内边距（左/右） | 12px | 12px |
 | 菜单项 item spacing | 8px | 8px |
 | 示例高度（5 项） | 208px | 168px |
-| 面板背景（Light） | rgb(255,255,255)（`color-fill2`） | 同 large |
-| 面板背景（Dark） | rgb(36,36,39)（`color-fill2` Dark） | 同 large |
-| 菜单项文字颜色 | `color-info1`（rgb(0,0,0)） | 同 large |
-| 菜单项 hover 背景 | `color-fill3` | 同 large |
+| 面板背景（Light） | rgb(255,255,255)（`--o-color-fill2`） | 同 large |
+| 面板背景（Dark） | rgb(36,36,39)（`--o-color-fill2` Dark） | 同 large |
+| 菜单项文字颜色 | `--o-color-info1`（rgb(0,0,0)） | 同 large |
+| 菜单项 hover 背景 | `--o-color-fill3` | 同 large |
 
 ---
 
@@ -181,8 +181,8 @@ ODropdown-Panel（FRAME，浮层）
 
 | 区域 | Light 模式 | Dark 模式 | Token | RGB 值 |
 |------|-----------|----------|-------|--------|
-| 背景 | `color-primary1` | `color-primary1` | brand-6 | rgb(0,47,167) → rgb(73,122,248) |
-| 背景（Disabled） | `color-primary4` | `color-primary4` | — | 禁用状态背景色 |
+| 背景 | `--o-color-primary1` | `--o-color-primary1` | brand-6 | rgb(0,47,167) → rgb(73,122,248) |
+| 背景（Disabled） | `--o-color-primary4` | `--o-color-primary4` | — | 禁用状态背景色 |
 | 文字 | `white` | `white` | — | rgb(255,255,255) |
 | 图标 | `white` | `white` | — | 与文字一致 |
 
@@ -190,22 +190,22 @@ ODropdown-Panel（FRAME，浮层）
 
 | 区域 | Light 模式 | Dark 模式 | Token | RGB 值 |
 |------|-----------|----------|-------|--------|
-| 描边 | `color-primary1` | `color-primary1` | brand-6 | rgb(0,47,167) → rgb(73,122,248) |
-| 描边（Disabled） | `color-primary4` | `color-primary4` | — | 禁用状态描边色 |
-| 文字 | `color-primary1` | `color-primary1` | brand-6 | rgb(0,47,167) → rgb(73,122,248) |
-| 文字（Disabled） | `color-primary4` | `color-primary4` | — | 禁用状态文字色 |
-| 图标 | `color-primary1` | `color-primary1` | brand-6 | 与文字一致 |
-| 图标（Disabled） | `color-primary4` | `color-primary4` | — | 禁用状态图标色 |
+| 描边 | `--o-color-primary1` | `--o-color-primary1` | brand-6 | rgb(0,47,167) → rgb(73,122,248) |
+| 描边（Disabled） | `--o-color-primary4` | `--o-color-primary4` | — | 禁用状态描边色 |
+| 文字 | `--o-color-primary1` | `--o-color-primary1` | brand-6 | rgb(0,47,167) → rgb(73,122,248) |
+| 文字（Disabled） | `--o-color-primary4` | `--o-color-primary4` | — | 禁用状态文字色 |
+| 图标 | `--o-color-primary1` | `--o-color-primary1` | brand-6 | 与文字一致 |
+| 图标（Disabled） | `--o-color-primary4` | `--o-color-primary4` | — | 禁用状态图标色 |
 | 背景 | 无 | 无 | — | — |
 
 #### text 变体
 
 | 区域 | Light 模式 | Dark 模式 | Token | RGB 值 |
 |------|-----------|----------|-------|--------|
-| 文字 | `color-info1` | `color-info1` | grey-14 | rgb(0,0,0) → rgb(255,255,255) |
-| 文字（Disabled） | `color-info4` | `color-info4` | — | 禁用状态文字色 |
-| 图标 | `color-info1` | `color-info1` | grey-14 | 与文字一致 |
-| 图标（Disabled） | `color-info4` | `color-info4` | — | 禁用状态图标色 |
+| 文字 | `--o-color-info1` | `--o-color-info1` | grey-14 | rgb(0,0,0) → rgb(255,255,255) |
+| 文字（Disabled） | `--o-color-info4` | `--o-color-info4` | — | 禁用状态文字色 |
+| 图标 | `--o-color-info1` | `--o-color-info1` | grey-14 | 与文字一致 |
+| 图标（Disabled） | `--o-color-info4` | `--o-color-info4` | — | 禁用状态图标色 |
 | 背景/描边 | 无 | 无 | — | — |
 
 ---
@@ -299,7 +299,7 @@ ODropdown（HORIZONTAL，自适应宽度，固定高度 28/32/40px）
 - **text 变体无 Padding**：text 变体左右 Padding 为 0，宽度完全由内容决定
 - **solid/outline Padding**：实心和描边变体有左右 Padding（large=24/16px，medium/small=16/12px）
 - **描边宽度**：outline 变体描边宽度固定为 1px
-- **Disabled 状态**：solid/outline 变体使用 `color-primary4`，text 变体使用 `color-info4`
+- **Disabled 状态**：solid/outline 变体使用 `--o-color-primary4`，text 变体使用 `--o-color-info4`
 - **深色模式**：品牌色自动切换为 rgb(73,122,248)，白色和 info1 色自动切换
 
 ---
@@ -314,27 +314,27 @@ ODropdown 支持 Enabled 和 Disabled 两种状态，颜色规则如下：
 
 | 变体 | 元素 | 颜色 |
 |------|------|------|
-| solid | 背景 | `color-primary1` |
+| solid | 背景 | `--o-color-primary1` |
 | solid | 文字 | `white` |
 | solid | 图标 | `white` |
-| outline | 描边 | `color-primary1` |
-| outline | 文字 | `color-primary1` |
-| outline | 图标 | `color-primary1` |
-| text | 文字 | `color-info1` |
-| text | 图标 | `color-info1` |
+| outline | 描边 | `--o-color-primary1` |
+| outline | 文字 | `--o-color-primary1` |
+| outline | 图标 | `--o-color-primary1` |
+| text | 文字 | `--o-color-info1` |
+| text | 图标 | `--o-color-info1` |
 
 **Disabled 状态**
 
 | 变体 | 元素 | 颜色 |
 |------|------|------|
-| solid | 背景 | `color-primary4` |
+| solid | 背景 | `--o-color-primary4` |
 | solid | 文字 | `white` |
 | solid | 图标 | `white` |
-| outline | 描边 | `color-primary4` |
-| outline | 文字 | `color-primary4` |
-| outline | 图标 | `color-primary4` |
-| text | 文字 | `color-info4` |
-| text | 图标 | `color-info4` |
+| outline | 描边 | `--o-color-primary4` |
+| outline | 文字 | `--o-color-primary4` |
+| outline | 图标 | `--o-color-primary4` |
+| text | 文字 | `--o-color-info4` |
+| text | 图标 | `--o-color-info4` |
 
 ---
 
@@ -342,8 +342,8 @@ ODropdown 支持 Enabled 和 Disabled 两种状态，颜色规则如下：
 
 - **点击触发**：点击 ODropdown 按钮，按钮下方 4px 处渲染浮层面板，按钮图标切换为 `icon-上箭头.svg`
 - **面板定位**：浮层位于触发按钮正下方，垂直间距 4px，宽度与按钮一致，高度随选项数量动态伸缩
-- **面板样式**：圆角 4px，白色背景（`color-fill2`），卡片投影 `DROP_SHADOW x=0 y=6 blur=24 rgba(18,20,23,0.08)`，四周内边距 4px
-- **菜单项**：高度 large=40px / medium=32px，内边距上下 8px 左右 12px，文字颜色 `color-info1`，hover 背景 `color-fill3`
+- **面板样式**：圆角 4px，白色背景（`--o-color-fill2`），卡片投影 `DROP_SHADOW x=0 y=6 blur=24 rgba(18,20,23,0.08)`，四周内边距 4px
+- **菜单项**：高度 large=40px / medium=32px，内边距上下 8px 左右 12px，文字颜色 `--o-color-info1`，hover 背景 `--o-color-fill3`
 - **选项点击**：选中后面板关闭，按钮图标恢复为 `icon-下箭头.svg`，按钮文字更新为选中项
 - **收起**：再次点击按钮或点击面板外区域，面板收起，图标恢复下箭头
 
@@ -355,15 +355,15 @@ ODropdown 支持 Enabled 和 Disabled 两种状态，颜色规则如下：
 
 | 元素 | 属性 | 推荐变量 Token |
 |------|------|---------------|
-| solid 背景 | fill | `color-primary1` |
-| solid 背景（Disabled） | fill | `color-primary4` |
-| outline 描边 | stroke | `color-primary1` |
-| outline 描边（Disabled） | stroke | `color-primary4` |
+| solid 背景 | fill | `--o-color-primary1` |
+| solid 背景（Disabled） | fill | `--o-color-primary4` |
+| outline 描边 | stroke | `--o-color-primary1` |
+| outline 描边（Disabled） | stroke | `--o-color-primary4` |
 | solid 文字/图标 | fill | `white` |
-| outline 文字/图标 | fill | `color-primary1` |
-| outline 文字/图标（Disabled） | fill | `color-primary4` |
-| text 文字/图标 | fill | `color-info1` |
-| text 文字/图标（Disabled） | fill | `color-info4` |
+| outline 文字/图标 | fill | `--o-color-primary1` |
+| outline 文字/图标（Disabled） | fill | `--o-color-primary4` |
+| text 文字/图标 | fill | `--o-color-info1` |
+| text 文字/图标（Disabled） | fill | `--o-color-info4` |
 | large 文字字号 | fontSize | `font_size-text1`（16px） |
 | medium/small 文字字号 | fontSize | `font_size-tip1`（14px） |
 | large 文字行高 | lineHeight | `line_height-text1`（24px） |
@@ -417,10 +417,10 @@ ODropdown 支持 Enabled 和 Disabled 两种状态，颜色规则如下：
 | Variant / state | 图标颜色 Token |
 |----------------|--------------|
 | solid · Enabled & Disabled | `white` |
-| outline · Enabled | `color-primary1` |
-| outline · Disabled | `color-primary4` |
-| text · Enabled | `color-info1` |
-| text · Disabled | `color-info4` |
+| outline · Enabled | `--o-color-primary1` |
+| outline · Disabled | `--o-color-primary4` |
+| text · Enabled | `--o-color-info1` |
+| text · Disabled | `--o-color-info4` |
 
 > 图标颜色始终与文字颜色一致，深色模式下同名 Token 自动切换为深色值。
 
@@ -435,4 +435,4 @@ ODropdown 支持 Enabled 和 Disabled 两种状态，颜色规则如下：
 - 字号数据：来源于 Pixso 设计稿确认
 - 图标尺寸：所有尺寸统一 24×24px
 - 描边宽度：outline 变体固定 1px
-- Disabled 状态：solid/outline 使用 `color-primary4`
+- Disabled 状态：solid/outline 使用 `--o-color-primary4`

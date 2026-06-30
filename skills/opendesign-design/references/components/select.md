@@ -121,7 +121,7 @@ OSelect-Dropdown（FRAME，浮层）
 │  Height: 4px（上内边距）+ N × 40px（large）/ N × 32px（medium）+ 4px（下内边距）
 │          示例 5 项 × large = 208px
 │  cornerRadius: 4px → Token: `radius_control-xs`
-│  fill: rgb(255,255,255) → Token: `color-fill2`（Light）
+│  fill: rgb(255,255,255) → Token: `--o-color-fill2`（Light）
 │  boxShadow: DROP_SHADOW x=0 y=6 blur=24 spread=0 rgba(18,20,23,0.08)
 │  padding: 4px（四周）
 │  autoLayout: VERTICAL，子项自适应宽度
@@ -232,38 +232,38 @@ OSelect-Dropdown（FRAME，浮层）
 
 | 区域 | Light 模式 | Dark 模式 | Token | RGB 值 |
 |------|-----------|----------|-------|--------|
-| 选择器背景 | `grey-1` | `grey-4` | `color-fill2` | rgb(255,255,255) → rgb(36,36,39) |
-| 选择器描边 | `grey-14 @ 0.25` | `grey-14 @ 0.25` | `color-control1` | rgba(0,0,0,0.25) → rgba(255,255,255,0.25) |
-| 占位文字 | `grey-14 @ 0.4` | `grey-14 @ 0.4` | `color-info4` | rgba(0,0,0,0.4) → rgba(255,255,255,0.4) |
-| 下箭头图标 | `grey-14` | `grey-14` | `color-info1` | rgb(0,0,0) → rgb(255,255,255) |
+| 选择器背景 | `grey-1` | `grey-4` | `--o-color-fill2` | rgb(255,255,255) → rgb(36,36,39) |
+| 选择器描边 | `grey-14 @ 0.25` | `grey-14 @ 0.25` | `--o-color-control1` | rgba(0,0,0,0.25) → rgba(255,255,255,0.25) |
+| 占位文字 | `grey-14 @ 0.4` | `grey-14 @ 0.4` | `--o-color-info4` | rgba(0,0,0,0.4) → rgba(255,255,255,0.4) |
+| 下箭头图标 | `grey-14` | `grey-14` | `--o-color-info1` | rgb(0,0,0) → rgb(255,255,255) |
 
 #### Actived 状态
 
 | 区域 | Light 模式 | Dark 模式 | Token | RGB 值 |
 |------|-----------|----------|-------|--------|
-| 选择器背景 | `grey-1` | `grey-4` | `color-fill2` | rgb(255,255,255) → rgb(36,36,39) |
-| 选择器描边 | `brand-6` | `brand-6` | `color-primary1` | rgb(0,47,167) → rgb(110,148,243) |
-| 占位文字 | `grey-14 @ 0.4` | `grey-14 @ 0.4` | `color-info4` | rgba(0,0,0,0.4) → rgba(255,255,255,0.4) |
-| 下箭头图标 | `grey-14` | `grey-14` | `color-info1` | rgb(0,0,0) → rgb(255,255,255) |
+| 选择器背景 | `grey-1` | `grey-4` | `--o-color-fill2` | rgb(255,255,255) → rgb(36,36,39) |
+| 选择器描边 | `brand-6` | `brand-6` | `--o-color-primary1` | rgb(0,47,167) → rgb(110,148,243) |
+| 占位文字 | `grey-14 @ 0.4` | `grey-14 @ 0.4` | `--o-color-info4` | rgba(0,0,0,0.4) → rgba(255,255,255,0.4) |
+| 下箭头图标 | `grey-14` | `grey-14` | `--o-color-info1` | rgb(0,0,0) → rgb(255,255,255) |
 
 #### Complete 状态
 
 | 区域 | Light 模式 | Dark 模式 | Token | RGB 值 |
 |------|-----------|----------|-------|--------|
-| 选择器背景 | `grey-1` | `grey-4` | `color-fill2` | rgb(255,255,255) → rgb(36,36,39) |
-| 选择器描边 | `grey-14 @ 0.25` | `grey-14 @ 0.25` | `color-control1` | rgba(0,0,0,0.25) → rgba(255,255,255,0.25) |
-| 选中文字 | `grey-14` | `grey-14` | `color-info1` | rgb(0,0,0) → rgb(255,255,255) |
-| 下箭头图标 | `grey-14` | `grey-14` | `color-info1` | rgb(0,0,0) → rgb(255,255,255) |
+| 选择器背景 | `grey-1` | `grey-4` | `--o-color-fill2` | rgb(255,255,255) → rgb(36,36,39) |
+| 选择器描边 | `grey-14 @ 0.25` | `grey-14 @ 0.25` | `--o-color-control1` | rgba(0,0,0,0.25) → rgba(255,255,255,0.25) |
+| 选中文字 | `grey-14` | `grey-14` | `--o-color-info1` | rgb(0,0,0) → rgb(255,255,255) |
+| 下箭头图标 | `grey-14` | `grey-14` | `--o-color-info1` | rgb(0,0,0) → rgb(255,255,255) |
 
 #### Actived-menu 状态
 
 | 区域 | Light 模式 | Dark 模式 | Token | RGB 值 |
 |------|-----------|----------|-------|--------|
-| 选择器描边 | `brand-6` | `brand-6` | `color-primary1` | rgb(0,47,167) → rgb(110,148,243) |
-| 上箭头图标 | `grey-14` | `grey-14` | `color-info1` | rgb(0,0,0) → rgb(255,255,255) |
-| 菜单背景 | `grey-1` | `grey-4` | `color-fill2` | rgb(255,255,255) → rgb(36,36,39) |
-| 菜单项文字 | `grey-14` | `grey-14` | `color-info1` | rgb(0,0,0) → rgb(255,255,255) |
-| 菜单项 hover 背景 | — | — | `color-fill3` | — |
+| 选择器描边 | `brand-6` | `brand-6` | `--o-color-primary1` | rgb(0,47,167) → rgb(110,148,243) |
+| 上箭头图标 | `grey-14` | `grey-14` | `--o-color-info1` | rgb(0,0,0) → rgb(255,255,255) |
+| 菜单背景 | `grey-1` | `grey-4` | `--o-color-fill2` | rgb(255,255,255) → rgb(36,36,39) |
+| 菜单项文字 | `grey-14` | `grey-14` | `--o-color-info1` | rgb(0,0,0) → rgb(255,255,255) |
+| 菜单项 hover 背景 | — | — | `--o-color-fill3` | — |
 
 ---
 
@@ -287,19 +287,19 @@ OSelect（FRAME）
 │  GUID: 1042:17665
 │  Width: 320px | Height: 40px
 │  cornerRadius: 4px → Token: `radius_control-xs`
-│  fill: rgb(255,255,255) → Token: `color-fill2`（Light）
-│  stroke: rgba(0,0,0,0.25) → Token: `color-control1`
+│  fill: rgb(255,255,255) → Token: `--o-color-fill2`（Light）
+│  stroke: rgba(0,0,0,0.25) → Token: `--o-color-control1`
 │  strokeWeight: 1px | strokeAlign: INSIDE
 │
 ├── [占位文字 PARAGRAPH]（自适应宽度）
 │   fontSize: 16px → Token: `font_size-text1`
 │   lineHeight: 24px → Token: `line_height-text1`
-│   fill: rgba(0,0,0,0.4) → Token: `color-info4`
+│   fill: rgba(0,0,0,0.4) → Token: `--o-color-info4`
 │   nodeText: "请选择"
 │
 └── [下箭头图标 Icon/下箭头 INSTANCE]
     Width: 24px | Height: 24px → Token: `icon_size_control-m`
-    fill: rgb(0,0,0) → Token: `color-info1`
+    fill: rgb(0,0,0) → Token: `--o-color-info1`
 ```
 
 **size=large, type=Actived-menu, Dark=off**
@@ -308,20 +308,20 @@ OSelect（FRAME）
 OSelect（FRAME）
 │  GUID: 1042:17677
 │  Width: 320px | Height: 252px
-│  stroke: rgba(0,47,167,1) → Token: `color-primary1`
+│  stroke: rgba(0,47,167,1) → Token: `--o-color-primary1`
 │
 ├── [选择器头部]（Height: 40px）
 │   ├── [占位文字 PARAGRAPH]
-│   │   fill: rgba(0,0,0,0.4) → Token: `color-info4`
+│   │   fill: rgba(0,0,0,0.4) → Token: `--o-color-info4`
 │   └── [上箭头图标 Icon/上箭头 INSTANCE]（24×24px）
-│       fill: rgb(0,0,0) → Token: `color-info1`
+│       fill: rgb(0,0,0) → Token: `--o-color-info1`
 │
 └── [菜单面板 FRAME]（Height: 212px）
     cornerRadius: 4px
-    fill: rgb(255,255,255) → Token: `color-fill2`
+    fill: rgb(255,255,255) → Token: `--o-color-fill2`
     └── [菜单项 × N]（Height: 40px each）
         └── [文字 PARAGRAPH]
-            fill: rgb(0,0,0) → Token: `color-info1`
+            fill: rgb(0,0,0) → Token: `--o-color-info1`
 ```
 
 **size=medium, type=Complete, Dark=off**
@@ -331,16 +331,16 @@ OSelect（FRAME）
 │  GUID: 1042:17712
 │  Width: 320px | Height: 32px
 │  cornerRadius: 4px
-│  fill: rgb(255,255,255) → Token: `color-fill2`
-│  stroke: rgba(0,0,0,0.25) → Token: `color-control1`
+│  fill: rgb(255,255,255) → Token: `--o-color-fill2`
+│  stroke: rgba(0,0,0,0.25) → Token: `--o-color-control1`
 │
 ├── [选中文字 PARAGRAPH]
 │   fontSize: 14px → Token: `font_size-tip1`
 │   lineHeight: 22px → Token: `line_height-tip1`
-│   fill: rgb(0,0,0) → Token: `color-info1`
+│   fill: rgb(0,0,0) → Token: `--o-color-info1`
 │
 └── [下箭头图标 Icon/下箭头 INSTANCE]（24×24px）
-    fill: rgb(0,0,0) → Token: `color-info1`
+    fill: rgb(0,0,0) → Token: `--o-color-info1`
 ```
 
 ---
@@ -396,8 +396,8 @@ OSelect（FRAME）
 - **文字字号**：large=16px，medium/small=14px
 - **圆角统一**：所有尺寸圆角均为 4px（`radius_control-xs`）
 - **背景颜色**：Light=grey-1（white），Dark=grey-4
-- **描边颜色**：Enabled/Complete=grey-14@0.25（`color-control1`），Actived/Actived-menu=brand-6（`color-primary1`）
-- **占位文字颜色**：`color-info4`（grey-14@0.4），选中值颜色：`color-info1`（grey-14）
+- **描边颜色**：Enabled/Complete=grey-14@0.25（`--o-color-control1`），Actived/Actived-menu=brand-6（`--o-color-primary1`）
+- **占位文字颜色**：`--o-color-info4`（grey-14@0.4），选中值颜色：`--o-color-info1`（grey-14）
 - **Actived-menu 总高**：包含选择器头部 + 菜单面板（large=252px，medium=194px）
 - **宽度自适应**：选择器宽度随容器自适应，示例宽度 320px
 - **尺寸用途**：large/medium 用于 PC 端，small 用于移动端
@@ -410,14 +410,14 @@ OSelect（FRAME）
 
 | 元素 | 状态 | 视觉表现 |
 |------|------|---------|
-| 选择器 | Enabled | 背景 `color-fill2`，描边 `color-control1`，占位文字 `color-info4`，下箭头 |
-| 选择器 | Actived | 背景 `color-fill2`，描边 `color-primary1`，占位文字 `color-info4`，下箭头 |
-| 选择器 | Complete | 背景 `color-fill2`，描边 `color-control1`，选中值 `color-info1`，下箭头 |
-| 选择器 | Actived-menu | 背景 `color-fill2`，描边 `color-primary1`，上箭头，菜单展开 |
-| 下箭头图标 | Enabled / Actived / Complete | fill：`color-info1`（grey-14），24×24px |
-| 上箭头图标 | Actived-menu | fill：`color-info1`（grey-14），24×24px |
-| 菜单项 | 默认 | 文字 `color-info1`，背景透明 |
-| 菜单项 | Hover | 背景 `color-fill3` |
+| 选择器 | Enabled | 背景 `--o-color-fill2`，描边 `--o-color-control1`，占位文字 `--o-color-info4`，下箭头 |
+| 选择器 | Actived | 背景 `--o-color-fill2`，描边 `--o-color-primary1`，占位文字 `--o-color-info4`，下箭头 |
+| 选择器 | Complete | 背景 `--o-color-fill2`，描边 `--o-color-control1`，选中值 `--o-color-info1`，下箭头 |
+| 选择器 | Actived-menu | 背景 `--o-color-fill2`，描边 `--o-color-primary1`，上箭头，菜单展开 |
+| 下箭头图标 | Enabled / Actived / Complete | fill：`--o-color-info1`（grey-14），24×24px |
+| 上箭头图标 | Actived-menu | fill：`--o-color-info1`（grey-14），24×24px |
+| 菜单项 | 默认 | 文字 `--o-color-info1`，背景透明 |
+| 菜单项 | Hover | 背景 `--o-color-fill3` |
 
 ---
 
@@ -425,8 +425,8 @@ OSelect（FRAME）
 
 > `Actived-menu` 是设计稿示意变体，不参与真实交互流转，下列描述对应真实的触发器状态变化。
 
-- **Enabled → Actived**：点击 / hover 选择器，描边颜色切换为 `color-primary1`（brand-6）
-- **Actived → Complete**：从下拉菜单选中一个选项，菜单收起，触发器显示选中值，描边恢复为 `color-control1`
+- **Enabled → Actived**：点击 / hover 选择器，描边颜色切换为 `--o-color-primary1`（brand-6）
+- **Actived → Complete**：从下拉菜单选中一个选项，菜单收起，触发器显示选中值，描边恢复为 `--o-color-control1`
 - **Complete → Actived**：再次点击，触发器重新进入 Actived 态（下拉菜单重新展开）
 - **Light → Dark**：背景色切换 grey-1 → grey-4，描边和文字颜色同步切换
 
@@ -440,15 +440,15 @@ OSelect（FRAME）
 
 | 元素 | Hover 视觉表现 |
 |------|---------------|
-| 选择器（Enabled / Complete） | 描边颜色切换为 `color-control2` |
+| 选择器（Enabled / Complete） | 描边颜色切换为 `--o-color-control2` |
 | 选择器（Actived / Actived-menu） | 描边颜色不变 |
-| 菜单项 | 背景 `color-fill3` |
+| 菜单项 | 背景 `--o-color-fill3` |
 
 ---
 
 ### Focus 状态
 
-Focus 状态即 Actived 状态，描边切换为 `color-primary1`。
+Focus 状态即 Actived 状态，描边切换为 `--o-color-primary1`。
 
 ---
 
@@ -458,16 +458,16 @@ Focus 状态即 Actived 状态，描边切换为 `color-primary1`。
 
 | 元素 | 属性 | 推荐变量 Token |
 |------|------|---------------|
-| 选择器背景 | fill | `color-fill2` |
-| 选择器描边（Enabled/Complete） | stroke | `color-control1` |
-| 选择器描边（Actived/Actived-menu） | stroke | `color-primary1` |
-| 占位文字 | fill | `color-info4` |
-| 选中文字 | fill | `color-info1` |
-| 箭头图标 | fill | `color-info1` |
+| 选择器背景 | fill | `--o-color-fill2` |
+| 选择器描边（Enabled/Complete） | stroke | `--o-color-control1` |
+| 选择器描边（Actived/Actived-menu） | stroke | `--o-color-primary1` |
+| 占位文字 | fill | `--o-color-info4` |
+| 选中文字 | fill | `--o-color-info1` |
+| 箭头图标 | fill | `--o-color-info1` |
 | 箭头图标尺寸 | width/height | `icon_size_control-m`（24px） |
-| 菜单背景 | fill | `color-fill2` |
-| 菜单项文字 | fill | `color-info1` |
-| 菜单项 hover 背景 | fill | `color-fill3` |
+| 菜单背景 | fill | `--o-color-fill2` |
+| 菜单项文字 | fill | `--o-color-info1` |
+| 菜单项 hover 背景 | fill | `--o-color-fill3` |
 | 选择器高度（large/small） | height | `control_size-l`（40px） |
 | 选择器高度（medium） | height | `control_size-m`（32px） |
 | 选择器圆角 | cornerRadius | `radius_control-xs`（4px） |
@@ -523,8 +523,8 @@ Focus 状态即 Actived 状态，描边切换为 `color-primary1`。
 
 | state | 使用图标 | 图标颜色 Token |
 |-------|---------|--------------|
-| Enabled / Actived / Complete | `icon-下箭头.svg` | `color-info1`（grey-14） |
-| Actived-menu | `icon-上箭头.svg` | `color-info1`（grey-14） |
+| Enabled / Actived / Complete | `icon-下箭头.svg` | `--o-color-info1`（grey-14） |
+| Actived-menu | `icon-上箭头.svg` | `--o-color-info1`（grey-14） |
 
 > 图标颜色与尺寸由 OSelect 组件统一定义，在所有 type 和 size 下保持不变。深色模式下同名 Token 自动切换为深色值（rgb(255,255,255)）。
 

@@ -42,8 +42,8 @@
 - `Actived` — 选中状态，文字使用品牌主色，字重加粗（SemiBold）
 
 **Dark（主题）**
-- `off` — 浅色模式（默认），未选中文字为 `rgba(0,0,0,0.8)`（`color-info2`）
-- `on` — 深色模式，未选中文字为 `rgba(255,255,255,0.8)`（`color-info2`），选中文字为 `rgb(73,122,248)`（`color-primary1`）
+- `off` — 浅色模式（默认），未选中文字为 `rgba(0,0,0,0.8)`（`--o-color-info2`）
+- `on` — 深色模式，未选中文字为 `rgba(255,255,255,0.8)`（`--o-color-info2`），选中文字为 `rgb(73,122,248)`（`--o-color-primary1`）
 
 **Layout（布局方向）**
 - `h` — 横向布局，锚点项水平排列，间距 32px，适合页面顶部导航条
@@ -183,10 +183,10 @@ OAnchor（VERTICAL，固定宽，自适应高）
 
 | 视觉区域 | Token 名称 | Light 模式色值 | Dark 模式色值 | 说明 |
 |---------|-----------|----------------|---------------|------|
-| 未选中文字 | `color-info2` | `rgba(0, 0, 0, 0.8)` | `rgba(255, 255, 255, 0.8)` | 二级次强调色 |
-| 选中文字 | `color-primary1` | `rgb(0, 47, 167)` | `rgb(73, 122, 248)` | 品牌色 brand-6 |
-| 容器背景 | `color-fill2` | `rgb(255, 255, 255)` | `rgb(36, 36, 39)` | 二级填充色 |
-| 分隔线 | `color-control4` | `rgba(0, 0, 0, 0.1)` | `rgba(255, 255, 255, 0.15)` | 浅色分隔线（禁用边框色） |
+| 未选中文字 | `--o-color-info2` | `rgba(0, 0, 0, 0.8)` | `rgba(255, 255, 255, 0.8)` | 二级次强调色 |
+| 选中文字 | `--o-color-primary1` | `rgb(0, 47, 167)` | `rgb(73, 122, 248)` | 品牌色 brand-6 |
+| 容器背景 | `--o-color-fill2` | `rgb(255, 255, 255)` | `rgb(36, 36, 39)` | 二级填充色 |
+| 分隔线 | `--o-color-control4` | `rgba(0, 0, 0, 0.1)` | `rgba(255, 255, 255, 0.15)` | 浅色分隔线（禁用边框色） |
 
 ---
 
@@ -207,24 +207,24 @@ OAnchor（VERTICAL，固定宽，自适应高）
 
 | 状态 | 一级锚点 | 二级锚点 |
 |------|---------|---------|
-| **默认（未选中）** | 字号: 14px (Regular)<br>色值: color-info2 | 二级字号: 12px (Regular)<br>二级色值: color-info2 |
-| **未选中·悬浮** | 悬浮: color-primary2<br>字号: 14px (Regular) | — |
-| **已选中·悬浮** | 一级字号: 14px (SemiBold)<br>一级色值: color-primary1<br>二级锚点(选中): 二级字号: 12px (SemiBold)<br>二级色值: color-primary1 | — |
-| **未选中·按下** | 点击: color-primary3<br>字号: 14px (Regular) | — |
-| **已选中·按下** | 一级字号: 14px (SemiBold)<br>一级色值: color-primary3<br>二级锚点(选中): 二级字号: 12px (SemiBold)<br>二级色值: color-primary3 | — |
-| **选中** | 选中: color-primary1<br>字号: 14px (SemiBold) | — |
-| **禁用** | 一级字号: 14px (Regular)<br>一级色值: color-info4<br>二级锚点(选中): 二级字号: 12px (Regular)<br>二级色值: color-info4 | — |
+| **默认（未选中）** | 字号: 14px (Regular)<br>色值: --o-color-info2 | 二级字号: 12px (Regular)<br>二级色值: --o-color-info2 |
+| **未选中·悬浮** | 悬浮: --o-color-primary2<br>字号: 14px (Regular) | — |
+| **已选中·悬浮** | 一级字号: 14px (SemiBold)<br>一级色值: --o-color-primary1<br>二级锚点(选中): 二级字号: 12px (SemiBold)<br>二级色值: --o-color-primary1 | — |
+| **未选中·按下** | 点击: --o-color-primary3<br>字号: 14px (Regular) | — |
+| **已选中·按下** | 一级字号: 14px (SemiBold)<br>一级色值: --o-color-primary3<br>二级锚点(选中): 二级字号: 12px (SemiBold)<br>二级色值: --o-color-primary3 | — |
+| **选中** | 选中: --o-color-primary1<br>字号: 14px (SemiBold) | — |
+| **禁用** | 一级字号: 14px (Regular)<br>一级色值: --o-color-info4<br>二级锚点(选中): 二级字号: 12px (Regular)<br>二级色值: --o-color-info4 | — |
 
 #### 横向布局锚点交互状态
 
 | 状态 | 锚点选项 | 锚点选中 |
 |------|---------|---------|
-| **默认（未选中）** | 字号: 16px (Regular)<br>色值: color-info3 | — |
-| **未选中·悬浮** | 色值: color-primary2<br>字号: 16px (Regular) | — |
-| **已选中·悬浮** | — | 字号: 16px (SemiBold)<br>色值: color-primary1 |
-| **未选中·按下** | 字号: 16px (SemiBold)<br>色值: color-primary3 | — |
-| **已选中·按下** | — | 字号: 16px (SemiBold)<br>色值: color-primary1 |
-| **选中** | — | 字号: 16px (SemiBold)<br>色值: color-primary1 |
+| **默认（未选中）** | 字号: 16px (Regular)<br>色值: --o-color-info3 | — |
+| **未选中·悬浮** | 色值: --o-color-primary2<br>字号: 16px (Regular) | — |
+| **已选中·悬浮** | — | 字号: 16px (SemiBold)<br>色值: --o-color-primary1 |
+| **未选中·按下** | 字号: 16px (SemiBold)<br>色值: --o-color-primary3 | — |
+| **已选中·按下** | — | 字号: 16px (SemiBold)<br>色值: --o-color-primary1 |
+| **选中** | — | 字号: 16px (SemiBold)<br>色值: --o-color-primary1 |
 | **禁用** | 字号: 16px (Regular)<br>色值: color-info4 | — |
 
 ---
@@ -233,24 +233,24 @@ OAnchor（VERTICAL，固定宽，自适应高）
 
 - **默认**：组件初始状态，未选中时使用辅助信息色（info系列）
 - **悬浮（Hover）**：鼠标悬停时的反馈状态
-  - 未选中项悬浮：使用 `color-primary2`
+  - 未选中项悬浮：使用 `--o-color-primary2`
   - 已选中项悬浮：保持选中态样式不变
 - **按下（Active/Pressed）**：鼠标点击按下时的反馈状态
-  - 未选中项按下：使用 `color-primary3`，字重可能加粗
-  - 已选中项按下：保持选中态样式或加深至 `color-primary3`
-- **选中（Selected）**：当前激活的锚点项，使用品牌主色 `color-primary1` + SemiBold 字重
-- **禁用（Disabled）**：不可交互状态，使用 `color-info4` 禁用色，字重 Regular
+  - 未选中项按下：使用 `--o-color-primary3`，字重可能加粗
+  - 已选中项按下：保持选中态样式或加深至 `--o-color-primary3`
+- **选中（Selected）**：当前激活的锚点项，使用品牌主色 `--o-color-primary1` + SemiBold 字重
+- **禁用（Disabled）**：不可交互状态，使用 `--o-color-info4` 禁用色，字重 Regular
 
 #### 颜色Token速查
 
 | Token名称 | 用途 | 出现状态 |
 |----------|------|---------|
-| `color-info2` | 默认未选中文字色 | 默认态（竖向） |
-| `color-info3` | 默认未选中文字色 | 默认态（横向） |
-| `color-info4` | 禁用态文字色 | 禁用态 |
-| `color-primary1` | 选中态/已选中悬浮/已选中按下 | 选中、已选中悬浮、已选中按下 |
-| `color-primary2` | 未选中悬浮态 | 未选中·悬浮 |
-| `color-primary3` | 按下态（未选中/已选中） | 未选中·按下、已选中·按下 |
+| `--o-color-info2` | 默认未选中文字色 | 默认态（竖向） |
+| `--o-color-info3` | 默认未选中文字色 | 默认态（横向） |
+| `--o-color-info4` | 禁用态文字色 | 禁用态 |
+| `--o-color-primary1` | 选中态/已选中悬浮/已选中按下 | 选中、已选中悬浮、已选中按下 |
+| `--o-color-primary2` | 未选中悬浮态 | 未选中·悬浮 |
+| `--o-color-primary3` | 按下态（未选中/已选中） | 未选中·按下、已选中·按下 |
 ---
 
 ### 组件层级结构
@@ -261,10 +261,10 @@ OAnchor（HORIZONTAL，自适应宽，固定高 48px）
 │  itemSpacing: 32px
 │
 ├── [一级锚点项 INSTANCE]（level1, Enabled）
-│   └── [文字 PARAGRAPH]（16px Regular，color-info3）
+│   └── [文字 PARAGRAPH]（16px Regular，--o-color-info3）
 │
 ├── [一级锚点项 INSTANCE]（level1, Actived）
-│   └── [文字 PARAGRAPH]（16px SemiBold，color-primary1）
+│   └── [文字 PARAGRAPH]（16px SemiBold，--o-color-primary1）
 │
 └── ...
 ```

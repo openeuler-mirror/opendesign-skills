@@ -93,7 +93,7 @@ ONavigation Header Mb（SYMBOL）
 │  boxShadow: 0px 3px 8px 0px rgba(0,0,0,0.078)
 │  backdropFilter: blur(1.67px)
 │
-├── [状态栏 FRAME]（348.5px × 18px，overflow: hidden，top: 0）
+├── [状态栏 FRAME]（348.5px × 18px，overflow: hidden，top: 0
 │   信号图标（38.34px × 10px）+ 时间"9:41 AM" + 蓝牙/电量图标
 │
 ├── [汉堡菜单图标 FRAME]（24px × 24px）
@@ -514,11 +514,11 @@ ONavigation Footer Mb（SYMBOL）
 
 | 状态 | 字号 | 字重 | 文字色值 | 背景色 | 下拉菜单 |
 |------|------|------|---------|--------|---------|
-| **默认态** | 14px | Regular | #000000 100% (color-info1) | 透明 | 不显示 |
-| **悬浮态(Hover)** | 14px | Regular | #000000 80% (color-info2) | 透明 | 显示 |
-| **按下态(Press)** | 14px | Semibold | #002FA7 (color-primary1) | #EBF1FA (color-control3-light) | 显示 |
-| **选中态(Selected)**<br>（菜单展开时） | 14px | Semibold | #002FA7 (color-primary1) | #EBF1FA (color-control3-light) | 显示 |
-| **禁用态(Disabled)** | 14px | Regular | #000000 40% (color-info4) | 透明 | 不显示 |
+| **默认态** | 14px | Regular | #000000 100% (--o-color-info1) | 透明 | 不显示 |
+| **悬浮态(Hover)** | 14px | Regular | #000000 80% (--o-color-info2) | 透明 | 显示 |
+| **按下态(Press)** | 14px | Semibold | #002FA7 (--o-color-primary1) | #EBF1FA (--o-color-control3-light) | 显示 |
+| **选中态(Selected)**<br>（菜单展开时） | 14px | Semibold | #002FA7 (--o-color-primary1) | #EBF1FA (--o-color-control3-light) | 显示 |
+| **禁用态(Disabled)** | 14px | Regular | #000000 40% (--o-color-info4) | 透明 | 不显示 |
 
 #### 下拉菜单（悬浮/按下/选中态时弹出）
 
@@ -526,7 +526,7 @@ ONavigation Footer Mb（SYMBOL）
 
 | 属性 | 值 |
 |------|---|
-| 背景色 | #FFFFFF (color-control5-light) |
+| 背景色 | #FFFFFF (--o-color-control5-light) |
 | 阴影 | X: 0, Y: 2, Blur: 24px, 颜色: #000000 15% |
 
 ##### 菜单项列表
@@ -539,8 +539,8 @@ ONavigation Footer Mb（SYMBOL）
 
 | 状态 | 字号 | 字重 | 文字色值 | 背景色 |
 |------|------|------|---------|--------|
-| 默认态 | 14px | Regular | #000000 80% (color-info2) | 透明 |
-| 悬浮态 | 14px | Regular | #000000 80% (color-info2) | #EBF1FA (color-control2-light) |
+| 默认态 | 14px | Regular | #000000 80% (--o-color-info2) | 透明 |
+| 悬浮态 | 14px | Regular | #000000 80% (--o-color-info2) | #EBF1FA (--o-color-control2-light) |
 
 #### 未登录状态
 
@@ -553,12 +553,7 @@ ONavigation Footer Mb（SYMBOL）
 | 使用方式 | CSS mask（可着色） |
 | 点击行为 | 跳转至登录页面 |
 
-> 📌 **参考位置**：PC 顶导布局结构中的 `[用户图标 FRAME]`（[第 82 行](file:///Users/lixuan/opendesign-skills/skills/opendesign-design/references/components/navigation.md#L82)），以及 [Part G 资源表](file:///Users/lixuan/opendesign-skills/skills/opendesign-design/references/components/navigation.md#L680) 中的「顶导用户图标」条目。
----
-
-## Part F：Logo 自定义（仅顶导）
-
-> 顶导左侧 Logo 区域是**可替换插槽**。本 skill 已自带 **openEuler 默认 Logo 的 4 个 SVG 变体**（见下方「默认 Logo 资源」），与 ONavigation Symbol 内置 Logo 视觉一致；调用方也可用自家品牌的 SVG / PNG 切图替换。本节定义默认资源、自定义资源要求、目标尺寸、主题适配与 Pixso 操作流程。
+> 📌 **参考位置**：PC 顶导布局> 顶导左侧 Logo 区域是**可替换插槽**。本 skill 已自带 **openEuler 默认 Logo 的 4 个 SVG 变体**（见下方「默认 Logo 资源」），与 ONavigation Symbol 内置 Logo 视觉一致；调用方也可用自家品牌的 SVG / PNG 切图替换。本节定义默认资源、自定义资源要求、目标尺寸、主题适配与 Pixso 操作流程。
 
 ### 适用范围
 
@@ -701,14 +696,14 @@ ONavigation Footer Mb（SYMBOL）
 .nav-right  { display: flex; align-items: center; gap: 20px; }  /* ⚠️ gap=20 不是 16 */
 .icon-btn   { width: 24px; height: 24px; }
 
-/* OSearch small 变体：背景白色(color-fill2)，描边 rgba(0,0,0,.25)(grey-14@0.25) */
+/* OSearch small 变体：背景白色(--o-color-fill2)，描边 rgba(0,0,0,.25)(grey-14@0.25) */
 .nav-search { width: 160px; height: 32px;
               background: rgb(255,255,255);            /* ⚠️ 不是 rgba(0,0,0,.04) */
               border: 1px solid rgba(0,0,0,.25);       /* ⚠️ 不是 rgba(0,0,0,.12) */
               border-radius: 4px; }
 .nav-search span { font-size: 14px; line-height: 22px; color: rgba(0,0,0,.4); }
 
-/* ODropdown text 变体：无背景无描边无Padding，颜色 color-info1 = rgba(0,0,0,.85) */
+/* ODropdown text 变体：无背景无描边无Padding，颜色 --o-color-info1 = rgba(0,0,0,.85) */
 .nav-btn    { padding: 0; border: none; background: transparent;
               color: rgba(0,0,0,.85);                  /* ⚠️ 不是 #002FA7 */
               font-size: 14px; line-height: 22px;
@@ -928,8 +923,8 @@ ONavigation Footer Mb（SYMBOL）
 | 14 | 源码 height 32px，无下拉箭头 | height **24px**，含下拉箭头 16×16 |
 | 15 | 主题切换图标缺失 | 必须有，24×24px，位于国际化与用户之间 |
 | 16 | nav-right gap 16px | gap **20px** |
-| 17 | 搜索框背景 `rgba(0,0,0,.04)`，描边 `.12` | OSearch small：背景 **`rgb(255,255,255)`**（white/color-fill2），描边 **`rgba(0,0,0,.25)`**（grey-14@0.25） |
-| 18 | 源码按钮蓝色描边 pill，颜色 `#002FA7` | ODropdown **text 变体**：无背景无描边，颜色 **`rgba(0,0,0,.85)`**（color-info1），padding=0 |
+| 17 | 搜索框背景 `rgba(0,0,0,.04)`，描边 `.12` | OSearch small：背景 **`rgb(255,255,255)`**（white/--o-color-fill2），描边 **`rgba(0,0,0,.25)`**（grey-14@0.25） |
+| 18 | 源码按钮蓝色描边 pill，颜色 `#002FA7` | ODropdown **text 变体**：无背景无描边，颜色 **`rgba(0,0,0,.85)`**（--o-color-info1），padding=0 |
 
 ---
 

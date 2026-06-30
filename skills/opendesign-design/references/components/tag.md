@@ -153,21 +153,21 @@ OTag（HORIZONTAL，自适应宽度，固定高度）
 
 | 颜色主题 | 背景 Token | 文字/图标 Token | Light RGB | Dark RGB |
 |---------|-----------|----------------|----------|----------|
-| primary | `color-primary1` | `color-white` | rgb(0,47,167) / rgb(255,255,255) | rgb(73,122,248) / rgb(255,255,255) |
-| success | `color-success1` | `color-white` | rgb(11,177,81) / rgb(255,255,255) | rgb(51,193,104) / rgb(255,255,255) |
-| warning | `color-warning1` | `color-white` | rgb(250,115,5) / rgb(255,255,255) | rgb(251,143,43) / rgb(255,255,255) |
-| danger | `color-danger1` | `color-white` | rgb(230,0,18) / rgb(255,255,255) | rgb(235,35,45) / rgb(255,255,255) |
-| info | `color-control2-light` | `color-white` | rgb(222,222,227) / rgb(255,255,255) | rgb(43,43,47) / rgb(255,255,255) |
+| primary | `--o-color-primary1` | `--o-color-white` | rgb(0,47,167) / rgb(255,255,255) | rgb(73,122,248) / rgb(255,255,255) |
+| success | `--o-color-success1` | `--o-color-white` | rgb(11,177,81) / rgb(255,255,255) | rgb(51,193,104) / rgb(255,255,255) |
+| warning | `--o-color-warning1` | `--o-color-white` | rgb(250,115,5) / rgb(255,255,255) | rgb(251,143,43) / rgb(255,255,255) |
+| danger | `--o-color-danger1` | `--o-color-white` | rgb(230,0,18) / rgb(255,255,255) | rgb(235,35,45) / rgb(255,255,255) |
+| info | `--o-color-control2-light` | `--o-color-white` | rgb(222,222,227) / rgb(255,255,255) | rgb(43,43,47) / rgb(255,255,255) |
 
 #### Stroke 变体
 
 | 颜色主题 | 边框 Token | 文字/图标 Token | 背景 | Light RGB | Dark RGB |
 |---------|-----------|----------------|------|----------|----------|
-| primary | `color-primary1` | `color-primary1` | 透明 | rgb(0,47,167) | rgb(73,122,248) |
-| success | `color-success1` | `color-success1` | 透明 | rgb(11,177,81) | rgb(51,193,104) |
-| warning | `color-warning1` | `color-warning1` | 透明 | rgb(250,115,5) | rgb(251,143,43) |
-| danger | `color-danger1` | `color-danger1` | 透明 | rgb(230,0,18) | rgb(235,35,45) |
-| info | `color-control4` | `color-info1` | 透明 | rgba(0,0,0,0.1) | rgba(255,255,255,0.15) |
+| primary | `--o-color-primary1` | `--o-color-primary1` | 透明 | rgb(0,47,167) | rgb(73,122,248) |
+| success | `--o-color-success1` | `--o-color-success1` | 透明 | rgb(11,177,81) | rgb(51,193,104) |
+| warning | `--o-color-warning1` | `--o-color-warning1` | 透明 | rgb(250,115,5) | rgb(251,143,43) |
+| danger | `--o-color-danger1` | `--o-color-danger1` | 透明 | rgb(230,0,18) | rgb(235,35,45) |
+| info | `--o-color-control4` | `--o-color-info1` | 透明 | rgba(0,0,0,0.1) | rgba(255,255,255,0.15) |
 
 > **说明**：info 颜色主题使用中性色（grey 系列）而非品牌色系，具体 Token 需从设计稿确认。
 >
@@ -274,10 +274,10 @@ OTag（HORIZONTAL，自适应宽，固定高）
 
 | 元素 | 属性 | 推荐变量 Token |
 |------|------|---------------|
-| 背景（fill 变体） | fill | `color-primary1` 等 |
-| 文字/图标颜色（fill 变体） | fill | `color-white` |
-| 边框（stroke 变体） | stroke | `color-primary1` 等 |
-| 文字/图标颜色（stroke 变体） | fill | `color-primary1` 等 |
+| 背景（fill 变体） | fill | `--o-color-primary1` 等 |
+| 文字/图标颜色（fill 变体） | fill | `--o-color-white` |
+| 边框（stroke 变体） | stroke | `--o-color-primary1` 等 |
+| 文字/图标颜色（stroke 变体） | fill | `--o-color-primary1` 等 |
 | 圆角 | cornerRadius | `radius_control-m`（4px） |
 | 高度 | height | `control_size-m`（32px，large） |
 | 字号（large） | fontSize | `font_size-tip1`（14px） |

@@ -159,35 +159,35 @@ OSwitch（SYMBOL，48×24px，cornerRadius: 100px）
 
 | 区域 | Light 模式 | Dark 模式 | Token | RGB 值 |
 |------|-----------|----------|-------|--------|
-| 轨道背景 | `brand-6` | `brand-6` | `color-primary1` | rgb(0,47,167) → rgb(73,122,248) |
-| 滑块 | `white` | `grey-4` | `color-fill2` | rgb(255,255,255) → rgb(36,36,39) |
-| 文字（text 变体） | `white` | `black` | `color-white` / `color-black` | rgb(255,255,255) → rgb(0,0,0) |
-| 图标（icon 变体） | `white` | `white` | `color-white` | rgb(255,255,255) |
+| 轨道背景 | `brand-6` | `brand-6` | `--o-color-primary1` | rgb(0,47,167) → rgb(73,122,248) |
+| 滑块 | `white` | `grey-4` | `--o-color-fill2` | rgb(255,255,255) → rgb(36,36,39) |
+| 文字（text 变体） | `white` | `black` | `--o-color-white` / `--o-color-black` | rgb(255,255,255) → rgb(0,0,0) |
+| 图标（icon 变体） | `white` | `white` | `--o-color-white` | rgb(255,255,255) |
 
 #### Unselected 状态（关闭）
 
 | 区域 | Light 模式 | Dark 模式 | Token | RGB 值 |
 |------|-----------|----------|-------|--------|
-| 轨道背景 | `grey-6` | `grey-7` | `color-control1-light` | rgb(222,222,227) → rgb(63,63,67) |
-| 滑块 | `white` | `grey-4` | `color-fill2` | rgb(255,255,255) → rgb(36,36,39) |
-| 文字（text 变体） | `info4` | `info4` | `color-info4` | rgb(85,85,92) → rgb(156,156,159) |
+| 轨道背景 | `grey-6` | `grey-7` | `--o-color-control1-light` | rgb(222,222,227) → rgb(63,63,67) |
+| 滑块 | `white` | `grey-4` | `--o-color-fill2` | rgb(255,255,255) → rgb(36,36,39) |
+| 文字（text 变体） | `info4` | `info4` | `--o-color-info4` | rgb(85,85,92) → rgb(156,156,159) |
 | 图标（icon 变体） | — | — | — | — |
 
 #### Light 状态（icon 变体，浅色模式开启）
 
 | 区域 | Light 模式 | Dark 模式 | Token | RGB 值 |
 |------|-----------|----------|-------|--------|
-| 轨道背景 | `grey-6` | `grey-7` | `color-control1-light` | rgb(222,222,227) → rgb(63,63,67) |
-| 滑块 | `brand-6` | `brand-6` | `color-primary1` | rgb(0,47,167) → rgb(73,122,248) |
-| 太阳图标 | `white` | `white` | `color-white` | rgb(255,255,255) |
+| 轨道背景 | `grey-6` | `grey-7` | `--o-color-control1-light` | rgb(222,222,227) → rgb(63,63,67) |
+| 滑块 | `brand-6` | `brand-6` | `--o-color-primary1` | rgb(0,47,167) → rgb(73,122,248) |
+| 太阳图标 | `white` | `white` | `--o-color-white` | rgb(255,255,255) |
 
 #### Dark 状态（icon 变体，深色模式开启）
 
 | 区域 | Light 模式 | Dark 模式 | Token | RGB 值 |
 |------|-----------|----------|-------|--------|
-| 轨道背景 | `grey-6` | `grey-7` | `color-control1-light` | rgb(222,222,227) → rgb(63,63,67) |
-| 滑块 | `brand-6` | `brand-6` | `color-primary1` | rgb(0,47,167) → rgb(73,122,248) |
-| 月亮图标 | `white` | `white` | `color-white` | rgb(255,255,255) |
+| 轨道背景 | `grey-6` | `grey-7` | `--o-color-control1-light` | rgb(222,222,227) → rgb(63,63,67) |
+| 滑块 | `brand-6` | `brand-6` | `--o-color-primary1` | rgb(0,47,167) → rgb(73,122,248) |
+| 月亮图标 | `white` | `white` | `--o-color-white` | rgb(255,255,255) |
 
 ---
 
@@ -211,13 +211,13 @@ OSwitch（SYMBOL，40×24px）
 │        1042:17527（Unselected Light）/ 1042:17529（Unselected Dark）
 │  Width: 40px | Height: 24px
 │  cornerRadius: 100px（全圆角）
-│  fill: rgb(0,47,167) → rgb(73,122,248) → Token: `color-primary1`（Selected）
-│        rgb(222,222,227) → rgb(63,63,67) → Token: `color-control1-light`（Unselected）
+│  fill: rgb(0,47,167) → rgb(73,122,248) → Token: `--o-color-primary1`（Selected）
+│        rgb(222,222,227) → rgb(63,63,67) → Token: `--o-color-control1-light`（Unselected）
 │
 └── [椭圆形 滑块 ELLIPSE]
     GUID: 1042:17524 等
     Width: 16px | Height: 16px
-    fill: rgb(255,255,255) → rgb(36,36,39) → Token: `color-fill2`
+    fill: rgb(255,255,255) → rgb(36,36,39) → Token: `--o-color-fill2`
     位置：Selected 时靠右（left≈22），Unselected 时靠左（left≈2）
 ```
 
@@ -239,10 +239,10 @@ OSwitch（SYMBOL，44×24px）
     │   Width: 12px | Height: 18px
     │   fontSize: 12px | lineHeight: 18px
     │   nodeText: "开"（Selected）/ "关"（Unselected）
-    │   fill: Selected Light=white → Token: `color-white`
-    │         Selected Dark=black → Token: `color-black`
-    │         Unselected Light=info4 → Token: `color-info4`
-    │         Unselected Dark=info4 → Token: `color-info4`
+    │   fill: Selected Light=white → Token: `--o-color-white`
+    │         Selected Dark=black → Token: `--o-color-black`
+    │         Unselected Light=info4 → Token: `--o-color-info4`
+    │         Unselected Dark=info4 → Token: `--o-color-info4`
     │
     └── [椭圆形 滑块 ELLIPSE]
         Width: 16px | Height: 16px
@@ -257,7 +257,7 @@ OSwitch（SYMBOL，48×24px）
 │        1042:17587（Dark Light）/ 1042:17606（Dark Dark）
 │  Width: 48px | Height: 24px
 │  cornerRadius: 100px
-│  fill: rgb(222,222,227) → rgb(63,63,67) → Token: `color-control1-light`
+│  fill: rgb(222,222,227) → rgb(63,63,67) → Token: `--o-color-control1-light`
 │
 └── [容器 FRAME]
     Width: 32px | Height: 18px
@@ -266,11 +266,11 @@ OSwitch（SYMBOL，48×24px）
     │   Width: 16px | Height: 16px
     │   Light: 太阳图标 → 表示切换到浅色模式
     │   Dark: 月亮图标 → 表示切换到深色模式
-    │   fill: white → Token: `color-white`
+    │   fill: white → Token: `--o-color-white`
     │
     └── [椭圆形 滑块 ELLIPSE]
         Width: 16px | Height: 16px
-        fill: rgb(0,47,167) → rgb(73,122,248) → Token: `color-primary1`
+        fill: rgb(0,47,167) → rgb(73,122,248) → Token: `--o-color-primary1`
 ```
 
 ---
@@ -309,11 +309,11 @@ OSwitch（SYMBOL，48×24px）
 - **无 Disabled 状态**：OSwitch 没有 Disabled（禁用）变体，所有状态均为 Enabled，可交互
 - **轨道圆角**：全圆角（cornerRadius: 100px），视觉上是胶囊形轨道
 - **滑块位置**：Selected 时滑块位于右侧，Unselected 时位于左侧，通过 Auto Layout 或绝对定位实现
-- **滑块颜色**：Selected 状态滑块使用 `color-fill2`（Light=white，Dark=grey-4）；Unselected 同样
-- **轨道颜色差异**：Selected 使用 `color-primary1`（brand-6），Unselected 使用 `color-control1-light`（grey-6/grey-7）
+- **滑块颜色**：Selected 状态滑块使用 `--o-color-fill2`（Light=white，Dark=grey-4）；Unselected 同样
+- **轨道颜色差异**：Selected 使用 `--o-color-primary1`（brand-6），Unselected 使用 `--o-color-control1-light`（grey-6/grey-7）
 - **text 变体文字**：字号 12px，内容固定为「开」或「关」，颜色随状态和主题变化
 - **icon 变体用途**：专用于主题切换场景，Light 显示太阳图标，Dark 显示月亮图标
-- **icon 变体滑块**：滑块颜色为 `color-primary1`（brand-6），与选中图标对应
+- **icon 变体滑块**：滑块颜色为 `--o-color-primary1`（brand-6），与选中图标对应
 - **Dark 模式轨道**：Unselected Dark 使用 grey-7（rgb(63,63,67)）而非 grey-6，确保深色背景下可识别
 
 ---
@@ -324,23 +324,23 @@ OSwitch（SYMBOL，48×24px）
 
 | 元素 | 状态 | 视觉表现 |
 |------|------|---------|
-| 轨道 | Selected | 背景：`color-primary1`，滑块靠右 |
-| 轨道 | Unselected | 背景：`color-control1-light`，滑块靠左 |
-| 轨道 | Light（icon） | 背景：`color-control1-light`，太阳图标靠左 |
-| 轨道 | Dark（icon） | 背景：`color-control1-light`，月亮图标靠右 |
-| 滑块 | Selected/Unselected | fill：`color-fill2` |
-| 滑块 | Light/Dark（icon） | fill：`color-primary1` |
-| 文字 | Selected Light | fill：`color-white` |
-| 文字 | Selected Dark | fill：`color-black` |
-| 文字 | Unselected Light | fill：`color-info4` |
-| 文字 | Unselected Dark | fill：`color-info4` |
+| 轨道 | Selected | 背景：`--o-color-primary1`，滑块靠右 |
+| 轨道 | Unselected | 背景：`--o-color-control1-light`，滑块靠左 |
+| 轨道 | Light（icon） | 背景：`--o-color-control1-light`，太阳图标靠左 |
+| 轨道 | Dark（icon） | 背景：`--o-color-control1-light`，月亮图标靠右 |
+| 滑块 | Selected/Unselected | fill：`--o-color-fill2` |
+| 滑块 | Light/Dark（icon） | fill：`--o-color-primary1` |
+| 文字 | Selected Light | fill：`--o-color-white` |
+| 文字 | Selected Dark | fill：`--o-color-black` |
+| 文字 | Unselected Light | fill：`--o-color-info4` |
+| 文字 | Unselected Dark | fill：`--o-color-info4` |
 
 ---
 
 ### 状态切换逻辑
 
-- **Unselected → Selected**：轨道背景切换为 `color-primary1`，滑块滑动到右侧，文字切换为「开」
-- **Selected → Unselected**：轨道背景切换为 `color-control1-light`，滑块滑动到左侧，文字切换为「关」
+- **Unselected → Selected**：轨道背景切换为 `--o-color-primary1`，滑块滑动到右侧，文字切换为「开」
+- **Selected → Unselected**：轨道背景切换为 `--o-color-control1-light`，滑块滑动到左侧，文字切换为「关」
 - **Light → Dark（icon 变体）**：太阳图标切换为月亮图标，表示切换到深色模式
 - **Dark → Light（icon 变体）**：月亮图标切换为太阳图标，表示切换到浅色模式
 - **Light → Dark（主题）**：轨道色、滑块色、文字色同步切换为深色主题对应值
@@ -351,7 +351,7 @@ OSwitch（SYMBOL，48×24px）
 
 | 元素 | Hover 视觉表现 |
 |------|---------------|
-| 轨道（Selected） | 背景颜色切换为 `color-primary2`（brand-4） |
+| 轨道（Selected） | 背景颜色切换为 `--o-color-primary2`（brand-4） |
 | 轨道（Unselected） | 背景颜色不变 |
 | 滑块 | 尺寸略微放大（可选动效） |
 
@@ -363,14 +363,14 @@ OSwitch（SYMBOL，48×24px）
 
 | 元素 | 属性 | 推荐变量 Token |
 |------|------|---------------|
-| 轨道背景（Selected） | fill | `color-primary1` |
-| 轨道背景（Unselected） | fill | `color-control1-light` |
-| 滑块（regular/text） | fill | `color-fill2` |
-| 滑块（icon 变体） | fill | `color-primary1` |
-| 文字（Selected Light） | fill | `color-white` |
-| 文字（Selected Dark） | fill | `color-black` |
-| 文字（Unselected） | fill | `color-info4` |
-| 图标（icon 变体） | fill | `color-white` |
+| 轨道背景（Selected） | fill | `--o-color-primary1` |
+| 轨道背景（Unselected） | fill | `--o-color-control1-light` |
+| 滑块（regular/text） | fill | `--o-color-fill2` |
+| 滑块（icon 变体） | fill | `--o-color-primary1` |
+| 文字（Selected Light） | fill | `--o-color-white` |
+| 文字（Selected Dark） | fill | `--o-color-black` |
+| 文字（Unselected） | fill | `--o-color-info4` |
+| 图标（icon 变体） | fill | `--o-color-white` |
 | 轨道圆角 | cornerRadius | 100px（全圆角） |
 | 滑块尺寸 | width/height | 16px |
 | 文字字号 | fontSize | 12px |

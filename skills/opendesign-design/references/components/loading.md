@@ -147,9 +147,9 @@ OLoading small（HORIZONTAL，垂直居中，gap: 4px）
 
 | 视觉区域 | Token 名称 | Light 色值 | Dark 色值 | 说明 |
 |---------|-----------|-----------|----------|------|
-| 活跃弧（旋转部分） | `color-primary1` | `rgb(0, 47, 167)` | `rgb(73, 122, 248)` | 品牌蓝，构成视觉焦点 |
-| 轨道环（背景环） | `color-control4` | `rgba(grey-14, 0.1)` | `rgba(grey-14, 0.15)` | 浅灰轨道，large/medium/small 均有 |
-| 文字"加载中" | `color-info2` | `rgba(0, 0, 0, 0.8)` | `rgba(grey-1, 0.8)` | 二级/次强调文字色 |
+| 活跃弧（旋转部分） | `--o-color-primary1` | `rgb(0, 47, 167)` | `rgb(73, 122, 248)` | 品牌蓝，构成视觉焦点 |
+| 轨道环（背景环） | `--o-color-control4` | `rgba(grey-14, 0.1)` | `rgba(grey-14, 0.15)` | 浅灰轨道，large/medium/small 均有 |
+| 文字"加载中" | `--o-color-info2` | `rgba(0, 0, 0, 0.8)` | `rgba(grey-1, 0.8)` | 二级/次强调文字色 |
 
 ---
 
@@ -216,7 +216,7 @@ OLoading small（HORIZONTAL，垂直居中，gap: 4px）
 2. **切换尺寸**：右侧面板 → size 属性 → 选择 `large` / `medium` / `small`
 3. **切换主题**：右侧面板 → Dark 属性 → 选择 `off` / `on`
 4. **修改文字**：双击进入组件实例 → 双击文字图层 → 替换"加载中"为自定义文案
-5. **应用颜色变量**：`set_bound_variables` 绑定 `color-primary1`（活跃弧）和 `color-info2`（文字）
+5. **应用颜色变量**：`set_bound_variables` 绑定 `--o-color-primary1`（活跃弧）和 `--o-color-info2`（文字）
 
 ---
 

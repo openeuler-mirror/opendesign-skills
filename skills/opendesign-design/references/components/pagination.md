@@ -140,7 +140,7 @@ OPagination（HORIZONTAL，自适应宽度，固定高度 32px）
 
 | 区域 | Light 模式 Token | Dark 模式 Token | 说明 |
 |------|-----------------|----------------|------|
-| 背景 | `color-primary1` | `color-primary1` | brand-6：rgb(0,47,167) → rgb(73,122,248) |
+| 背景 | `--o-color-primary1` | `--o-color-primary1` | brand-6：rgb(0,47,167) → rgb(73,122,248) |
 | 文字 | `white` | `white` | 始终为白色 rgb(255,255,255) |
 
 #### 未选中页码/箭头按钮
@@ -148,28 +148,28 @@ OPagination（HORIZONTAL，自适应宽度，固定高度 32px）
 | 区域 | Light 模式 Token | Dark 模式 Token | 说明 |
 |------|-----------------|----------------|------|
 | 背景 | 透明 | 透明 | 无填充 |
-| 线框 | `color-control1` | `color-control1` | 箭头按钮默认线框 |
-| 文字/图标 | `color-info1` | `color-info1` | 一级文字色 |
+| 线框 | `--o-color-control1` | `--o-color-control1` | 箭头按钮默认线框 |
+| 文字/图标 | `--o-color-info1` | `--o-color-info1` | 一级文字色 |
 
 #### 禁用箭头
 
 | 区域 | Light 模式 Token | Dark 模式 Token | 说明 |
 |------|-----------------|----------------|------|
-| 线框 | `color-control4` | `color-control4` | 禁用线框色 |
-| 文字/图标 | `color-info4` | `color-info4` | 禁用色，透明度 40% |
+| 线框 | `--o-color-control4` | `--o-color-control4` | 禁用线框色 |
+| 文字/图标 | `--o-color-info4` | `--o-color-info4` | 禁用色，透明度 40% |
 
 #### 箭头悬浮状态
 
 | 区域 | Light 模式 Token | Dark 模式 Token | 说明 |
 |------|-----------------|----------------|------|
-| 线框 | `color-control2` | `color-control2` | 悬浮线框色 |
-| 图标 | `color-primary1` | `color-primary1` | 悬浮图标色 |
+| 线框 | `--o-color-control2` | `--o-color-control2` | 悬浮线框色 |
+| 图标 | `--o-color-primary1` | `--o-color-primary1` | 悬浮图标色 |
 
 #### 数据统计文字
 
 | 区域 | Light 模式 Token | Dark 模式 Token | 说明 |
 |------|-----------------|----------------|------|
-| 总条数/每页条数 | `color-info1` | `color-info1` | 一级文字色，强调信息 |
+| 总条数/每页条数 | `--o-color-info1` | `--o-color-info1` | 一级文字色，强调信息 |
 
 #### 页码输入框
 
@@ -177,17 +177,17 @@ OPagination（HORIZONTAL，自适应宽度，固定高度 32px）
 
 | 状态 | 线框 Token | 填充 Token | 说明 |
 |------|-----------|-----------|------|
-| 默认 | `color-control1` | `color-fill2` | 常规线框，二级填充背景 |
-| 悬浮 | `color-primary2` | `color-fill2` | 悬浮线框（brand-4） |
-| 选中 | `color-primary1` | `color-fill2` | 选中线框（brand-6） |
-| 禁用 | `color-control4` | `color-control4-light` | 禁用线框和背景 |
+| 默认 | `--o-color-control1` | `--o-color-fill2` | 常规线框，二级填充背景 |
+| 悬浮 | `--o-color-primary2` | `--o-color-fill2` | 悬浮线框（brand-4） |
+| 选中 | `--o-color-primary1` | `--o-color-fill2` | 选中线框（brand-6） |
+| 禁用 | `--o-color-control4` | `--o-color-control4-light` | 禁用线框和背景 |
 
 **输入框文字**
 
 | 状态 | 文字 Token | 说明 |
 |------|-----------|------|
-| 默认/悬浮 | `color-info1` | 一级文字色 |
-| 禁用 | `color-info4` | 禁用文字色 |
+| 默认/悬浮 | `--o-color-info1` | 一级文字色 |
+| 禁用 | `--o-color-info4` | 禁用文字色 |
 
 #### 每页条数下拉选择器
 
@@ -195,25 +195,25 @@ OPagination（HORIZONTAL，自适应宽度，固定高度 32px）
 
 | 状态 | 文字 Token | 说明 |
 |------|-----------|------|
-| 默认/悬浮 | `color-info1` | 一级文字色 |
-| 禁用 | `color-info4` | 禁用文字色 |
+| 默认/悬浮 | `--o-color-info1` | 一级文字色 |
+| 禁用 | `--o-color-info4` | 禁用文字色 |
 
 **图标**
 
 | 状态 | 图标 Token | 说明 |
 |------|-----------|------|
-| 默认/悬浮 | `color-info2` | 二级文字色 |
-| 激活 | `color-info2` | 二级文字色，垂直翻转 |
-| 禁用 | `color-info4` | 禁用图标色 |
+| 默认/悬浮 | `--o-color-info2` | 二级文字色 |
+| 激活 | `--o-color-info2` | 二级文字色，垂直翻转 |
+| 禁用 | `--o-color-info4` | 禁用图标色 |
 
 **下拉选择框**
 
 | 状态 | 线框 Token | 填充 Token | 说明 |
 |------|-----------|-----------|------|
-| 默认 | `color-control1` | `color-fill2` | 常规线框，二级填充背景 |
-| 悬浮 | `color-control2` | `color-fill2` | 悬浮线框（brand-6） |
-| 激活 | `color-control3` | `color-fill2` | 激活线框（brand-7） |
-| 禁用 | `color-control4` | `color-control4-light` | 禁用线框和背景 |
+| 默认 | `--o-color-control1` | `--o-color-fill2` | 常规线框，二级填充背景 |
+| 悬浮 | `--o-color-control2` | `--o-color-fill2` | 悬浮线框（brand-6） |
+| 激活 | `--o-color-control3` | `--o-color-fill2` | 激活线框（brand-7） |
+| 禁用 | `--o-color-control4` | `--o-color-control4-light` | 禁用线框和背景 |
 
 ---
 
@@ -316,9 +316,9 @@ OPagination（HORIZONTAL，自适应宽度，固定高 32px）
 
 - 选中页码使用品牌色背景（brand-6）+ 白色文字，圆角 4px，与其他页码视觉区分明显
 - 未选中页码背景透明，避免视觉干扰，仅文字显示
-- 禁用箭头使用 `color-info4`（禁用色）图标 + `color-control4` 禁用线框，点击区域保留但不可交互
-- 左/右箭头按钮默认有 `color-control1` 线框，尺寸 32×32px，悬浮时线框切换为 `color-control2`
-- 省略号显示在页码超出范围时，与其他页码文字颜色保持一致，使用一级文字色 `color-info1`
+- 禁用箭头使用 `--o-color-info4`（禁用色）图标 + `--o-color-control4` 禁用线框，点击区域保留但不可交互
+- 左/右箭头按钮默认有 `--o-color-control1` 线框，尺寸 32×32px，悬浮时线框切换为 `--o-color-control2`
+- 省略号显示在页码超出范围时，与其他页码文字颜色保持一致，使用一级文字色 `--o-color-info1`
 - `show=Simple` 模式适合移动端或空间有限的场景，隐藏复杂控件
 - 页码按钮尺寸固定 32×32px，与图标（24×24px）保持 4px 的内边距对齐
 - 页码输入框宽度自适应，建议设置最小宽度约束避免变形
@@ -332,29 +332,29 @@ OPagination（HORIZONTAL，自适应宽度，固定高 32px）
 
 | 元素 | 状态 | 视觉表现 |
 |------|------|---------|
-| 页码按钮 | 默认 | 背景：透明，文字：`color-info1` |
-| 页码按钮 | 选中 | 背景：`color-primary1`（brand-6），文字：`white`，圆角：4px |
-| 页码按钮 | 悬浮 | 背景：`color-primary2`（brand-4），文字：`color-info1` |
-| 左/右箭头 | 默认 | 线框：`color-control1`，图标：`color-info1`，尺寸：32×32px |
-| 左/右箭头 | 禁用 | 线框：`color-control4`，图标：`color-info4`，透明度 40% |
-| 左/右箭头 | 悬浮 | 线框：`color-control2`，图标：`color-primary1` |
-| 页码输入框文字 | 默认 | 文字：`color-info1` |
-| 页码输入框文字 | 悬浮 | 文字：`color-info1` |
-| 页码输入框 | 默认 | 线框：`color-control1`，填充：`color-fill2` |
-| 页码输入框 | 悬浮 | 线框：`color-primary2`，填充：`color-fill2` |
-| 页码输入框 | 选中 | 线框：`color-primary1`，填充：`color-fill2` |
-| 页码输入框 | 禁用 | 线框：`color-control4`，填充：`color-control4-light`，文字：`color-info4` |
-| 每页条数下拉选择器文字 | 默认 | 文字：`color-info1` |
-| 每页条数下拉选择器文字 | 悬浮 | 文字：`color-info1` |
-| 每页条数下拉选择器文字 | 禁用 | 文字：`color-info4` |
-| 每页条数下拉选择器图标 | 默认 | 图标：`color-info2` |
-| 每页条数下拉选择器图标 | 悬浮 | 图标：`color-info2` |
-| 每页条数下拉选择器图标 | 激活 | 图标：`color-info2`，垂直翻转 |
-| 每页条数下拉选择器图标 | 禁用 | 图标：`color-info4` |
-| 每页条数下拉选择框 | 默认 | 线框：`color-control1`，填充：`color-fill2` |
-| 每页条数下拉选择框 | 悬浮 | 线框：`color-control2`，填充：`color-fill2` |
-| 每页条数下拉选择框 | 激活 | 线框：`color-control3`，填充：`color-fill2` |
-| 每页条数下拉选择框 | 禁用 | 线框：`color-control4`，填充：`color-control4-light` |
+| 页码按钮 | 默认 | 背景：透明，文字：`--o-color-info1` |
+| 页码按钮 | 选中 | 背景：`--o-color-primary1`（brand-6），文字：`white`，圆角：4px |
+| 页码按钮 | 悬浮 | 背景：`--o-color-primary2`（brand-4），文字：`--o-color-info1` |
+| 左/右箭头 | 默认 | 线框：`--o-color-control1`，图标：`--o-color-info1`，尺寸：32×32px |
+| 左/右箭头 | 禁用 | 线框：`--o-color-control4`，图标：`--o-color-info4`，透明度 40% |
+| 左/右箭头 | 悬浮 | 线框：`--o-color-control2`，图标：`--o-color-primary1` |
+| 页码输入框文字 | 默认 | 文字：`--o-color-info1` |
+| 页码输入框文字 | 悬浮 | 文字：`--o-color-info1` |
+| 页码输入框 | 默认 | 线框：`--o-color-control1`，填充：`--o-color-fill2` |
+| 页码输入框 | 悬浮 | 线框：`--o-color-primary2`，填充：`--o-color-fill2` |
+| 页码输入框 | 选中 | 线框：`--o-color-primary1`，填充：`--o-color-fill2` |
+| 页码输入框 | 禁用 | 线框：`--o-color-control4`，填充：`--o-color-control4-light`，文字：`--o-color-info4` |
+| 每页条数下拉选择器文字 | 默认 | 文字：`--o-color-info1` |
+| 每页条数下拉选择器文字 | 悬浮 | 文字：`--o-color-info1` |
+| 每页条数下拉选择器文字 | 禁用 | 文字：`--o-color-info4` |
+| 每页条数下拉选择器图标 | 默认 | 图标：`--o-color-info2` |
+| 每页条数下拉选择器图标 | 悬浮 | 图标：`--o-color-info2` |
+| 每页条数下拉选择器图标 | 激活 | 图标：`--o-color-info2`，垂直翻转 |
+| 每页条数下拉选择器图标 | 禁用 | 图标：`--o-color-info4` |
+| 每页条数下拉选择框 | 默认 | 线框：`--o-color-control1`，填充：`--o-color-fill2` |
+| 每页条数下拉选择框 | 悬浮 | 线框：`--o-color-control2`，填充：`--o-color-fill2` |
+| 每页条数下拉选择框 | 激活 | 线框：`--o-color-control3`，填充：`--o-color-fill2` |
+| 每页条数下拉选择框 | 禁用 | 线框：`--o-color-control4`，填充：`--o-color-control4-light` |
 
 ---
 
@@ -372,29 +372,29 @@ OPagination（HORIZONTAL，自适应宽度，固定高 32px）
 
 | 元素 | 属性 | 推荐变量 Token |
 |------|------|---------------|
-| 选中页码背景 | fill | `color-primary1` |
+| 选中页码背景 | fill | `--o-color-primary1` |
 | 选中页码文字 | text color | `white` |
-| 未选中页码文字 | text color | `color-info1` |
-| 禁用箭头图标 | fill | `color-info4` |
-| 禁用箭头线框 | stroke | `color-control4` |
-| 默认箭头线框 | stroke | `color-control1` |
-| 悬浮箭头线框 | stroke | `color-control2` |
-| 数据统计文字 | text color | `color-info1` |
-| 每页条数下拉选择器文字 | text color | `color-info1`（默认/悬浮）/ `color-info4`（禁用） |
-| 每页条数下拉选择器图标 | fill | `color-info2`（默认/悬浮/激活）/ `color-info4`（禁用） |
-| 每页条数下拉选择框默认线框 | stroke | `color-control1` |
-| 每页条数下拉选择框默认填充 | fill | `color-fill2` |
-| 每页条数下拉选择框悬浮线框 | stroke | `color-control2` |
-| 每页条数下拉选择框激活线框 | stroke | `color-control3` |
-| 每页条数下拉选择框禁用线框 | stroke | `color-control4` |
-| 每页条数下拉选择框禁用填充 | fill | `color-control4-light` |
-| 页码输入框默认线框 | stroke | `color-control1` |
-| 页码输入框默认填充 | fill | `color-fill2` |
-| 页码输入框悬浮线框 | stroke | `color-primary2` |
-| 页码输入框选中线框 | stroke | `color-primary1` |
-| 页码输入框禁用线框 | stroke | `color-control4` |
-| 页码输入框禁用填充 | fill | `color-control4-light` |
-| 页码输入框禁用文字 | text color | `color-info4` |
+| 未选中页码文字 | text color | `--o-color-info1` |
+| 禁用箭头图标 | fill | `--o-color-info4` |
+| 禁用箭头线框 | stroke | `--o-color-control4` |
+| 默认箭头线框 | stroke | `--o-color-control1` |
+| 悬浮箭头线框 | stroke | `--o-color-control2` |
+| 数据统计文字 | text color | `--o-color-info1` |
+| 每页条数下拉选择器文字 | text color | `--o-color-info1`（默认/悬浮）/ `--o-color-info4`（禁用） |
+| 每页条数下拉选择器图标 | fill | `--o-color-info2`（默认/悬浮/激活）/ `--o-color-info4`（禁用） |
+| 每页条数下拉选择框默认线框 | stroke | `--o-color-control1` |
+| 每页条数下拉选择框默认填充 | fill | `--o-color-fill2` |
+| 每页条数下拉选择框悬浮线框 | stroke | `--o-color-control2` |
+| 每页条数下拉选择框激活线框 | stroke | `--o-color-control3` |
+| 每页条数下拉选择框禁用线框 | stroke | `--o-color-control4` |
+| 每页条数下拉选择框禁用填充 | fill | `--o-color-control4-light` |
+| 页码输入框默认线框 | stroke | `--o-color-control1` |
+| 页码输入框默认填充 | fill | `--o-color-fill2` |
+| 页码输入框悬浮线框 | stroke | `--o-color-primary2` |
+| 页码输入框选中线框 | stroke | `--o-color-primary1` |
+| 页码输入框禁用线框 | stroke | `--o-color-control4` |
+| 页码输入框禁用填充 | fill | `--o-color-control4-light` |
+| 页码输入框禁用文字 | text color | `--o-color-info4` |
 | 页码按钮圆角 | cornerRadius | `radius_control-xs`（4px） |
 | 区域间距 | autoLayoutItemSpacing | `gap-6`（24px） |
 | 按钮间距 | autoLayoutItemSpacing | `gap-2`（8px） |

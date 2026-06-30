@@ -136,18 +136,18 @@ OButton（HORIZONTAL，自适应宽度，固定高度）
 
 | 区域 | 状态 | Light 模式 Token | Dark 模式 Token | 说明 |
 |------|------|-----------------|----------------|------|
-| 背景 | Enabled | `color-primary1` | `color-primary1` | brand-6：rgb(0,47,167) → rgb(73,122,248) |
-| 背景 | Disabled | `color-primary4` | `color-primary4` | brand-3：rgb(132,161,220) → rgb(29,51,120) |
+| 背景 | Enabled | `--o-color-primary1` | `--o-color-primary1` | brand-6：rgb(0,47,167) → rgb(73,122,248) |
+| 背景 | Disabled | `--o-color-primary4` | `--o-color-primary4` | brand-3：rgb(132,161,220) → rgb(29,51,120) |
 | 文字 / 图标 | Enabled & Disabled | `white` | `white` | 始终为白色 rgb(255,255,255) |
 
 #### Outline 变体
 
 | 区域 | 状态 | Light 模式 Token | Dark 模式 Token | 说明 |
 |------|------|-----------------|----------------|------|
-| 边框 | Enabled | `color-primary1` | `color-primary1` | brand-6：rgb(0,47,167) → rgb(73,122,248) |
-| 边框 | Disabled | `color-primary4` | `color-primary4` | brand-3：rgb(132,161,220) → rgb(29,51,120) |
-| 文字 / 图标 | Enabled | `color-primary1` | `color-primary1` | 同边框色 |
-| 文字 / 图标 | Disabled | `color-primary4` | `color-primary4` | 同边框色 |
+| 边框 | Enabled | `--o-color-primary1` | `--o-color-primary1` | brand-6：rgb(0,47,167) → rgb(73,122,248) |
+| 边框 | Disabled | `--o-color-primary4` | `--o-color-primary4` | brand-3：rgb(132,161,220) → rgb(29,51,120) |
+| 文字 / 图标 | Enabled | `--o-color-primary1` | `--o-color-primary1` | 同边框色 |
+| 文字 / 图标 | Disabled | `--o-color-primary4` | `--o-color-primary4` | 同边框色 |
 | 背景 | — | 透明 | 透明 | 无填充 |
 
 #### Text 变体
@@ -164,41 +164,41 @@ OButton（HORIZONTAL，自适应宽度，固定高度）
 
 | 状态 | 填充色 | 文本样式 | 文字颜色 |
 |------|--------|---------|----------|
-| 默认 | `color-primary1` | 鸿蒙黑体 (Regular)，16px | `color-white` |
-| 悬浮 | `color-primary2` | 鸿蒙黑体 (Regular)，16px | `color-white` |
-| 按下 | `color-primary3` | 鸿蒙黑体 (Regular)，16px | `color-white` |
-| 选中 | `color-primary1` | 鸿蒙黑体 (Regular)，16px | `color-white` |
-| 禁用 | `color-primary4` | 鸿蒙黑体 (Regular)，16px | `color-white` |
+| 默认 | `--o-color-primary1` | 鸿蒙黑体 (Regular)，16px | `--o-color-white` |
+| 悬浮 | `--o-color-primary2` | 鸿蒙黑体 (Regular)，16px | `--o-color-white` |
+| 按下 | `--o-color-primary3` | 鸿蒙黑体 (Regular)，16px | `--o-color-white` |
+| 选中 | `--o-color-primary1` | 鸿蒙黑体 (Regular)，16px | `--o-color-white` |
+| 禁用 | `--o-color-primary4` | 鸿蒙黑体 (Regular)，16px | `--o-color-white` |
 
 #### 普通按钮 (Outline) - 以L尺寸为例
 
 | 状态 | 描边色 | 文本样式 | 文字颜色 |
 |------|--------|---------|----------|
-| 默认 | `color-primary1` | 鸿蒙黑体 (Regular)，16px | `color-primary1` |
-| 悬浮 | `color-primary2` | 鸿蒙黑体 (Regular)，16px | `color-primary2` |
-| 按下 | `color-primary3` | 鸿蒙黑体 (Regular)，16px | `color-primary3` |
-| 选中 | `color-primary1` | 鸿蒙黑体 (Regular)，16px | `color-primary1` |
-| 禁用 | `color-primary4` | 鸿蒙黑体 (Regular)，16px | `color-primary4` |
+| 默认 | `--o-color-primary1` | 鸿蒙黑体 (Regular)，16px | `--o-color-primary1` |
+| 悬浮 | `--o-color-primary2` | 鸿蒙黑体 (Regular)，16px | `--o-color-primary2` |
+| 按下 | `--o-color-primary3` | 鸿蒙黑体 (Regular)，16px | `--o-color-primary3` |
+| 选中 | `--o-color-primary1` | 鸿蒙黑体 (Regular)，16px | `--o-color-primary1` |
+| 禁用 | `--o-color-primary4` | 鸿蒙黑体 (Regular)，16px | `--o-color-primary4` |
 
 #### 文本按钮 (Text) - 以L尺寸为例
 
 | 状态 | 图标颜色/尺寸 | 文本样式 | 文字颜色 |
 |------|-------------|---------|----------|
-| 默认 | 24×24px，`color-info1` | 鸿蒙黑体 (Regular)，16px | `color-info1` |
-| 悬浮 | 24×24px，`color-primary2` | 鸿蒙黑体 (Regular)，16px | `color-primary2` |
-| 按下 | 24×24px，`color-primary3` | 鸿蒙黑体 (Regular)，16px | `color-primary3` |
-| 选中 | 24×24px，`color-primary1` | 鸿蒙黑体 (Regular)，16px | `color-primary1` |
-| 禁用 | 24×24px，`color-info4` | 鸿蒙黑体 (Regular)，16px | `color-info4` |
+| 默认 | 24×24px，`--o-color-info1` | 鸿蒙黑体 (Regular)，16px | `--o-color-info1` |
+| 悬浮 | 24×24px，`--o-color-primary2` | 鸿蒙黑体 (Regular)，16px | `--o-color-primary2` |
+| 按下 | 24×24px，`--o-color-primary3` | 鸿蒙黑体 (Regular)，16px | `--o-color-primary3` |
+| 选中 | 24×24px，`--o-color-primary1` | 鸿蒙黑体 (Regular)，16px | `--o-color-primary1` |
+| 禁用 | 24×24px，`--o-color-info4` | 鸿蒙黑体 (Regular)，16px | `--o-color-info4` |
 
 #### 图标按钮 (Icon Only) - 以L尺寸为例
 
 | 状态 | 图标颜色/尺寸 | 背景色/尺寸 | 说明 |
 |------|-------------|------------|------|
-| 默认 | 24×24px，`color-info2` | 无背景 | 仅图标显示 |
-| 悬浮 | 24×24px，`color-primary2` | 24×24px，`color-control2-light` | 显示浅色背景浮层 |
-| 按下 | 24×24px，`color-primary3` | 24×24px，`color-control2-light` | 显示浅色背景浮层 |
-| 选中 | 24×24px，`color-primary1` | 无背景 | 高亮品牌色 |
-| 禁用 | 24×24px，`color-info4` | 无背景 | 使用禁用色 |
+| 默认 | 24×24px，`--o-color-info2` | 无背景 | 仅图标显示 |
+| 悬浮 | 24×24px，`--o-color-primary2` | 24×24px，`--o-color-control2-light` | 显示浅色背景浮层 |
+| 按下 | 24×24px，`--o-color-primary3` | 24×24px，`--o-color-control2-light` | 显示浅色背景浮层 |
+| 选中 | 24×24px，`--o-color-primary1` | 无背景 | 高亮品牌色 |
+| 禁用 | 24×24px，`--o-color-info4` | 无背景 | 使用禁用色 |
 
 ---
 
@@ -263,7 +263,7 @@ OButton（HORIZONTAL，自适应宽，固定高）
 
 - `large` 和 `small` 均为全圆角（cornerRadius: 100px），视觉上是胶囊形；`medium` 是 16px 圆角矩形——三者圆角**不同**，切换 size 时注意视觉一致性
 - 同一区域使用 `solid` 按钮不超过 1 个，多个主操作并列时降级为 `outline`
-- `Disabled` 状态仅改变颜色 Token（切换为 `color-primary4`），不改变尺寸和圆角
+- `Disabled` 状态仅改变颜色 Token（切换为 `--o-color-primary4`），不改变尺寸和圆角
 - `text` 变体水平内边距为 0，宽度完全由内容决定，无最小宽度约束——不适合用于需要固定宽度的布局
 - 内部图标层为占位符（Icon/占位符号），替换时进入实例修改图标内容，不要直接绑定外部图标组件
 - 按钮宽度默认随文字自适应，如需固定宽度需手动覆盖 Auto Layout 的自适应规则
@@ -293,7 +293,7 @@ OButton（HORIZONTAL，自适应宽，固定高）
 | Variant / state | 图标颜色 Token |
 |----------------|--------------|
 | solid · Enabled & Disabled | `white` |
-| outline · Enabled | `color-primary1` |
-| outline · Disabled | `color-primary4` |
+| outline · Enabled | `--o-color-primary1` |
+| outline · Disabled | `--o-color-primary4` |
 | text · Enabled | `grey-14` |
 | text · Disabled | `grey-14` @ 40% |
