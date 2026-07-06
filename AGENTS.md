@@ -21,12 +21,23 @@
 ├── CHANGELOG.md                   ← 变更记录总览（第二层：共享约定）
 ├── LICENSE
 ├── AGENTS.md                      ← 本文件，AI 编码工具工作指导（第一层：生产指导）
-├── SKILL-GEN-GUIDE.md             ← 代码 Skill 生成详细流程（第一层：生产指导）
-├── DESIGN-SKILL-GEN-GUIDE.md      ← 设计 Skill 生成详细流程（第一层：生产指导）
-├── SKILL-REVIEW-GUIDE.md          ← 自评与进度管理（含代码 + 设计两类维度，第一层）
-├── .gitignore                     ← 排除生成过程文件（*.review.md, *-status.md）
-├── design-specs/
-│   └── form-grid-spec.md          ← 设计规范文档（面向设计师）
+├── package.json                   ← pnpm 工作流：skills:install / update / sync-agents + git hooks
+├── skills-lock.json               ← 外部 skill（vue / nuxt / pinia 等 15 个）来源与哈希锁定
+├── .gitignore                     ← 排除生成过程文件 + .agents/skills、.claude/skills、node_modules
+├── .agents/                       ← agent 源目录（由 sync-agents 生成；存放外部下载 + 项目注入的 skill）
+│   └── skills/                    ← 各子目录符号链接到 packages/skills/* 与 skills/*
+├── .claude/                       ← Claude Code 读取的目录（.claude/skills → .agents/skills）
+│   └── skills/                    ← 符号链接，指向 .agents/skills
+├── packages/
+│   ├── scripts/
+│   │   └── sync-agents.js         ← 同步 .agents / .claude 的脚本（符号链接管理）
+│   └── skills/
+│       └── skill-gen-guide/       ← Skill 生成与自评指南（内部 skill）
+│           ├── SKILL.md           ← 索引 + 场景路由
+│           └── references/
+│               ├── code-skill-gen.md    ← 代码 Skill 生成详细流程
+│               ├── design-skill-gen.md  ← 设计 Skill 生成详细流程
+│               └── skill-review.md      ← 自评与进度管理
 └── skills/
     ├── opendesign-components/     ← 46 个 Vue 3 UI 组件的 Skill（代码侧）
     │   ├── SKILL.md               ← 组件 Skill 索引与使用指南（第二层）
@@ -69,7 +80,7 @@
 
 | 层级 | 名称 | 受众 | 典型文件 |
 |------|------|------|---------|
-| **第一层** | 生产指导 | AI 编码工具（写作者） | `AGENTS.md`、`SKILL-GEN-GUIDE.md`、`SKILL-REVIEW-GUIDE.md`、`*.review.md`、`_skill-gen-status.md` |
+| **第一层** | 生产指导 | AI 编码工具（写作者） | `AGENTS.md`、`packages/skills/skill-gen-guide/`、`*.review.md`、`_skill-gen-status.md` |
 | **第二层** | 共享约定 | Skill 调用者（跨 Skill 公共上下文） | `skills/*/SKILL.md`（含 `last_update` 字段）、`CHANGELOG.md` |
 | **第三层** | Skill 本体 | Skill 调用者（AI 工具 / 开发者） | `skills/*/references/{name}.md` |
 
@@ -79,27 +90,77 @@
 - **否，只在生成时有用** → 放入第一层文件
 
 
+## Agent 目录同步
+
+本仓库通过 `packages/scripts/sync-agents.js` 把项目自编 skill 与外部下载 skill 统一注入到各 AI coding agent 的读取目录。**`.agents/` 与 `.claude/` 下的 `skills/` 子目录由脚本生成，不要手动编辑、不要手动提交**（已被 `.gitignore` 排除）。
+
+### 同步内容与优先级
+
+`sync-agents` 当前同步一个子目录 `skills`，其来源按**优先级降序**合并：
+
+| 优先级 | 源目录 | 内容 | 同名冲突处理 |
+|---|---|---|---|
+| 1（高） | `packages/skills/` | 项目自编 skill（如 `skill-gen-guide`） | 以此为准 |
+| 2（补充） | `skills/` | 对外分发的 OpenDesign skill（`opendesign-components` 等） | 仅注入上层未出现的子目录 |
+
+外部下载的 skill（由 `pnpm skills:install` 安装，见 `skills-lock.json`）也会落入 `.agents/skills/`，与上述项目源合并。
+
+### 目录与符号链接关系
+
+```
+.agents/skills/{name}        ← 真实存放点（外部下载 + 项目注入汇聚于此）
+.claude/skills               ← 符号链接，指向 .agents/skills
+.claude/CLAUDE.md            ← 符号链接，指向根 AGENTS.md
+```
+
+- `.agents/` 是**源目录**：外部 skill 下载到这里，项目自编 skill 通过符号链接注入这里
+- `.claude/` 是**消费目录**：Claude Code 只读这里；其下子目录与文件全部是指向 `.agents/` 或根目录的符号链接
+- 其他 AI coding agent（opencode 等）按相同模式接入，只需把自己的读取目录链接到 `.agents/`
+
+### 自动触发时机
+
+`package.json` 通过 `simple-git-hooks` 注册了两个钩子，**无需手动执行**：
+
+| 钩子 | 触发命令 | 何时运行 |
+|---|---|---|
+| `post-merge` | `pnpm sync-agents` | `git pull` / `git merge` 合并完成后 |
+| `post-checkout` | `pnpm sync-agents` | `git checkout` / `git switch` 切换分支后 |
+
+因此 clone 仓库并 `pnpm install` 后，首次 `git pull` 或切换分支即会自动重建 `.agents/` 与 `.claude/`。手动执行用 `pnpm sync-agents`。
+
+### 外部 skill 锁定
+
+`skills-lock.json` 锁定从 GitHub 安装的 15 个外部 skill（来源：`antfu/skills`、`anthropics/skills`、`vuejs-ai/skills`），包含 `source` / `sourceType` / `skillPath` / `computedHash` 四个字段。新增或升级外部 skill 用：
+
+```bash
+pnpm skills:install    # 按 skills-lock.json 安装到 .agents/skills/
+pnpm skills:update     # 拉取最新版并更新 lock 文件
+```
+
+> 外部 skill 与项目自编 skill 同名时，**项目自编优先**（见上方优先级表）。
+
 ## 操作指南索引
 
 | 任务 | 参考文件 |
 |------|---------|
-| 生成/更新组件或脚本 Skill（代码侧） | [`SKILL-GEN-GUIDE.md`](SKILL-GEN-GUIDE.md) |
-| 生成/更新组件设计规范 Skill（设计侧） | [`DESIGN-SKILL-GEN-GUIDE.md`](DESIGN-SKILL-GEN-GUIDE.md) |
-| 完成 Skill 后的自评与进度更新（代码 + 设计） | [`SKILL-REVIEW-GUIDE.md`](SKILL-REVIEW-GUIDE.md) |
-| 断点定义、Slot 约定、CSS 变量规则 | [`SKILL-GEN-GUIDE.md`](SKILL-GEN-GUIDE.md) |
+| 生成/更新组件或脚本 Skill（代码侧） | [`skill-gen-guide/references/code-skill-gen.md`](packages/skills/skill-gen-guide/references/code-skill-gen.md) |
+| 生成/更新组件设计规范 Skill（设计侧） | [`skill-gen-guide/references/design-skill-gen.md`](packages/skills/skill-gen-guide/references/design-skill-gen.md) |
+| 完成 Skill 后的自评与进度更新（代码 + 设计） | [`skill-gen-guide/references/skill-review.md`](packages/skills/skill-gen-guide/references/skill-review.md) |
+| 断点定义、Slot 约定、CSS 变量规则 | [`skill-gen-guide/references/code-skill-gen.md`](packages/skills/skill-gen-guide/references/code-skill-gen.md) |
 | Pixso MCP 调用顺序、图标处理规范、两阶段生成 | [`skills/opendesign-design/SKILL.md`](skills/opendesign-design/SKILL.md) |
 | 变更记录维护（CHANGELOG + `last_update`） | 本文件「[变更记录规范](#变更记录规范changelog)」章节 |
+| Agent 目录同步、外部 skill 安装 | 本文件「[Agent 目录同步](#agent-目录同步)」章节 |
 
-## 全局约定（详见 SKILL-GEN-GUIDE.md）
+## 全局约定（详见 skill-gen-guide）
 
-生成 Skill 时必须遵守以下规则。完整定义见 [`SKILL-GEN-GUIDE.md`](SKILL-GEN-GUIDE.md) 末尾「全局约定」章节：
+生成 Skill 时必须遵守以下规则。完整定义见 [`skill-gen-guide/references/code-skill-gen.md`](packages/skills/skill-gen-guide/references/code-skill-gen.md) 末尾「全局约定」章节：
 
 - **组件命名**：所有组件以 `O` 前缀命名（OButton、OInput 等）
 - **响应式断点**：两套体系（opendesign isPhonePad / openEuler Portal screen.scss）
 - **Slot 约定**：未传入时不渲染；外层 slot 使用时内部子 slot 全失效
 - **触控 vs 指针**：通过 `isTouchDevice` 区分，影响 hover 交互
 - **CSS 变量覆盖**：无需 `:deep`，直接在样式中覆盖
-- **文件组织**：平铺结构（每组件/命令一个 `.md`），reference 文件头部包含返回链接（格式见 SKILL-GEN-GUIDE.md）
+- **文件组织**：平铺结构（每组件/命令一个 `.md`），reference 文件头部包含返回链接（格式见 `skill-gen-guide`）
 
 ## 内容更新原则：融合而非补丁
 
@@ -184,7 +245,7 @@ last_update: 2026-06-29
 
 变更记录的维护**挂接到现有自评流程**，不另起一项：
 
-1. 完成 Skill 修改后，按 `SKILL-REVIEW-GUIDE.md` 做自评
+1. 完成 Skill 修改后，按 [`skill-gen-guide/references/skill-review.md`](packages/skills/skill-gen-guide/references/skill-review.md) 做自评
 2. 把自评中的“变更要点”摘抄到根 `CHANGELOG.md` 顶部对应日期下
 3. 同步更新该 skill `SKILL.md` 的 `last_update` 字段为同一天
 
@@ -201,9 +262,9 @@ last_update: 2026-06-29
 ### 场景 1：需要生成某个新组件的 Skill
 
 1. 指定组件名（如 "Dialog"）
-2. 读取 `SKILL-GEN-GUIDE.md`，按 7 步流程执行
+2. 读取 [`skill-gen-guide`](packages/skills/skill-gen-guide/SKILL.md) 的代码侧 reference，按 7 步流程执行
 3. 生成 Skill 文件到 `skills/opendesign-components/references/dialog.md`
-4. 按 `SKILL-REVIEW-GUIDE.md` 完成自评，生成 `dialog.review.md`
+4. 按 [`skill-gen-guide/references/skill-review.md`](packages/skills/skill-gen-guide/references/skill-review.md) 完成自评，生成 `dialog.review.md`
 5. 更新 `_skill-gen-status.md`
 
 ### 场景 2：发现组件源码有缺陷
@@ -220,16 +281,28 @@ last_update: 2026-06-29
 3. 标注各 slot/prop 在视觉上的位置和尺寸规律
 4. 响应式行为表清晰地展示多断点变化
 
-详细写作规范见 `SKILL-GEN-GUIDE.md` 的「Pixso MCP 协同指南」章节。
+详细写作规范见 [`skill-gen-guide/references/code-skill-gen.md`](packages/skills/skill-gen-guide/references/code-skill-gen.md) 的「Pixso MCP 协同指南」章节。
 
 ### 场景 4：生成或更新组件设计 Spec（设计侧 Skill）
 
 1. 指定组件名（如 "Button"）
-2. 读取 [`DESIGN-SKILL-GEN-GUIDE.md`](DESIGN-SKILL-GEN-GUIDE.md)，按其中的 Pixso MCP 调用顺序提取设计稿信息
+2. 读取 [`skill-gen-guide`](packages/skills/skill-gen-guide/SKILL.md) 的设计侧 reference，按其中的 Pixso MCP 调用顺序提取设计稿信息
 3. 通过 WebFetch 拉取最新的栅格 / token 上游 JSON（不要 bundle 到本地）
 4. 生成 Skill 文件到 `skills/opendesign-design/references/components/{name}.md`
-5. 按 [`SKILL-REVIEW-GUIDE.md`](SKILL-REVIEW-GUIDE.md) 的设计侧维度自评，写入 `{name}.review.md`
+5. 按 [`skill-gen-guide/references/skill-review.md`](packages/skills/skill-gen-guide/references/skill-review.md) 的设计侧维度自评，写入 `{name}.review.md`
 6. 更新 `skills/opendesign-design/references/components/_skill-gen-status.md`
+
+### 场景 5：`.agents/` 或 `.claude/` 缺失 / 未同步
+
+clone 后或切换分支后，agent 读取不到 skill 时：
+
+1. 确认已执行 `pnpm install`（首次必装，会注册 `simple-git-hooks`）
+2. 手动跑一次 `pnpm sync-agents`，观察输出是否出现 `✅ 同步完成`
+3. 检查 `.agents/skills/` 下是否出现期望的子目录；若缺失，确认 `packages/skills/` 与 `skills/` 下对应目录存在
+4. 检查 `.claude/skills` 是否为指向 `.agents/skills` 的符号链接（Windows 下需开发者模式或管理员权限，否则符号链接可能创建失败）
+5. 外部 skill 缺失：`pnpm skills:install` 按 `skills-lock.json` 重新安装
+
+> **不要**手动在 `.agents/` 或 `.claude/` 下创建 / 编辑文件——这些目录由脚本生成，下次同步会覆盖。
 
 ## 常见问题
 
@@ -251,6 +324,18 @@ A: 检查 `types.ts` 中的定义：
 
 A: 如果有多个相关的 sub-component（如 OFormItem 是 OForm 的子组件），在主组件的 Skill 中作为独立小节输出，不单独创建文件。
 
+**Q: `.agents/` 和 `.claude/` 下的文件能手动改吗？**
+
+A: 不能。这两个目录下的 `skills/` 子目录由 `sync-agents` 生成（符号链接 + 外部下载），已被 `.gitignore` 排除、不提交。手动改动会在下次 `pnpm sync-agents` 或 `git pull` 后被覆盖。要改内容，改源目录（`packages/skills/` 或 `skills/`），再跑一次同步。
+
+**Q: 怎么新增一个外部 skill？**
+
+A: 编辑 `skills-lock.json`，新增一条 `skills` 字段，填入 `source`（GitHub 仓库 `owner/repo`）、`sourceType: "github"`、`skillPath`（仓库内 SKILL.md 相对路径）、`computedHash`（可留空，`pnpm skills:update` 会补全）。然后 `pnpm skills:install`。提交 `skills-lock.json` 时记得在 CHANGELOG 记一条「新增」。
+
+**Q: sync-agents 报「符号链接创建失败」（Windows）怎么办？**
+
+A: Windows 创建符号链接需满足以下任一条件：① 启用开发者模式（设置 → 隐私和安全性 → 开发者选项）；② 以管理员身份运行终端；③ 给 `pnpm.exe` 进程 `SeCreateSymbolicLinkPrivilege`。否则脚本会降级为复制目录，但 `.claude/skills` 的链接关系会失效，建议优先开启开发者模式。
+
 ## 项目上下文
 
 - **OpenDesign 组件库**：`@opensig/opendesign`，46 个 Vue 3 UI 组件
@@ -259,6 +344,7 @@ A: 如果有多个相关的 sub-component（如 OFormItem 是 OForm 的子组件
 - **Pixso 设计协作**：21 个组件的 Pixso 设计规范、536 个 componentKey 变体、187 个图标
 - **前端工具库**：openEuler Portal 项目的通用 composables / mixins / utils
 - **发布平台**：skills.sh，供其他开发者安装这些 Skill
+- **外部 skill 来源**：`antfu/skills`、`anthropics/skills`、`vuejs-ai/skills`（GitHub），由 `skills-lock.json` 锁定，`pnpm skills:install` 安装到 `.agents/skills/`
 
 ## 与其他仓库的关联
 
@@ -271,4 +357,4 @@ A: 如果有多个相关的 sub-component（如 OFormItem 是 OForm 的子组件
 
 ---
 
-**最后更新**：2026-06-30
+**最后更新**：2026-07-06

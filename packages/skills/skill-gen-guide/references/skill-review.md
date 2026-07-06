@@ -1,4 +1,6 @@
-# SKILL-REVIEW-GUIDE.md
+> ← [Skill Gen Guide](../SKILL.md) · [README](../../../../README.md)
+
+# Skill 自评与进度管理指南
 
 Skill 自评与进度管理的操作指南。每完成一个 Skill 后按此流程执行。
 

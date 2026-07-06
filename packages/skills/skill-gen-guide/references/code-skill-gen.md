@@ -1,4 +1,6 @@
-# SKILL-GEN-GUIDE.md
+> ← [Skill Gen Guide](../SKILL.md) · [README](../../../../README.md)
+
+# 代码 Skill 生成指南
 
 Skill 生成的详细操作指南。适用场景：新建或更新组件/脚本 Skill 时按需查阅。
 
