@@ -1,5 +1,7 @@
 > ← [Token 索引](../SKILL.md) · [README](../../../README.md)
 
+> 本文档对应 @opensig/opendesign-token **v0.1.1**（2026-06 生成），最低依赖版本 ≥0.1.1。具体 token 在哪个版本引入/变更/删除，查 [`ReleaseNote`](https://raw.atomgit.com/openeuler/opendesign-token/blobs/9315d89bfe0c8538b75df2907f6ad8c2e9e235ba/ReleaseNote.md)。
+
 # openGauss 主题 Token 色值参考（g）
 
 主题标识：`g`

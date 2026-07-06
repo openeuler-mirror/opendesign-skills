@@ -1,10 +1,12 @@
 ---
 name: opendesign-scripts
 description: OpenDesign 构建脚本工具使用指南。当需要使用 @opensig/open-scripts CLI 工具进行图标生成、SVG 清理、组件构建、样式编译、设计令牌生成时使用此 skill。支持 5 个命令：gen:icon（SVG 转 Vue 图标组件）、clean:svg（SVG 清理优化）、build:component（Vue 组件库构建）、build:style（SCSS 样式编译）、gen:token（设计令牌 CSS 变量生成）。使用场景：(1) 配置和执行构建脚本，(2) 编写图标/令牌配置文件，(3) 了解构建流程和命令用法
-last_update: 2026-05-21
+last_update: 2026-07-06
 ---
 
 # OpenDesign Scripts 使用指南
+
+> 本 Skill 对应 @opensig/open-scripts **v1.0.6**（2026-07 生成），最低依赖版本 ≥1.0.6。具体命令 API 在哪个版本引入/变更，查 [`ReleaseNote`](https://raw.atomgit.com/openeuler/opendesign-components/blobs/536b758fec8f078807da932f33b9ad08c20aa25a/ReleaseNote.scripts.md)。
 
 `@opensig/open-scripts` 是 OpenDesign 生态的 CLI 构建工具包，提供从 SVG 图标生成到组件库打包的全流程构建能力。
 
