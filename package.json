@@ -1,0 +1,20 @@
+{
+  "name": "opendesign-skills",
+  "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "skills:install": "pnpx skills@latest experimental_install",
+    "skills:update": "pnpx skills@latest update -p",
+    "sync-agents": "node packages/scripts/sync-agents.js",
+    "prepare": "simple-git-hooks"
+  },
+  "devDependencies": {
+    "simple-git-hooks": "^2.13.1"
+  },
+  "simple-git-hooks": {
+    "post-merge": "pnpm sync-agents",
+    "post-checkout": "pnpm sync-agents"
+  }
+}

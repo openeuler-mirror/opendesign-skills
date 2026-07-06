@@ -1,4 +1,6 @@
-# DESIGN-SKILL-GEN-GUIDE.md
+> ← [Skill Gen Guide](../SKILL.md) · [README](../../../../README.md)
+
+# 设计 Skill 生成指南
 
 设计 Skill 生成的详细操作指南。适用场景：为新组件生成 Pixso 设计规范，或扩展设计模式 Skill 时按需查阅。
 
@@ -10,7 +12,7 @@
 
 设计 Skill 与代码 Skill 的本质差异：
 
-| 项目 | 代码 Skill（SKILL-GEN-GUIDE） | 设计 Skill（本指南） |
+| 项目 | 代码 Skill（code-skill-gen.md） | 设计 Skill（本指南） |
 |---|---|---|
 | 信息来源 | `@opensig/opendesign` 源码 + Playwright 快照 | **Pixso MCP 工具** + atomgit token JSON |
 | 输出物 | Vue 代码调用参考（Props/Events/Slots） | Pixso 设计规范（变体 / Token 映射 / 视觉规格） |
@@ -199,7 +201,7 @@
 - **不读取源码**：所有信息来自 Pixso MCP + WebFetch 远端 JSON，不打开任何 `@opensig/*` 源码
 - **图标处理 / 两阶段生成 / 跨文件库链接修复** 等运行时规则见 [`skills/opendesign-design/SKILL.md`](skills/opendesign-design/SKILL.md)（本文件不复述，避免内容漂移）
 - **Token 名称权威性**：组件文档中所有色值、字号、间距必须匹配上游 Token 变量名（数据从远端 URL 拉取），禁止使用硬编码值
-- **自评维度选用规则**：见 [`SKILL-REVIEW-GUIDE.md`](SKILL-REVIEW-GUIDE.md)（含设计侧专属维度）
+- **自评维度选用规则**：见 [`skill-review.md`](./skill-review.md)（含设计侧专属维度）
 
 ---
 
@@ -211,14 +213,14 @@
 
 ---
 
-## 与代码侧 SKILL-GEN-GUIDE.md 的关系
+## 与代码侧 reference 的关系
 
 两份指南互不替代：
 
 | 你要生成什么 | 用哪份指南 |
 |---|---|
-| Vue 组件的代码调用参考（Props/Events/Slots） | [`SKILL-GEN-GUIDE.md`](SKILL-GEN-GUIDE.md) |
-| CLI 命令的脚本 Skill | [`SKILL-GEN-GUIDE.md`](SKILL-GEN-GUIDE.md) |
+| Vue 组件的代码调用参考（Props/Events/Slots） | [`code-skill-gen.md`](./code-skill-gen.md) |
+| CLI 命令的脚本 Skill | [`code-skill-gen.md`](./code-skill-gen.md) |
 | Pixso 中的组件设计规范（变体 / Token 映射 / 识别特征） | **本文件** |
 | Pixso 中的设计模式（多组件组合规范） | **本文件** |
 
