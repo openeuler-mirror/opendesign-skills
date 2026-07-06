@@ -1,10 +1,12 @@
 ---
 name: opendesign-components
 description: OpenDesign 组件库使用指南。当需要使用 OpenDesign Vue 组件库快速搭建页面时使用此 skill。支持所有 OpenDesign 组件（46 个），包括按钮、表单、表格、对话框、卡片、图标、滑块、步骤条、轻提示等常用 UI 组件。使用场景：(1) 使用 OpenDesign 组件构建 Vue 页面，(2) 查找组件使用方法和属性说明，(3) 获取组件代码示例
-last_update: 2026-06-29
+last_update: 2026-07-06
 ---
 
 # OpenDesign 组件库使用指南
+
+> 本 Skill 对应 @opensig/opendesign **v1.2.5**（2026-07 生成），最低依赖版本 ≥1.2.5。具体组件 API 在哪个版本引入/变更/废弃，查 [`ReleaseNote`](https://raw.atomgit.com/openeuler/opendesign-components/blobs/bb8e66ef9d79e2fd08fb841de9340ef00e5a841d/ReleaseNote.opendesign.md)。
 
 OpenDesign 是一个面向 openEuler 生态的 Vue 3 组件库，提供 59 个可复用 UI 组件。组件库有六套独立主题，**每个社区项目在初始化时选定一套，运行时只切换 dark/light 模式**。
 
@@ -18,8 +20,8 @@ pnpm add @opensig/opendesign @opensig/opendesign-token
 npm install @opensig/opendesign @opensig/opendesign-token
 ```
 
-- `@opensig/opendesign` — 组件库
-- `@opensig/opendesign-token` — 设计 token（必需），包含主题 CSS 变量
+- `@opensig/opendesign` — 组件库（最低版本见各组件 Skill 头部标注）
+- `@opensig/opendesign-token` — 设计 token（必需），最低版本见 Token Skill 头部标注（当前为 `≥0.1.1`）
 
 ### 2. 选择主题并引入样式
 

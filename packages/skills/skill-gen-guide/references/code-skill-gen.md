@@ -2,7 +2,7 @@
 
 # 代码 Skill 生成指南
 
-Skill 生成的详细操作指南。适用场景：新建或更新组件/脚本 Skill 时按需查阅。
+Skill 生成的详细操作指南。适用场景：新建或更新组件/脚本/Token Skill 时按需查阅。
 
 ---
 
@@ -34,13 +34,24 @@ Skill 生成的详细操作指南。适用场景：新建或更新组件/脚本 
 
 **前置：确认源码版本**
 
-在提取任何 API 之前，先到组件库源码目录（通常为本项目同级的 `opendesign/` 或 `packages/` 下）查看当前版本：
+在提取任何 API 之前，先查看 Skill 对应的源码包当前版本：
 
-```bash
-git describe --tags --abbrev=0   # 最近发布的版本 tag
-# 只追踪 types.ts 中目标接口定义的历史，避免读取整个文件
-git log -L '/ButtonProps/,/^}/' -- packages/components/button/types.ts
-```
+- **组件 Skill**：到组件库源码目录（通常为本项目同级的 `opendesign/` 或 `packages/` 下）查看版本：
+  ```bash
+  git describe --tags --abbrev=0   # 最近发布的版本 tag
+  # 只追踪 types.ts 中目标接口定义的历史，避免读取整个文件
+  git log -L '/ButtonProps/,/^}/' -- packages/components/button/types.ts
+  ```
+
+- **Token Skill**：到 token 包源码目录（通常为本项目同级的 `opendesign-token/` 或 `packages/` 下）查看版本：
+  ```bash
+  # 查看 token 包版本（package.json 中的 version 字段）
+  cat packages/opendesign-token/package.json | grep '"version"'
+  # 或查看最近 tag
+  git describe --tags --abbrev=0
+  # 追踪 token JSON 文件的变更历史（token 的 API 变化体现在 JSON 文件）
+  git log -- packages/opendesign-token/tokens/
+  ```
 
 `git log -L` 只输出匹配行块的变更历史，优先使用。看不出上下文时再用 `git show <hash>` 查具体 commit，仍不够时才读完整文件——梯次决策，按需升级。
 
@@ -142,9 +153,32 @@ open-scripts {cmd} [options]
 关键使用要点、边界情况
 ```
 
-### 3. 更新文档
+### 3. 生成/更新 Token Skill
 
-当组件库或工具发生变化时，更新相应的 Skill 文件：
+当需要生成或更新设计 Token 的 Skill 文件时：
+
+**关键点**：
+- Skill 索引层写入 `skills/opendesign-tokens/SKILL.md`（头部加版本标注行）
+- 通用 Token 参考写入 `skills/opendesign-tokens/references/tokens.md`
+- 各主题 Token 参考写入 `skills/opendesign-tokens/references/tokens-{theme}.md`
+- 所有 reference 文件头部必须加版本标注行（格式见下方「Skill 文件格式规范」）
+- 自评结论写入 `tokens.review.md`
+
+#### 详细的 Token Skill 生成/更新流程（4 个步骤）
+
+1. **确认 token 包版本**：查看 `@opensig/opendesign-token` 源码的 `package.json` `version` 字段或最近 git tag，记录到所有 Skill 文件头部（格式见「版本标注」规范）
+2. **提取 token 变量**：读取 token 包中的 JSON 文件（`tokens/openeuler-token.json` 等），提取所有 CSS 变量名、值、语义注释；对照远端 atomgit 最新版本（WebFetch）确认是否有新增/变更/删除的 token。**对每个 token 变量标注引入版本**（`@since vX.X.X`），与组件 Skill 的 `@since` 列格式一致——标注方式为在 token 表的「说明」列末尾追加 `@since vX.X.X`，基础 token（自首个版本即存在）不需标注
+3. **识别破坏性变更**：对比上次 Skill 记录的版本与当前版本间的 token JSON diff，重点关注：
+   - token 变量名重命名（如 `--o-color-bg1` → `--o-color-fill2`）
+   - token 值语义变化（如字号白名单范围变更、字重值变化）
+   - 删除的 token（旧产物引用会失效）
+4. **更新 Skill 文件**：增量修改（而非重写），有破坏性变更时在文件末尾增加「版本迁移说明」小节
+
+> **注意**：Token Skill 不涉及 Playwright 快照或组件源码分析。它的信息来源是 token 包的 JSON 文件 + 远端 atomgit 资源 + 已生成的主题 CSS 变量文件。
+
+### 4. 更新文档
+
+当组件库、工具或 token 包发生变化时，更新相应的 Skill 文件：
 
 ```bash
 # 按文件列表逐个修改，使用 Edit 工具进行增量修改（而非重写整个文件）
@@ -152,6 +186,8 @@ open-scripts {cmd} [options]
 ```
 
 **更新时的版本比对流程**：
+
+**组件 Skill**：
 1. 查看 Skill 文件头部记录的旧版本号
 2. 在组件库源码目录，按需逐步放宽查询范围：
 
@@ -174,6 +210,28 @@ open-scripts {cmd} [options]
 
 3. 有破坏性变更 → 更新「版本迁移说明」节；无破坏性变更 → 只更新头部版本号即可
 
+**Token Skill**：
+1. 查看 Skill 文件头部记录的旧版本号（如 `v0.1.1`）
+2. 在 token 包源码目录，按需逐步放宽查询范围：
+
+   **第一步：只看 token JSON diff**（多数情况够用）
+   ```bash
+   git diff <旧版本tag>..HEAD -- packages/opendesign-token/tokens/
+   ```
+
+   **第二步：JSON diff 看不出上下文时，查具体 commit**
+   ```bash
+   git log <旧版本tag>..HEAD -- packages/opendesign-token/tokens/
+   git show <commit-hash> -- packages/opendesign-token/tokens/openeuler-token.json
+   ```
+
+   **第三步：变更涉及字体/构建配置时，读完整文件**
+   ```bash
+   # 用 Read 工具读 package.json、fonts/ 目录等
+   ```
+
+3. 有破坏性变更（token 重命名/删除/值语义变化）→ 更新「版本迁移说明」节；无破坏性变更 → 只更新头部版本号即可
+
 ---
 
 ## Skill 文件格式规范
@@ -181,10 +239,20 @@ open-scripts {cmd} [options]
 ### 组件 Skill（以 Card.md 为例）
 
 **版本标注**
-- 在文件头部导航链接之后，用一行注明 Skill 对应的源码版本：
+- 所有 Skill（组件、脚本、Token）的 reference 文件和 SKILL.md 索引层，在文件头部导航链接之后、标题之前，用一行注明 Skill 对应的源码包版本、最低依赖版本、ReleaseNote 链接：
   ```
-  > 本文档对应 @opensig/opendesign **v2.3.1**（2025-11 生成）
+  > 本 Skill 对应 @opensig/opendesign **v1.2.5**（2026-07 生成），最低依赖版本 ≥1.2.5。具体组件 API 在哪个版本引入/变更/废弃，查 [ReleaseNote](https://raw.atomgit.com/openeuler/opendesign-components/blobs/bb8e66ef9d79e2fd08fb841de9340ef00e5a841d/ReleaseNote.opendesign.md)。
   ```
+  ```
+  > 本 Skill 对应 @opensig/open-scripts **v1.0.6**（2026-07 生成），最低依赖版本 ≥1.0.6。具体命令 API 在哪个版本引入/变更，查 [ReleaseNote](https://raw.atomgit.com/openeuler/opendesign-components/blobs/536b758fec8f078807da932f33b9ad08c20aa25a/ReleaseNote.scripts.md)。
+  ```
+  ```
+  > 本 Skill 对应 @opensig/opendesign-token **v0.1.1**（2026-06 生成），最低依赖版本 ≥0.1.1。具体 token 在哪个版本引入/变更/删除，查 [ReleaseNote](https://raw.atomgit.com/openeuler/opendesign-token/blobs/9315d89bfe0c8538b75df2907f6ad8c2e9e235ba/ReleaseNote.md)。
+  ```
+  索引层（SKILL.md）用「本 Skill」，reference 文件用「本文档」
+- **最低依赖版本**同时是 Skill 的**消费者版本门槛**：调用者（AI 工具/开发者）使用 Skill 中推荐的任何 API/token 时，应确保项目中安装的包版本 ≥ 此值。检查方式为读取用户项目 `package.json` 中对应包的 `version` 字段（或 `dependencies` / `devDependencies` 中的版本范围），与 Skill 头部标注的最低版本比对。若版本偏低：
+  - Skill 中标注为 `@since vX.X.X` 的个别 API/token 在低版本中不存在，调用者应提醒用户升级包或换用低版本可用的替代方案；各包 ReleaseNote 链接已在 Skill 头部标注行中提供，直接查阅即可
+  - Skill 中有「版本迁移说明」的破坏性变更，调用者应提醒用户按迁移说明调整已有代码
 - 若该组件曾有过 API 破坏性变更，在文件末尾增加「版本迁移说明」小节，列出各版本间需要手动调整的地方（重命名的 prop、移除的 slot、变更的事件签名等）；无破坏性变更则省略此节
 
 **Part A：设计理解卡**
