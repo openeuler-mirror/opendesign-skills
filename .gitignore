@@ -9,3 +9,4 @@ node_modules
 generation-progress.md
 _skill-gen-status.md
 CLAUDE.md
+.playwright-*

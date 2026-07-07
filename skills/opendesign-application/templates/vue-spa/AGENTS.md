@@ -1,0 +1,546 @@
+# AGENTS.md — Vite + Vue 3 SPA 脚手架
+
+本文件为 AI 编码工具（及不熟悉代码的设计师）在此项目中工作时提供 **架构约束、组件拆分规范、公共抽象模式与项目级操作指导**。样式硬规则、token 用法、mixin 详细说明、主题系统完整集成、反模式清单等通用规范已由 **opendesign-application skill** 覆盖，此处不再重复——遇到具体问题按下方「查阅指引」定位。
+
+---
+
+## 项目定位
+
+这是一个基于 **Vite + Vue 3 + Pinia** 的单页应用（SPA）脚手架，集成了 OpenDesign 设计系统。无 SSR，无 hydration 问题，适合后台管理、工具站、不需要 SEO 的应用。
+
+---
+
+## 一、架构约束（红线）
+
+### 1.1 技术栈不可替换
+
+| 层面 | 选型 | 不可替换为 |
+|------|------|-----------|
+| 构建工具 | Vite 8 | webpack / rollup |
+| 框架 | Vue 3（Composition API） | React / Angular / Vue 2 Options API |
+| 状态管理 | Pinia 3 | Vuex / Redux / 手写 reactive |
+| CSS 预处理 | SCSS（sass-embedded） | Less / Stylus / 纯 CSS |
+| 设计系统 | @opensig/opendesign + @opensig/opendesign-token | 自造 UI / 其他组件库 |
+| 图标生成 | @opensig/open-scripts gen:icon | 手写 SVG 内联 / 其他图标方案 |
+| 工具库 | @vueuse/core | 手写 composables 替代 VueUse 已有功能 |
+
+> **为什么**：脚手架的 mixin 全局注入、样式引入顺序、防闪烁脚本、store 持久化机制都围绕上述选型深度绑定。替换任一项都会导致集成断裂。
+
+### 1.2 入口文件职责划分
+
+| 文件 | 职责 | 严禁做的事 |
+|------|------|-----------|
+| `index.html` | 防闪烁内联脚本 + `<div id="app">` | 不在此引入外部 CSS/JS、不写业务逻辑 |
+| `main.ts` | createApp + Pinia 注册 + **样式引入（顺序不可调换）** | 不在此注册全局组件、不在此写业务逻辑、不在此调 API |
+| `App.vue` | 应用入口（主题初始化 + DefaultLayout 包裹页面） | 不在此写骨架、不在此写楼层内容、不在此做数据请求 |
+| `layouts/DefaultLayout.vue` | 页面骨架（AppHeader + slot + AppFooter） | 不在此写楼层内容、不在此做数据请求 |
+| `pages/*.vue` | 页面楼层内容编排 | 不在此写骨架结构 |
+| `vite.config.ts` | SCSS 注入 + 别名（`@` + `#icons`） | 不在此写业务逻辑 |
+| `icons/icon.config.ts` | gen:icon 配置（SVG 源目录 → Vue 图标组件输出） | 不在此写业务逻辑 |
+
+### 1.3 样式引入顺序
+
+**红线，违反即视觉错乱。** 顺序：CSS Reset → Token CSS → 鹦鸿字体 → 组件库样式 → 项目全局样式。原理详见 opendesign-application skill → getting-started。SPA 中在 `main.ts` 用 `import` 语句保证，**不可调换，不可跳过任何一项**。
+
+> CSS Reset（`reset.scss`）必须在 Token 之前——归零规则最早生效，后续 Token / 组件样式 / global.scss 覆盖可正常叠加。reset.scss 详解见 opendesign-application skill → styles-infrastructure。
+
+---
+
+## 二、目录结构与命名规范
+
+> 完整目录结构详解与 Nuxt vs SPA 差异对照见 opendesign-application skill → project-layout。
+
+### 2.1 新增内容的命名规范
+
+| 要新增的内容 | 放在哪里 | 命名规范 |
+|-------------|---------|---------|
+| 可复用的响应式逻辑 | `composables/useXxx.ts` | `use` 前缀 + 骆峰 |
+| 全局状态 | `stores/useXxxStore.ts` | `use` + `Store` 后缀 |
+| 纯函数（无 Vue 依赖） | `utils/xxx.ts` | 骆峰，无 `use` 前缀 |
+| TypeScript 类型 / 接口 | `types/xxx.ts` | 骆峰或大驼峰（interface/type） |
+| 页面级组件 | `components/XxxPage.vue` | 大驼峰 + `Page` 后缀 |
+| 通用 UI 片段 | `components/XxxSection.vue` | 大驼峰 + 语义后缀 |
+| 子组件（被父组件引用） | `components/父组件名/XxxItem.vue` | 父组件名子目录 + 大驼峰 |
+
+> 本项目是 SPA，无 vue-router 文件路由。页面内容在 `pages/*.vue` 中按楼层编排，由 `DefaultLayout` 统一包裹骨架（AppHeader + AppFooter）。
+
+---
+
+## 三、业务组件
+
+### 3.1 AppSection 楼层组件
+
+`AppSection` 是全宽页面楼层的**通用容器组件**，消费 OpenDesign 设计令牌承担楼层级结构（header / body / footer）与排版规范（宽度、内外间距、标题/副标题层级、底部链接），避免各页面重复实现等价楼层骨架.> **适用场景**: 页面非左右布局场景下的全宽楼层。当页面采用左右布局时不应使用本组件，应由具体布局组件自行承载楼层结构.
+
+**Props**:
+
+| Prop | 类型 | 默认 | 说明 |
+|------|------|------|------|
+| `title` | `string \| string[]` | — | 区块标题。字符串数组时逐行渲染 h2 |
+| `subtitle` | `string` | — | 区块副标题，居中展示于标题下方 |
+| `full` | `boolean` | `false` | 全宽展示主体内容（取消 section-body 的宽度限制与内边距） |
+| `headerJustifyCenter` | `boolean` | `true` | 头部是否居中对齐，`false` 时左对齐 |
+| `footer` | `string` | — | 底部链接文案，配合 `footerHref` 组成 OLink 外链 |
+| `footerHref` | `string` | — | 底部链接跳转地址 |
+
+**Slots**:
+
+| Slot | 说明 |
+|------|------|
+| `main` | 整体内容兜底，传入时完全覆盖 header / body / footer 默认结构 |
+| `header` | 区块头部，不传时回退到 title / subtitle 默认渲染 |
+| `title` | 标题插槽，配合 title prop 使用 |
+| `subtitle` | 副标题插槽，配合 subtitle prop 使用 |
+| `default` | 区块主体内容 |
+| `footer` | 底部插槽，不传时回退到 footer + footerHref 组合的 OLink 渲染 |
+
+**典型用法**:
+
+```vue
+<!-- 最常用：标题 + 主体内容 -->
+<AppSection title="用户列表"><UserList /></AppSection>
+
+<!-- 标题 + 副标题 -->
+<AppSection title="响应式栅格" subtitle="当前断点列数随窗口缩放变化">
+  <TokenGridShowcase />
+</AppSection>
+
+<!-- 左对齐标题 -->
+<AppSection title="Token 库使用示例" :header-justify-center="false">
+  <template #subtitle>
+    <p>自定义副标题内容</p>
+  </template>
+</AppSection>
+
+<!-- 全宽内容（如横幅图片、全宽数据展示） -->
+<AppSection title="数据概览" :full="true">
+  <FullWidthChart />
+</AppSection>
+
+<!-- 带底部链接 -->
+<AppSection title="最新动态" footer="查看全部" footer-href="/news">
+  <NewsList />
+</AppSection>
+```
+
+> **页脚 `<AppFooter>` 不套 AppSection**——页脚是页面结构元素而非楼层内容，直接使用 `<AppFooter />` 组件：
+> ```vue
+> <AppFooter />
+> ```
+
+### 4.2 AppHeader 导航栏组件
+
+`AppHeader` 是页面顶部导航栏组件，内含品牌 Logo 与主题切换按钮，使用 `o-r-grid-container` 做水平居中，消费设计令牌承担导航栏高度、间距与排版规范。
+
+**Slots**：
+
+| Slot | 说明 |
+|------|------|
+| `brand` | 品牌区域，不传时回退到默认 Logo + 标题组合 |
+| `actions` | 右侧操作区，不传时回退到默认 ThemeToggle |
+
+### 4.3 AppFooter 页脚组件
+
+`AppFooter` 是页面底部页脚组件，内含版权信息，使用 `o-r-grid-container` 做水平居中，消费设计令牌承担页脚间距与排版规范。
+
+**Slots**：
+
+| Slot | 说明 |
+|------|------|
+| `default` | 页脚内容区，不传时回退到默认 Powered by 文本 |
+
+### 4.4 布局与页面分层
+
+SPA 采用三层分离：`App.vue` → `layouts/DefaultLayout.vue` → `pages/*.vue`。
+
+| 层级 | 文件 | 职责 |
+|------|------|------|
+| 入口 | `src/App.vue` | 主题初始化（useThemeStore）+ DefaultLayout 包裹页面 |
+| 骨架 | `src/layouts/DefaultLayout.vue` | AppHeader + `<slot />`（楼层内容）+ AppFooter |
+| 页面 | `src/pages/*.vue` | 楼层编排（AppSection 包裹业务组件） |
+
+> **App.vue 不承载骨架或楼层内容**——骨架由 layout 承担，楼层内容由 page 承担。新增页面只需在 `pages/` 下新建 `.vue` 文件，在 App.vue 中引用即可，骨架自动复用。
+
+**关键约束**:
+
+- **全宽页面楼层必须使用 `<AppSection>`**——不得手写 `<section class="o-r-grid-container floor">` + `.floor` / `.floor-first` / `.floor-last` CSS 组合
+- 楼层标题由 `title` prop 传入，业务组件内部不再自含 `<h2 class="section-title">` 样式
+- AppSection 使用 `--o-r-grid-section-width` 和 `--o-r-gap-*` 等响应式令牌，标题用 `display3` / `text1` mixin——楼层排版完全由设计令牌驱动，页面不再维护 `.floor` 等楼层 CSS 类
+- **页脚 `<AppFooter>` 不套 AppSection**——页脚是页面结构元素而非楼层内容，直接使用 `<AppFooter />` 组件
+- 非全宽布局（左右布局侧边栏等）不应使用 AppSection
+
+---
+
+## 四、组件拆分规范
+
+### 4.1 拆分时机（什么时候该拆）
+
+| 信号 | 应该拆分 |
+|------|---------|
+| 单个 `.vue` 文件 `<template>` 超过 80 行 | 拆出子组件 |
+| `<style>` 超过 60 行 | 检查是否有可提取的通用样式模式 |
+| 同一页面出现 3+ 个语义独立的区块 | 每个区块拆为独立组件 |
+| 多个页面/楼层复用相同 UI 片段 | 提取为公共组件 |
+| `v-if` + `v-else` 切换的是整块 DOM 结构 | 各分支拆为子组件 |
+
+### 4.2 拆分原则（怎么拆）
+
+#### 单一职责原则
+
+每个组件只做一件事：
+
+```vue
+<!-- ✅ 正确：页面标题由 AppSection 渲染，业务组件只管内容 -->
+<AppSection title="用户管理" subtitle="管理系统用户与权限">
+  <UserList />
+</AppSection>
+
+<!-- ❌ 错误：把标题、列表、操作全部写在一个巨型组件里 -->
+<AppSection>
+  <UserManagement /> <!-- 500 行，什么都干 -->
+</AppSection>
+```
+
+#### 楼层式组装
+
+页面内容按三层分离：**App.vue** 只做主题初始化与页面编排，**DefaultLayout** 承载骨架（AppHeader + AppFooter），**pages/*.vue** 负责楼层编排。全宽页面的楼层统一使用 `<AppSection>` 组件包裹业务内容。`<AppSection>` 消费设计令牌（`--o-r-grid-section-width` / `--o-r-gap-*`），承担楼层级宽度、间距与标题排版规范，页面不再手写 `.o-r-grid-container` + `.floor` CSS 组合。
+
+> AppSection 组件详解见本章「业务组件 / AppSection 楼层组件」章节，AppSection 的设计令牌与楼层结构原理见 opendesign-application skill → styles-infrastructure 的「栅格容器」与「楼层式页面结构」章节。
+
+```vue
+<!-- App.vue：应用入口，主题初始化 + 页面编排 -->
+<template>
+  <DefaultLayout>
+    <HomePage />
+  </DefaultLayout>
+</template>
+```
+
+```vue
+<!-- layouts/DefaultLayout.vue：页面骨架 -->
+<template>
+  <div>
+    <AppHeader />
+    <main>
+      <slot />
+    </main>
+    <AppFooter />
+  </div>
+</template>
+```
+
+```vue
+<!-- pages/HomePage.vue：楼层内容编排 -->
+<template>
+  <AppSection title="用户管理" subtitle="管理系统用户与权限" :header-justify-center="false">
+    <PageHero />
+  </AppSection>
+  <AppSection title="用户列表"><UserList /></AppSection>
+  <AppSection title="权限矩阵"><PermissionMatrix /></AppSection>
+</template>
+```
+
+#### 父子组件数据流
+
+| 方式 | 用途 | 规范 |
+|------|------|------|
+| `props` | 父 → 子 数据传递 | 必须用 `defineProps<T>()` 泛型，禁用字符串数组式 |
+| `emit` | 子 → 父 事件通知 | 必须用 `defineEmits<T>()` 泛型 |
+| `v-model` | 双向绑定 | 组件支持 `modelValue` + `update:modelValue` |
+| Pinia store | 跨组件共享状态 | 仅当确实需要跨楼层/跨页面共享时使用 |
+| provide/inject | 深层传递 | 仅用于主题 / 配置等基础设施，业务数据走 props |
+
+**严禁**子组件直接修改父组件传入的 props（Vue 单向数据流）。需要通知父组件时用 `emit`。
+
+### 4.3 组件命名规范
+
+| 类型 | 格式 | 示例 |
+|------|------|------|
+| 页面级 | `XxxPage.vue` | `UserManagementPage.vue` |
+| 楼层级 / 区块级 | `XxxSection.vue` / `XxxPanel.vue` | `UserListSection.vue` |
+| 通用 UI 片段 | `XxxCard.vue` / `XxxBar.vue` | `StatCard.vue` |
+| 子组件（属于父组件） | `父名/XxxItem.vue` | `UserList/UserItem.vue` |
+| 基础设施 | 按功能命名 | `ThemeToggle.vue` / `AppLogo.vue` / `AppSection.vue` |
+
+> **不使用** `Index.vue` / `Main.vue` / `Wrapper.vue` 这类无语义命名。
+
+---
+
+## 五、公共抽象模式
+
+### 5.1 Composable（`composables/useXxx.ts`）
+
+提取为 composable 的信号：
+
+| 信号 | 示例 |
+|------|------|
+| 多个组件需要相同响应式逻辑 | `useScreen()` 已由 OpenDesign 提供，不自造 |
+| 需要生命周期钩子 + 响应式状态 | `useAsyncData(fetchFn)` |
+| DOM 操作需要封装 | `useScrollLock()` |
+| 逻辑与 UI 无关、可独立测试 | `useDebounce(fn, delay)` |
+
+**composable 文件模板**：
+
+```typescript
+// composables/useXxx.ts
+import { ref, computed, onMounted, onUnmounted } from 'vue'
+
+/**
+ * @description XXX 功能的 composable
+ * @param options 配置选项
+ * @returns 响应式状态与方法
+ */
+export function useXxx(options?: { /* ... */ }) {
+  const state = ref(/* ... */)
+
+  // 逻辑...
+
+  return { state, /* ... */ }
+}
+```
+
+**规范**：
+- 文件名 = 函数名：`useXxx.ts` 导出 `useXxx`
+- 一个文件只导出一个 composable
+- 不在 composable 中直接操作 DOM（除非是 DOM 相关 composable 如 `useScrollLock`）
+- composable 内部可调用其他 composable（如 `useScreen()`、`useThemeStore()`）
+
+### 5.2 Store（`stores/useXxxStore.ts`）
+
+> 主题 store 的完整设计（含防闪烁、DOM 同步）见 opendesign-application skill → theme-system。以下为**新增业务 store** 的通用模板。
+
+提取为 store 的信号：
+
+| 信号 | 示例 |
+|------|------|
+| 状态需要跨页面 / 跨楼层共享 | 用户信息、全局配置 |
+| 状态需要持久化 | 用户偏好设置 |
+| 多个组件需要读写同一份数据 | 当前选中项、筛选条件 |
+
+**store 文件模板**：
+
+```typescript
+// stores/useXxxStore.ts
+import { defineStore } from 'pinia'
+import { ref, computed } from 'vue'
+
+export const useXxxStore = defineStore('xxx', () => {
+  // —— State ——
+  const items = ref<Item[]>([])
+
+  // —— Getters ——
+  const activeItems = computed(() => items.value.filter(i => i.active))
+
+  // —— Actions ——
+  function fetchItems() { /* ... */ }
+
+  return { items, activeItems, fetchItems }
+})
+```
+
+**规范**：
+- 仅用 Composition API 风格（setup store），不用 Options API 风格
+- 命名 = `use` + 语义 + `Store`
+- 持久化用 `useStorage`（localStorage），不用 cookie（SPA 无 SSR）
+- store 之间可以互相调用：`const userStore = useUserStore()`
+
+### 5.3 SCSS Mixin
+
+> 三套 mixin（common / font / screen）的完整说明与用法见 opendesign-application skill → styles-infrastructure。此处仅说明 SPA 中的注入方式与新增规则。
+
+三套 mixin 已全局注入（通过 `vite.config.ts` 的 `additionalData`），**组件内不再手动 `@use`**。
+
+**新增 mixin 的规范**：
+
+| 要新增的 mixin | 放在哪里 | 规则 |
+|---------------|---------|------|
+| 全局通用（所有组件都可能用到） | 新文件 `mixin/xxx.scss` + 在 `vite.config.ts` 的 `additionalData` 中追加 | 必须全局注入才有效 |
+| 仅某几个组件用到 | 在组件 `<style>` 内局部定义，或创建 `mixin/xxx.scss` 但不全局注入 | 不全局注入的 mixin 需手动 `@use` |
+
+> **不建议**频繁新增 mixin——现有三套已覆盖 95% 场景。新增前先确认是否已有等价能力。
+
+---
+
+## 六、SVG 图标工作流
+
+### 6.1 gen:icon 工作流
+
+项目使用 `@opensig/open-scripts` 的 `gen:icon` 命令管理自定义 SVG 图标。**禁止内联 SVG**——所有图标必须通过 gen:icon 生成 Vue 组件后使用，确保图标统一管理、可复用、支持主题变色。
+
+**工作流**：
+
+1. 设计师交付 SVG 切图 → 按类型放入 `icons/svgs/` 对应子目录（`fill/` / `stroke/` / `color/`）
+2. 执行 `pnpm gen:icon` → 清空 `src/icon-components/` 并重新生成所有 Vue 图标组件
+3. 组件中通过 `#icons` 别名导入使用
+
+> SVG 分类规则与命名规范详见 **opendesign-scripts** skill → gen:icon。核心要点：实心填充放 `fill/`、线条描边放 `stroke/`、多色固定放 `color/`；文件名用 kebab-case 语义命名（如 `arrow-right.svg`），生成后组件名自动转为大驼峰（`AppIconArrowRight`）。
+
+### 6.2 图标组件导入方式
+
+SPA 中通过 `#icons` 别名导入（别名注册在 `vite.config.ts`）：
+
+```vue
+<script setup lang="ts">
+import { AppIconSun, AppIconMoon } from '#icons'
+</script>
+
+<template>
+  <AppIconSun class="my-icon" />
+</template>
+```
+
+> `#icons` 指向 `src/icon-components/` 目录——每次 `pnpm gen:icon` 会清空重建该目录，已纳入 `.gitignore`。
+
+### 6.3 图标新增与修改原则
+
+| 操作 | 做法 |
+|------|------|
+| 新增图标 | 将 SVG 文件追加到 `icons/svgs/fill/` / `stroke/` / `color/` 对应子目录，然后执行 `pnpm gen:icon` |
+| 修改图标 | 用新版 SVG 替换 `icons/svgs/` 中的同名文件，然后执行 `pnpm gen:icon` |
+| 删除图标 | 删除 `icons/svgs/` 中的 SVG 文件，然后执行 `pnpm gen:icon`（会清空重建整个产物目录） |
+| 优先复用 | 新增前先检查 `icons/svgs/` 和组件库内置图标，避免重复添加语义相近的图标 |
+
+> **反模式**：不要在组件中内联 `<svg>` 标签——统一走 gen:icon 生成 Vue 组件，通过 `#icons` 导入使用。
+
+### 6.4 图标样式控制
+
+生成的图标组件根元素带 `o-svg-icon app-svg-icon` 类名，支持以下样式控制：
+
+```scss
+.my-icon {
+  // 尺寸：默认 1em（跟随字号），可按需覆盖
+  width: 1.25em;
+  height: 1.25em;
+
+  // 颜色：fill/stroke 类图标通过 CSS color 统一变色（生成时已移除 fill/stroke 属性）
+  color: var(--o-color-primary1);
+
+  // color 类图标保留原始颜色，不可通过 CSS color 变色
+}
+```
+
+---
+
+## 七、最佳实践
+
+### 6.1 页面组装与楼层结构
+
+新页面内容按**楼层**添加到 `pages/*.vue`——全宽页面楼层统一使用 `<AppSection>` 组件，标题通过 `title` / `subtitle` prop 传入，主体内容通过默认插槽传入。`pages/*.vue` 只编排楼层，不写具体业务内容。骨架（AppHeader + AppFooter）由 `layouts/DefaultLayout.vue` 承担，`App.vue` 只做主题初始化与页面编排。
+
+> AppSection 组件详解见本章「业务组件 / AppSection 楼层组件」章节。AppSection 的设计令牌与楼层结构原理见 opendesign-application skill → styles-infrastructure 的「栅格容器」与「楼层式页面结构」章节。
+
+### 6.2 组件内部结构规范
+
+每个 `.vue` 文件按固定顺序组织：
+
+```vue
+<script setup lang="ts">
+// 1. 类型定义（如需要）
+// 2. import：外部库 → OpenDesign 组件 → 内部组件 → store/composable → utils
+// 3. props / emits 定义
+// 4. composable / store 调用
+// 5. 响应式状态（ref / reactive / computed）
+// 6. 方法 / 事件处理
+// 7. 生命周期钩子（watch / onMounted 等）
+</script>
+
+<template>
+  <!-- 单根元素，class 用 BEM 命名 -->
+  <section class="xxx-section">
+    ...
+  </section>
+</template>
+
+<style lang="scss" scoped>
+/* BEM 命名 + 全 token 驱动 + 无 :deep */
+.xxx-section {
+  /* ... */
+}
+</style>
+```
+
+### 6.3 样式硬规则与反模式
+
+> 样式硬规则（`:deep` 禁令、token 优先、组件优先、hover 走 mixin 等）完整清单见 opendesign-application skill → conventions 的「硬规则红线」与「应用层补充约定」章节。
+> 常见反模式与违规修正见同一 skill → conventions 的「常见违规示例与修正」及「Code Review 检查清单」。
+
+SPA 专属补充：
+- 持久化用 `useStorage`（localStorage），不用 cookie
+- 组件应显式 `import`，不全局注册
+
+### 6.4 响应式策略优先级
+
+> CSS vs JS 层面的响应式分工详见 opendesign-application skill → styles-infrastructure 的「`useScreen()` 运行时响应式检测」章节。
+
+### 6.5 表单宽度管理
+
+> 表单控件宽度规则详解见 opendesign-application skill → styles-infrastructure 的 `global.scss` 章节，以及 conventions 的「表单宽度走 `global.scss`」条目。
+
+### 6.6 主题切换
+
+> 完整主题系统集成（Pinia store、防闪烁、社区切换、ThemeToggle）见 opendesign-application skill → theme-system。
+
+业务代码统一走 `useThemeStore()` 的 `isDark`（writable computed）或 `setMode`，不直接操作 DOM。
+
+防闪烁脚本在 `index.html` 的 `<head>` 内联——改社区时需同步修改四处：
+1. `main.ts` 的 token CSS 引入
+2. `stores/theme.ts` 的 `OPENDESIGN_COMMUNITY` 常量
+3. `index.html` 内联脚本的社区前缀
+4. `index.html` `<html>` 标签的 `data-o-theme` 默认值
+
+---
+
+## 八、新增业务组件的完整流程
+
+1. 在 `components/` 下创建 `XxxSection.vue`
+2. 按 5.2 规范组织文件结构
+3. 所有样式值用 `var(--o-*)` token 或 `@include` mixin（详见 opendesign-application skill → conventions）
+4. 如需响应式，优先用 SCSS mixin，次选 `useScreen()`
+5. 如需跨组件共享状态，创建 `stores/useXxxStore.ts`
+6. 如需复用逻辑，创建 `composables/useXxx.ts`
+7. 在 `pages/*.vue` 的楼层结构中引入新组件
+8. 运行 `pnpm dev` 验证效果
+
+---
+
+## 九、项目基础设施文件（不建议修改）
+
+以下文件是脚手架基础设施，除非切换社区或有明确需求，**不建议修改**：
+
+| 文件 | 作用 |
+|------|------|
+| `main.ts` | 入口 + 样式引入顺序 |
+| `index.html` | 防闪烁脚本 |
+| `vite.config.ts` | SCSS 全局注入 + 别名（`@` + `#icons`） |
+| `stores/theme.ts` | 主题 store |
+| `components/ThemeToggle.vue` | 主题切换开关（OSwitch） |
+| `components/AppSection.vue` | 楼层通用容器（标题/主体/底部 + 宽度/间距/排版规范） |
+| `assets/styles/mixin/*.scss` | 三套 mixin |
+| `assets/styles/reset.scss` | CSS Reset（归零 UA 默认样式，必须在 Token 之前） |
+| `assets/styles/global.scss` | body 基线 + 表单宽度 |
+| `icons/icon.config.ts` | gen:icon 配置（SVG 源 → Vue 图标组件产物） |
+
+如需切换社区主题，见 opendesign-application skill → theme-system 的「社区切换」章节，同步修改四处。
+
+---
+
+## 十、查阅指引
+
+本 AGENTS.md 只保留 SPA 专属约束与项目级操作指导。通用规范按以下指引定位（AI 工具通过 skill 名称解析，开发者查阅 `@opensig/opendesign` 包文档或 OpenDesign 官网）：
+
+| 要查什么 | 去哪查 |
+|---------|--------|
+| 组件 API（Props / Events / Slots） | **opendesign-components** skill |
+| token 变量名完整列表 | **opendesign-tokens** skill |
+| 依赖安装、入口文件、样式引入顺序详解 | **opendesign-application** skill → getting-started |
+| 主题系统完整集成（Pinia store、防闪烁、社区切换） | **opendesign-application** skill → theme-system |
+| SCSS mixin 用法详解、栅格容器、楼层结构、global.scss | **opendesign-application** skill → styles-infrastructure |
+| 目录结构对照与 Nuxt vs SPA 差异 | **opendesign-application** skill → project-layout |
+| 样式硬规则、反模式清单、Code Review 检查清单 | **opendesign-application** skill → conventions |
+| 响应式策略（CSS vs JS 层面分工） | **opendesign-application** skill → styles-infrastructure → `useScreen()` 章节 |
+| 表单宽度全局规则 | **opendesign-application** skill → styles-infrastructure → `global.scss` 章节 |
+| SVG 图标生成、分类规则、命名规范、导入方式 | **opendesign-scripts** skill → gen:icon |
+
+---
+
+**最后更新**：2026-07-07
