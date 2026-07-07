@@ -1,6 +1,6 @@
 # Changelog
 
-本文件记录所有对外暴露的 Skill 的变更，供使用者判断是否需要重新安装已安装的 skill。各 `skills/*/SKILL.md` frontmatter 的 `last_update` 字段与本文件中的日期一一对应。
+本文件记录 `skills/` 目录下对外分发的 Skill 的变更，供使用者判断是否需要重新安装已安装的 skill。`packages/skills/` 下的内部 Skill（第一层：生产指导）不记入本文件——它们的受众是 AI 编码工具（写作者），而非 Skill 使用者，变更不影响已交付的产物。各 `skills/*/SKILL.md` frontmatter 的 `last_update` 字段与本文件中的日期一一对应。
 
 > 维护规范见 [`AGENTS.md`](AGENTS.md) 的「[变更记录规范](#变更记录规范changelog)」章节。
 
@@ -13,6 +13,16 @@
 | 修正 | 错误引用、过时描述、与源码不符的修正 |
 | 移除 | 删除的组件 / 选项 / 约束 |
 | ⚠️ 破坏性 | 硬约束 / 断点 / 规则变化，会让旧产物不再合规 |
+
+---
+
+## 2026-07-07
+
+### 新增
+- **opendesign-application**：工程化落地指南（`skills/opendesign-application/`），含 5 份 reference——`getting-started.md`（依赖安装、入口文件、样式引入顺序、`useScreen()`）、`theme-system.md`（Pinia store writable computed `isDark` + `storeToRefs` 解构、防闪烁、SSR hydration、社区切换、ThemeToggle 基于 OSwitch + OIconSun/OIconMoon + `:checked-value="false" :unchecked-value="true"`）、`styles-infrastructure.md`（SCSS mixin 三套含 hover/hoverable、全局注入、栅格容器、AppSection 楼层组件）、`project-layout.md`（目录结构、Nuxt vs SPA 差异对照、选型建议）、`conventions.md`（硬规则、应用层约定、Code Review 检查清单）。另含两套可运行脚手架（`templates/nuxt` Nuxt 4 SSR + `templates/vue-spa` Vite SPA），每套附带项目级 `AGENTS.md`。
+
+### 更新
+- **opendesign-components**：移除 `me-hover` mixin（语义含糊且与 hover/hoverable 功能重叠），补充 `hover()` 与 `hoverable()` 的区别说明（hover 自动包裹 `:hover` 仅瞬态生效，hoverable 只做设备筛选 `@content` 原样输出常驻样式）。hoverable 用法示例从 `visibility: visible` 改为更直观的 `background-color` 覆盖，新增 `hoverable(none)` 触控设备示例。SCSS mixin 速查表移除 `me-hover` 行，`hoverable` 行标注「常驻，非瞬态」。
 
 ---
 

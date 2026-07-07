@@ -1,0 +1,111 @@
+// 响应式字体 mixin — 使用 opendesign --o-r-font_size-* 变量
+// 通过 CSS 变量实现，无需重复写媒体查询
+// 注意：字号和行高本身已经是响应式的（由 responsive.token.css 的媒体查询控制）
+//
+// 用法：
+//   直接应用样式：@include display1;
+//   只暴露 CSS 变量（不输出 font-size/line-height 属性）：@include display1('my-prefix-');
+
+@mixin text {
+  font-size: var(--font-size);
+  line-height: var(--line-height);
+}
+
+@mixin display1($only-var-prefix: '') {
+  --#{$only-var-prefix}font-size: var(--o-r-font_size-display1);
+  --#{$only-var-prefix}line-height: var(--o-r-line_height-display1);
+
+  @if $only-var-prefix == '' {
+    @include text;
+  }
+}
+
+@mixin display2($only-var-prefix: '') {
+  --#{$only-var-prefix}font-size: var(--o-r-font_size-display2);
+  --#{$only-var-prefix}line-height: var(--o-r-line_height-display2);
+
+  @if $only-var-prefix == '' {
+    @include text;
+  }
+}
+
+@mixin display3($only-var-prefix: '') {
+  --#{$only-var-prefix}font-size: var(--o-r-font_size-display3);
+  --#{$only-var-prefix}line-height: var(--o-r-line_height-display3);
+
+  @if $only-var-prefix == '' {
+    @include text;
+  }
+}
+
+@mixin h1($only-var-prefix: '') {
+  --#{$only-var-prefix}font-size: var(--o-r-font_size-h1);
+  --#{$only-var-prefix}line-height: var(--o-r-line_height-h1);
+
+  @if $only-var-prefix == '' {
+    @include text;
+  }
+}
+
+@mixin h2($only-var-prefix: '') {
+  --#{$only-var-prefix}font-size: var(--o-r-font_size-h2);
+  --#{$only-var-prefix}line-height: var(--o-r-line_height-h2);
+
+  @if $only-var-prefix == '' {
+    @include text;
+  }
+}
+
+@mixin h3($only-var-prefix: '') {
+  --#{$only-var-prefix}font-size: var(--o-r-font_size-h3);
+  --#{$only-var-prefix}line-height: var(--o-r-line_height-h3);
+
+  @if $only-var-prefix == '' {
+    @include text;
+  }
+}
+
+@mixin h4($only-var-prefix: '') {
+  --#{$only-var-prefix}font-size: var(--o-r-font_size-h4);
+  --#{$only-var-prefix}line-height: var(--o-r-line_height-h4);
+
+  @if $only-var-prefix == '' {
+    @include text;
+  }
+}
+
+@mixin text1($only-var-prefix: '') {
+  --#{$only-var-prefix}font-size: var(--o-r-font_size-text1);
+  --#{$only-var-prefix}line-height: var(--o-r-line_height-text1);
+
+  @if $only-var-prefix == '' {
+    @include text;
+  }
+}
+
+@mixin text2($only-var-prefix: '') {
+  --#{$only-var-prefix}font-size: var(--o-r-font_size-text2);
+  --#{$only-var-prefix}line-height: var(--o-r-line_height-text2);
+
+  @if $only-var-prefix == '' {
+    @include text;
+  }
+}
+
+@mixin tip1($only-var-prefix: '') {
+  --#{$only-var-prefix}font-size: var(--o-r-font_size-tip1);
+  --#{$only-var-prefix}line-height: var(--o-r-line_height-tip1);
+
+  @if $only-var-prefix == '' {
+    @include text;
+  }
+}
+
+@mixin tip2($only-var-prefix: '') {
+  --#{$only-var-prefix}font-size: var(--o-r-font_size-tip2);
+  --#{$only-var-prefix}line-height: var(--o-r-line_height-tip2);
+
+  @if $only-var-prefix == '' {
+    @include text;
+  }
+}

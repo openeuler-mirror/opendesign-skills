@@ -1,0 +1,29 @@
+{
+  "name": "nuxt",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "gen:icon": "open-scripts gen:icon --config ./icons/icon.config.ts"
+  },
+  "dependencies": {
+    "@opensig/opendesign": "^1.2.5",
+    "@opensig/opendesign-token": "^0.1.1",
+    "@pinia/nuxt": "^0.11.3",
+    "@vueuse/nuxt": "^14.3.0",
+    "nuxt": "^4.4.8",
+    "vue": "^3.5.38",
+    "vue-router": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.2",
+    "sass-embedded": "^1.89.0",
+    "@opensig/open-scripts": "^1.0.6",
+    "typescript": "~5.9.0",
+    "vue-tsc": "^3.3.5"
+  }
+}

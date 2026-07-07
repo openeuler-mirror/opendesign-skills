@@ -1,0 +1,47 @@
+body {
+  margin: 0;
+  background-color: var(--o-color-fill1);
+  font-family: var(--o-font_family);
+  font-weight: var(--o-font_weight-regular);
+  @include tip1;
+}
+
+/* 全局表单控件宽度 - 使用 OForm 提供的响应式变量 */
+.o-form {
+  .o-input,
+  .o-select,
+  .o-input-number,
+  .o-ip-input {
+    width: var(--form-item-main-box-width-standard);
+  }
+
+  .o-textarea {
+    width: var(--form-item-main-box-width-wide);
+  }
+
+  /* 同行双输入（范围输入）：用 div.form-inline 包裹 */
+  .form-inline {
+    display: flex;
+    gap: var(--form-item-main-box-inline-gap);
+    width: var(--form-item-main-box-width-wide);
+
+    .o-input,
+    .o-select,
+    .o-input-number {
+      width: var(--form-item-main-box-width-min);
+      flex: 1 1 var(--form-item-main-box-width-min);
+      min-width: 0;
+    }
+
+    @include respond('<=pad_v') {
+      flex-wrap: wrap;
+
+      .o-input,
+      .o-select,
+      .o-input-number {
+        width: 100%;
+        flex: none;
+      }
+    }
+  }
+}

@@ -245,8 +245,10 @@ $o-breakpoints: (
   }
 }
 
-/// 设备悬停能力查询
-/// 用法：@include hoverable { ... }（仅在支持 hover 的设备生效）
+/// 设备悬停能力查询——筛选设备类型，不附加 :hover 伪类
+/// 与 hover() 的区别：hoverable 只做设备筛选，@content 原样输出；
+///   hover() 会自动包裹 &:hover，只在指针设备的 hover 瞬态生效。
+/// 用法：@include hoverable { ... }（仅在支持 hover 的设备生效，常驻样式）
 ///      @include hoverable(none) { ... }（仅在触控等不支持 hover 的设备生效）
 @mixin hoverable($hover: hover) {
   @media (hover: $hover) {
@@ -255,21 +257,11 @@ $o-breakpoints: (
 }
 
 /// 安全 hover 样式——仅在支持 hover 的指针设备上追加 :hover
+/// 与 hoverable() 的区别：hover() 自动包裹 &:hover，只在 hover 瞬态生效；
+///   hoverable() 只做设备筛选，@content 原样输出，不附加 :hover。
 /// 触控设备不会产生粘连残留状态
 /// 用法：@include hover { color: red; }
 @mixin hover() {
-  @media (hover: hover) {
-    &:hover {
-      @content;
-    }
-  }
-}
-
-/// 移动端常显 + 桌面端 hover 同时触发
-/// 触控设备上内容始终可见，指针设备上仅在 :hover 时显示
-/// 用法：@include me-hover { visibility: visible; }
-@mixin me-hover() {
-  @content;
   @media (hover: hover) {
     &:hover {
       @content;
@@ -330,10 +322,17 @@ $o-breakpoints: (
   }
 }
 
-// 移动端常显、桌面端 hover 触发
+// 仅 hover 设备生效的常驻样式
 .action-area {
-  @include me-hover {
-    visibility: visible;
+  @include hoverable {
+    background-color: var(--o-color-fill3);
+  }
+}
+
+// 仅触控设备生效的样式
+.mobile-only {
+  @include hoverable(none) {
+    display: block;
   }
 }
 
@@ -396,9 +395,8 @@ export default defineNuxtConfig({
 | 场景 | 用哪个 |
 |------|--------|
 | 鼠标悬停改变样式（触控设备跳过） | `@include hover { ... }` |
-| 某段样式仅限支持 hover 的设备 | `@include hoverable { ... }` |
+| 某段样式仅限支持 hover 的设备（常驻，非瞬态） | `@include hoverable { ... }` |
 | 某段样式仅限触控设备 | `@include hoverable(none) { ... }` |
-| 移动端常显、桌面端 hover 也触发 | `@include me-hover { ... }` |
 | 展开/收起箭头旋转动效 | `@include x-hover` |
 | 带 overflow 裁切的 SVG 旋转动效 | `@include x-svg-hover` |
 

@@ -1,0 +1,105 @@
+@use 'sass:map';
+@use 'sass:list';
+@use 'sass:meta';
+
+// 断点定义
+$o-breakpoints: (
+  // phone
+        'phone': (0, 600px),
+        '>phone': 601px,
+  // pad
+        'pad': (601px, 1200px),
+        '<=pad': (0, 1200px),
+        '>pad': 1201px,
+  // pad-v
+        'pad_v': (601px, 840px),
+        '<=pad_v': (0, 840px),
+        '>pad_v': 841px,
+  // pad-h
+        'pad_h': (841px, 1200px),
+  // laptop
+        'laptop': (1201px, 1680px),
+        '<=laptop': (0, 1680px),
+        '>laptop': 1681px,
+        'pad-laptop': (601px, 1680px),
+        'pad_v-laptop': (841px, 1680px),
+        'laptop_s': (1201px, 1440px),
+        '<=laptop_s': (0, 1440px),
+        '>laptop_l': 1441px,
+  // pc
+        'pc': (1680px, 1920px),
+        '>pc': 1921px
+);
+@mixin respond($breakname) {
+  $bp: map.get($o-breakpoints, $breakname);
+  @if meta.type-of($bp) == 'list' {
+    $min: list.nth($bp, 1);
+    $max: list.nth($bp, 2);
+    @if $min == 0 {
+      @media (max-width: $max) {
+        @content;
+      }
+    } @else {
+      @media (min-width: $min) and (max-width: $max) {
+        @content;
+      }
+    }
+  } @else {
+    @media (min-width: $bp) {
+      @content;
+    }
+  }
+}
+
+/// 设备悬停能力查询——筛选设备类型，不附加 :hover 伪类
+/// 与 hover() 的区别：hoverable 只做设备筛选，@content 原样输出；
+///   hover() 会自动包裹 &:hover，只在指针设备的 hover 瞬态生效。
+/// @param {String} $hover [hover] - hover 表示仅支持悬停的设备，none 表示触控设备
+/// 用法：@include hoverable { ... }（指针设备常驻样式）
+///      @include hoverable(none) { ... }（触控设备常驻样式）
+@mixin hoverable($hover: hover) {
+  @media (hover: $hover) {
+    @content;
+  }
+}
+
+/// 安全 hover 样式——仅在支持 hover 的指针设备上追加 :hover
+/// 与 hoverable() 的区别：hover() 自动包裹 &:hover，只在 hover 瞬态生效；
+///   hoverable() 只做设备筛选，@content 原样输出，不附加 :hover。
+/// 触控设备不会产生粘连残留状态
+/// 用法：@include hover { color: red; }
+@mixin hover() {
+  @media (hover: hover) {
+    &:hover {
+      @content;
+    }
+  }
+}
+
+/// 展开/收起箭头旋转动效（hover 时旋转 180°，带过渡动画）
+/// 用法：.arrow { @include x-hover; }
+@mixin x-hover {
+  transition: all var(--o-duration-m1) var(--o-easing-standard-in);
+
+  @include hoverable {
+    transform: rotate(180deg);
+  }
+}
+
+/// SVG 图标旋转动效（overflow:hidden + 内部 svg 旋转 180°）
+/// 用法：.icon-wrap { @include x-svg-hover; }
+@mixin x-svg-hover {
+  & {
+    overflow: hidden;
+  }
+
+  svg {
+    transition: all var(--o-duration-m1) var(--o-easing-standard-in);
+  }
+
+  @include hoverable {
+    svg {
+      transform: rotate(180deg);
+    }
+  }
+}
