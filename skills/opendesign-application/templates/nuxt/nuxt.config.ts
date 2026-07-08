@@ -26,19 +26,9 @@ export default defineNuxtConfig({
     // 4. 项目全局样式（可在上述基础上覆盖）
     '~/assets/styles/global.scss',
   ],
-  // 让 Nuxt 在生成的 tsconfig.node.json 中包含 Node.js 类型声明，
-  // 避免 nuxt.config.ts 中的 node:url 等 Node 内置模块报 TS2307
-  typescript: {
-    nodeTsConfig: {
-      compilerOptions: {
-        types: ['node'],
-      },
-    },
-  },
-
   vite: {
     optimizeDeps: {
-      include: ['@opensig/opendesign', '@vueuse/core'],
+      include: ['@opensig/opendesign'],
     },
     css: {
       preprocessorOptions: {

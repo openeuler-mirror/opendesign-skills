@@ -31,7 +31,7 @@
 以下特征说明改动是**跨模板通用**的：
 
 - 改动来自 **opendesign-application skill references 的规范变化**（如 mixin 新增、token 重命名、样式引入顺序调整）
-- 改动是 **OpenDesign 集成机制的更新**（如防闪烁脚本改进、主题 store API 变化）
+- 改动是 **OpenDesign 集成机制的更新**（如主题 store API 变化）
 - 改动是 **基础设施组件的更新**（如 AppSection 新增 prop、ScreenDetector 检测逻辑优化）
 - 改动是 **通用 bug 修正**（如 mixin 中的 CSS 错误、global.scss 遗漏）
 - 改动是 **依赖版本升级**（如 `@opensig/opendesign` 版本更新）
@@ -40,8 +40,8 @@
 
 以下特征说明改动是**平台特异**的：
 
-- 改动只涉及 **Nuxt SSR 专属机制**（如 hydration 修复、`<ClientOnly>` 使用方式、`useCookie` 持久化逻辑）
-- 改动只涉及 **SPA 专属机制**（如 `index.html` 防闪烁脚本、`main.ts` 入口逻辑、`useStorage` 持久化）
+- 改动只涉及 **Nuxt SSR 专属机制**（如 hydration 修复、`<ClientOnly>` 使用方式、`useHead` DOM 同步逻辑）
+- 改动只涉及 **SPA 专属机制**（如 `main.ts` 入口逻辑、`watchEffect` DOM 同步）
 - 改动是 **某模板特有的配置文件结构变化**（如 Nuxt 的 `nuxt.config.ts` 模块注册方式、SPA 的 `vite.config.ts` 别名配置）
 - 改动是 **某模板特有的目录约定变化**（如 Nuxt 自动导入规则、SPA 显式 import 规范）
 
@@ -50,8 +50,7 @@
 | 误判 | 实际 | 正确做法 |
 |------|------|---------|
 | "组件代码一样，所以直接复制" | 组件内 `import` / `composable` / `store` 调用方式不同（Nuxt 自动导入 vs SPA 显式 import） | 代码意图相同，但 import 语句按各模板特异机制分别写 |
-| "防闪烁脚本改了" | Nuxt 用 `useHead` 注入，SPA 用 `index.html` 内联 | 功能意图相同（防闪烁），实现方式不同——两处都要改，但改法不同 |
-| "主题 store 加了新方法" | 两套模板的 theme.ts 接口一致，但持久化方式不同（`useCookie` vs `useStorage`） | store 逻辑同步，持久化各自适配 |
+| "主题 store 加了新方法" | 两套模板的 theme.ts 接口一致，但 DOM 同步方式不同（`useHead` vs `watchEffect`） | store 逻辑同步，DOM 同步各自适配 |
 | "AppSection 新增了 prop" | 两套模板的 AppSection.vue 代码可完全相同 | ✅ 确实通用，直接同步 |
 
 ---
@@ -70,8 +69,7 @@
 |------|----------|----------|
 | 新增 mixin 并全局注入 | `nuxt.config.ts` → `additionalData` 追加 | `vite.config.ts` → `additionalData` 追加 |
 | token CSS 引入路径变化 | `nuxt.config.ts` → `css` 数组修改 | `main.ts` → `import` 语句修改 |
-| 防闪烁脚本改进 | `stores/theme.ts` → `FOUC_SCRIPT` 更新（`useHead` 注入） | `stores/theme.ts` → `FOUC_SCRIPT` 更新 + `index.html` 内联脚本更新 |
-| 主题 store 新增方法 | `stores/theme.ts` 同步（持久化走 `useCookie`） | `stores/theme.ts` 同步（持久化走 `useStorage`） |
+| 主题 store 新增方法 | `stores/theme.ts` 同步（DOM 同步走 `useHead`） | `stores/theme.ts` 同步（DOM 同步走 `watchEffect`） |
 | 基础设施组件新增 prop | 组件 `.vue` 文件直接同步（两套通常代码相同） | 同左 |
 | `global.scss` 新增规则 | `assets/styles/global.scss` 直接同步 | 同左 |
 | `reset.scss` 规则变化 | `assets/styles/reset.scss` 直接同步 | 同左 |
@@ -113,7 +111,7 @@
 | ThemeToggle.vue | `app/components/ThemeToggle.vue` | `src/components/ThemeToggle.vue` | 代码通常完全相同 |
 | ScreenDetector.vue | `app/components/ScreenDetector.vue` | `src/components/ScreenDetector.vue` | 代码通常完全相同 |
 | Token* 演示组件 | `app/components/Token*.vue` | `src/components/Token*.vue` | 代码通常完全相同 |
-| theme.ts | `app/stores/theme.ts` | `src/stores/theme.ts` | **逻辑相同，持久化特异**（`useCookie` vs `useStorage`） |
+| theme.ts | `app/stores/theme.ts` | `src/stores/theme.ts` | **逻辑相同，DOM 同步特异**（`useHead` vs `watchEffect`） |
 | mixin/*.scss | `app/assets/styles/mixin/*.scss` | `src/assets/styles/mixin/*.scss` | 完全相同 |
 | reset.scss | `app/assets/styles/reset.scss` | `src/assets/styles/reset.scss` | 完全相同 |
 | global.scss | `app/assets/styles/global.scss` | `src/assets/styles/global.scss` | 完全相同 |
@@ -125,8 +123,7 @@
 | 文件 | 路径 | 说明 |
 |------|------|------|
 | nuxt.config.ts | `nuxt.config.ts` | 模块注册 + css 数组 + SCSS 注入 |
-| app.vue | `app/app.vue` | 页面骨架 + `useHead` 注入防闪烁 |
-| theme.client.ts | `app/plugins/theme.client.ts` | 系统暗色检测（仅客户端） |
+| app.vue | `app/app.vue` | 应用入口编排（NuxtLayout + NuxtPage） |
 
 ### SPA 特异文件
 
@@ -134,8 +131,8 @@
 |------|------|------|
 | vite.config.ts | `vite.config.ts` | SCSS 注入 + 别名 |
 | main.ts | `src/main.ts` | createApp + 样式引入顺序 |
-| App.vue | `src/App.vue` | 页面骨架 |
-| index.html | `index.html` | 防闪烁内联脚本 + `<html data-o-theme>` |
+| App.vue | `src/App.vue` | 主题初始化 + DefaultLayout 包裹页面 |
+| index.html | `index.html` | `<html lang="zh-CN" data-o-theme="e.light">` |
 
 ---
 

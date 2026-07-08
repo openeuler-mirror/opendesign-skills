@@ -72,7 +72,7 @@
 - `<ClientOnly>` 完整示例（Nuxt）
 - hydration 详细代码
 - 目录结构树
-- 主题切换详细机制（防闪烁原理、DOM 同步、社区切换全流程）
+- 主题切换详细机制（DOM 同步、社区切换全流程）
 
 ### 用一句话 + skill 引用替代
 
@@ -102,7 +102,7 @@
 | 组件 API（Props / Events / Slots） | **opendesign-components** skill |
 | token 变量名完整列表 | **opendesign-tokens** skill |
 | 依赖安装、入口文件、样式引入顺序详解 | **opendesign-application** skill → getting-started |
-| 主题系统完整集成（Pinia store、防闪烁、SSR hydration、社区切换） | **opendesign-application** skill → theme-system |
+| 主题系统完整集成（Pinia store、SSR hydration、社区切换） | **opendesign-application** skill → theme-system |
 | SCSS mixin 用法详解、栅格容器、楼层结构、global.scss | **opendesign-application** skill → styles-infrastructure |
 | 目录结构对照与 Nuxt vs SPA 差异 | **opendesign-application** skill → project-layout |
 | 样式硬规则、反模式清单、Code Review 检查清单 | **opendesign-application** skill → conventions |
@@ -127,15 +127,15 @@
 |------|---------------|---------------|
 | SSR 安全守卫 | ✅ 必含（服务端不可用 API 表 + hydration 防范 + ClientOnly 规范） | ❌ 不含（无 SSR） |
 | `<ClientOnly>` | ✅ 必含使用规范 | ❌ 不含 |
-| 持久化方案 | `useCookie()`（服务端可读） | `useStorage` / `localStorage`（无 SSR） |
+| DOM 同步 | `useHead`（Nuxt HTML 注入通道） | `watchEffect` + `document.setAttribute` |
 | 客户端守卫 | `import.meta.client` | ❌ 不需要 |
 | 自动导入 | ✅ Nuxt 自动导入规则 + 禁手动 import | ❌ 需显式 import |
 | Plugin 分类 | ✅ `.client.ts` / `.server.ts` / `.ts` | ❌ 无 Plugin 目录 |
 | 数据获取 | ✅ `useFetch` / `useAsyncData` / `$fetch` | ❌ 无内置数据获取 |
-| 社区切换同步点 | 3 处（nuxt.config.ts + store 常量 + FOUC 脚本） | 4 处（main.ts + store 常量 + index.html 脚本 + `<html>` 默认值） |
+| 社区切换同步点 | 2 处（nuxt.config.ts + store 常量） | 2 处（main.ts + store 常量） |
 | 入口文件 | `nuxt.config.ts` + `app/app.vue` | `main.ts` + `App.vue` + `index.html` |
 | 页面路由 | `pages/` 目录自动路由 | 无 `pages/` 目录 |
-| 防闪烁注入 | `useHead`（Nuxt 自动注入 `<head>`） | `index.html` 内联 `<script>` |
+| DOM 同步注入 | `useHead`（Nuxt 自动注入 `htmlAttrs`） | `watchEffect`（直接 `setAttribute`） |
 
 > **通用改动的同步**：如果 AGENTS.md 的某个通用章节（如组件拆分规范、AppSection 用法、最佳实践）需要更新，两套 AGENTS.md 都要同步改——特异章节只改对应模板。详见 [`template-sync.md`](template-sync.md)。
 
@@ -154,8 +154,8 @@
 | 查阅指引列名 | "去哪查" | "查哪里" + markdown 链接 |
 | skill 引用格式 | `opendesign-application skill → getting-started` | `../../references/getting-started.md` |
 | 内容重复 | 一句话引用替代 skill 已覆盖的完整内容 | 大段复制 skill references 的原文 |
-| Nuxt 专属内容 | SSR 守卫 / ClientOnly / useCookie / 自动导入 / Plugin / 数据获取 | SPA AGENTS.md 中出现这些内容 |
-| SPA 专属内容 | 显式 import / useStorage / 无 SSR 守卫 | Nuxt AGENTS.md 中出现 SPA 专属表述 |
+| Nuxt 专属内容 | SSR 守卫 / ClientOnly / useHead（DOM 同步）/ 自动导入 / Plugin / 数据获取 | SPA AGENTS.md 中出现这些内容 |
+| SPA 专属内容 | 显式 import / 无 SSR 守卫 | Nuxt AGENTS.md 中出现 SPA 专属表述 |
 | 项目定位 | 首段明确标注 SSR 或 SPA + 适用场景 | 模糊或未区分 |
 | 基础设施文件清单 | 列出所有不建议修改的基础文件 | 缺失或遗漏关键文件 |
 | 楼层式组装 | AppSection 使用规范 + 标准页面结构代码 | 手写 `.floor` CSS 组合 |
@@ -186,7 +186,7 @@
 |-------------|----------------------|
 | 新增基础设施文件 | **两套**都加入「基础设施文件清单」 |
 | 新增基础设施组件 | **两套**都加入「业务组件」章节（Props/Slots/用法）+ 基础设施文件清单 |
-| 社区切换同步点变化 | Nuxt AGENTS.md 更新 3 处 / SPA AGENTS.md 更新 4 处（**特异内容各自适配**） |
+| 社区切换同步点变化 | Nuxt AGENTS.md 更新 2 处 / SPA AGENTS.md 更新 2 处（**特异内容各自适配**） |
 | 入口文件职责变化 | **两套**都更新「入口文件职责划分」表 |
 | 技术栈变化 | **两套**都更新「技术栈红线」表 |
 | 新增 mixin | **两套**都更新 SCSS mixin 章节的注入说明 + 基础设施文件清单 |
@@ -202,4 +202,4 @@
 | 脚手架 | 文件 | 特点 |
 |--------|------|------|
 | Nuxt 4 SSR | `skills/opendesign-application/templates/nuxt/AGENTS.md` | 含 SSR 安全守卫、`<ClientOnly>`、自动导入、Plugin、数据获取 |
-| Vite + Vue 3 SPA | `skills/opendesign-application/templates/vue-spa/AGENTS.md` | 无 SSR 守卫，含显式 import、useStorage |
+| Vite + Vue 3 SPA | `skills/opendesign-application/templates/vue-spa/AGENTS.md` | 无 SSR 守卫，含显式 import |

@@ -10,7 +10,7 @@
 
 ```
 vue-spa/
-├── index.html                  ← 入口 HTML（含防闪烁内联脚本）
+├── index.html                  ← 入口 HTML
 ├── vite.config.ts              ← Vite 配置（别名 `@` + `#icons` + SCSS 全局注入）
 ├── package.json
 ├── tsconfig.json / tsconfig.app.json / tsconfig.node.json
@@ -50,7 +50,7 @@ vue-spa/
     │   └── ...
     ├── icon-components/        ← gen:icon 输出（git 忽略，勿提交）
     └── stores/
-        └── theme.ts            ← 主题 store（useStorage + watchEffect）
+        └── theme.ts            ← 主题 store（默认 light + watchEffect）
 ```
 
 ---
@@ -89,10 +89,8 @@ nuxt/
     │   ├── ScreenDetector.vue   ← useScreen() + in-dark + hover + ClientOnly 示范
     │   └── ...
     ├── icon-components/        ← gen:icon 输出（git 忽略，勿提交）
-    ├── plugins/
-    │   └── theme.client.ts     ← 主题系统偏好检测插件（仅客户端）
     └── stores/
-        └── theme.ts            ← 主题 store（useCookie + useHead）
+        └── theme.ts            ← 主题 store（默认 light + useHead）
 ```
 
 > Nuxt 4 把应用代码放在 `app/` 子目录下（区别于 Nuxt 3 的根目录）。`.nuxt/` 是生成目录，不提交。
@@ -103,7 +101,7 @@ nuxt/
 
 | 维度 | Vite SPA | Nuxt |
 |------|----------|------|
-| **入口 HTML** | `index.html`（手写，含 FOUC 脚本） | Nuxt 自动生成（`app.vue` 为根） |
+| **入口 HTML** | `index.html`（手写） | Nuxt 自动生成（`app.vue` 为根） |
 | **入口 JS** | `src/main.ts`（`createApp` + `app.use` + `mount`） | Nuxt 自动（无 main.ts） |
 | **样式引入** | `main.ts` 的 `import` 语句 | `nuxt.config.ts` 的 `css` 数组 |
 | **SCSS 全局注入** | `vite.config.ts` 的 `css.preprocessorOptions.scss.additionalData` | `nuxt.config.ts` 的 `vite.css.preprocessorOptions.scss.additionalData` |
@@ -112,10 +110,8 @@ nuxt/
 | **Pinia 注册** | `main.ts` 中 `app.use(createPinia())` | `@pinia/nuxt` 模块自动注册 |
 | **组件导入** | 显式 `import` | 自动导入（`components/` 下的组件无需 import） |
 | **VueUse** | `@vueuse/core`（显式 import） | `@vueuse/nuxt` 模块（自动导入 composables） |
-| **主题持久化** | `useStorage`（localStorage） | `useCookie`（cookie，服务端可读） |
-| **防闪烁脚本** | `index.html` 内联 `<script>` | `useHead` 注入 `script.innerHTML` |
-| **DOM 同步** | `watchEffect` + `document.setAttribute` | `useHead` 的 `htmlAttrs`（computed） |
-| **系统偏好检测** | store 内 `watch(prefersDark)` | `plugins/theme.client.ts` + `app:mounted` 钩子延迟 |
+| **DOM 同步** | `watchEffect` + `document.setAttribute` | `useHead` 的 `htmlAttrs`（ref） |
+| **系统偏好检测** | 无（默认 light，不跟随系统） | 无（默认 light，不跟随系统） |
 | **hydration** | 无（纯客户端） | 有（需处理 SSR/客户端不匹配） |
 | **SSR 安全** | 不需要 | `import.meta.client` 守卫、`<ClientOnly>`、避免 `window`/`matchMedia` 在服务端调用 |
 | **`useScreen()`** | 直接调用，无 hydration 问题 | 需 `<ClientOnly>` 包裹含 `v-if` 条件渲染的部分 |
@@ -134,7 +130,7 @@ nuxt/
 | 已有 vue-router 项目改造 | Vite SPA | 迁移成本低，不引入 Nuxt 路由约定 |
 | 需要全静态部署（CDN） | Nuxt（`nuxt generate`）或 Vite SPA | 两者均可，Nuxt 静态化更彻底 |
 
-> 若不需要 SSR/SSG，**优先选 Vite SPA**——集成更简单（无 hydration 问题、无 SSR 安全守卫、`localStorage` 比 cookie 容量大）。只有明确需要 SEO 或服务端渲染时才上 Nuxt。
+> 若不需要 SSR/SSG，**优先选 Vite SPA**——集成更简单（无 hydration 问题、无 SSR 安全守卫）。只有明确需要 SEO 或服务端渲染时才上 Nuxt。
 
 ---
 
@@ -144,10 +140,7 @@ nuxt/
 
 | 需要改的 | 从 | 到 |
 |---------|-----|-----|
-| 持久化机制 | `useStorage` + `localStorage` | `useCookie` |
-| 防闪烁脚本位置 | `index.html` 内联 | `useHead` 的 `script.innerHTML` |
-| DOM 同步 | `watchEffect` + `setAttribute` | `useHead` 的 `htmlAttrs`（computed） |
-| 系统偏好检测 | store 内 `watch` | `plugins/theme.client.ts` + `app:mounted` |
+| DOM 同步 | `watchEffect` + `setAttribute` | `useHead` 的 `htmlAttrs`（ref） |
 | 样式引入 | `main.ts` import | `nuxt.config.ts` css 数组 |
 | 路径别名 | `@` → `./src` | `~@` → `app/` |
 | 组件 import | 显式 | 自动导入（可删除 import 语句） |
