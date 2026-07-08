@@ -16,6 +16,16 @@
 
 ---
 
+## 2026-07-08
+
+### 更新
+- **opendesign-application**：font.scss 字体 mixin 移除 `$only-var-prefix` 前缀参数模式（原 `@include h1('card-')` 只暴露 CSS 变量不输出属性），改为固定 `--font-size` / `--line-height` + `@include text` 成对输出。需要「单独引用字号/行高」的场景应直接使用 `var(--o-r-font_size-*)` / `var(--o-r-line_height-*)` 响应式变量，不再通过 mixin 前缀参数实现。两套脚手架模板（nuxt / vue-spa）的 `font.scss` 与 `TokenFontDemo.vue` 同步更新。
+- **opendesign-application**：约定强化——Code Review 检查清单新增行高配对要求（字号+行高成对出现，刻意只用一项须注释）、字重 token 规则（`var(--o-font_weight-*)`）、动画时间/缓动 token 规则（`var(--o-duration-*)` + `var(--o-easing-*)`）、组件样式定制途径（CSS 变量/slot/props，禁止 `:deep` 穿透）、表单控件宽度检视项、mixin vs useScreen 分工（CSS 层样式变化走 mixin，DOM 结构不同才用 useScreen）、gen:icon 产物目录检视项。违规示例新增 4.7–4.12 共 6 条（行高未成对、硬编码字重、硬编码动画时间/缓动、字号引用方式误用、组件样式定制途径、纯样式变化误用 useScreen）。自动化扫描正则新增硬编码字重、动画时间、缓动曲线、字号行高 4 条。
+- **opendesign-application**：Token 优先规则细化——响应式 token（`--o-r-*`）优先使用，静态 token（`--o-gap-*` / `--o-font_size-*`）仅用于需要固定不变的布局场景；图标使用规范简化导入路径描述（不再硬写 `#icons` 别名，改为「按项目约定路径导入」）；表单宽度规则从硬性约束调整为建议做法；移除独立「主题切换走 storeToRefs」与「i18n」章节（内容保留在其他 reference 或已由更上游 skill 覆盖）。
+- **opendesign-tokens**：SKILL.md 新增字号/行高引用方式指引——mixin（`@include h*`）用于成对输出到当前元素，`var(--o-r-font_size-*)` + `var(--o-r-line_height-*)` 用于单独引用某一项；新增 mixin 用法示例；链接指向 opendesign-application skill → styles-infrastructure §4。
+
+---
+
 ## 2026-07-07
 
 ### 新增

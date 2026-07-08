@@ -134,32 +134,40 @@ export default defineNuxtConfig({
 .hint { @include tip1; }
 ```
 
-### 仅暴露变量（加前缀，不输出属性）
+### 单独引用响应式变量（不使用 mixin）
 
-适用于需要在子元素或不同断点复用同一字号变量的场景：
+当需要响应式字号/行高但不使用 mixin（如在非 SCSS 上下文、或在子元素单独引用某一项时），可直接引用 `--o-r-font_size-*` / `--o-r-line_height-*` 变量：
 
 ```scss
-.card {
-  @include h1('card-');   // 只生成 --card-font-size / --card-line-height
-  // 不输出 font-size / line-height 属性
-}
-
-.card__title {
-  font-size: var(--card-font-size);      // 引用暴露的变量
-  line-height: var(--card-line-height);
+.hero-label {
+  font-size: var(--o-r-font_size-h1);
+  line-height: var(--o-r-line_height-h1);
 }
 ```
 
+> **mixin vs 直接引用变量的选择**：
+> - **需要字号 + 行高成对输出到当前元素** → 使用 `@include h1;` 等 mixin（保证配对、调用简洁）
+> - **只需要单独引用某一项，或不在 SCSS 上下文中** → 直接 `var(--o-r-font_size-h1)` + `var(--o-r-line_height-h1)`
+
 ### 可用 mixin 清单
 
-| mixin | token | 用途 |
-|-------|-------|------|
-| `display1` / `display2` / `display3` | `--o-r-font_size-display*` | 数据展示 |
-| `h1` / `h2` / `h3` / `h4` | `--o-r-font_size-h*` | 标题层级 |
-| `text1` / `text2` | `--o-r-font_size-text*` | 正文 |
-| `tip1` / `tip2` | `--o-r-font_size-tip*` | 辅助提示 |
+> 以下 ≥1920 列标注了 Desktop 断点（>1680px）时的字号与行高值，方便在设计稿或大屏场景下快速查找。
 
-> **为何用 mixin 而非直接 `var()`**：① 字号 + 行高成对，避免漏写行高；② 引用响应式 token，免写 media query；③ 全局注入后调用简洁。
+| mixin | ≥1920 字号 / 行高 | token | 用途 |
+|-------|-------------------|-------|------|
+| `display1` | 56px / 80px | `--o-r-font_size-display1` | 一级数据展示 |
+| `display2` | 48px / 64px | `--o-r-font_size-display2` | 二级数据展示 |
+| `display3` | 40px / 56px | `--o-r-font_size-display3` | 三级数据展示 |
+| `h1` | 32px / 44px | `--o-r-font_size-h1` | 一级标题 |
+| `h2` | 24px / 32px | `--o-r-font_size-h2` | 二级标题 |
+| `h3` | 22px / 30px | `--o-r-font_size-h3` | 三级标题 |
+| `h4` | 20px / 28px | `--o-r-font_size-h4` | 四级标题 |
+| `text1` | 16px / 24px | `--o-r-font_size-text1` | 常规正文 |
+| `text2` | 18px / 26px | `--o-r-font_size-text2` | 大号正文 |
+| `tip1` | 14px / 22px | `--o-r-font_size-tip1` | 提示文本1 |
+| `tip2` | 12px / 18px | `--o-r-font_size-tip2` | 提示文本2 |
+
+> **为何用 mixin 而非直接 `var()`**：① 字号 + 行高成对，避免漏写行高；② 引用响应式 token，免写 media query；③ 全局注入后调用简洁。若只需单独引用某一项或不在 SCSS 上下文中，可直接使用 `var(--o-r-font_size-*)` + `var(--o-r-line_height-*)`。
 
 ---
 
