@@ -77,7 +77,10 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   plugins: [vue()],
   resolve: {
-    alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      '#icons': fileURLToPath(new URL('./src/icon-components', import.meta.url)),
+    },
   },
   css: {
     preprocessorOptions: {
@@ -96,7 +99,21 @@ export default defineConfig({
 ### Nuxt（`nuxt.config.ts`）
 
 ```typescript
+import { fileURLToPath } from 'node:url'
+
 export default defineNuxtConfig({
+  modules: ['@pinia/nuxt', '@vueuse/nuxt'],
+  alias: {
+    '#icons': fileURLToPath(new URL('./app/icon-components', import.meta.url)),
+  },
+  css: [
+    '~/assets/styles/reset.scss',
+    '@opensig/opendesign-token/themes/e.light.token.css',
+    '@opensig/opendesign-token/themes/e.dark.token.css',
+    '@opensig/opendesign-token/fonts/font-harmony.css',
+    '@opensig/opendesign/es/index.css',
+    '~/assets/styles/global.scss',
+  ],
   vite: {
     css: {
       preprocessorOptions: {
@@ -113,7 +130,7 @@ export default defineNuxtConfig({
 })
 ```
 
-> ⚠️ **路径别名一致性**：`additionalData` 中的 `@` / `~` 必须与 `resolve.alias` 或 Nuxt 约定一致。Vite 的 `@` → `./src`；Nuxt 的 `~` → 项目根（`app/` 在 Nuxt 4 下自动解析）。配置后**所有 `.scss` 文件自动注入**，组件内不再 `@use`。
+> ⚠️ **路径别名一致性**：`additionalData` 中的 `@` / `~` 必须与 `resolve.alias` 或 Nuxt 约定一致。Vite 的 `@` → `./src`、`#icons` → `./src/icon-components/`；Nuxt 的 `~` → 项目根、`#icons` → `./app/icon-components/`（在 `nuxt.config.ts` 的 `alias` 配置，`app/` 在 Nuxt 4 下自动解析）。配置后**所有 `.scss` 文件自动注入**，组件内不再 `@use`。
 
 ---
 

@@ -53,7 +53,7 @@
     │   ├── SKILL.md               ← 工程化总纲 + 红线 + 起手式 + 参考文件索引（第二层）
     │   ├── references/
     │   │   ├── getting-started.md      ← 依赖安装、入口文件、样式引入顺序、useScreen()
-    │   │   ├── theme-system.md         ← Pinia store、防闪烁、SSR hydration、社区切换、ThemeToggle（OSwitch）
+    │   │   ├── theme-system.md         ← Pinia store、SSR hydration、社区切换、ThemeToggle（OSwitch）
     │   │   ├── styles-infrastructure.md← SCSS mixin 三套、全局注入、栅格容器、楼层结构、global.scss
     │   │   ├── project-layout.md       ← 目录结构、Nuxt vs SPA 差异对照、选型建议
     │   │   └── conventions.md          ← 硬规则、应用层约定、Code Review 检查清单

@@ -24,13 +24,13 @@
 | 图标生成 | @opensig/open-scripts gen:icon | 手写 SVG 内联 / 其他图标方案 |
 | 工具库 | @vueuse/core | 手写 composables 替代 VueUse 已有功能 |
 
-> **为什么**：脚手架的 mixin 全局注入、样式引入顺序、防闪烁脚本、store 持久化机制都围绕上述选型深度绑定。替换任一项都会导致集成断裂。
+> **为什么**：脚手架的 mixin 全局注入、样式引入顺序、store 默认主题机制都围绕上述选型深度绑定。替换任一项都会导致集成断裂。
 
 ### 1.2 入口文件职责划分
 
 | 文件 | 职责 | 严禁做的事 |
 |------|------|-----------|
-| `index.html` | 防闪烁内联脚本 + `<div id="app">` | 不在此引入外部 CSS/JS、不写业务逻辑 |
+| `index.html` | `<div id="app">` | 不在此引入外部 CSS/JS、不写业务逻辑 |
 | `main.ts` | createApp + Pinia 注册 + **样式引入（顺序不可调换）** | 不在此注册全局组件、不在此写业务逻辑、不在此调 API |
 | `App.vue` | 应用入口（主题初始化 + DefaultLayout 包裹页面） | 不在此写骨架、不在此写楼层内容、不在此做数据请求 |
 | `layouts/DefaultLayout.vue` | 页面骨架（AppHeader + slot + AppFooter） | 不在此写楼层内容、不在此做数据请求 |
@@ -128,7 +128,7 @@
 > <AppFooter />
 > ```
 
-### 4.2 AppHeader 导航栏组件
+### 3.2 AppHeader 导航栏组件
 
 `AppHeader` 是页面顶部导航栏组件，内含品牌 Logo 与主题切换按钮，使用 `o-r-grid-container` 做水平居中，消费设计令牌承担导航栏高度、间距与排版规范。
 
@@ -139,7 +139,7 @@
 | `brand` | 品牌区域，不传时回退到默认 Logo + 标题组合 |
 | `actions` | 右侧操作区，不传时回退到默认 ThemeToggle |
 
-### 4.3 AppFooter 页脚组件
+### 3.3 AppFooter 页脚组件
 
 `AppFooter` 是页面底部页脚组件，内含版权信息，使用 `o-r-grid-container` 做水平居中，消费设计令牌承担页脚间距与排版规范。
 
@@ -149,7 +149,7 @@
 |------|------|
 | `default` | 页脚内容区，不传时回退到默认 Powered by 文本 |
 
-### 4.4 布局与页面分层
+### 3.4 布局与页面分层
 
 SPA 采用三层分离：`App.vue` → `layouts/DefaultLayout.vue` → `pages/*.vue`。
 
@@ -307,7 +307,7 @@ export function useXxx(options?: { /* ... */ }) {
 
 ### 5.2 Store（`stores/useXxxStore.ts`）
 
-> 主题 store 的完整设计（含防闪烁、DOM 同步）见 opendesign-application skill → theme-system。以下为**新增业务 store** 的通用模板。
+> 主题 store 的完整设计（含 DOM 同步）见 opendesign-application skill → theme-system。以下为**新增业务 store** 的通用模板。
 
 提取为 store 的信号：
 
@@ -341,7 +341,7 @@ export const useXxxStore = defineStore('xxx', () => {
 **规范**：
 - 仅用 Composition API 风格（setup store），不用 Options API 风格
 - 命名 = `use` + 语义 + `Store`
-- 持久化用 `useStorage`（localStorage），不用 cookie（SPA 无 SSR）
+- 主题默认 light 模式
 - store 之间可以互相调用：`const userStore = useUserStore()`
 
 ### 5.3 SCSS Mixin
@@ -423,13 +423,13 @@ import { AppIconSun, AppIconMoon } from '#icons'
 
 ## 七、最佳实践
 
-### 6.1 页面组装与楼层结构
+### 7.1 页面组装与楼层结构
 
 新页面内容按**楼层**添加到 `pages/*.vue`——全宽页面楼层统一使用 `<AppSection>` 组件，标题通过 `title` / `subtitle` prop 传入，主体内容通过默认插槽传入。`pages/*.vue` 只编排楼层，不写具体业务内容。骨架（AppHeader + AppFooter）由 `layouts/DefaultLayout.vue` 承担，`App.vue` 只做主题初始化与页面编排。
 
 > AppSection 组件详解见本章「业务组件 / AppSection 楼层组件」章节。AppSection 的设计令牌与楼层结构原理见 opendesign-application skill → styles-infrastructure 的「栅格容器」与「楼层式页面结构」章节。
 
-### 6.2 组件内部结构规范
+### 7.2 组件内部结构规范
 
 每个 `.vue` 文件按固定顺序组织：
 
@@ -459,41 +459,39 @@ import { AppIconSun, AppIconMoon } from '#icons'
 </style>
 ```
 
-### 6.3 样式硬规则与反模式
+### 7.3 样式硬规则与反模式
 
 > 样式硬规则（`:deep` 禁令、token 优先、组件优先、hover 走 mixin 等）完整清单见 opendesign-application skill → conventions 的「硬规则红线」与「应用层补充约定」章节。
 > 常见反模式与违规修正见同一 skill → conventions 的「常见违规示例与修正」及「Code Review 检查清单」。
 
 SPA 专属补充：
-- 持久化用 `useStorage`（localStorage），不用 cookie
+- 主题默认 light 模式
 - 组件应显式 `import`，不全局注册
 
-### 6.4 响应式策略优先级
+### 7.4 响应式策略优先级
 
 > CSS vs JS 层面的响应式分工详见 opendesign-application skill → styles-infrastructure 的「`useScreen()` 运行时响应式检测」章节。
 
-### 6.5 表单宽度管理
+### 7.5 表单宽度管理
 
 > 表单控件宽度规则详解见 opendesign-application skill → styles-infrastructure 的 `global.scss` 章节，以及 conventions 的「表单宽度走 `global.scss`」条目。
 
-### 6.6 主题切换
+### 7.6 主题切换
 
-> 完整主题系统集成（Pinia store、防闪烁、社区切换、ThemeToggle）见 opendesign-application skill → theme-system。
+> 完整主题系统集成（Pinia store、社区切换、ThemeToggle）见 opendesign-application skill → theme-system。
 
 业务代码统一走 `useThemeStore()` 的 `isDark`（writable computed）或 `setMode`，不直接操作 DOM。
 
-防闪烁脚本在 `index.html` 的 `<head>` 内联——改社区时需同步修改四处：
+改社区时需同步修改两处：
 1. `main.ts` 的 token CSS 引入
 2. `stores/theme.ts` 的 `OPENDESIGN_COMMUNITY` 常量
-3. `index.html` 内联脚本的社区前缀
-4. `index.html` `<html>` 标签的 `data-o-theme` 默认值
 
 ---
 
 ## 八、新增业务组件的完整流程
 
 1. 在 `components/` 下创建 `XxxSection.vue`
-2. 按 5.2 规范组织文件结构
+2. 按 4.2 规范组织文件结构
 3. 所有样式值用 `var(--o-*)` token 或 `@include` mixin（详见 opendesign-application skill → conventions）
 4. 如需响应式，优先用 SCSS mixin，次选 `useScreen()`
 5. 如需跨组件共享状态，创建 `stores/useXxxStore.ts`
@@ -510,7 +508,7 @@ SPA 专属补充：
 | 文件 | 作用 |
 |------|------|
 | `main.ts` | 入口 + 样式引入顺序 |
-| `index.html` | 防闪烁脚本 |
+| `index.html` | SPA 入口 HTML |
 | `vite.config.ts` | SCSS 全局注入 + 别名（`@` + `#icons`） |
 | `stores/theme.ts` | 主题 store |
 | `components/ThemeToggle.vue` | 主题切换开关（OSwitch） |
@@ -520,7 +518,7 @@ SPA 专属补充：
 | `assets/styles/global.scss` | body 基线 + 表单宽度 |
 | `icons/icon.config.ts` | gen:icon 配置（SVG 源 → Vue 图标组件产物） |
 
-如需切换社区主题，见 opendesign-application skill → theme-system 的「社区切换」章节，同步修改四处。
+如需切换社区主题，见 opendesign-application skill → theme-system 的「社区切换」章节，同步修改两处。
 
 ---
 
@@ -533,7 +531,7 @@ SPA 专属补充：
 | 组件 API（Props / Events / Slots） | **opendesign-components** skill |
 | token 变量名完整列表 | **opendesign-tokens** skill |
 | 依赖安装、入口文件、样式引入顺序详解 | **opendesign-application** skill → getting-started |
-| 主题系统完整集成（Pinia store、防闪烁、社区切换） | **opendesign-application** skill → theme-system |
+| 主题系统完整集成（Pinia store、社区切换） | **opendesign-application** skill → theme-system |
 | SCSS mixin 用法详解、栅格容器、楼层结构、global.scss | **opendesign-application** skill → styles-infrastructure |
 | 目录结构对照与 Nuxt vs SPA 差异 | **opendesign-application** skill → project-layout |
 | 样式硬规则、反模式清单、Code Review 检查清单 | **opendesign-application** skill → conventions |

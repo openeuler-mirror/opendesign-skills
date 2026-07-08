@@ -35,7 +35,6 @@
 | `app/app.vue` | 应用入口编排（NuxtLayout + NuxtPage） | 不在此写骨架、不在此写楼层内容、不在此做数据请求 |
 | `app/layouts/default.vue` | 页面骨架（AppHeader + slot + AppFooter） | 不在此写楼层内容、不在此做数据请求 |
 | `app/pages/*.vue` | 页面楼层内容编排 | 不在此写骨架结构 |
-| `app/plugins/theme.client.ts` | 系统暗色偏好检测（仅客户端，延迟到 `app:mounted`） | 不在此写业务逻辑、不在此访问 localStorage |
 | `icons/icon.config.ts` | gen:icon 配置（SVG 源目录 → Vue 图标组件输出） | 不在此写业务逻辑 |
 
 > Nuxt 没有 `main.ts`——所有配置在 `nuxt.config.ts`，应用入口在 `app/app.vue`。
@@ -50,7 +49,7 @@
 
 ## 二、SSR 安全守卫（Nuxt 专属红线）
 
-> 以下为 Nuxt SSR 专属约束，SPA 项目无此问题。完整主题系统集成（含 hydration 原理、防闪烁、`useCookie` 替代 `localStorage`）详见 opendesign-application skill → theme-system。
+> 以下为 Nuxt SSR 专属约束，SPA 项目无此问题。完整主题系统集成（含 hydration 原理、默认 light 模式）详见 opendesign-application skill → theme-system。
 
 ### 2.1 服务端不可用的 API
 
@@ -58,7 +57,7 @@
 |-----------|-----------|---------|
 | `window` | ❌ undefined | `import.meta.client` 守卫 或 `onMounted` 后访问 |
 | `document` | ❌ undefined | `import.meta.client` 守卫 或 `onMounted` 后访问 |
-| `localStorage` | ❌ undefined | `useCookie()`（服务端可读） |
+| `localStorage` | ❌ undefined | `import.meta.client` 守卫 或 `onMounted` 后访问 |
 | `matchMedia` | ❌ undefined | `usePreferredDark()`（VueUse 处理了 SSR 安全） |
 | `innerWidth` | ❌ undefined | `useScreen()`（仅在客户端可用） |
 
@@ -67,9 +66,9 @@
 > 详细原理与代码示例见 opendesign-application skill → theme-system 的「Nuxt hydration 处理」章节，以及 conventions 的 Code Review 检查清单「主题系统 / Nuxt `<ClientOnly>`」条目。
 
 核心规则：
-- **不在 `app:mounted` 前改 store 状态**——SSR HTML 与客户端不一致时触发 hydration 警告。系统暗色检测必须在 `plugins/theme.client.ts` 的 `app:mounted` 钩子后更新。
+- **不在 `app:mounted` 前改 store 状态**——SSR HTML 与客户端不一致时触发 hydration 警告（当前默认 light，SSR 与客户端一致，此问题已避免）
 - **含 `useScreen()` 条件渲染必须 `<ClientOnly>` 包裹**——服务端无 `matchMedia`，默认值与客户端不同。
-- **持久化统一用 `useCookie()`**——服务端可读 cookie，不可读 `localStorage`。
+- **主题默认 light**——每次刷新回到 light，SSR 与客户端初始状态一致
 
 ### 2.3 `<ClientOnly>` 使用规范
 
@@ -359,7 +358,7 @@ export function useXxx(options?: { /* ... */ }) {
 
 Nuxt 自动导入 `stores/` 下 `use` + `Store` 后缀的导出函数。
 
-> 主题 store 的完整设计（含防闪烁、DOM 同步、hydration 处理）见 opendesign-application skill → theme-system。以下为**新增业务 store** 的通用模板。
+> 主题 store 的完整设计（含 DOM 同步、hydration 处理）见 opendesign-application skill → theme-system。以下为**新增业务 store** 的通用模板。
 
 提取为 store 的信号：
 
@@ -377,10 +376,6 @@ export const useXxxStore = defineStore('xxx', () => {
   // —— State ——
   const items = ref<Item[]>([])
 
-  // —— SSR 持久化 ——
-  // 用 useCookie（服务端可读），不用 localStorage
-  const pref = useCookie<XxxPref>('xxx-pref', { maxAge: 60 * 60 * 24 * 365 })
-
   // —— Getters ——
   const activeItems = computed(() => items.value.filter(i => i.active))
 
@@ -394,7 +389,8 @@ export const useXxxStore = defineStore('xxx', () => {
 **规范**：
 - 仅用 Composition API 风格（setup store），不用 Options API 风格
 - 命名 = `use` + 语义 + `Store`
-- **持久化用 `useCookie`**（服务端可读），**不用 `localStorage` / `useStorage`**（服务端不可读）
+- 主题默认 light 模式
+- 若业务需要持久化偏好，可自行接入 `useCookie`（Nuxt）或 localStorage（仅客户端）
 - store 之间可互相调用：`const userStore = useUserStore()`
 - 涉及客户端专属逻辑（如 `matchMedia`）的更新，必须在 `app:mounted` 之后执行
 
@@ -407,9 +403,6 @@ Nuxt 插件文件名决定运行时机：
 | `.client.ts` | 仅客户端（SSR 不执行） | `matchMedia` / `localStorage` / DOM 操作 |
 | `.server.ts` | 仅服务端 | 数据预处理 / API 代理 |
 | `.ts`（无后缀） | 两端都执行 | 全局注册 / 配置 |
-
-**现有基础设施插件**：
-- `plugins/theme.client.ts`：系统暗色偏好检测，延迟到 `app:mounted` 后更新 store
 
 **新增插件规范**：
 - 涉及 `window` / `matchMedia` / `localStorage` 的插件 → `.client.ts`
@@ -494,7 +487,7 @@ import { AppIconSun, AppIconMoon } from '#icons'
 
 ## 八、最佳实践
 
-### 7.1 页面组装与楼层结构
+### 8.1 页面组装与楼层结构
 
 新页面内容按**楼层**添加到 `pages/*.vue`——全宽页面楼层统一使用 `<AppSection>` 组件，标题通过 `title` / `subtitle` prop 传入，主体内容通过默认插槽传入。`pages/*.vue` 只编排楼层，不写具体业务内容。骨架（AppHeader + AppFooter）由 `layouts/default.vue` 承担，`app.vue` 只做入口编排。
 
@@ -502,7 +495,7 @@ import { AppIconSun, AppIconMoon } from '#icons'
 
 > 新增页面只需在 `pages/` 下新建 `.vue` 文件，Nuxt 自动基于文件名生成路由，骨架自动复用。
 
-### 7.2 组件内部结构规范
+### 8.2 组件内部结构规范
 
 每个 `.vue` 文件按固定顺序组织：
 
@@ -534,42 +527,39 @@ import { AppIconSun, AppIconMoon } from '#icons'
 
 > Nuxt 自动导入意味着：`ref`、`computed`、`watch`、`onMounted`、`defineProps`、`defineEmits`、`useThemeStore`、`useScreen` 等无需 `import` 语句。手动 import 也可以，但不必要。
 
-### 7.3 样式硬规则与反模式
+### 8.3 样式硬规则与反模式
 
 > 样式硬规则（`:deep` 禁令、token 优先、组件优先、hover 走 mixin 等）完整清单见 opendesign-application skill → conventions 的「硬规则红线」与「应用层补充约定」章节。
 > 常见反模式与违规修正见同一 skill → conventions 的「常见违规示例与修正」及「Code Review 检查清单」。
 
 Nuxt 专属补充：
 - 含 `useScreen()` 条件渲染必须 `<ClientOnly>` 包裹（见本章 2.3）
-- 持久化用 `useCookie`，不用 `localStorage`
+- 主题默认 light 模式
 - 手动 import 组件是反模式——Nuxt 自动导入
 - `app.use(createPinia())` 是反模式——`@pinia/nuxt` 模块已自动注册
 - 在 `app:mounted` 前改 store 状态是反模式——会导致 hydration 不匹配
 
-### 7.4 响应式策略优先级
+### 8.4 响应式策略优先级
 
 > CSS vs JS 层面的响应式分工详见 opendesign-application skill → styles-infrastructure 的「`useScreen()` 运行时响应式检测」章节。
 
 Nuxt 专属补充：JS 层面（`useScreen()` + `v-if`）的条件渲染**必须**加 `<ClientOnly>`。
 
-### 7.5 表单宽度管理
+### 8.5 表单宽度管理
 
 > 表单控件宽度规则详解见 opendesign-application skill → styles-infrastructure 的 `global.scss` 章节，以及 conventions 的「表单宽度走 `global.scss`」条目。
 
-### 7.6 主题切换
+### 8.6 主题切换
 
-> 完整主题系统集成（Pinia store、防闪烁、社区切换、ThemeToggle）见 opendesign-application skill → theme-system。
+> 完整主题系统集成（Pinia store、社区切换、ThemeToggle）见 opendesign-application skill → theme-system。
 
 业务代码统一走 `useThemeStore()` 的 `isDark`（writable computed）或 `setMode`，不直接操作 DOM。
 
-防闪烁脚本通过 `useHead` 注入——改社区时需同步修改三处：
+改社区时需同步修改两处：
 1. `nuxt.config.ts` 的 token CSS 引入
 2. `stores/theme.ts` 的 `OPENDESIGN_COMMUNITY` 常量
-3. `stores/theme.ts` 的 `FOUC_SCRIPT` 字符串中的社区前缀
 
-> Nuxt 版防闪烁不需要修改 `index.html`——`useHead` 在服务端和客户端都自动注入 `<script>` 到 `<head>`。
-
-### 7.7 数据获取
+### 8.7 数据获取
 
 Nuxt 提供内置数据获取 composables，**不自造**：
 
@@ -586,10 +576,10 @@ Nuxt 提供内置数据获取 composables，**不自造**：
 ## 九、新增业务组件的完整流程
 
 1. 在 `components/` 下创建 `XxxSection.vue`
-2. 按 6.2 规范组织文件结构
+2. 按 5.2 规范组织文件结构
 3. 所有样式值用 `var(--o-*)` token 或 `@include` mixin（详见 opendesign-application skill → conventions）
 4. 如需响应式，优先用 SCSS mixin，次选 `useScreen()` + `<ClientOnly>`
-5. 如需跨组件共享状态，创建 `stores/useXxxStore.ts`（持久化用 `useCookie`）
+5. 如需跨组件共享状态，创建 `stores/useXxxStore.ts`
 6. 如需复用逻辑，创建 `composables/useXxx.ts`
 7. 在 `pages/*.vue` 的楼层结构中引入新组件（Nuxt 自动导入，无需 import）
 8. 运行 `pnpm dev` 验证效果
@@ -603,8 +593,7 @@ Nuxt 提供内置数据获取 composables，**不自造**：
 | 文件 | 作用 |
 |------|------|
 | `nuxt.config.ts` | 模块注册 + 样式引入顺序 + SCSS 全局注入 + `#icons` 别名 |
-| `stores/theme.ts` | 主题 store（含防闪烁脚本 + DOM 同步） |
-| `plugins/theme.client.ts` | 系统暗色偏好检测（延迟到 `app:mounted`） |
+| `stores/theme.ts` | 主题 store（默认 light + DOM 同步） |
 | `components/ThemeToggle.vue` | 主题切换开关（OSwitch） |
 | `components/AppSection.vue` | 楼层通用容器（标题/主体/底部 + 宽度/间距/排版规范） |
 | `assets/styles/mixin/*.scss` | 三套 mixin |
@@ -612,7 +601,7 @@ Nuxt 提供内置数据获取 composables，**不自造**：
 | `assets/styles/global.scss` | body 基线 + 表单宽度 |
 | `icons/icon.config.ts` | gen:icon 配置（SVG 源 → Vue 图标组件产物） |
 
-如需切换社区主题，见 opendesign-application skill → theme-system 的「社区切换」章节，同步修改三处（nuxt.config.ts + store 常量 + FOUC 脚本）。
+如需切换社区主题，见 opendesign-application skill → theme-system 的「社区切换」章节，同步修改两处（nuxt.config.ts + store 常量）。
 
 ---
 
@@ -625,7 +614,7 @@ Nuxt 提供内置数据获取 composables，**不自造**：
 | 组件 API（Props / Events / Slots） | **opendesign-components** skill |
 | token 变量名完整列表 | **opendesign-tokens** skill |
 | 依赖安装、入口文件、样式引入顺序详解 | **opendesign-application** skill → getting-started |
-| 主题系统完整集成（Pinia store、防闪烁、SSR hydration、社区切换） | **opendesign-application** skill → theme-system |
+| 主题系统完整集成（Pinia store、SSR hydration、社区切换） | **opendesign-application** skill → theme-system |
 | SCSS mixin 用法详解、栅格容器、楼层结构、global.scss | **opendesign-application** skill → styles-infrastructure |
 | 目录结构对照与 Nuxt vs SPA 差异 | **opendesign-application** skill → project-layout |
 | 样式硬规则、反模式清单、Code Review 检查清单 | **opendesign-application** skill → conventions |

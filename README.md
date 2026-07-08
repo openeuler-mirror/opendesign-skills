@@ -50,7 +50,7 @@ pnpx skills experimental_install
 
 **适用场景**：
 - 新建项目采用 OpenDesign，需要脚手架起手
-- 集成主题系统（Pinia store + 防闪烁 + 社区切换 + ThemeToggle 基于 OSwitch）
+- 集成主题系统（Pinia store + 社区切换 + ThemeToggle 基于 OSwitch）
 - SCSS mixin 全局注入、栅格容器、AppSection 楼层组件
 - Nuxt SSR 与 Vite SPA 在 OpenDesign 集成上的差异
 - Code Review 时检视 OpenDesign 是否被正确使用
@@ -67,7 +67,7 @@ pnpx skills experimental_install
 | 主题 | 文件 | 内容 |
 |------|------|------|
 | 起手 | [getting-started.md](skills/opendesign-application/references/getting-started.md) | 依赖安装、入口文件、样式引入顺序、`useScreen()` |
-| 主题系统 | [theme-system.md](skills/opendesign-application/references/theme-system.md) | Pinia store、防闪烁、SSR hydration、社区切换、ThemeToggle（OSwitch） |
+| 主题系统 | [theme-system.md](skills/opendesign-application/references/theme-system.md) | Pinia store、SSR hydration、社区切换、ThemeToggle（OSwitch） |
 | 样式基础设施 | [styles-infrastructure.md](skills/opendesign-application/references/styles-infrastructure.md) | SCSS mixin 三套、全局注入、栅格容器、AppSection 楼层组件 |
 | 项目布局 | [project-layout.md](skills/opendesign-application/references/project-layout.md) | 目录结构、Nuxt vs SPA 差异对照、选型建议 |
 | 编码约定 | [conventions.md](skills/opendesign-application/references/conventions.md) | 硬规则、应用层约定、Code Review 检查清单 |
