@@ -1,7 +1,7 @@
 ---
 name: opendesign-application
 description: OpenDesign 工程化落地指南。当开发者要新建或改造项目采用 @opensig/opendesign 设计系统、集成主题系统（Pinia store + 防闪烁 + SSR/SPA 差异 + 社区切换）、搭建全局样式基础设施（SCSS mixin 全局注入 + 栅格容器 + 楼层结构）、对比 Nuxt vs Vite SPA 工程形态、或在 code review 时检视 OpenDesign 是否被正确使用（:deep 禁令、token 优先、组件优先）时使用此 skill。提供两套可运行脚手架（templates/nuxt、templates/vue-spa）与工程化专题参考。不重复组件 API（→ opendesign-components）、token 表（→ opendesign-tokens）、设计稿生产（→ opendesign-design）、设计师侧代码直出（→ opendesign-codegen）、CLI 命令（→ opendesign-scripts）。
-last_update: 2026-07-07
+last_update: 2026-07-08
 ---
 
 # OpenDesign 工程化落地指南
@@ -60,7 +60,7 @@ last_update: 2026-07-07
 ### 红线（违反即视为集成失败）
 
 1. **样式引入顺序不可调换**：Token CSS → 鸿蒙字体 → 组件库样式 → 项目全局样式。Token 必须先于组件样式，否则组件拿不到 CSS 变量。
-2. **禁止 `:deep()` 修改 OpenDesign 组件内部样式**。组件内部宽度 / 间距等全局规则放 `global.scss` 的渲染类（如 `.o-form .o-input`），scoped 样式只管组件自身的 layout。
+2. **禁止 `:deep()` 修改 OpenDesign 组件内部样式**。组件内部宽度等全局规则放 `global.scss` 的渲染类（如 `.o-form .o-input`），scoped 样式只管组件自身的 layout。
 3. **颜色 / 间距 / 字号一律 `var(--o-*)`**，禁止硬编码 hex / px。语义色用 `--o-color-*`，严禁直接用色板变量（`--o-kleinblue-*` / `--o-grey-*` 等）。
 4. **优先使用 OpenDesign 组件**，凡组件库已提供的能力必须用组件 props / slots / events 实现，不自造原生替代。
 5. **主题由 `<html data-o-theme="社区.模式">` 驱动**，业务代码不直接操作 CSS 变量切换主题，走 Pinia store 的 `isDark`（writable computed）或 `setMode`。
@@ -95,12 +95,15 @@ last_update: 2026-07-07
 | 检视项 | 合规 | 违规信号 |
 |--------|------|---------|
 | 样式引入顺序 | Token → 字体 → 组件样式 → 全局样式 | 组件样式在 Token 之前 |
-| `:deep` 使用 | scoped 样式中无 `:deep(.o-*)` | 出现 `:deep(.o-input)` 等 |
+| `:deep` 使用 | scoped 样式中无 `:deep(.o-*)`；组件样式定制走 CSS 变量 / slot / props | 出现 `:deep(.o-input)` 等 |
 | 颜色值 | `var(--o-color-*)` 语义 token | 硬编码 `#fff` / `var(--o-grey-14)` 色板 |
-| 间距 / 字号 | `var(--o-gap-*)` / `var(--o-r-font_size-*)` | 硬编码 `16px` / `22px` |
+| 间距 / 字号 / 行高 | `var(--o-gap-*)` / 字号+行高成对（`@include h*` 或 `var(--o-r-font_size-*)` + `var(--o-r-line_height-*)`）；刻意只用一项须注释 | 硬编码 `16px` / 只写字号漏行高无注释 |
+| 字重 / 动画 | `var(--o-font_weight-*)` / `var(--o-duration-*)` + `var(--o-easing-*)` | 硬编码 `600` / `300ms` / `cubic-bezier(...)` |
 | 组件优先 | `<OButton>` / `<OInput>` 等真实组件 | 原生 `<button>` / `<select>` 替代 |
+| 表单控件宽度 | `global.scss` 渲染类引用 OForm 导出的宽度变量（参考脚手架模板） | 组件 scoped 内 `:deep` 修改控件宽度；硬编码 `width: 200px` |
 | 主题切换 | 走 store 的 `isDark`（writable computed）或 `setMode` | 直接 `document.setAttribute` 操作 |
 | 内联样式 | 无 `style="..."`（动态值除外） | 大量内联 style |
 | hover 交互 | `@include hover`（安全 hover）/ `@include hoverable` | 裸 `:hover` 或裸 `@media (hover: hover)` |
 | 响应式检测 | `useScreen()` composable + `<ClientOnly>`（Nuxt） | 裸 `window.matchMedia` 或缺少 `<ClientOnly>` 导致 hydration 不匹配 |
+| mixin vs useScreen | CSS 样式变化走 mixin；DOM 结构不同才用 useScreen + v-if | 纯样式变化却用 useScreen + :style/:class |
 | 图标使用 | gen:icon 产物组件（`#icons` 别名导入） | 内联 `<svg>` 标签替代 |

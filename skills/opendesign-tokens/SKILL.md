@@ -1,7 +1,7 @@
 ---
 name: opendesign-tokens
 description: OpenDesign 设计 Token 指南。当需要使用 @opensig/opendesign-token 包中的 CSS 变量时使用此 skill。包含六套主题（openEuler/Ascend/Kunpeng/Mindspore/openGauss/openUBMC）的完整 token 体系，支持颜色、间距、圆角、字体、阴影、响应式排版、栅格系统等所有设计令牌。使用场景：(1) 查找颜色值对应的语义 token，(2) 获取间距/圆角/字体的 token 名称，(3) 了解六套主题的差异，(4) 代码中使用 CSS 变量替代硬编码值，(5) 使用响应式 token 实现多断点适配，(6) 引入鸿蒙字体文件并使用字体族/字重 token（含七档字重、拉丁/中文自动分流、按字重按需引入）
-last_update: 2026-07-06
+last_update: 2026-07-08
 ---
 
 # OpenDesign 设计 Token 指南
@@ -398,6 +398,8 @@ background-color: var(--o-color-white);
 | 组件内部固定尺寸（如图标旁 4px 间距） | `--o-gap-*`（静态） | 尺寸不应随视口变化 |
 | 设计稿硬编码的字号/间距纠正 | `--o-r-*`（响应式） | **首选**，确保多端一致 |
 
+> **字号/行高的引用方式**：① 字号 + 行高成对输出到当前元素时，使用 `font.scss` mixin（`@include h1;`），保证配对且调用简洁；② 只需单独引用某一项时，直接使用 `var(--o-r-font_size-*)` + `var(--o-r-line_height-*)` 响应式变量。mixin 的全局注入配置与完整用法详见 **opendesign-application** skill → styles-infrastructure 第 4 节。
+
 ---
 
 ## 3. 栅格系统 Token（Grid）— 页面级模块布局
@@ -751,6 +753,10 @@ code, pre {
   font-size: var(--o-r-font_size-h3);
   line-height: var(--o-r-line_height-h3);
 }
+
+/* 需要字号 + 行高成对输出时，可用 font.scss mixin */
+/* 全局注入配置与完整用法见 opendesign-application skill → styles-infrastructure §4 */
+.title { @include h3; }
 
 /* 静态（仅在需要固定值时使用） */
 .fixed-label {

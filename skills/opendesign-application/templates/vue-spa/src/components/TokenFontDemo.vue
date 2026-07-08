@@ -48,17 +48,16 @@ css: {
       <!-- 两种用法 -->
       <div class="usage-row">
         <div class="usage-item">
-          <p class="usage-label">直接应用</p>
+          <p class="usage-label">直接应用（mixin）</p>
           <pre class="usage-code"><code>.title {
   @include h1;  <span class="c">// 输出 font-size + line-height</span>
 }</code></pre>
         </div>
         <div class="usage-item">
-          <p class="usage-label">仅暴露变量（加前缀）</p>
-          <pre class="usage-code"><code>.card {
-  @include h1('card-');
-  <span class="c">// 只生成 --card-font-size / --card-line-height</span>
-  <span class="c">// 不输出 font-size / line-height 属性</span>
+          <p class="usage-label">单独引用响应式变量</p>
+          <pre class="usage-code"><code>.label {
+  font-size: var(--o-r-font_size-h1);
+  line-height: var(--o-r-line_height-h1);
 }</code></pre>
         </div>
       </div>

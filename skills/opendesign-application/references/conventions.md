@@ -26,16 +26,19 @@
 
 ### 1.2 Token 优先
 
-颜色 / 间距 / 字号 / 圆角 / 阴影 / 动效一律 `var(--o-*)`，禁止硬编码：
+颜色 / 间距 / 字号 / 圆角 / 阴影 / 动效一律 `var(--o-*)`，禁止硬编码。其中字号、间距、行高等有响应式变体的 token，**优先使用响应式版本**（`--o-r-font_size-*` / `--o-r-line_height-*` / `--o-r-gap-*`），静态 token（`--o-font_size-*` / `--o-gap-*`）仅用于需要固定不变的布局场景：
 
 ```scss
-// ✅ 正确
-color: var(--o-color-info1);
-padding: var(--o-gap-3);
-border-radius: var(--o-radius-l);
-@include h2;
+// ✅ 正确：响应式 token 优先（随视口自动缩放）
+font-size: var(--o-r-font_size-h3);
+line-height: var(--o-r-line_height-h3);
+padding: var(--o-r-gap-3);
+@include h2;  // mixin 内部已引用响应式 token
 
-// ❌ 错误
+// ⚠️ 仅需要固定不变的布局尺寸才用静态 token
+.sidebar { width: var(--o-gap-20); }  // 固定侧边栏宽度，不应随视口变化
+
+// ❌ 错误：硬编码
 color: #1a1a1a;
 padding: 16px;
 border-radius: 8px;
@@ -82,47 +85,19 @@ token 变量名查 [`../opendesign-tokens/SKILL.md`](../opendesign-tokens/SKILL.
 - `<style lang="scss" scoped>` + BEM 命名，嵌套 ≤ 3 层
 - 无内联 `style="..."`（动态值等极特殊情况除外并注释）；无 `!important`
 
-### 1.5 主题切换走 store + storeToRefs
-
-业务代码**不直接操作** `document.documentElement.setAttribute`，统一走 Pinia store。**store 中的状态/ref/computed 必须 `storeToRefs` 解构**——直接解构会丢失响应性，v-model 绑定失效：
-
-```typescript
-// ✅ 正确：通过 storeToRefs 解构 writable computed（v-model 绑定）
-const { isDark } = storeToRefs(useThemeStore())
-isDark.value = !isDark.value  // 切换
-isDark.value = true            // 设深色
-isDark.value = false           // 设浅色
-
-// ✅ 正确：通过 setMode 显式设置（action 不需要 storeToRefs）
-const { setMode } = useThemeStore()
-setMode('dark')
-
-// ❌ 错误：直接解构丢失响应性
-const { isDark } = useThemeStore()  // isDark 变成普通值，不响应切换
-
-// ❌ 错误：直接操作 DOM
-document.documentElement.setAttribute('data-o-theme', 'e.dark')
-```
-
-### 1.6 样式引入顺序
+### 1.5 样式引入顺序
 
 CSS Reset → Token CSS → 鸿蒙字体 → 组件库样式 → 项目全局样式，**不可调换**。见 [getting-started.md](getting-started.md)。
 
-### 1.7 i18n
+### 1.6 图标使用规范
 
-不写死面向用户的文字，用目标工程的 i18n 方案（`t('module.key')`）。
+**禁止内联 `<svg>` 标签**。图标来源分两类：
 
-### 1.8 图标使用规范
-
-**禁止内联 `<svg>` 标签**。图标来源分两类，按场景选用：
-
-| 图标来源 | 导入方式 | 适用场景 |
-|---------|---------|---------|
-| **组件库内置图标**（OIconSun、OIconMoon 等） | `import { OIconSun } from '@opensig/opendesign'` | 已有对应组件库图标时优先使用（如主题切换 OSwitch 的 slot） |
-| **项目自定义图标**（gen:icon 产物） | `import { AppIconXxx } from '#icons'` | 组件库无对应图标时的业务图标 |
+1. **组件库内置图标**（OIconSun、OIconMoon 等）——已有对应图标时优先使用
+2. **项目自定义图标**——通过 `gen:icon` 命令生成 SVG 组件，并在项目中配置导出别名，业务代码按项目约定的别名路径导入即可
 
 ```vue
-<!-- ✅ 正确：组件库内置图标（已有 OIconSun 时优先用组件库） -->
+<!-- ✅ 正确：组件库内置图标 -->
 <script setup lang="ts">
 import { OIconSun } from '@opensig/opendesign'
 </script>
@@ -130,12 +105,12 @@ import { OIconSun } from '@opensig/opendesign'
   <OIconSun />
 </template>
 
-<!-- ✅ 正确：项目自定义图标（组件库无对应图标时用 gen:icon 产物） -->
+<!-- ✅ 正确：项目自定义图标（导入路径取决于项目的 gen:icon 配置） -->
 <script setup lang="ts">
-import { AppIconSearch } from '#icons'
+import { IconSearch } from '@/icons'  // 项目自行配置别名与导出路径
 </script>
 <template>
-  <AppIconSearch class="my-icon" />
+  <IconSearch class="my-icon" />
 </template>
 
 <!-- ❌ 错误：内联 SVG -->
@@ -146,15 +121,15 @@ import { AppIconSearch } from '#icons'
 </template>
 ```
 
-图标分类规则、命名规范、生成流程详见 **opendesign-scripts** skill → gen:icon。
+`gen:icon` 的使用方式与配置详见 **opendesign-scripts** skill。
 
 ---
 
 ## 2. 应用层补充约定
 
-### 2.1 表单宽度走 `global.scss`
+### 2.1 表单宽度建议走 `global.scss`
 
-表单控件宽度规则放 `global.scss` 的 `.o-form .o-input` 等渲染类，**不在组件 scoped 样式里 `:deep`**。见 [styles-infrastructure.md](styles-infrastructure.md) 的 `global.scss` 章节。
+表单控件宽度规则建议放 `global.scss` 的 `.o-form .o-input` 等渲染类，而非在组件 scoped 样式里 `:deep`（`1.3 :deep` 禁令是红线，此条是建议做法）。见 [styles-infrastructure.md](styles-infrastructure.md) 的 `global.scss` 章节。
 
 ### 2.2 hover 交互走 mixin
 
@@ -174,15 +149,25 @@ import { AppIconSearch } from '#icons'
 }
 ```
 
-### 2.3 字号成对用 `font.scss` mixin
+### 2.3 字号成对用 `font.scss` mixin 或直接引用响应式变量
 
 ```scss
 // ✅ 正确：字号 + 行高成对输出，且引用响应式 token
 .title { @include h2; }
 
+// ✅ 正确：单独引用响应式变量（不需要 mixin 输出到当前元素时）
+.hero-label {
+  font-size: var(--o-r-font_size-h1);
+  line-height: var(--o-r-line_height-h1);
+}
+
 // ❌ 错误：只写字号，漏行高，且硬编码
 .title { font-size: 20px; }
 ```
+
+**mixin vs 直接引用变量的选择**：
+- 需要字号 + 行高成对输出到当前元素 → 使用 `@include h*` mixin（保证配对、调用简洁）
+- 只需要单独引用某一项，或不在 SCSS 上下文中 → 直接 `var(--o-r-font_size-*)` + `var(--o-r-line_height-*)`
 
 ### 2.4 响应式断点用 `respond`
 
@@ -223,24 +208,20 @@ code review 时遇到 OpenDesign 相关调用，按下表逐项检视：
 |--------|------|---------|
 | `:deep` | scoped 样式中无 `:deep(.o-*)` | 出现 `:deep(.o-input)` / `:deep(.o-form-item)` |
 | 颜色 | `var(--o-color-*)` 语义 token | 硬编码 `#fff` / `rgb()` / 色板 `var(--o-grey-14)` |
-| 间距 | `var(--o-gap-*)` / `var(--o-r-gap-*)` | 硬编码 `16px` / `32px` |
-| 字号 | `@include h*` / `var(--o-r-font_size-*)` | 硬编码 `font-size: 20px` |
+| 间距 | `var(--o-r-gap-*)` 响应式优先；固定布局用 `var(--o-gap-*)` | 硬编码 `16px` / `32px`；非固定场景用静态 `--o-gap-*` |
+| 字号 | `@include h*` / `var(--o-r-font_size-*)` 响应式优先 | 硬编码 `font-size: 20px`；页面级用静态 `--o-font_size-*` |
 | 圆角 | `var(--o-radius-*)` | 硬编码 `border-radius: 8px` |
 | 阴影 | `var(--o-shadow-*)` | 硬编码 `box-shadow: 0 2px 8px rgba(...)` |
 | 内联样式 | 无 `style="..."` | 大量内联 style（动态值除外） |
 | `!important` | 无 | 出现 `!important` |
+| 行高 | 字号与行高成对出现（`@include h*` 或 `var(--o-r-font_size-*)` + `var(--o-r-line_height-*)`）；刻意只用一项时须注释说明意图 | 只写字号漏行高且无注释说明；只写行高漏字号且无注释说明 |
+| 字重 | `var(--o-font_weight-*)` | 硬编码 `font-weight: 600` / `700` / `bold` |
+| 动画时间 / 缓动 | `var(--o-duration-*)` + `var(--o-easing-*)` | 硬编码 `transition: all 300ms` / `cubic-bezier(...)` |
+| 字号引用方式 | `@include h*`（字号行高成对输出）或 `var(--o-r-font_size-*)` + `var(--o-r-line_height-*)`（单独引用）；刻意只用一项须注释 | 硬编码字号行高；只写字号漏行高且无注释说明 |
+| 组件样式定制途径 | CSS 变量覆盖（如 `--switch-color`）、slot 内容替换、props 传参 | 用 `:deep` 穿透组件内部 class；全局 CSS 覆盖非渲染类组件内部 class（`.o-btn__text`） |
+| 表单控件宽度 | `global.scss` 中通过渲染类（`.o-form .o-input`）引用 OForm 导出的宽度变量（`--form-item-main-box-width-*`）统一约束；参考脚手架模板 `global.scss` | 组件 scoped 内 `:deep` 修改控件宽度；硬编码 `width: 200px` |
 
-### 3.4 主题系统
-
-| 检视项 | 合规 | 违规信号 |
-|--------|------|---------|
-| 主题切换 | 走 store 的 `isDark`（`storeToRefs` 解构）或 `setMode` | 直接 `document.setAttribute` 操作；直接解构 `const { isDark } = useThemeStore()` 丢失响应性 |
-| 持久化 | SPA 用 `useStorage`、SSR 用 `useCookie` | SPA 用 cookie（无需服务端可读，且受 4KB 限制）；SSR 用 localStorage（服务端不可读） |
-| 防闪烁 | `index.html` 内联脚本 / `useHead` 注入 | 无 FOUC 脚本，首屏闪烁 |
-| Nuxt hydration | `plugins/theme.client.ts` 延迟到 `app:mounted` | 在 store 顶层直接读 `prefersDark` 改值 |
-| 社区切换 | 三处同步（token CSS + 常量 + FOUC 脚本） | 只改了 store 常量 |
-
-### 3.5 响应式与 hover
+### 3.4 响应式与 hover
 
 | 检视项 | 合规 | 违规信号 |
 |--------|------|---------|
@@ -249,8 +230,9 @@ code review 时遇到 OpenDesign 相关调用，按下表逐项检视：
 | 响应式字号 | `@include h*`（引用 `--o-r-font_size-*`） | 硬编码字号 + 手写 media query |
 | 运行时响应式 | `useScreen()` composable | 裸 `window.matchMedia` / 裸 `window.innerWidth` |
 | Nuxt `<ClientOnly>` | 含 `useScreen()` 条件渲染的部分用 `<ClientOnly>` 包裹 | Nuxt 中含 `v-if="isPhonePadSize"` 无 `<ClientOnly>` 导致 hydration 不匹配 |
+| mixin vs useScreen 分工 | CSS 层面样式变化用 SCSS mixin（`respond` / `hover`）；仅 DOM 结构确实不同时用 `useScreen()` + `v-if` | 纯样式变化（字号/间距/布局列数）却用 `useScreen()` + `:style` / `:class` 代替 mixin |
 
-### 3.6 工程化
+### 3.5 工程化
 
 | 检视项 | 合规 | 违规信号 |
 |--------|------|---------|
@@ -259,21 +241,23 @@ code review 时遇到 OpenDesign 相关调用，按下表逐项检视：
 | `<script setup lang="ts">` | 是 | Options API 或非 TS |
 | BEM 命名 | `.block__element--modifier` | 非规范命名 |
 | 嵌套深度 | ≤ 3 层 | 过深嵌套 |
+| gen:icon 产物目录 | `icon-components/` 纳入 `.gitignore`，不手动编辑或提交 | 手动编辑 `icon-components/` 下文件；目录未纳入 `.gitignore` |
 
 ---
 
 ## 4. 常见违规示例与修正
 
-### 4.1 `:deep` 修改组件宽度
+### 4.1 表单宽度走 `global.scss`
 
 ```scss
-// ❌ 违规
+// ❌ 违规：组件内 :deep 修改宽度
 .demo-form {
   :deep(.o-input) { width: var(--form-item-main-box-width-standard); }
 }
 
-// ✅ 修正：删掉组件内 :deep，宽度由 global.scss 的 .o-form .o-input 统一管理
-// 组件内只管自身 layout
+// ✅ 修正：宽度由 global.scss 的渲染类统一管理
+// global.scss 中已有 .o-form .o-input { width: var(--form-item-main-box-width-standard); }
+// 组件内只管自身 layout——参考脚手架模板（templates/nuxt 或 templates/vue-spa）的 global.scss
 .form-inline {
   display: flex;
   gap: var(--form-item-main-box-inline-gap);
@@ -315,22 +299,7 @@ code review 时遇到 OpenDesign 相关调用，按下表逐项检视：
 }
 ```
 
-### 4.5 直接操作 DOM 切换主题
-
-```typescript
-// ❌ 违规
-document.documentElement.setAttribute('data-o-theme', 'e.dark')
-
-// ✅ 修正：通过 storeToRefs 解构 writable computed
-const { isDark } = storeToRefs(useThemeStore())
-isDark.value = true
-
-// ✅ 修正：通过 setMode（action 无需 storeToRefs）
-const { setMode } = useThemeStore()
-setMode('dark')
-```
-
-### 4.6 裸 `window.matchMedia` 或裸 `window.innerWidth`
+### 4.5 裸 `window.matchMedia` 或裸 `window.innerWidth`
 
 ```typescript
 // ❌ 违规：裸 matchMedia / innerWidth 判断断点
@@ -342,7 +311,7 @@ const { isPhonePadSize, isPhonePad } = useScreen()
 // isPhonePadSize = ≤840px，isPhonePad = ≤1200px + 触控设备
 ```
 
-### 4.7 Nuxt 中缺少 `<ClientOnly>` 导致 hydration 不匹配
+### 4.6 Nuxt 中缺少 `<ClientOnly>` 导致 hydration 不匹配
 
 ```vue
 <!-- ❌ 违规：Nuxt 中含 useScreen() 条件渲染无 ClientOnly -->
@@ -355,6 +324,128 @@ const { isPhonePadSize, isPhonePad } = useScreen()
   <template #fallback>
     <div>加载中...</div>
   </template>
+</ClientOnly>
+```
+
+### 4.7 字号与行高未成对
+
+```scss
+// ❌ 违规：只写字号，漏行高
+.title { font-size: var(--o-r-font_size-h3); }
+
+// ✅ 修正：字号 + 行高成对（优先用 mixin）
+.title { @include h3; }
+
+// ✅ 也可：手动成对引用响应式 token
+.title {
+  font-size: var(--o-r-font_size-h3);
+  line-height: var(--o-r-line_height-h3);
+}
+
+// ⚠️ 刻意只用一项时须注释说明意图
+.icon-label {
+  font-size: var(--o-font_size-tip2);
+  // line-height 不设置：刻意继承父元素行高，避免多行图标标签换行
+}
+```
+
+### 4.8 硬编码字重
+
+```scss
+// ❌ 违规
+.title { font-weight: 600; }
+.bold-text { font-weight: bold; }
+
+// ✅ 修正
+.title { font-weight: var(--o-font_weight-semibold); }   // 600
+.bold-text { font-weight: var(--o-font_weight-bold); }    // 700
+```
+
+### 4.9 硬编码动画时间与缓动
+
+```scss
+// ❌ 违规
+.card { transition: all 300ms ease; }
+.modal { transition: opacity 250ms cubic-bezier(0.2, 0, 0, 1); }
+
+// ✅ 修正
+.card { transition: all var(--o-duration-m2) var(--o-easing-standard); }
+.modal { transition: opacity var(--o-duration-m1) var(--o-easing-standard-in); }
+```
+
+### 4.10 响应式字号引用方式误用
+
+```scss
+// ❌ 违规：硬编码字号而非使用 mixin 或响应式变量
+.hero-title { font-size: 32px; line-height: 44px; }
+
+// ✅ 修正一：使用 mixin（字号 + 行高成对输出）
+.hero-title { @include h1; }
+
+// ✅ 修正二：直接引用响应式变量（不需要 mixin 成对输出时）
+.hero-label {
+  font-size: var(--o-r-font_size-h1);
+  line-height: var(--o-r-line_height-h1);
+}
+
+// ⚠️ 刻意只用一项时须注释说明意图
+.icon-label {
+  font-size: var(--o-r-font_size-tip1);
+  // line-height 不设置：刻意继承父元素行高，避免多行图标标签换行
+}
+```
+
+### 4.11 组件样式定制途径
+
+```scss
+// ❌ 违规：用 :deep 穿透修改组件内部样式
+.my-form :deep(.o-form-item) { margin-bottom: 0; }
+.my-switch :deep(.o-switch__track) { background-color: red; }
+
+// ✅ 修正方式一：CSS 变量覆盖（无需 :deep，在 scoped 样式中直接设置）
+.my-switch { --switch-color: var(--o-color-info4); }
+
+// ✅ 修正方式二：props 传参
+<OInput size="medium" variant="outline" />
+<OForm :label-position="isPhonePadSize ? 'top' : 'left'" />
+
+// ✅ 修正方式三：slot 内容替换
+<OSwitch v-model="isDark">
+  <template #inactive><OIconMoon /></template>
+  <template #active><OIconSun /></template>
+</OSwitch>
+```
+
+### 4.12 纯样式变化误用 useScreen()
+
+```vue
+<!-- ❌ 违规：纯样式变化却用 JS 响应式 -->
+<script setup lang="ts">
+const { isPhonePadSize } = useScreen()
+</script>
+<template>
+  <div :class="{ 'compact': isPhonePadSize }">...</div>
+</template>
+<style lang="scss" scoped>
+.compact { grid-template-columns: 1fr; }
+</style>
+
+<!-- ✅ 修正：纯样式变化用 SCSS mixin -->
+<template>
+  <div class="grid-section">...</div>
+</template>
+<style lang="scss" scoped>
+.grid-section {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  @include respond('<=pad_v') { grid-template-columns: 1fr; }
+}
+</style>
+
+<!-- ✅ useScreen() 的正确场景：DOM 结构确实不同 -->
+<ClientOnly>
+  <OPopup v-if="isPhonePadSize" title="详情">...</OPopup>
+  <ODialog v-else title="详情">...</ODialog>
 </ClientOnly>
 ```
 
@@ -371,9 +462,12 @@ code review 时可用正则快速扫描违规信号：
 | 硬编码 px 字号 | `font-size:\s*\d+px` |
 | 裸 `:hover` | `(?<!@include )&:hover|(?<!@include ):hover`（粗略） |
 | 原生 button | `<button` （在 `.vue` template） |
-| 直接 setAttribute | `setAttribute\(['"]data-o-theme` |
-| Pinia 解构丢响应 | `const \{ isDark \} = useThemeStore` （不含 `storeToRefs`） |
+| Pinia 解构丢响应 | `const \{ isDark \} = useThemeStore` （不含 `storeToRefs`）— 需读取主题状态时 |
 | 裸 matchMedia | `window\.matchMedia` （在 `.vue` script，排除 useScreen 内部） |
 | 裸 innerWidth | `window\.innerWidth` （在 `.vue` script） |
+| 硬编码字重 | `font-weight:\s*(600|700|bold)` （在 `.vue` / `.scss`，排除 `var(--o-font_weight-*)`） |
+| 硬编码动画时间 | `transition:.*\d+ms\b` （粗略，排除 `var(--o-duration-*)`） |
+| 硬编码缓动曲线 | `cubic-bezier\(` （在 `.vue` / `.scss`，排除 `var(--o-easing-*)`） |
+| 硬编码字号行高 | `font-size:\s*\d+px` （在 `.vue` / `.scss`，排除注释） |
 
 > 正则只做初筛，命中后人工判断是否属于动态值等例外情况。
