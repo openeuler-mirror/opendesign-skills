@@ -295,6 +295,90 @@ ORadio（HORIZONTAL，自适应宽度，固定高度 24px）
 
 ---
 
+### 完整交互状态规格表
+
+> 📋 **交互状态矩阵**：以下表格展示 Radio 组件在不同选择状态和交互状态下的完整视觉规格。
+
+#### 未选中状态（Unselected）
+
+| 交互状态 | 填充（fill） | 描边（stroke） | 文本样式 |
+|---------|-------------|---------------|---------|
+| **默认** | `--o-color-fill2` | `--o-color-control1` | 鸿蒙黑体 (Regular) / 16px / `--o-color-info1` |
+| **悬浮** | `--o-color-fill2` | `--o-color-control2` | 鸿蒙黑体 (Regular) / 16px / `--o-color-info1` |
+| **按下** | `--o-color-fill2` | `--o-color-control3` | 鸿蒙黑体 (Regular) / 16px / `--o-color-info1` |
+| **选中** | `--o-color-primary1` | 无描边 | 鸿蒙黑体 (Regular) / 16px / `--o-color-info1` |
+| **禁用** | `--o-color-control2-light` | `--o-color-control4` | 鸿蒙黑体 (Regular) / 16px / `--o-color-info1` |
+
+#### 已选中状态（Selected）
+
+| 交互状态 | 填充（fill） | 描述 | 文本样式 |
+|---------|-------------|------|---------|
+| **默认** | `--o-color-primary1` | 显示内圈指示点 | 鸿蒙黑体 (Regular) / 16px / `--o-color-info1` |
+| **悬浮** | `--o-color-primary2` | 显示内圈指示点 | 鸿蒙黑体 (Regular) / 16px / `--o-color-info1` |
+| **按下** | `--o-color-primary3` | 显示内圈指示点 | 鸿蒙黑体 (Regular) / 16px / `--o-color-info1` |
+| **选中** | `--o-color-primary1` | 显示内圈指示点 | 鸿蒙黑体 (Regular) / 16px / `--o-color-info1` |
+| **禁用** | `--o-color-primary4` | 显示内圈指示点（半透明） | 鸿蒙黑体 (Regular) / 16px / `--o-color-info1` |
+
+---
+
+### 各状态详细说明
+
+#### 1. 默认状态（Default）
+- **未选中**：外圈白色背景 + 灰色描边，无内圈指示点
+- **已选中**：外圈品牌色填充 + 白色内圈指示点
+
+#### 2. 悬浮状态（Hover）
+- **未选中**：描边颜色加深（`--o-color-control1` → `--o-color-control2`），背景不变
+- **已选中**：外圈背景颜色变浅（`--o-color-primary1` → `--o-color-primary2`），内圈不变
+- **触发条件**：鼠标悬停在 Radio 组件区域
+
+#### 3. 按下状态（Pressed/Active）
+- **未选中**：描边颜色进一步加深（`--o-color-control2` → `--o-color-control3`），背景不变
+- **已选中**：外圈背景颜色继续变深（`--o-color-primary2` → `--o-color-primary3`），内圈不变
+- **触发条件**：鼠标按下但未释放时
+
+#### 4. 选中状态（Selected/Focus）
+- **从未选中切换到选中**：外圈背景变为品牌色（`--o-color-fill2` → `--o-color-primary1`），描边隐藏，显示内圈指示点
+- **保持选中**：维持 `--o-color-primary1` 背景和内圈显示
+
+#### 5. 禁用状态（Disabled）
+- **未选中禁用**：外圈使用浅灰背景（`--o-color-control2-light`）+ 浅灰描边（`--o-color-control4`），文字使用禁用色
+- **已选中禁用**：外圈使用禁用品牌色（`--o-color-primary4`），内圈显示但整体透明度降低，文字使用禁用色
+- **交互限制**：不可点击、不可获得焦点、不响应鼠标事件
+
+---
+
+### 状态转换流程图
+
+```
+                    ┌─────────────────┐
+                    │   Unselected    │
+                    │     Default     │
+                    └────────┬────────┘
+                             │ Click
+                             ▼
+                    ┌─────────────────┐
+              ┌─────│    Selected     │──────┐
+              │     │     Default     │      │
+              │     └────────┬────────┘      │
+              │              │               │
+        Hover │         Click│          Hover│
+              │              ▼               │
+              │     ┌─────────────────┐      │
+              └─────│    Selected     │◄─────┘
+                    │     Hover       │
+                    └────────┬────────┘
+                             │
+                        (其他状态类似)
+                             
+                    ┌─────────────────┐
+                    │    Disabled     │
+                    │  (任何状态下设置)│
+                    └─────────────────┘
+```
+
+---
+
 ### Hover 状态（交互态）
 
 | 元素 | Hover 视觉表现 |
@@ -302,6 +386,17 @@ ORadio（HORIZONTAL，自适应宽度，固定高度 24px）
 | 外圈（Unselected） | 描边颜色切换为 `--o-color-control2`（brand-6），背景不变 |
 | 外圈（Selected） | 背景颜色切换为 `--o-color-primary2`（brand-4），内圈不变 |
 | 文字 | 颜色不变 |
+
+---
+
+### Pressed 状态（按下态）
+
+| 元素 | Pressed 视觉表现 |
+|------|------------------|
+| 外圈（Unselected） | 描边颜色切换为 `--o-color-control3`，背景不变 |
+| 外圈（Selected） | 背景颜色切换为 `--o-color-primary3`（brand-2），内圈不变 |
+| 文字 | 颜色不变 |
+| 光标 | 可选：显示按下手势光标 |
 
 ---
 

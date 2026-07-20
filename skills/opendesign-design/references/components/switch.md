@@ -320,20 +320,86 @@ OSwitch（SYMBOL，48×24px）
 
 ## Part C：交互与状态
 
-### 交互状态
+### 交互状态总览
 
-| 元素 | 状态 | 视觉表现 |
-|------|------|---------|
-| 轨道 | Selected | 背景：`--o-color-primary1`，滑块靠右 |
-| 轨道 | Unselected | 背景：`--o-color-control1-light`，滑块靠左 |
-| 轨道 | Light（icon） | 背景：`--o-color-control1-light`，太阳图标靠左 |
-| 轨道 | Dark（icon） | 背景：`--o-color-control1-light`，月亮图标靠右 |
-| 滑块 | Selected/Unselected | fill：`--o-color-fill2` |
-| 滑块 | Light/Dark（icon） | fill：`--o-color-primary1` |
-| 文字 | Selected Light | fill：`--o-color-white` |
-| 文字 | Selected Dark | fill：`--o-color-black` |
-| 文字 | Unselected Light | fill：`--o-color-info4` |
-| 文字 | Unselected Dark | fill：`--o-color-info4` |
+#### 未选中状态（Unselected）
+
+| 交互状态 | 滑块规格 | 文字规格 | 轨道色值 |
+|---------|----------|----------|----------|
+| **默认（Default）** | 圆圈：16×16px，`color-fill2`<br>Token: `--o-color-fill2` | 字体：12px，`color-info4`<br>Token: `--o-color-info4` | `color-control1-light`<br>Token: `--o-color-control1-light` |
+| **悬浮（Hover）** | 圆圈：16×16px，`color-fill2`<br>Token: `--o-color-fill2` | 字体：12px，`color-info4`<br>Token: `--o-color-info4` | `color-control2-light`<br>Token: `--o-color-control2-light` |
+| **按下（Pressed/Active）** | 圆圈：16×16px，`color-fill2`<br>Token: `--o-color-fill2` | 字体：12px，`color-info4`<br>Token: `--o-color-info4` | `color-control3-light`<br>Token: `--o-color-control3-light` |
+| **选中（Focused）** | 圆圈：16×16px，`color-fill2`<br>Token: `--o-color-fill2` | 字体：12px，`color-info4`<br>Token: `--o-color-info4` | `color-primary1`<br>Token: `--o-color-primary1` |
+| **禁用（Disabled）** | 圆圈：16×16px，`color-fill2`（60%不透明度）<br>Token: `--o-color-fill2` | 字体：12px，`color-white`<br>Token: `--o-color-white` | `color-control4-light`<br>Token: `--o-color-control4-light` |
+
+#### 已选中状态（Selected）
+
+| 交互状态 | 滑块规格 | 文字规格 | 轨道色值 |
+|---------|----------|----------|----------|
+| **默认（Default）** | 圆圈：16×16px，`color-fill2`<br>Token: `--o-color-fill2` | 字体：12px，`color-white`<br>Token: `--o-color-white` | `color-primary1`<br>Token: `--o-color-primary1` |
+| **悬浮（Hover）** | 圆圈：16×16px，`color-fill2`<br>Token: `--o-color-fill2` | 字体：12px，`color-white`<br>Token: `--o-color-white` | `color-primary2`<br>Token: `--o-color-primary2` |
+| **按下（Pressed/Active）** | 圆圈：16×16px，`color-fill2`<br>Token: `--o-color-fill2` | 字体：12px，`color-white`<br>Token: `--o-color-white` | `color-primary3`<br>Token: `--o-color-primary3` |
+| **选中（Focused）** | 圆圈：16×16px，`color-fill2`<br>Token: `--o-color-fill2` | 字体：12px，`color-white`<br>Token: `--o-color-white` | `color-primary1`<br>Token: `--o-color-primary1` |
+| **禁用（Disabled）** | 圆圈：16×16px，`color-fill2`（40%不透明度）<br>Token: `--o-color-fill2` | 字体：12px，`color-white`<br>Token: `--o-color-white` | `color-primary4`<br>Token: `--o-color-primary4` |
+
+---
+
+### 交互状态详解
+
+#### 1. 默认状态（Default）
+- **未选中**：轨道使用 `control1-light`（浅灰色），滑块位于左侧
+- **已选中**：轨道使用 `primary1`（品牌主色），滑块位于右侧
+- 文字颜色根据选中状态显示（未选中=info4，已选中=white）
+
+#### 2. 悬浮状态（Hover）
+- 鼠标悬停时触发
+- **未选中**：轨道色从 `control1-light` → `control2-light`（略深灰色）
+- **已选中**：轨道色从 `primary1` → `primary2`（品牌色悬浮态）
+- 滑块和文字颜色保持不变
+
+#### 3. 按下状态（Pressed/Active）
+- 鼠标按下或触摸时触发
+- **未选中**：轨道色从 `control2-light` → `control3-light`（更深的灰色）
+- **已选中**：轨道色从 `primary2` → `primary3`（品牌色按下态）
+- 可选：滑块略微缩小或增加阴影效果
+
+#### 4. 选中/聚焦状态（Focused）
+- 键盘Tab聚焦或点击后保持的视觉反馈
+- **未选中**：轨道色切换为 `primary1`（与已选中默认态相同），提供明确的聚焦指示
+- **已选中**：轨道色保持 `primary1`
+- 建议配合外边框或阴影增强聚焦可见性
+
+#### 5. 禁用状态（Disabled）
+- 组件不可交互时的视觉表现
+- **未选中**：
+  - 轨道色：`control4-light`（最浅的灰色，表示不可用）
+  - 滑块：`fill2` 降低至 60% 不透明度
+  - 文字：`white`（降低对比度）
+- **已选中**：
+  - 轨道色：`primary4`（品牌色的禁用版本，通常更浅或更低饱和度）
+  - 滑块：`fill2` 降低至 40% 不透明度（比未选中禁用更明显）
+  - 文字：`white`
+
+---
+
+### 交互状态映射表
+
+| 元素 | 状态 | Token 变量 | 说明 |
+|------|------|-----------|------|
+| **轨道背景** | 未选中-默认 | `--o-color-control1-light` | 关闭状态的默认背景 |
+| **轨道背景** | 未选中-悬浮 | `--o-color-control2-light` | 关闭状态的悬浮背景 |
+| **轨道背景** | 未选中-按下 | `--o-color-control3-light` | 关闭状态的按下背景 |
+| **轨道背景** | 未选中-聚焦 | `--o-color-primary1` | 关闭状态的聚焦背景（使用品牌色强调） |
+| **轨道背景** | 未选中-禁用 | `--o-color-control4-light` | 关闭状态的禁用背景 |
+| **轨道背景** | 已选中-默认 | `--o-color-primary1` | 开启状态的默认背景 |
+| **轨道背景** | 已选中-悬浮 | `--o-color-primary2` | 开启状态的悬浮背景 |
+| **轨道背景** | 已选中-按下 | `--o-color-primary3` | 开启状态的按下背景 |
+| **轨道背景** | 已选中-聚焦 | `--o-color-primary1` | 开启状态的聚焦背景 |
+| **轨道背景** | 已选中-禁用 | `--o-color-primary4` | 开启状态的禁用背景 |
+| **滑块填充** | 所有状态 | `--o-color-fill2` | 滑块基础颜色（禁用时调整不透明度） |
+| **文字颜色** | 未选中 | `--o-color-info4` | 关闭状态文字（默认/悬浮/按下/聚焦） |
+| **文字颜色** | 已选中 | `--o-color-white` | 开启状态文字 |
+| **文字颜色** | 禁用 | `--o-color-white` | 禁用状态文字（降低可读性提示） |
 
 ---
 
@@ -347,13 +413,20 @@ OSwitch（SYMBOL，48×24px）
 
 ---
 
-### Hover 状态（交互态）
+### Hover 状态（悬浮态）
 
-| 元素 | Hover 视觉表现 |
-|------|---------------|
-| 轨道（Selected） | 背景颜色切换为 `--o-color-primary2`（brand-4） |
-| 轨道（Unselected） | 背景颜色不变 |
-| 滑块 | 尺寸略微放大（可选动效） |
+> ⚠️ **重要更新**：根据最新交互规范，Hover 状态已完善为：
+
+| 元素 | 未选中 Hover | 已选中 Hover |
+|------|-------------|-------------|
+| **轨道背景** | `--o-color-control1-light` → `--o-color-control2-light`<br>（浅灰 → 略深灰） | `--o-color-primary1` → `--o-color-primary2`<br>（品牌主色 → 品牌色悬浮态） |
+| **滑块** | 保持 `--o-color-fill2`，尺寸/颜色不变 | 保持 `--o-color-fill2`，尺寸/颜色不变 |
+| **文字** | 保持 `--o-color-info4` | 保持 `--o-color-white` |
+
+**交互说明**：
+- 鼠标悬停时仅轨道背景颜色变化
+- 滑块和文字保持默认态样式不变
+- 可选增强：滑块轻微放大或添加阴影效果
 
 ---
 

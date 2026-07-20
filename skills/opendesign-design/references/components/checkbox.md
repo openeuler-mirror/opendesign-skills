@@ -334,14 +334,55 @@ OCheckbox（HORIZONTAL，自适应宽度，固定高度 24px）
 
 ---
 
-### Hover 状态（交互态）
+### 交互状态完整规格
 
-| 元素 | Hover 视觉表现 |
-|------|---------------|
-| 框体（Unselected） | 描边颜色切换为 `--o-color-control2`（brand-6），背景不变 |
-| 框体（Selected） | 背景颜色切换为 `--o-color-primary2`（brand-4），图标不变 |
-| 框体（Indeterminate） | 背景颜色切换为 `--o-color-primary2`（brand-4），图标不变 |
-| 文字 | 颜色不变 |
+#### 未选中状态（Unselected）的5种交互态
+
+| 交互状态 | 框体填充 | 框体描边 | 文本样式 |
+|---------|---------|---------|---------|
+| **默认（Default）** | `--o-color-fill2` | `--o-color-control1` | 鸿蒙黑体 (Regular) 16px, `--o-color-info1` |
+| **悬浮（Hover）** | `--o-color-fill2` | `--o-color-control2` | 鸿蒙黑体 (Regular) 16px, `--o-color-info1` |
+| **按下（Pressed/Active）** | `--o-color-fill2` | `--o-color-control3` | 鸿蒙黑体 (Regular) 16px, `--o-color-info1` |
+| **选中（Focus）** | `--o-color-primary1` | 无 | 鸿蒙黑体 (Regular) 16px, `--o-color-info1` |
+| **禁用（Disabled）** | `--o-color-control2-light` | `--o-color-control4` | 鸿蒙黑体 (Regular) 16px, `--o-color-info1` |
+
+#### 已选中状态（Selected）的5种交互态
+
+| 交互状态 | 框体填充 | 文本样式 | 图标显示 |
+|---------|---------|---------|---------|
+| **默认（Default）** | `--o-color-primary1` | 鸿蒙黑体 (Regular) 16px, `--o-color-info1` | 显示勾号（✓） |
+| **悬浮（Hover）** | `--o-color-primary2` | 鸿蒙黑体 (Regular) 16px, `--o-color-info1` | 显示勾号（✓） |
+| **按下（Pressed/Active）** | `--o-color-primary3` | 鸿蒙黑体 (Regular) 16px, `--o-color-info1` | 显示勾号（✓） |
+| **选中（Focus）** | `--o-color-primary1` | 鸿蒙黑体 (Regular) 16px, `--o-color-info1` | 显示勾号（✓） |
+| **禁用（Disabled）** | `--o-color-primary4` | 鸿蒙黑体 (Regular) 16px, `--o-color-info1` | 显示勾号（✓） |
+
+> **交互状态说明**：
+> - **默认（Default）**：组件的正常显示状态
+> - **悬浮（Hover）**：鼠标悬停在组件上时的状态，用于提供视觉反馈
+> - **按下（Pressed/Active）**：鼠标点击按下时的状态，表示正在交互
+> - **选中（Focus）**：获得键盘焦点或被选中的状态
+> - **禁用（Disabled）**：不可操作的状态，使用降级颜色表达
+
+---
+
+### Hover 状态详细说明
+
+| 元素 | 状态 | Hover 视觉表现 | Token 变化 |
+|------|------|---------------|-----------|
+| 框体 | Unselected | 描边颜色加深 | `--o-color-control1` → `--o-color-control2` |
+| 框体 | Selected | 背景色变浅 | `--o-color-primary1` → `--o-color-primary2` |
+| 框体 | Indeterminate | 背景色变浅 | `--o-color-primary1` → `--o-color-primary2` |
+| 文字 | 所有状态 | 颜色不变 | 保持 `--o-color-info1` |
+
+---
+
+### Pressed/Active 状态详细说明
+
+| 元素 | 状态 | Pressed 视觉表现 | Token 变化 |
+|------|------|-----------------|-----------|
+| 框体 | Unselected | 描边颜色进一步加深 | `--o-color-control2` → `--o-color-control3` |
+| 框体 | Selected | 背景色进一步变浅 | `--o-color-primary2` → `--o-color-primary3` |
+| 文字 | 所有状态 | 颜色不变 | 保持 `--o-color-info1` |
 
 ---
 

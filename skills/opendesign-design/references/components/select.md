@@ -3,6 +3,61 @@
 # OSelect 选择器 · 设计 Skill
 
 > 组件集合节点：`1042:17664` · 组件名：OSelect 选择器 · 变体总数：20
+> 
+> 📦 **HTML 实例**：[select-demo.html](../examples/select-demo.html)（包含完整交互状态演示）
+
+---
+
+## ⚠️ 硬约束（必须遵守）
+
+### 🔒 图标资源规范（强制性）
+
+> **所有图标必须使用 `assets/` 目录下的 SVG 资源，禁止使用内联 SVG 或第三方图标库**
+
+| 图标类型 | 文件路径 | 尺寸 | 使用场景 |
+|---------|---------|------|---------|
+| **下箭头图标** | `assets/public icons/icon-下箭头.svg` | 24×24px (所有尺寸) | Enabled/Complete/Actived 状态显示，指示可展开 |
+| **上箭头图标** | `assets/public icons/icon-上箭头.svg` | 24×24px (所有尺寸) | Actived-menu 状态显示，指示已展开可收起 |
+| **加载图标** | `assets/public icons/icon-loading 加载.svg` | 24×24px | Loading 状态显示，替代箭头图标位置 |
+| **关闭图标** | `assets/public icons/icon-关闭.svg` | 12×12px | 多选标签的删除按钮（×） |
+| **复选框-未选中** | `assets/checkbox/Unselected.svg` | 16×16px | 多选模式未选中选项的复选框 |
+| **复选框-选中** | `assets/checkbox/Selected.svg` | 16×16px | 多选模式已选中选项的复选框 |
+
+> **说明**：
+> - 图标路径相对于 `references/` 目录：`../assets/public icons/icon-xxx.svg` 或 `../assets/checkbox/xxx.svg`
+> - 图标颜色由 CSS 变量控制（`fill: currentColor` 或 CSS `color` 属性）
+> - **禁止修改原始 SVG 文件的 `fill` 属性**，应通过 CSS 覆盖控制颜色
+> - 箭头图标透明度：正常态 `opacity: 1.0`，禁用态 `opacity: 0.4`
+> - 加载图标需添加 CSS 动画：`animation: spin 1s linear infinite`（360°旋转）
+> - 复选框图标在多选模式下使用，单选模式不显示复选框
+
+### 🔒 图标使用示例代码
+
+```html
+<!-- ✅ 正确：使用外部 SVG 资源 -->
+<svg class="arrow-icon" style="width: 24px; height: 24px;">
+    <use xlink:href="../assets/public icons/icon-下箭头.svg#icon" />
+</svg>
+
+<!-- ❌ 错误：禁止内联 SVG -->
+<svg class="arrow-icon" viewBox="0 0 24 24">
+    <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z" fill="currentColor"/>
+</svg>
+```
+
+### 🔒 图标状态映射表
+
+| 组件状态 | 显示图标 | 图标资源 | 颜色控制 | 特殊效果 |
+|---------|---------|---------|---------|---------|
+| **Enabled** | 下箭头 | `icon-下箭头.svg` | `--o-color-info1` | 无 |
+| **Complete** | 下箭头 | `icon-下箭头.svg` | `--o-color-info1` | 无 |
+| **Actived** | 下箭头 | `icon-下箭头.svg` | `--o-color-info1` | 无 |
+| **Actived-menu** | 上箭头 | `icon-上箭头.svg` | `--o-color-info1` | 无 |
+| **Disabled** | 下箭头 | `icon-下箭头.svg` | `--o-color-control4-light` | opacity: 0.4 |
+| **Loading** | 加载动画 | `icon-loading 加载.svg` | `--o-color-info1` | spin 动画 |
+| **多选-未选中** | 复选框 | `Unselected.svg` | `--o-color-control1` + border | 无 |
+| **多选-已选中** | 复选框勾选 | `Selected.svg` | 白色 (`white`) | 背景 `--o-color-primary1` |
+| **多选标签-删除** | 关闭按钮 | `icon-关闭.svg` | `--o-color-info1` | hover 时 opacity: 1 |
 
 ---
 
@@ -107,7 +162,7 @@ OSelect-Actived-menu（FRAME，示意组合）
       ├── boxShadow: 卡片投影
       └── [菜单项 OSelect 选择器/Menu × N]（每项 Height: 40px / 32px）
             ├── [文字 PARAGRAPH]（fill: color-info1）
-            └── hover 态背景: color-fill3
+            └── hover 态背景: --o-color-control2-light
 ```
 
 **OSelect-Dropdown（独立浮层）**
@@ -131,9 +186,9 @@ OSelect-Dropdown（FRAME，浮层）
 └── [菜单项 × N]（OSelect 选择器/Menu INSTANCE）
       ├── Width: 自适应（填充浮层内容宽度）
       ├── Height: 40px（large）/ 32px（medium）
-      ├── padding: 上下 8px，左右 12px，item spacing: 8px
+      ├── padding: 上下 8px，左右 12px，item spacing: 0px
       ├── [文字 PARAGRAPH]（fill: color-info1）
-      └── hover 态背景: color-fill3
+      └── hover 态背景: --o-color-control2-light（上下各减1px放量）
 ```
 
 ---
@@ -220,7 +275,7 @@ OSelect-Dropdown（FRAME，浮层）
 | 每菜单项高度 | 40px（`control_size-l`） | 32px（`control_size-m`） |
 | 菜单项内边距（上/下） | 8px | 8px |
 | 菜单项内边距（左/右） | 12px | 12px |
-| 菜单项 item spacing | 8px | 8px |
+| 菜单项 item spacing | 0px | 0px |
 | 示例高度（5 项） | 208px | 168px |
 | node_id（示例） | `1042:17681` | — |
 
@@ -263,7 +318,7 @@ OSelect-Dropdown（FRAME，浮层）
 | 上箭头图标 | `grey-14` | `grey-14` | `--o-color-info1` | rgb(0,0,0) → rgb(255,255,255) |
 | 菜单背景 | `grey-1` | `grey-4` | `--o-color-fill2` | rgb(255,255,255) → rgb(36,36,39) |
 | 菜单项文字 | `grey-14` | `grey-14` | `--o-color-info1` | rgb(0,0,0) → rgb(255,255,255) |
-| 菜单项 hover 背景 | — | — | `--o-color-fill3` | — |
+| 菜单项 hover 背景 | — | — | `--o-color-control2-light` | — |
 
 ---
 
@@ -385,11 +440,409 @@ OSelect（FRAME）
 
 ---
 
+## Part C：交互状态详细说明
+
+### 一、默认态（Default）
+
+#### 单选选择器
+
+| 区域 | 属性 | Token | 说明 |
+|------|------|-------|------|
+| 选择器描边 | 颜色 | `--o-color-control1` | 默认描边颜色 |
+| 选择器背景 | 颜色 | `--o-color-fill2` | 背景填充 |
+| 占位符文字 | 字号 | 16px (`font_size-text1`) | large 尺寸 |
+| 占位符文字 | 字重 | Regular (`font_weight-regular`) | — |
+| 占位符文字 | 颜色 | `--o-color-info4` | 占位提示文字 |
+| 已选文字 | 字号 | 16px (`font_size-text1`) | large 尺寸 |
+| 已选文字 | 字重 | Regular (`font_weight-regular`) | — |
+| 已选文字 | 颜色 | `--o-color-info1` | 实际选中值 |
+
+#### 多选选择器
+
+| 区域 | 属性 | Token | 说明 |
+|------|------|-------|------|
+| 选择器描边 | 颜色 | `--o-color-control1` | 默认描边颜色 |
+| 选择器背景 | 颜色 | `--o-color-fill2` | 背景填充 |
+| 占位符文字 | 字号 | 16px (`font_size-text1`) | large 尺寸 |
+| 占位符文字 | 颜色 | `--o-color-info4` | 占位提示文字 |
+| 标签文字 | 字号 | 12px (`font_size-tip2`) | 已选标签文字 |
+| 标签文字 | 字重 | Regular (`font_weight-regular`) | — |
+| 标签文字 | 颜色 | `--o-color-info1` | 标签文字颜色 |
+
+---
+
+### 二、悬浮态（Hover）
+
+#### 单选选择器
+
+| 区域 | 属性 | Token | 说明 |
+|------|------|-------|------|
+| 选择器描边 | 颜色 | `--o-color-control2` | 悬浮时描边加深 |
+| 选择器背景 | 颜色 | `--o-color-fill2` | 背景不变 |
+| 文字 | 字号 | 16px (`font_size-text1`) | large 尺寸 |
+| 文字 | 颜色 | `--o-color-info1` | 文字颜色不变 |
+
+#### 多选选择器
+
+| 区域 | 属性 | Token | 说明 |
+|------|------|-------|------|
+| 选择器描边 | 颜色 | `--o-color-control2` | 悬浮时描边加深 |
+| 选择器背景 | 颜色 | `--o-color-fill2` | 背景不变 |
+| 标签文字 | 字号 | 12px (`font_size-tip2`) | 标签文字 |
+| 标签文字 | 颜色 | `--o-color-info1` | 标签文字颜色不变 |
+
+---
+
+### 三、激活态-展开菜单（Active/Expanded）
+
+> **说明**：下拉面板规格严格遵循 **ODropdown** 和 **OSearch** 组件的下拉面板规范，确保跨组件视觉一致性。
+
+#### 触发器区域
+
+| 区域 | 属性 | Token | 说明 |
+|------|------|-------|------|
+| 选择器描边 | 颜色 | `--o-color-control3` | 聚焦描边 |
+| 选择器背景 | 颜色 | `--o-color-fill2` | 背景不变 |
+| 占位符/文字 | 字号 | 16px (`font_size-text1`) | large 尺寸 |
+| 占位符文字 | 颜色 | `--o-color-info4` | 占位提示 |
+| 已选文字 | 颜色 | `--o-color-info1` | 选中值 |
+
+#### 下拉面板容器（参考 ODropdown/OSearch）
+
+> 📐 **面板布局规格**：与 ODropdown 下拉面板、OSearch 搜索建议面板完全一致。
+
+```
+OSelect-Dropdown 浮层（FRAME）
+├── 与触发器间距: 4px（垂直方向）
+├── Width: 与触发器同宽（自适应）
+├── Height: 4px（上内边距）+ N × 40px（large）/ N × 32px（medium）+ 0px（项间距）+ 4px（下内边距）
+├── cornerRadius: 4px → Token: `radius_control-xs`
+├── fill: rgb(255,255,255) → Token: `--o-color-fill2`（Light）/ rgb(36,36,39)（Dark）
+├── boxShadow: DROP_SHADOW x=0 y=6 blur=24 spread=0 rgba(18,20,23,0.08)
+├── padding: 4px（四周）
+└── autoLayout: VERTICAL，子项自适应宽度
+```
+
+**面板详细规格表**
+
+| 规格项 | large（PC） | medium（PC） | Token |
+|--------|------------|-------------|-------|
+| **与触发器间距** | 4px | 4px | — |
+| **面板圆角** | 4px | 4px | `radius_control-xs` |
+| **面板内边距（四周）** | 4px | 4px | — |
+| **面板背景（Light）** | rgb(255,255,255) | rgb(255,255,255) | `--o-color-fill2` |
+| **面板背景（Dark）** | rgb(36,36,39) | rgb(36,36,39) | `--o-color-fill2` (Dark值) |
+| **面板阴影** | DROP_SHADOW | DROP_SHADOW | x=0 y=6 blur=24 spread=0 rgba(18,20,23,0.08) |
+
+#### 下拉菜单项（参考 ODropdown/OSearch）
+
+> 📐 **菜单项规格**：与 ODropdown 菜单项、OSearch 建议项完全一致。
+> 
+> ⚠️ **重要规范**：Hover 和 Selected 的背景色块必须**上下各缩 1px 放量**，避免相邻项粘连。
+
+```
+菜单项 × N（Height: 40px large / 32px medium）
+├── padding: 上下 8px，左右 12px
+├── item spacing: 0px（相邻菜单项无间距）
+├── cursor: pointer
+│
+├── [文字 PARAGRAPH / 复选框 + 文字]
+│    fontSize: 16px (large) / 14px (medium)
+│    fontWeight: Regular (`font_weight-regular`)
+│    color: --o-color-info1（默认态）
+│
+└── [背景色块 ::before 伪元素] ← 关键实现细节
+     position: absolute
+     top: 1px              ← 上缩 1px
+     left: 0
+     right: 0
+     bottom: 1px           ← 下缩 1px
+     borderRadius: 2px
+     z-index: -1           ← 在内容层下方
+     
+     Hover 态:
+       background: --o-color-control2-light  （浅色提示）
+       
+     Selected 态:
+       background: --o-color-control3-light  （深色强调）
+```
+
+**菜单项详细规格表**
+
+| 规格项 | large（PC） | medium（PC） | Token | 说明 |
+|--------|------------|-------------|-------|------|
+| **菜单项高度** | 40px | 32px | `control_size-l` / `control_size-m` | 整体高度 |
+| **菜单项内边距（上/下）** | 8px | 8px | — | 内容区内边距 |
+| **菜单项内边距（左/右）** | 12px | 12px | — | 内容区左右边距 |
+| **菜单项间距（item spacing）** | 0px | 0px | — | 相邻项无间距 |
+| **菜单项字号** | 16px | 14px | `font_size-text1` / `font_size-tip1` | 文字大小 |
+| **菜单项字重** | Regular | Regular | `font_weight-regular` | 默认字重 |
+| **默认文字颜色** | `--o-color-info1` | `--o-color-info1` | rgb(0,0,0) / rgb(255,255,255) | 正常文字 |
+| **Hover 背景色** | `--o-color-control2-light` | `--o-color-control2-light` | #E8F0FE (Light) / rgba(110,148,243,0.15) (Dark) | 浅色提示背景 |
+| **Selected 背景色** | `--o-color-control3-light` | `--o-color-control3-light` | #D2E3FC (Light) / rgba(110,148,243,0.25) (Dark) | 深色强调背景 |
+| **背景色块圆角** | 2px | 2px | — | 圆角半径 |
+| **背景色块缩放** | 上下各缩 1px | 上下各缩 1px | — | 防止粘连的关键 |
+| **选中项文字颜色** | `--o-color-primary1` | `--o-color-primary1` | brand-6 主色调 | 品牌蓝色高亮 |
+
+#### 菜单项交互状态详情
+
+| 状态 | 背景 Token | Light 模式值 | Dark 模式值 | 文字颜色 | 特殊效果 |
+|------|-----------|-------------|-------------|---------|---------|
+| **默认态** | transparent | transparent | transparent | `--o-color-info1` | 正常显示 |
+| **Hover 态** | `--o-color-control2-light` | #E8F0FE | rgba(110,148,243,0.15) | `--o-color-info1` | 浅色背景高亮，圆角 2px |
+| **选中态** | `--o-color-control3-light` | #D2E3FC | rgba(110,148,243,0.25) | `--o-color-primary1` | 深色背景强调 + 文字品牌蓝 |
+| **当前聚焦** | `--o-color-control2-light` | #E8F0FE | rgba(110,148,243,0.15) | `--o-color-info1` | 键盘导航时浅色高亮 |
+
+> **⚠️ 视觉层级说明**：
+> - **Hover 态**：使用 `--o-color-control2-light`（较浅），表示"可被选中"的提示状态
+> - **Selected 态**：使用 `--o-color-control3-light`（较深），表示"已选中"的确认状态
+> - 两种状态有明显视觉差异，避免用户混淆
+
+##### 多选菜单项特殊状态
+
+| 状态 | 属性 | Token | Light 值 | Dark 值 | 说明 |
+|------|------|-------|----------|---------|------|
+| 复选框-选中 | 图标 | 勾选图标（✓） | — | — | 已选项标识 |
+| 复选框-未选中 | 图标 | 空白方框（□） | — | — | 未选项标识 |
+| 选中项背景 | 颜色 | `--o-color-control3-light` | #D2E3FC | rgba(110,148,243,0.25) | 多选深色选中背景 |
+| Hover 未选中项背景 | 颜色 | `--o-color-control2-light` | #E8F0FE | rgba(110,148,243,0.15) | 悬停浅色背景 |
+| 复选框与文字间距 | 间距 | 8px | — | — | 图标与文字的水平间距 |
+
+---
+
+### 四、激活态-可搜索（Active/Searchable）
+
+> **说明**：可搜索选择器的下拉面板规格同样严格遵循 **OSearch** 搜索建议面板规范。
+
+#### 触发器区域
+
+| 区域 | 属性 | Token | 说明 |
+|------|------|-------|------|
+| 选择器描边 | 颜色 | `--o-color-control3` | 聚焦描边 |
+| 输入框背景 | 颜色 | `--o-color-fill2` | 输入区域背景 |
+| 输入文字 | 字号 | 16px (`font_size-text1`) | large 尺寸 |
+| 输入文字 | 颜色 | `--o-color-info1` | 用户输入文字 |
+
+#### 搜索下拉面板容器（参考 OSearch）
+
+> 📐 **面板布局规格**：与 OSearch 搜索建议面板完全一致。
+
+```
+可搜索 Select 下拉面板（FRAME）
+├── 与触发器间距: 4px（垂直方向）
+├── Width: 与触发器同宽（自适应）
+├── Height: 4px（上内边距）+ N × 40px（菜单项）+ 0px（项间距）+ 4px（下内边距）
+├── cornerRadius: 4px → Token: `radius_control-xs`
+├── fill: rgb(255,255,255) → Token: `--o-color-fill2`（Light）/ rgb(36,36,39)（Dark）
+├── boxShadow: DROP_SHADOW x=0 y=6 blur=24 spread=0 rgba(18,20,23,0.08)
+├── padding: 4px（四周）
+└── autoLayout: VERTICAL，子项自适应宽度
+```
+
+**面板详细规格表**
+
+| 规格项 | 值 | Token | 说明 |
+|--------|-----|-------|------|
+| **与触发元素间距** | 4px | — | 垂直方向间距 |
+| **面板圆角** | 4px | `radius_control-xs` | 统一圆角 |
+| **面板内边距** | 4px（四周） | — | 内边距 |
+| **面板背景（Light）** | rgb(255,255,255) | `--o-color-fill2` | 浅色模式 |
+| **面板背景（Dark）** | rgb(36,36,39) | `--o-color-fill2` (Dark值) | 深色模式 |
+| **面板阴影** | DROP_SHADOW | — | x=0 y=6 blur=24 spread=0 rgba(18,20,23,0.08) |
+
+#### 搜索下拉菜单项（参考 OSearch）
+
+> 📐 **菜单项规格**：与 OSearch 搜索建议项完全一致，支持关键词高亮。
+
+```
+菜单项 × N（Height: 40px = control_size-l）
+├── padding: 上下 8px，左右 12px
+├── item spacing: 0px
+├── cursor: pointer
+│
+├── [匹配关键词 SPAN] ← 与输入内容匹配的部分
+│    fontSize: 16px
+│    fontWeight: 600（Semibold）
+│    color: --o-color-primary1（rgb(0,47,167) 品牌蓝）
+│
+└── [补充文本] ← 选项的其他内容
+     fontSize: 16px
+     fontWeight: 400（Regular）
+     color: --o-color-info2（rgba(0,0,0,0.8) 80%黑）
+     
+└── [Hover 态背景]
+     background: --o-color-control2-light (#E8F0FE 极浅蓝)
+     borderRadius: 2px
+```
+
+**菜单项详细规格表**
+
+| 规格项 | 值 | Token | Light 值 | Dark 值 | 说明 |
+|--------|-----|-------|----------|---------|------|
+| **菜单项高度** | 40px | `control_size-l` | 40px | 40px | 统一高度 |
+| **菜单项内边距** | 上下 8px，左右 12px | — | 同左 | 同左 | 内边距 |
+| **菜单项间距** | 0px | — | 0px | 0px | 无间距 |
+| **匹配关键词字重** | 600 (Semibold) | — | Semibold | Semibold | 粗体高亮 |
+| **匹配关键词颜色** | rgb(0,47,167) | `--o-color-primary1` | brand-6 | brand-6 Dark | 品牌蓝色 |
+| **非匹配文本字重** | 400 (Regular) | — | Regular | Regular | 常规字体 |
+| **非匹配文本颜色** | rgba(0,0,0,0.8) | `--o-color-info2` | 80%黑 | 80%白 | 次要文字 |
+| **Hover 背景色** | 浅蓝 | `--o-color-control2-light` | #E8F0FE | rgba(110,148,243,0.15) | 浅色提示背景 |
+| **Selected 背景色** | 中蓝 | `--o-color-control3-light` | #D2E3FC | rgba(110,148,243,0.25) | 深色强调背景 |
+| **Hover/Selected 圆角** | 2px | — | 2px | 2px | 小圆角（上下缩1px后） |
+| **选中项文字颜色** | 品牌蓝 | `--o-color-primary1` | brand-6 | brand-6 Dark | 文字高亮 |
+
+> **⚠️ 背景色块规范**：与单选选择器一致，Hover 和 Selected 背景色块必须**上下各缩 1px 放量**
+
+> **⚠️ 关键词高亮逻辑（硬约束）**：
+> - 输入框中的文本内容必须在选项列表中**高亮显示**
+> - 匹配部分使用 `--o-color-primary1` (蓝色) + **Semibold** 字重
+> - 非匹配部分使用 `--o-color-info2` (80%黑) + **Regular** 字重
+> - 示例：输入 "选项" → "**选项**一" （"选项" 蓝色粗体，"一" 黑色常规）
+
+---
+
+### 五、禁用态（Disabled）
+
+| 区域 | 属性 | Token | 说明 |
+|------|------|-------|------|
+| 选择器描边 | 颜色 | `--o-color-control4-light` | 禁用描边（浅色） |
+| 选择器背景 | 颜色 | `--o-color-fill2` | 背景不变 |
+| 文字/占位符 | 字号 | 16px (`font_size-text1`) | large 尺寸 |
+| 文字/占位符 | 颜色 | `--o-color-info4` | 禁用文字颜色 |
+| 占位符文字颜色 | 颜色 | `--o-color-info4` | 提示文字 |
+| 箭头图标 | 颜色 | `--o-color-control4-light` | 禁用图标颜色 |
+
+> **注意**：禁用状态下选择器不可交互，鼠标悬停无反馈，点击无效。
+
+---
+
+### 六、加载态（Loading）
+
+| 区域 | 属性 | Token | 说明 |
+|------|------|-------|------|
+| 选择器描边 | 颜色 | `--o-color-control3` | 同激活态 |
+| 选择器背景 | 颜色 | `--o-color-fill2` | 背景不变 |
+| 加载图标 | 类型 | Spinner | 旋转加载动画 |
+| 加载图标位置 | 位置 | 右侧 | 替代箭头图标位置 |
+| 文字/占位符 | 颜色 | `--o-color-info1` / `--o-color-info4` | 根据状态显示 |
+
+> **注意**：加载态通常出现在异步加载选项数据时，加载完成后切换至正常状态。
+
+---
+
+### 七、交互状态转换流程
+
+```
+默认态（Default）
+    ↓ [鼠标进入]
+悬浮态（Hover）
+    ↓ [鼠标离开]
+默认态（Default）
+    ↓ [点击/聚焦]
+激活态-展开（Active/Expanded）
+    ↓ [选择选项]
+完成态（Complete）→ 默认态（显示选中值）
+    ↓ [再次点击]
+激活态-展开（Active/Expanded）
+    ↓ [按 Esc / 点击外部]
+默认态（Default）
+
+特殊情况：
+├── 禁用态（Disabled）：不可交互，保持在禁用状态
+└── 加载态（Loading）：自动过渡，加载完成后变为默认/激活态
+```
+
+---
+
+### 八、多选选择器特殊交互
+
+#### 标签显示规则
+
+| 状态 | 显示内容 | 行为 |
+|------|---------|------|
+| 未选择 | 占位符文字 | 显示 "请选择" 提示 |
+| 已选 1 项 | 1 个标签 | 显示单个选项标签 |
+| 已选 N 项 | N 个标签 | 标签横向排列，超出隐藏或折叠显示 |
+
+#### 标签样式
+
+| 属性 | Token | 说明 |
+|------|-------|------|
+| 标签背景 | `--o-color-control2-light` | 标签背景色 |
+| 标签文字 | `--o-color-info1` | 标签文字颜色 |
+| 标签文字字号 | 12px (`font_size-tip2`) | 小字号 |
+| 关闭按钮 | × 图标 | 可删除已选项 |
+| 标签圆角 | 2px (`radius_control-xs`) | 小圆角 |
+
+---
+
+### 九、可搜索选择器特殊交互
+
+#### 搜索输入框
+
+| 属性 | Token | 说明 |
+|------|-------|------|
+| 输入框背景 | `--o-color-fill2` | 透明背景 |
+| 输入框描边 | 无 | 无额外描边 |
+| 输入文字 | `--o-color-info1` | 用户输入文字 |
+| 占位符文字 | `--o-color-info4` | "请搜索" 提示 |
+
+#### 搜索过滤行为
+
+1. **实时过滤**：输入即时过滤选项列表
+2. **匹配高亮**：匹配文字高亮显示（可选）
+3. **无结果提示**：过滤后无匹配项时显示 "无匹配结果"
+4. **清除按钮**：输入内容后显示清除按钮（×）
+5. **键盘导航**：支持上下键选择，Enter 确认，Esc 关闭
+
+---
+
+### 十、颜色变量速查表（o-color-*）
+
+> **⚠️ 2026-07-15 更新**：优化菜单项 Hover/Selected 背景色区分，新增 `--o-color-control3-light` 变量
+
+#### 选择器主体状态
+
+| 状态 | 描边 Token | 背景 Token | 文字 Token | 说明 |
+|------|-----------|-----------|-----------|------|
+| **默认态** | `--o-color-control1` | `--o-color-fill2` | `--o-color-info1` / `--o-color-info4` | 正常显示（占位符/已选值） |
+| **悬浮态** | `--o-color-control2` | `--o-color-fill2` | `--o-color-info1` | 鼠标悬停选择器 |
+| **激活态** | `--o-color-control3` | `--o-color-fill2` | `--o-color-info1` | 聚焦/展开下拉 |
+| **禁用态** | `--o-color-control4-light` | `--o-color-fill2` | `--o-color-info4` | 不可交互 |
+
+#### 下拉菜单项状态（关键更新）
+
+| 状态 | 背景 Token | Light 模式值 | Dark 模式值 | 文字 Token | 说明 |
+|------|-----------|-------------|-------------|-----------|------|
+| **默认态** | transparent | transparent | transparent | `--o-color-info1` | 正常显示 |
+| **Hover 态** | `--o-color-control2-light` | #E8F0FE | rgba(110,148,243,0.15) | `--o-color-info1` | 浅色提示背景 |
+| **Selected 态** | `--o-color-control3-light` | #D2E3FC | rgba(110,148,243,0.25) | `--o-color-primary1` | 深色强调背景 + 品牌蓝文字 |
+
+#### 多选特殊状态
+
+| 元素 | 背景 Token | Light 值 | Dark 值 | 说明 |
+|------|-----------|----------|---------|------|
+| **标签背景** | `--o-color-control2-light` | #E8F0FE | rgba(110,148,243,0.15) | 已选标签背景 |
+| **多选选中项** | `--o-color-control3-light` | #D2E3FC | rgba(110,148,243,0.25) | 复选框选中项深色背景 |
+
+#### 背景色块实现规范
+
+> **🔧 技术实现要求**：
+> - 使用 CSS `::before` 伪元素实现背景色块
+> - 色块位置：`top: 1px; bottom: 1px; left: 0; right: 0`
+> - 色块圆角：`border-radius: 2px`
+> - 层级控制：`z-index: -1`（在文字内容下方）
+> - 目的：确保相邻菜单项的背景不粘连，保持 2px 间隙
+
+---
+
+## Part D：注意事项与最佳实践
+
 ### 注意事项
 
 - **Actived-menu 是示意变体**：将触发器（Actived 态）+ 菜单面板合为一体，仅用于设计稿展示；实际开发中菜单为浮层，触发器高度始终为 40px/32px
 - **small 尺寸限制**：`small`（移动端）仅有 `Enabled` 和 `Complete`，无 `Actived` / `Actived-menu` 变体
-- **无 Disabled 状态**：OSelect 无 Disabled 变体
+- **无 Disabled 状态**：OSelect 无 Disabled 变体（注：根据最新规范，已补充禁用态定义）
 - **箭头图标方向**：Enabled/Actived/Complete 使用「下箭头」，Actived-menu 使用「上箭头」
 - **描边样式**：描边宽度 1px INSIDE，不影响选择器整体尺寸
 - **选择器高度**：large=40px，medium=32px，small=40px（移动端同 large 高度）
@@ -397,6 +850,21 @@ OSelect（FRAME）
 - **圆角统一**：所有尺寸圆角均为 4px（`radius_control-xs`）
 - **背景颜色**：Light=grey-1（white），Dark=grey-4
 - **描边颜色**：Enabled/Complete=grey-14@0.25（`--o-color-control1`），Actived/Actived-menu=brand-6（`--o-color-primary1`）
+- **⚠️ 菜单项背景色块规范（2026-07-15 更新）**：
+  - Hover 态使用 `--o-color-control2-light`（浅色提示）：Light=#E8F0FE, Dark=rgba(110,148,243,0.15)
+  - Selected 态使用 `--o-color-control3-light`（深色强调）：Light=#D2E3FC, Dark=rgba(110,148,243,0.25)
+  - 背景色块必须**上下各缩 1px 放量**（使用 `::before` 伪元素实现）
+  - 目的：避免相邻菜单项背景粘连，保持视觉清晰度
+  - 实现方式：`position: absolute; top: 1px; bottom: 1px; z-index: -1`
+
+### 最佳实践
+
+1. **交互一致性**：确保所有状态的过渡平滑，避免突兀的视觉跳变
+2. **可访问性**：提供清晰的焦点指示器（Focus Indicator），支持键盘导航
+3. **性能优化**：大量选项时使用虚拟滚动（Virtual Scroll），避免渲染性能问题
+4. **响应式适配**：移动端考虑触摸区域大小，适当增大点击热区
+5. **国际化**：支持 RTL（从右到左）布局，文字方向自适应
+6. **背景色块实现**：使用 CSS `::before` 伪元素而非直接 background 属性，确保缩放规范正确执行
 - **占位文字颜色**：`--o-color-info4`（grey-14@0.4），选中值颜色：`--o-color-info1`（grey-14）
 - **Actived-menu 总高**：包含选择器头部 + 菜单面板（large=252px，medium=194px）
 - **宽度自适应**：选择器宽度随容器自适应，示例宽度 320px
@@ -417,7 +885,7 @@ OSelect（FRAME）
 | 下箭头图标 | Enabled / Actived / Complete | fill：`--o-color-info1`（grey-14），24×24px |
 | 上箭头图标 | Actived-menu | fill：`--o-color-info1`（grey-14），24×24px |
 | 菜单项 | 默认 | 文字 `--o-color-info1`，背景透明 |
-| 菜单项 | Hover | 背景 `--o-color-fill3` |
+| 菜单项 | Hover | 背景 `--o-color-control2-light` |
 
 ---
 
@@ -442,7 +910,7 @@ OSelect（FRAME）
 |------|---------------|
 | 选择器（Enabled / Complete） | 描边颜色切换为 `--o-color-control2` |
 | 选择器（Actived / Actived-menu） | 描边颜色不变 |
-| 菜单项 | 背景 `--o-color-fill3` |
+| 菜单项 | 背景 `--o-color-control2-light` |
 
 ---
 
@@ -467,7 +935,7 @@ Focus 状态即 Actived 状态，描边切换为 `--o-color-primary1`。
 | 箭头图标尺寸 | width/height | `icon_size_control-m`（24px） |
 | 菜单背景 | fill | `--o-color-fill2` |
 | 菜单项文字 | fill | `--o-color-info1` |
-| 菜单项 hover 背景 | fill | `--o-color-fill3` |
+| 菜单项 hover 背景 | fill | `--o-color-control2-light` |
 | 选择器高度（large/small） | height | `control_size-l`（40px） |
 | 选择器高度（medium） | height | `control_size-m`（32px） |
 | 选择器圆角 | cornerRadius | `radius_control-xs`（4px） |
