@@ -16,6 +16,14 @@
 
 ---
 
+## 2026-07-21
+
+### 新增
+- **opendesign-design**：新增多个交互示例 demo——card-demo、checkbox-demo、dropdown-demo、input-demo、interactive-card-demo、radio-demo、search-demo、select-demo、switch-debug、toggle 等 HTML 示例文件，用于展示各组件的实际使用效果。
+- 新增辅助工具脚本——fix_icons.py（图标修复）、open_chrome.sh（Chrome 启动）、.mcp.json（MCP 配置）。
+
+---
+
 ## 2026-07-08
 
 ### 更新
