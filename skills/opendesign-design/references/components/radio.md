@@ -69,7 +69,7 @@ ORadio（HORIZONTAL，自适应宽度，固定高度 24px）
 > - **单选组 ORadioGroup**：多个 ORadio 组合使用，同一组内互斥选中
 > - **表单布局**：与 OInput、OSelect 等表单组件配合，垂直排列
 > - **卡片内选项**：与 OCard 配合，卡片内展示单选选项
-> - **筛选面板**：与 OFilter 配合，筛选条件单选
+> - **筛选面板**：与 OForm/OFormItem 配合构成筛选条件区，单选用 ORadio
 
 ---
 

@@ -1,8 +1,8 @@
 > ← [Token 索引](../SKILL.md) · [README](../../../README.md)
 
-# Token 参考文档
+> 本文档对应 @opensig/opendesign-token **v0.1.1**（2026-06 生成），最低依赖版本 ≥0.1.1。具体 token 在哪个版本引入/变更/删除，查 [`ReleaseNote`](https://raw.atomgit.com/openeuler/opendesign-token/blobs/9315d89bfe0c8538b75df2907f6ad8c2e9e235ba/ReleaseNote.md)。
 
-本文档包含所有可用的设计 token。
+# Token 参考文档
 
 ## Palette Tokens
 
@@ -530,10 +530,19 @@
 
 ### font_weight
 
+鸿蒙字体共七档字重，与 `@font-face` 注册的七个字面一一对应（CSS `font-weight` 数值与字面精确匹配，无需就近匹配）。
+
 | Token 名称 | 值 | 说明 |
 |-----------|-----|------|
-| `--o-font_weight-regular` | `400` | 常规字重 |
-| `--o-font_weight-bold` | `600` | 粗体字重 |
+| `--o-font_weight-thin` | `250` | 极细 |
+| `--o-font_weight-light` | `300` | 细体 |
+| `--o-font_weight-regular` | `400` | 常规 |
+| `--o-font_weight-medium` | `500` | 中等 |
+| `--o-font_weight-semibold` | `600` | 半粗（标题、强调） |
+| `--o-font_weight-bold` | `700` | 加粗 |
+| `--o-font_weight-black` | `900` | 超粗 |
+
+> 实际开发以 `--o-font_weight-regular`（`400`）和 `--o-font_weight-semibold`（`600`）两档为主。
 
 ## Font Family Tokens
 
@@ -541,8 +550,10 @@
 
 | Token 名称 | 值 | 说明 |
 |-----------|-----|------|
-| `--o-font_family` | `HarmonyOS, Inter, -apple-system, BlinkMacSystemFont, 'PingFang SC','Microsoft YaHei',Arial,sans-serif` | 默认字体族（HarmonyOS Sans SC） |
+| `--o-font_family` | `'HarmonyOS Sans', 'HarmonyOS Sans SC', Inter, -apple-system, BlinkMacSystemFont, 'PingFang SC','Microsoft YaHei',Arial,sans-serif` | 默认字体族（拉丁族 `'HarmonyOS Sans'` 在前，中文族 `'HarmonyOS Sans SC'` 在后，自动分流） |
 | `--o-font_family-code` | `SFMono-Regular,Menlo,Monaco,Consolas,'Liberation Mono',monospace` | 等宽代码字体族 |
+
+> **字体族自动分流**：拉丁字符命中 `'HarmonyOS Sans'`（含独立 italic 面，`font-style: italic` 可直接渲染真斜体）；中文字符在 `'HarmonyOS Sans'` 字体文件中无对应 glyph（该字体仅含拉丁字形），浏览器自动穿透到下一族 `'HarmonyOS Sans SC'`。引入字体 CSS 后仅注册 `@font-face`，需自行在根容器设置 `:root { font-family: var(--o-font_family); }`。
 
 ## Shadow Tokens
 
@@ -587,7 +598,7 @@
 
 ## Responsive Tokens（响应式变量）
 
-> 版本 0.0.10 新增。引入任意主题 CSS 后自动生效，无需额外导入。变量前缀为 `--o-r-`（`r` = responsive）。
+> 版本 0.0.10 起可用。引入任意主题 CSS 后自动生效，无需额外导入。变量前缀为 `--o-r-`（`r` = responsive）。
 
 响应式变量会根据视口宽度在不同断点自动切换取值，共 4 个断点：
 
@@ -660,7 +671,7 @@
 
 ## Grid System Tokens（栅格系统）
 
-> 版本 0.0.10 新增。与响应式 Token 一同生效，无需额外导入。变量前缀为 `--o-r-grid-`。
+> 版本 0.0.10 起可用。与响应式 Token 一同生效，无需额外导入。变量前缀为 `--o-r-grid-`。
 
 栅格系统共 6 个响应断点，最大 24 列：
 
@@ -739,7 +750,7 @@
 >
 > 引入主题 CSS 后，组件库通过 CSS 变量级联自动关联到正确的主题色值。业务代码应优先使用语义化 Token（如 `--o-color-primary1`），而非直接引用调色板变量。
 
-## 扩展调色板 Palette（v0.0.10 新增）
+## 扩展调色板 Palette（0.0.10 起可用）
 
 以下 Palette 在 v0.0.10 中新增，供辅助色和图表配色使用。所有主题共用同一套 light 值（dark 模式下色阶反转）。
 

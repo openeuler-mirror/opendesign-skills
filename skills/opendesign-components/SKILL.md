@@ -1,9 +1,12 @@
 ---
 name: opendesign-components
 description: OpenDesign 组件库使用指南。当需要使用 OpenDesign Vue 组件库快速搭建页面时使用此 skill。支持所有 OpenDesign 组件（46 个），包括按钮、表单、表格、对话框、卡片、图标、滑块、步骤条、轻提示等常用 UI 组件。使用场景：(1) 使用 OpenDesign 组件构建 Vue 页面，(2) 查找组件使用方法和属性说明，(3) 获取组件代码示例
+last_update: 2026-07-06
 ---
 
 # OpenDesign 组件库使用指南
+
+> 本 Skill 对应 @opensig/opendesign **v1.2.5**（2026-07 生成），最低依赖版本 ≥1.2.5。具体组件 API 在哪个版本引入/变更/废弃，查 [`ReleaseNote`](https://raw.atomgit.com/openeuler/opendesign-components/blobs/bb8e66ef9d79e2fd08fb841de9340ef00e5a841d/ReleaseNote.opendesign.md)。
 
 OpenDesign 是一个面向 openEuler 生态的 Vue 3 组件库，提供 59 个可复用 UI 组件。组件库有六套独立主题，**每个社区项目在初始化时选定一套，运行时只切换 dark/light 模式**。
 
@@ -17,8 +20,8 @@ pnpm add @opensig/opendesign @opensig/opendesign-token
 npm install @opensig/opendesign @opensig/opendesign-token
 ```
 
-- `@opensig/opendesign` — 组件库
-- `@opensig/opendesign-token` — 设计 token（必需），包含主题 CSS 变量
+- `@opensig/opendesign` — 组件库（最低版本见各组件 Skill 头部标注）
+- `@opensig/opendesign-token` — 设计 token（必需），最低版本见 Token Skill 头部标注（当前为 `≥0.1.1`）
 
 ### 2. 选择主题并引入样式
 
@@ -106,7 +109,7 @@ initRound('pill') // 'pill'代表全圆角，通常在Ascend社区使用
 
 ```typescript
 // main.ts
-import '@opensig/opendesign-token/fonts/font-harmony.css' // 鸿蒙字体
+import '@opensig/opendesign-token/fonts/css' // 鸿蒙字体
 ```
 
 ---
@@ -242,8 +245,10 @@ $o-breakpoints: (
   }
 }
 
-/// 设备悬停能力查询
-/// 用法：@include hoverable { ... }（仅在支持 hover 的设备生效）
+/// 设备悬停能力查询——筛选设备类型，不附加 :hover 伪类
+/// 与 hover() 的区别：hoverable 只做设备筛选，@content 原样输出；
+///   hover() 会自动包裹 &:hover，只在指针设备的 hover 瞬态生效。
+/// 用法：@include hoverable { ... }（仅在支持 hover 的设备生效，常驻样式）
 ///      @include hoverable(none) { ... }（仅在触控等不支持 hover 的设备生效）
 @mixin hoverable($hover: hover) {
   @media (hover: $hover) {
@@ -252,21 +257,11 @@ $o-breakpoints: (
 }
 
 /// 安全 hover 样式——仅在支持 hover 的指针设备上追加 :hover
+/// 与 hoverable() 的区别：hover() 自动包裹 &:hover，只在 hover 瞬态生效；
+///   hoverable() 只做设备筛选，@content 原样输出，不附加 :hover。
 /// 触控设备不会产生粘连残留状态
 /// 用法：@include hover { color: red; }
 @mixin hover() {
-  @media (hover: hover) {
-    &:hover {
-      @content;
-    }
-  }
-}
-
-/// 移动端常显 + 桌面端 hover 同时触发
-/// 触控设备上内容始终可见，指针设备上仅在 :hover 时显示
-/// 用法：@include me-hover { visibility: visible; }
-@mixin me-hover() {
-  @content;
   @media (hover: hover) {
     &:hover {
       @content;
@@ -327,10 +322,17 @@ $o-breakpoints: (
   }
 }
 
-// 移动端常显、桌面端 hover 触发
+// 仅 hover 设备生效的常驻样式
 .action-area {
-  @include me-hover {
-    visibility: visible;
+  @include hoverable {
+    background-color: var(--o-color-fill3);
+  }
+}
+
+// 仅触控设备生效的样式
+.mobile-only {
+  @include hoverable(none) {
+    display: block;
   }
 }
 
@@ -393,9 +395,8 @@ export default defineNuxtConfig({
 | 场景 | 用哪个 |
 |------|--------|
 | 鼠标悬停改变样式（触控设备跳过） | `@include hover { ... }` |
-| 某段样式仅限支持 hover 的设备 | `@include hoverable { ... }` |
+| 某段样式仅限支持 hover 的设备（常驻，非瞬态） | `@include hoverable { ... }` |
 | 某段样式仅限触控设备 | `@include hoverable(none) { ... }` |
-| 移动端常显、桌面端 hover 也触发 | `@include me-hover { ... }` |
 | 展开/收起箭头旋转动效 | `@include x-hover` |
 | 带 overflow 裁切的 SVG 旋转动效 | `@include x-svg-hover` |
 
@@ -422,7 +423,7 @@ export default defineNuxtConfig({
 - [ODropdown](#odropdown) — 下拉菜单 · [参考文档](references/dropdown.md)
 - [OFigure](#ofigure) — 图片 · [参考文档](references/figure.md)
 - [OForm / OFormItem](#oform--oformitem) — 表单 · [参考文档](references/form.md)
-- [OGrid / ORow / OCol](#ogrid--orow--ocol) — 栅格布局 · [参考文档](references/grid.md)
+- [ORow / OCol](#orow--ocol) — 栅格布局 · [参考文档](references/grid.md)
 - [OIcon](#oicon) — 图标 · [参考文档](references/icon.md)
 - [OInput](#oinput) — 输入框 · [参考文档](references/input.md)
 - [OInputNumber](#oinputnumber) — 数字输入框 · [参考文档](references/input-number.md)
@@ -527,7 +528,7 @@ Pixso 图层或组件实例名通常含有以下关键词，可直接映射：
 | scrollbar / scroller / 滚动 | OScrollbar | references/scrollbar.md |
 | virtual-list / 虚拟列表 | OVirtualList | references/virtual-list.md |
 | data-table / 表格 / table | ODataTable | references/data-table.md |
-| row / col / grid / 栅格 | OGrid/ORow/OCol | references/grid.md |
+| row / col / grid / 栅格 | ORow/OCol | references/grid.md |
 | form / 表单 | OForm | references/form.md |
 
 ---
@@ -590,7 +591,7 @@ Pixso 图层或组件实例名通常含有以下关键词，可直接映射：
 | 通用弹出层容器（自身无样式，定位在触发元素附近） | OPopup | references/popup.md |
 | 通用蒙层/全屏浮层容器（无固定内部结构） | OLayer | references/layer.md |
 | 可展开/收起的内容面板，**标题区可点击切换** | OCollapse | references/collapse.md |
-| 横向或垂直**弹性列**布局容器（flex 排列子元素） | OGrid/ORow/OCol | references/grid.md |
+| 横向或垂直**弹性列**布局容器（flex 排列子元素） | ORow/OCol | references/grid.md |
 | 表单容器，内部为**标签 + 控件**成对排列 | OForm | references/form.md |
 
 #### 媒体 / 其他
@@ -1214,7 +1215,7 @@ const linkConfig = {
 
 ---
 
-## OGrid / ORow / OCol
+## ORow / OCol
 
 **ORow 属性**：
 - `align` — 辅轴对齐方式

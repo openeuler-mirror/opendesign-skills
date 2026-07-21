@@ -1,0 +1,86 @@
+/**
+ * CSS Reset — 统一浏览器 UA 默认样式，消除跨浏览器不一致性
+ *
+ * 职责：仅做"归零"与"防御"——归零 UA 默认 margin/padding/list-style 等，
+ *   防御 img/video 溢出、SVG 基线偏移、表单控件不继承 body 字体、长文本溢出容器等常见问题。
+ *   不包含任何设计系统的"正值"声明（字号/色/字重/间距等正值由 global.scss body 或各组件 scoped 样式提供）。
+ *
+ * 加载顺序：reset.scss 在入口样式首位（Token 之前），
+ *   确保归零规则最早生效，后续 Token / 组件样式 / global.scss 覆盖可正常叠加。
+ *
+ * 与社区标准对比：未采纳 Tailwind/Josh Comeau 的 img/svg { display: block }，
+ *   因脚手架大量使用行内 SVG 图标（gen:icon 产物经 OLink suffix 等行内渲染，
+ *   OIconSun / OIconMoon 经 OSwitch 行内渲染），
+ *   display: block 会破坏行内对齐，需大量局部 override，收益低于成本；
+ *   markdown 图片走 OFigure（块级 div），裸 img 底部空隙问题在实际中不存在。
+ */
+
+*,
+:after,
+:before {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+// 原生表单控件不继承 body 的 font-family / font-size / color（UA 默认值），
+// 此处强制继承，消除各组件逐一手动补偿的冗余；
+// 仅保留意图性差异（如 tip2 更小字号）需显式声明
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+ol,
+ul {
+  list-style: none outside none;
+}
+
+// h1-h6 字重归零为 body 默认（inherit），具体权重由 global.scss body.font-weight 或组件 scoped 样式设定；
+// 不在此处设 var(--o-font_weight-semibold)，因其属于设计系统正值而非归零规则
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+// 替换元素溢出防御：防止裸 img/video 超出容器
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+// 长文本溢出防御：防止长单词/URL 撑破容器边界
+// 对内容型页面尤其重要（代码路径、URL、技术术语等长字符串常见）
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+::selection {
+  background-color: var(--o-color-primary4-light);
+  color: var(--o-color-info1);
+}
+
+// 暗色模式选区：深色背景下用更亮的 primary 色
+[data-o-theme$='.dark'] ::selection {
+  background-color: var(--o-color-primary3);
+}

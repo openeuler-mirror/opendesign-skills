@@ -1,0 +1,92 @@
+// 响应式字体 mixin — 使用 opendesign --o-r-font_size-* 变量
+// 通过 CSS 变量实现，无需重复写媒体查询
+// 注意：字号和行高本身已经是响应式的（由 responsive.token.css 的媒体查询控制）
+//
+// 用法：
+//   直接应用样式：@include display1;
+//   单独引用响应式变量：font-size: var(--o-r-font_size-display1); line-height: var(--o-r-line_height-display1);
+//
+// 下方每个 mixin 注释标注了 ≤840px（Phone/Pad竖屏，基础值）与 ≥1920px（Desktop，>1680px）两档的字号与行高，
+// 方便快速对比最小与最大视口下的数值差异。中间档位（841–1200 / 1201–1680）详见 opendesign-tokens skill。
+
+@mixin text {
+  font-size: var(--font-size);
+  line-height: var(--line-height);
+}
+
+// ≤840 → 22px/30px | ≥1920 → 56px/80px
+@mixin display1 {
+  --font-size: var(--o-r-font_size-display1);
+  --line-height: var(--o-r-line_height-display1);
+  @include text;
+}
+
+// ≤840 → 20px/28px | ≥1920 → 48px/64px
+@mixin display2 {
+  --font-size: var(--o-r-font_size-display2);
+  --line-height: var(--o-r-line_height-display2);
+  @include text;
+}
+
+// ≤840 → 18px/26px | ≥1920 → 40px/56px
+@mixin display3 {
+  --font-size: var(--o-r-font_size-display3);
+  --line-height: var(--o-r-line_height-display3);
+  @include text;
+}
+
+// ≤840 → 18px/26px | ≥1920 → 32px/44px
+@mixin h1 {
+  --font-size: var(--o-r-font_size-h1);
+  --line-height: var(--o-r-line_height-h1);
+  @include text;
+}
+
+// ≤840 → 16px/24px | ≥1920 → 24px/32px
+@mixin h2 {
+  --font-size: var(--o-r-font_size-h2);
+  --line-height: var(--o-r-line_height-h2);
+  @include text;
+}
+
+// ≤840 → 16px/24px | ≥1920 → 22px/30px
+@mixin h3 {
+  --font-size: var(--o-r-font_size-h3);
+  --line-height: var(--o-r-line_height-h3);
+  @include text;
+}
+
+// ≤840 → 16px/24px | ≥1920 → 20px/28px
+@mixin h4 {
+  --font-size: var(--o-r-font_size-h4);
+  --line-height: var(--o-r-line_height-h4);
+  @include text;
+}
+
+// ≤840 → 14px/22px | ≥1920 → 16px/24px
+@mixin text1 {
+  --font-size: var(--o-r-font_size-text1);
+  --line-height: var(--o-r-line_height-text1);
+  @include text;
+}
+
+// ≤840 → 14px/22px | ≥1920 → 18px/26px
+@mixin text2 {
+  --font-size: var(--o-r-font_size-text2);
+  --line-height: var(--o-r-line_height-text2);
+  @include text;
+}
+
+// ≤840 → 12px/18px | ≥1920 → 14px/22px
+@mixin tip1 {
+  --font-size: var(--o-r-font_size-tip1);
+  --line-height: var(--o-r-line_height-tip1);
+  @include text;
+}
+
+// ≤840 → 10px/16px | ≥1920 → 12px/18px
+@mixin tip2 {
+  --font-size: var(--o-r-font_size-tip2);
+  --line-height: var(--o-r-line_height-tip2);
+  @include text;
+}

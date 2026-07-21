@@ -475,7 +475,7 @@ OInput（搜索框）+ OButton（操作按钮）
 OBreadcrumb（面包屑导航）
 > OTab（标签页切换不同详情面板）
   > OCard（信息卡片）
-    > OGrid > ORow > OCol（网格布局展示字段）
+    > ORow > OCol（网格布局展示字段）
 ```
 
 ### 发现来源

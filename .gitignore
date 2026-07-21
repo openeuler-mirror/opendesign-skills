@@ -1,8 +1,12 @@
 .idea
-.agents
+.agents/skills
+.claude/skills
+
+node_modules
 
 # Skill 生成过程文件
 *.review.md
 generation-progress.md
 _skill-gen-status.md
 CLAUDE.md
+.playwright-*

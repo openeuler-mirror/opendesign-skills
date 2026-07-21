@@ -105,7 +105,7 @@ regions:
 - **视觉特征指纹**：多个水平排列的文字标签 + 当前选中项有底部指示线/高亮背景 + 下方有对应内容区域 → 匹配 OTab；标签之间等距排列，选中项文字颜色为品牌色 → text/solid 模式；标签有圆角背景填充 → button 模式
 - **Token → Prop 映射**：文字标签+底部蓝色指示线 → variant="text"（默认）；文字标签+浅色背景填充 → variant="solid"；圆角按钮式+选中项有边框背景 → variant="button"；标签后有"+"图标 → addable=true；标签上有"x"关闭图标 → OTabPane closable=true；末尾有"更多"文字 → maxShow 属性限制；字号 h4 → size="large"；字号 text2 → size="medium"；字号 text1 → size="small"
 - **导航栏对齐**：默认居中；左对齐通过 CSS 变量 `--tab-nav-justify: flex-start` 实现
-- **易混淆组件区分**：与 ONav/导航菜单 区分——导航菜单用于页面路由切换通常在侧边栏/顶部全局导航，OTab 是同页面内容区域切换；与 OSegmented 区分——OSegmented 是分段选择器无下方内容面板，OTab 有关联的内容面板区域；与 OBreadcrumb 区分——OBreadcrumb 是路径导航有分隔箭头，OTab 无层级关系
+- **易混淆组件区分**：与 OMenu/导航菜单 区分——OMenu 用于页面路由切换通常在侧边栏/顶部全局导航，OTab 是同页面内容区域切换；与 OBreadcrumb 区分——OBreadcrumb 是路径导航有分隔箭头，OTab 无层级关系
 
 ---
 
@@ -504,8 +504,7 @@ layout:
 
 | 本组件         | 易混淆组件            | 关键区分依据                                                                 |
 | -------------- | --------------------- | ---------------------------------------------------------------------------- |
-| OTab           | ONav / 导航菜单       | 导航菜单用于页面路由全局导航（侧边栏/顶部），OTab 是同页面内局部内容区域切换 |
-| OTab           | OSegmented 分段选择器 | OSegmented 无关联内容面板，仅切换选中值；OTab 下方有对应的内容面板区域       |
+| OTab           | OMenu / 导航菜单      | OMenu 用于页面路由全局导航（侧边栏/顶部），OTab 是同页面内局部内容区域切换 |
 | OTab（button） | ORadioGroup（button） | ORadioGroup 是表单控件用于选值提交，OTab 是页面内容区域切换器                |
 | OTab           | OBreadcrumb           | OBreadcrumb 是路径导航有层级箭头分隔，OTab 无层级关系，各标签平级            |
 

@@ -74,7 +74,7 @@ regions: [carousel-wrap(内容容器), indicator-wrap(指示器栏), arrow-wrap(
 🔍 **设计稿识别指南**：
 - **视觉特征指纹**：大面积矩形内容区 + 底部居中的短横条指示器（多个等宽小条，当前项高亮）+ 左右两侧箭头图标（悬停显示或常驻）
 - **Token → Prop 映射**：指示器宽度 48px → 默认尺寸；若相邻内容部分露出 → effect="gallery"；若内容一次只显示一张完整切换 → effect="toggle"；箭头常驻可见 → arrow="always"
-- **易混淆组件区分**：与 OTabs（标签页）区分——OCarousel 底部是短横条指示器而非文字标签，内容区支持滑动/动画切换；与图片列表区分——OCarousel 同时只显示一项（或少量）内容并带有切换控件
+- **易混淆组件区分**：与 OTab（标签页）区分——OCarousel 底部是短横条指示器而非文字标签，内容区支持滑动/动画切换；与图片列表区分——OCarousel 同时只显示一项（或少量）内容并带有切换控件
 
 ### ⚠️ toggle 模式必须显式设置高度
 
@@ -361,7 +361,7 @@ breakpoints:
 
 | 本组件 | 易混淆组件 | 关键区分依据 |
 |--------|-----------|------------|
-| OCarousel | OTabs（标签页） | OCarousel 底部是短横条指示器，OTabs 底部是文字标签栏；OCarousel 内容通过动画滑动切换 |
+| OCarousel | OTab（标签页） | OCarousel 底部是短横条指示器，OTab 底部是文字标签栏；OCarousel 内容通过动画滑动切换 |
 | OCarousel | 图片列表/网格 | OCarousel 同时只展示一项（或少量）内容，带指示器和箭头导航控件 |
 | OCarousel | OCollapse（折叠面板） | OCarousel 内容水平切换，OCollapse 内容垂直展开收起 |
 

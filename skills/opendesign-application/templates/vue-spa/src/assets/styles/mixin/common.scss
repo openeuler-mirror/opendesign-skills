@@ -1,0 +1,79 @@
+// 通用样式 mixin
+
+// 暗色模式包装器
+@mixin in-dark {
+  [data-o-theme$='.dark'] & {
+    @content;
+  }
+}
+// 文本截断（单行或多行）
+@mixin text-truncate($line-clamp: 1) {
+  @if $line-clamp == 1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  } @else {
+    display: -webkit-box;
+    -webkit-line-clamp: $line-clamp;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+// 自定义滚动条样式（细滚动条，与设计系统一致）
+@mixin scrollbar {
+  &::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    border-radius: 4px;
+    background: var(--o-color-fill1);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background: var(--o-color-control1);
+
+    &:hover {
+      background: var(--o-color-control2);
+    }
+  }
+}
+
+// 图片暗色模式反转
+@mixin img-in-dark {
+  @include in-dark {
+    filter: brightness(0.8) invert(0.05);
+  }
+}
+
+// 行内代码样式（语义 token 版）
+@mixin inline-code {
+  font-family: var(--o-font_family-code);
+  background-color: var(--o-color-fill3);
+  color: var(--o-color-danger1);
+  padding: 2px var(--o-gap-1);
+  border-radius: var(--o-radius-xs);
+}
+
+// 演示布局块（模板教学专用，非组件库通用）
+@mixin demo-block {
+  background-color: var(--o-color-fill2);
+  border-radius: var(--o-radius-l);
+  padding: var(--o-gap-4);
+  margin-bottom: var(--o-gap-4);
+  box-shadow: var(--o-shadow-1);
+}
+
+// 演示布局块标题（模板教学专用）
+// 注意：common.scss 不在 font.scss 全局注入上下文中，h4 需展开为属性
+@mixin demo-block-title {
+  font-size: var(--o-r-font_size-h4);
+  line-height: var(--o-r-line_height-h4);
+  color: var(--o-color-info1);
+  margin: 0 0 var(--o-gap-3);
+  padding-bottom: var(--o-gap-2);
+  border-bottom: 1px solid var(--o-color-control1);
+}

@@ -84,7 +84,7 @@ regions: [cover(封面图), main(icon + main-wrap(header, content, footer))]
 🔍 **设计稿识别指南**：
 - **视觉特征指纹**：圆角矩形容器，浅色填充背景（fill2），内含封面图/图标 + 标题 + 正文的分区结构，悬停时可出现阴影
 - **Token → Prop 映射**：有大图=cover 图文卡片、有小图标=icon 图标卡片；纵向图上文下=layout:v、横向图左文右=layout:h；圆角大小 l/m/s 随断点缩小；标题字号 h3→text2→text1→tip1 随断点缩小
-- **易混淆组件区分**：与 OContainer/OPanel 区别——Card 有封面图/图标 + 标题 + 正文的固定语义分区，Container 是通用容器无语义；与 OBanner 区别——Card 用于列表/网格展示项，Banner 用于页面顶部大幅宣传区域
+- **易混淆组件区分**：与 ORow/OCol 区别——Card 有封面图/图标 + 标题 + 正文的固定语义分区，ORow/OCol 是通用栅格容器无语义
 
 ---
 
@@ -402,9 +402,8 @@ breakpoints:
 
 | 对比组件 | 相似点 | 区分方法 |
 |---------|-------|---------|
-| OContainer / OPanel | 都是圆角矩形容器 | Card 有封面图/图标 + 标题 + 正文的固定语义分区和插槽；Container/Panel 是通用容器无固定内部结构 |
-| OBanner | 都可含图文内容 | Card 用于列表/网格中的展示项，尺寸较小；Banner 用于页面顶部大幅宣传区，通常全宽 |
-| OList / OListItem | 都可展示多条内容 | Card 是独立的卡片容器，有封面图和圆角阴影；ListItem 是列表中的行级元素，无封面图和独立容器样式 |
+| ORow / OCol | 都是圆角矩形容器 | Card 有封面图/图标 + 标题 + 正文的固定语义分区和插槽；ORow/OCol 是通用栅格容器无固定内部结构 |
+| OTable（单列模式） | 都可展示多条内容 | Card 是独立的卡片容器，有封面图和圆角阴影；OTable 单列模式的行是行级元素，无封面图和独立卡片样式 |
 
 ### 版本变更记录
 

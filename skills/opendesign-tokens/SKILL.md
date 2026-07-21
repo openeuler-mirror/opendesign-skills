@@ -1,17 +1,22 @@
 ---
 name: opendesign-tokens
-description: OpenDesign 设计 Token 指南。当需要使用 @opensig/opendesign-token 包中的 CSS 变量时使用此 skill。包含六套主题（openEuler/Ascend/Kunpeng/Mindspore/openGauss/openUBMC）的完整 token 体系，支持颜色、间距、圆角、字体、阴影、响应式排版、栅格系统等所有设计令牌。使用场景：(1) 查找颜色值对应的语义 token，(2) 获取间距/圆角/字体的 token 名称，(3) 了解六套主题的差异，(4) 代码中使用 CSS 变量替代硬编码值，(5) 使用响应式 token 实现多断点适配
+description: OpenDesign 设计 Token 指南。当需要使用 @opensig/opendesign-token 包中的 CSS 变量时使用此 skill。包含六套主题（openEuler/Ascend/Kunpeng/Mindspore/openGauss/openUBMC）的完整 token 体系，支持颜色、间距、圆角、字体、阴影、响应式排版、栅格系统等所有设计令牌。使用场景：(1) 查找颜色值对应的语义 token，(2) 获取间距/圆角/字体的 token 名称，(3) 了解六套主题的差异，(4) 代码中使用 CSS 变量替代硬编码值，(5) 使用响应式 token 实现多断点适配，(6) 引入鸿蒙字体文件并使用字体族/字重 token（含七档字重、拉丁/中文自动分流、按字重按需引入）
+last_update: 2026-07-08
 ---
 
 # OpenDesign 设计 Token 指南
 
-`@opensig/opendesign-token` 是 OpenDesign 组件库的设计令牌包，所有 token 使用 `--o-` 前缀。
+> 本 Skill 对应 @opensig/opendesign-token **v0.1.1**（2026-06 生成），最低依赖版本 ≥0.1.1
+
+`@opensig/opendesign-token` 是 OpenDesign 组件库的设计令牌包，所有 token 使用 `--o-` 前缀。若项目使用了更早版本（<0.1.1），部分 token（如七档字重、按需引入、拉丁/中文分流）可能不存在——使用 Skill 推荐的 token 时应先检查项目 `package.json` 中该包的版本，低于 0.1.1 时提醒用户升级。具体某个 token 在哪个版本引入/变更/删除，查 [`ReleaseNote`](https://raw.atomgit.com/openeuler/opendesign-token/blobs/9315d89bfe0c8538b75df2907f6ad8c2e9e235ba/ReleaseNote.md)。
 
 组件库有六套独立主题（openEuler / Ascend / Kunpeng / Mindspore / openGauss / openUBMC），**每个社区项目在初始化时选定一套，不在六套主题之间运行时切换**。选定主题后，只需在浅色/深色模式之间切换。
 
 ---
 
 ## 各社区主题的使用方式
+
+每个社区项目在初始化时选定一套主题，在入口文件（`main.ts`）引入对应的主题 CSS。如需启用鸿蒙字体（HarmonyOS Sans SC），需在主题 CSS 之后引入字体 CSS（`@opensig/opendesign-token/fonts/css`），具体见第 6 节「字体 Token」。
 
 ### openEuler 主题（`e`）
 
@@ -393,6 +398,8 @@ background-color: var(--o-color-white);
 | 组件内部固定尺寸（如图标旁 4px 间距） | `--o-gap-*`（静态） | 尺寸不应随视口变化 |
 | 设计稿硬编码的字号/间距纠正 | `--o-r-*`（响应式） | **首选**，确保多端一致 |
 
+> **字号/行高的引用方式**：① 字号 + 行高成对输出到当前元素时，使用 `font.scss` mixin（`@include h1;`），保证配对且调用简洁；② 只需单独引用某一项时，直接使用 `var(--o-r-font_size-*)` + `var(--o-r-line_height-*)` 响应式变量。mixin 的全局注入配置与完整用法详见 **opendesign-application** skill → styles-infrastructure 第 4 节。
+
 ---
 
 ## 3. 栅格系统 Token（Grid）— 页面级模块布局
@@ -464,7 +471,7 @@ grid-N₁ + gutter + grid-N₂ + gutter + ... + grid-Nₙ = 内容区全宽
 
 ### 楼层栅格适配规范
 
-楼层（页面整体区块）的宽度应居中显示，两侧留出适当空白。以下变量已在 token 包中预定义(0.0.11版本)，无需手动创建：
+楼层（页面整体区块）的宽度应居中显示，两侧留出适当空白。以下变量已在 token 包中预定义，无需手动创建：
 
 | 变量名 | 用途 |
 |--------|------|
@@ -630,9 +637,82 @@ Pad及以下 (≤1200px):  grid-padding               | grid-full | grid-padding
 
 ---
 
-## 6. 字体 Token（Font）— 静态值
+## 6. 字体 Token（Font）
 
 > **页面级文字推荐使用响应式 token `--o-r-font_size-*` / `--o-r-line_height-*`**（见第 2 节），以下静态 token 适用于不随视口变化的固定字号场景。
+
+### 字体族（Font Family）— 鸿蒙字体
+
+OpenDesign 默认使用 **HarmonyOS Sans SC**（鸿蒙黑体简体）作为中文字体族，并以 **HarmonyOS Sans** 作为拉丁字体族。字体文件随 `@opensig/opendesign-token` 包发布，需在入口文件显式引入后，`--o-font_family` 才会真正指向鸿蒙字体。
+
+> ⚠️ **0.1.1 破坏性变更**：
+> - `@font-face` 注册的字体族由旧版 `"HarmonyOS"` / `HarmonyOS-Hans` 更名为 `'HarmonyOS Sans SC'`（中文）与 `'HarmonyOS Sans'`（拉丁）。若项目中硬编码了旧字体族名，需改为 `'HarmonyOS Sans SC'`，或直接使用变量 `var(--o-font_family)`（推荐）。
+> - **旧版引入字体文件后会自动对 `body` 应用 `var(--o-font_family)`，本版不再自动应用**，仅注册 `@font-face`。升级后需自行在根容器设置字体：
+>   ```css
+>   :root { font-family: var(--o-font_family); }
+>   ```
+> - `--o-font_weight-bold` 由 `600` 改为 `700`（对应 `SansSC_Bold` 字体文件）；旧版 `600` 现有独立的 `--o-font_weight-semibold` 变量对应。设计师通常使用 semibold（`600`）作为加粗，请确认加粗效果符合预期。
+
+```typescript
+// main.ts（在主题 CSS 之后引入）
+import '@opensig/opendesign-token/themes/e.token.css' // 主题 CSS
+import '@opensig/opendesign-token/fonts/css'          // 鸿蒙字体（仅注册 @font-face，不自动应用）
+```
+
+> 若只需某一字重，可按需引入以减小体积（`sc-` 为中文字体，`sans-` 为拉丁字体；中文无斜体源文件，故仅有 7 个非斜体目录）：
+> ```typescript
+> // 仅引入中文常规字重（400）
+> import '@opensig/opendesign-token/fonts/sc-regular/font.min.css'
+> // 仅引入拉丁常规字重（400）
+> import '@opensig/opendesign-token/fonts/sans-regular/font.min.css'
+> ```
+
+| Token | 值 | 说明 |
+|-------|-----|------|
+| `--o-font_family` | `'HarmonyOS Sans', 'HarmonyOS Sans SC', Inter, -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', Arial, sans-serif` | 默认字体族 |
+| `--o-font_family-code` | `SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace` | 等宽代码字体族 |
+
+> **字体族自动分流**：`--o-font_family` 将 `'HarmonyOS Sans'`（拉丁族）排在 `'HarmonyOS Sans SC'`（中文族）之前。浏览器逐族匹配：拉丁字符命中 `'HarmonyOS Sans'`（含独立 italic 面，`font-style: italic` 可直接渲染真斜体）；中文字符在 `'HarmonyOS Sans'` 字体文件中无对应 glyph（该字体仅含拉丁字形），浏览器自动穿透到下一族 `'HarmonyOS Sans SC'`。中文无源文件斜体，`font-style: italic` 会合成伪斜体。
+
+### 字体应用与加载
+
+引入字体 CSS 后仅完成 `@font-face` 注册，**不会自动应用到任何元素**。需在根容器手动应用字体变量：
+
+```css
+/* 全局应用鸿蒙字体（推荐在根容器设置） */
+:root {
+  font-family: var(--o-font_family);
+}
+
+code, pre {
+  font-family: var(--o-font_family-code);
+}
+```
+
+> ⚠️ 仅设置 `font-family: var(--o-font_family)` 不会自动加载字体文件，必须在入口文件 `import '@opensig/opendesign-token/fonts/css'`。中文字体（`HarmonyOS Sans SC`）按 `unicode-range` 分片，仅按需加载实际用到的字符；拉丁字体（`HarmonyOS Sans`）不分片，但文件体量小（~28KB/字重），整体按需加载影响不大。
+
+### 字重（Font Weight）
+
+鸿蒙字体共七档字重，与 `@font-face` 注册的七个字面一一对应（CSS `font-weight` 数值与字面精确匹配，无需就近匹配）。
+
+| Token | 值 | 说明 |
+|-------|-----|------|
+| `--o-font_weight-thin` | `250` | 极细 |
+| `--o-font_weight-light` | `300` | 细体 |
+| `--o-font_weight-regular` | `400` | 常规 |
+| `--o-font_weight-medium` | `500` | 中等 |
+| `--o-font_weight-semibold` | `600` | 半粗（标题、强调） |
+| `--o-font_weight-bold` | `700` | 加粗 |
+| `--o-font_weight-black` | `900` | 超粗 |
+
+> **实际开发**：日常使用以 `--o-font_weight-regular`（`400`）和 `--o-font_weight-semibold`（`600`）两档为主，前者用于正文，后者用于标题、强调等场景。
+
+```css
+.title {
+  font-family: var(--o-font_family);
+  font-weight: var(--o-font_weight-semibold); /* 600，标题加粗 */
+}
+```
 
 ### 字体大小（Font Size）
 
@@ -673,6 +753,10 @@ Pad及以下 (≤1200px):  grid-padding               | grid-full | grid-padding
   font-size: var(--o-r-font_size-h3);
   line-height: var(--o-r-line_height-h3);
 }
+
+/* 需要字号 + 行高成对输出时，可用 font.scss mixin */
+/* 全局注入配置与完整用法见 opendesign-application skill → styles-infrastructure §4 */
+.title { @include h3; }
 
 /* 静态（仅在需要固定值时使用） */
 .fixed-label {

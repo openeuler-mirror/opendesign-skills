@@ -1,6 +1,10 @@
-# 直出代码自检清单（四维度门禁）
+# 直出代码自检清单（前置 + 四维度门禁）
 
 AI 生成 Vue + OpenDesign 代码后**逐项核对**，全部通过方可交付。任一 ❌ 必须修正后重检。
+
+## ⓪ 适用前提与目标仓适配（前置门禁）
+- [ ] 已确认目标仓 UI 库为 `@opensig/opendesign`（读其根 `AGENTS.md` §1 技术栈表）；非 opendesign 仓（shadcn-vue / Element Plus 等）不适用本 skill
+- [ ] 已读目标仓根 `AGENTS.md` + 相关 `rules/*.md`，并据此适配：框架族（VitePress/Nuxt 的 import 与 SSR 写法）、路径别名、i18n、SEO/GEO（组件内未重复注入 TDK）、样式 rules、命名
 
 ## ① 视觉 Token
 - [ ] 颜色全部 `var(--o-color-*)` 语义 token，无 `#xxxxxx`/`rgb()` 硬编码
