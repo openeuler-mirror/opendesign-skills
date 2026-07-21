@@ -86,9 +86,9 @@ ODropdown-Panel（FRAME，浮层）
 ├── autoLayout: VERTICAL，子项自适应宽度
 │
 └── [菜单项 × N]（Height: 40px large / 32px medium）
-      ├── padding: 上下 8px，左右 12px，item spacing: 8px
+      ├── padding: 上下 8px，左右 12px，item spacing: 0px
       ├── [文字 PARAGRAPH]（fill: color-info1，rgb(0,0,0)）
-      └── hover 态背景: color-fill3
+      └── hover 态背景: --o-color-control2-light（上下各减1px放量）
 ```
 
 ---
@@ -166,12 +166,12 @@ ODropdown-Panel（FRAME，浮层）
 | 每菜单项高度 | 40px（`control_size-l`） | 32px（`control_size-m`） |
 | 菜单项内边距（上/下） | 8px | 8px |
 | 菜单项内边距（左/右） | 12px | 12px |
-| 菜单项 item spacing | 8px | 8px |
+| 菜单项 item spacing | 0px | 0px |
 | 示例高度（5 项） | 208px | 168px |
 | 面板背景（Light） | rgb(255,255,255)（`--o-color-fill2`） | 同 large |
 | 面板背景（Dark） | rgb(36,36,39)（`--o-color-fill2` Dark） | 同 large |
 | 菜单项文字颜色 | `--o-color-info1`（rgb(0,0,0)） | 同 large |
-| 菜单项 hover 背景 | `--o-color-fill3` | 同 large |
+| 菜单项 hover 背景 | `--o-color-control2-light` | 同 large |
 
 ---
 
@@ -306,35 +306,107 @@ ODropdown（HORIZONTAL，自适应宽度，固定高度 28/32/40px）
 
 ## Part C：交互与状态
 
-### 交互状态
+### 交互状态总览
 
-ODropdown 支持 Enabled 和 Disabled 两种状态，颜色规则如下：
+ODropdown 组件支持 **5 种交互状态**：**默认(Default)**、**悬浮(Hover)**、**按下(Press)**、**选中(Selected)**、**禁用(Disabled)**。
 
-**Enabled 状态**
+以下以 L 尺寸为例，详细说明各变体的交互状态规范：
 
-| 变体 | 元素 | 颜色 |
-|------|------|------|
-| solid | 背景 | `--o-color-primary1` |
-| solid | 文字 | `white` |
-| solid | 图标 | `white` |
-| outline | 描边 | `--o-color-primary1` |
-| outline | 文字 | `--o-color-primary1` |
-| outline | 图标 | `--o-color-primary1` |
-| text | 文字 | `--o-color-info1` |
-| text | 图标 | `--o-color-info1` |
+---
 
-**Disabled 状态**
+#### 1. 强调下拉按钮 (solid 变体)
 
-| 变体 | 元素 | 颜色 |
-|------|------|------|
-| solid | 背景 | `--o-color-primary4` |
-| solid | 文字 | `white` |
-| solid | 图标 | `white` |
-| outline | 描边 | `--o-color-primary4` |
-| outline | 文字 | `--o-color-primary4` |
-| outline | 图标 | `--o-color-primary4` |
-| text | 文字 | `--o-color-info4` |
-| text | 图标 | `--o-color-info4` |
+| 状态 | 填充背景 | 文本样式 | 箭头图标 |
+|------|---------|---------|---------|
+| **默认 (Default)** | `--o-color-primary1` | 鸿蒙黑体 (Regular)，16px，`white` | 24×24，`white` |
+| **悬浮 (Hover)** | `--o-color-primary2` | 鸿蒙黑体 (Regular)，16px，`white` | 24×24，`white` |
+| **按下 (Press)** | `--o-color-primary3` | 鸿蒙黑体 (Regular)，16px，`white` | 24×24，`white` |
+| **选中 (Selected)** | `--o-color-primary1` | 鸿蒙黑体 (Regular)，16px，`white` | 24×24，`white` |
+| **禁用 (Disabled)** | `--o-color-primary4` | 鸿蒙黑体 (Regular)，16px，`white` | 24×24，`white` |
+
+> **说明**：solid 变体在所有状态下，文字和箭头均保持白色 (`white`)，仅背景色随状态变化。
+
+---
+
+#### 2. 普通下拉按钮 (outline 变体)
+
+| 状态 | 填充背景 | 描边 | 文本样式 | 箭头图标 |
+|------|---------|------|---------|---------|
+| **默认 (Default)** | 无 | `--o-color-primary1` | 鸿蒙黑体 (Regular)，16px，`--o-color-primary1` | 24×24，`--o-color-primary1` |
+| **悬浮 (Hover)** | 无 | `--o-color-primary2` | 鸿蒙黑体 (Regular)，16px，`--o-color-primary2` | 24×24，`--o-color-primary2` |
+| **按下 (Press)** | 无 | `--o-color-primary3` | 鸿蒙黑体 (Regular)，16px，`--o-color-primary3` | 24×24，`--o-color-primary3` |
+| **选中 (Selected)** | 无 | `--o-color-primary1` | 鸿蒙黑体 (Regular)，16px，`--o-color-primary1` | 24×24，`--o-color-primary1` |
+| **禁用 (Disabled)** | 无 | `--o-color-primary4` | 鸿蒙黑体 (Regular)，16px，`--o-color-primary4` | 24×24，`--o-color-primary4` |
+
+> **说明**：outline 变体始终保持**透明背景**，Hover/Press 状态下描边、文字、箭头统一变为对应的 primary 色阶（非白色），确保在浅色背景下清晰可见；禁用状态下使用 `--o-color-primary4`。
+
+---
+
+#### 3. 文本按钮 (text 变体)
+
+| 状态 | 文本样式 | 箭头图标 |
+|------|---------|---------|
+| **默认 (Default)** | 鸿蒙黑体 (Regular)，16px，`--o-color-info1` | 24×24，`--o-color-info1` |
+| **悬浮 (Hover)** | 鸿蒙黑体 (Regular)，16px，`--o-color-primary2` | 24×24，`--o-color-primary2` |
+| **按下 (Press)** | 鸿蒙黑体 (Regular)，16px，`--o-color-primary3` | 24×24，`--o-color-primary3` |
+| **选中 (Selected)** | 鸿蒙黑体 (Regular)，16px，`--o-color-primary1` | 24×24，`--o-color-primary1` |
+| **禁用 (Disabled)** | 鸿蒙黑体 (Regular)，16px，`--o-color-info4` | 24×24，`--o-color-info4` |
+
+> **说明**：text 变体无背景和描边，仅通过文字和图标的颜色变化表达交互状态。
+
+---
+
+#### 4. 下拉面板 (Dropdown Panel)
+
+| 状态 | 面板背景 | 菜单项样式 | 特殊说明 |
+|------|---------|-----------|---------|
+| **默认 (Default)** | — | 鸿蒙黑体 (Regular)，16px，`--o-color-info2` | 显示"默认选项一"、"默认选项"等列表项 |
+| **悬浮 (Hover)** | `--o-color-control2-light` | 高亮当前悬停项 | 背景变为浅色高亮 |
+| **按下 (Press)** | `--o-color-control3-light` | 高亮当前按下的项 | 背景变为更深的浅色 |
+| **选中 (Selected)** | — | — | 选中后面板关闭，无特殊面板态 |
+| **禁用 (Disabled)** | — | 禁用项：鸿蒙黑体 (Regular)，16px，`--o-color-info4` | 禁用的菜单项文字变灰 |
+
+> **说明**：
+> - 面板内菜单项高度：L 尺寸 = 40px / M 尺寸 = 32px
+> - 菜单项内边距：上下 8px，左右 12px
+> - 菜单项间距：0px（hover背景色块上下各减1px放量）
+> - 面板圆角：4px（`--o-radius-control-xs`）
+> - 面板阴影：`DROP_SHADOW x=0 y=6 blur=24 spread=0 rgba(18,20,23,0.08)`
+> - 面板与触发按钮间距：4px
+
+---
+
+### 交互流程
+
+```
+用户操作流程：
+
+1. 默认状态 → 悬浮状态
+   └─ 用户鼠标移入 ODropdown 按钮
+   
+2. 悬浮状态 → 按下状态
+   └─ 用户鼠标按下按钮
+   
+3. 按下状态 → 展开面板
+   └─ 用户释放鼠标或点击按钮
+   └─ 按钮下方 4px 处渲染浮层面板
+   └─ 按钮图标切换为「上箭头」
+   
+4. 面板交互
+   ├─ Hover 菜单项 → 背景色变为 --o-color-control2-light
+   ├─ Press 菜单项 → 背景色变为 --o-color-control3-light
+   └─ Click 菜单项 → 选中该项，面板关闭
+   
+5. 选中后
+   └─ 按钮文字更新为选中项内容
+   └─ 按钮恢复「下箭头」图标
+   └─ 按钮进入 Selected 状态
+   
+6. 收起面板
+   ├─ 再次点击按钮
+   └─ 或点击面板外区域
+   └─ 面板收起，图标恢复下箭头
+```
 
 ---
 
@@ -342,8 +414,8 @@ ODropdown 支持 Enabled 和 Disabled 两种状态，颜色规则如下：
 
 - **点击触发**：点击 ODropdown 按钮，按钮下方 4px 处渲染浮层面板，按钮图标切换为 `icon-上箭头.svg`
 - **面板定位**：浮层位于触发按钮正下方，垂直间距 4px，宽度与按钮一致，高度随选项数量动态伸缩
-- **面板样式**：圆角 4px，白色背景（`--o-color-fill2`），卡片投影 `DROP_SHADOW x=0 y=6 blur=24 rgba(18,20,23,0.08)`，四周内边距 4px
-- **菜单项**：高度 large=40px / medium=32px，内边距上下 8px 左右 12px，文字颜色 `--o-color-info1`，hover 背景 `--o-color-fill3`
+- **面板样式**：圆角 4px（`--o-radius-control-xs`），白色背景（`--o-color-fill2`），卡片投影 `DROP_SHADOW x=0 y=6 blur=24 rgba(18,20,23,0.08)`，四周内边距 4px
+- **菜单项**：高度 large=40px / medium=32px（`--o-control-size-l` / `--o-control-size-m`），内边距上下 8px 左右 12px，文字颜色 `--o-color-info1`，hover 背景 `--o-color-control2-light`
 - **选项点击**：选中后面板关闭，按钮图标恢复为 `icon-下箭头.svg`，按钮文字更新为选中项
 - **收起**：再次点击按钮或点击面板外区域，面板收起，图标恢复下箭头
 

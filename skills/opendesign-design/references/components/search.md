@@ -3,6 +3,27 @@
 # OSearch 搜索框 · 设计 Skill
 
 > 组件集合节点：`1042:18112` · 组件名：OSearch 搜索框 · 变体总数：16
+> 
+> 📦 **HTML 实例**：[search-demo.html](./search-demo.html)（包含完整交互状态演示）
+
+---
+
+## ⚠️ 硬约束（必须遵守）
+
+### 🔒 图标资源规范（强制性）
+
+> **所有图标必须使用 `assets/` 目录下的 SVG 资源，禁止使用内联 SVG 或第三方图标库**
+
+| 图标类型 | 文件路径 | 尺寸 | 使用场景 |
+|---------|---------|------|---------|
+| **搜索图标** | `assets/public icons/icon-搜索.svg` | 24×24px (large/medium/Mb) / 16×16px (small) | 所有状态始终显示 |
+| **清除图标** | `assets/public icons/icon-关闭.svg` | 24×24px (large/medium/Mb) / 16×16px (small) | 仅 Actived 状态显示 |
+
+> **说明**：
+> - 图标路径相对于 `references/` 目录：`../assets/public icons/icon-xxx.svg`
+> - 图标颜色由 CSS 变量控制（`fill: currentColor` 或 CSS `opacity`）
+> - 禁止修改原始 SVG 文件的 `fill` 属性，应通过 CSS 覆盖
+> - 图标透明度：正常态 `opacity: 0.8`，禁用态 `opacity: 0.4`
 
 ---
 
@@ -10,7 +31,7 @@
 
 ### 组件概览
 
-**OSearch 搜索框**：用于搜索场景的专用输入控件。集成搜索图标、输入区域和清除按钮，通过描边颜色区分默认和激活状态。激活状态显示光标和清除图标，支持四种尺寸（large/medium/small/Mb）和 Light/Dark 主题。
+**OSearch 搜索框**：用于搜索场景的专用输入控件。集成搜索图标、输入区域和清除按钮，通过描边颜色区分默认和激活状态。激活状态显示光标、清除图标和搜索建议下拉面板，支持四种尺寸（large/medium/small/Mb）和 Light/Dark 主题。
 
 ---
 
@@ -193,6 +214,315 @@ OSearch（SYMBOL，自适应宽度，固定高度）
 | 清除图标 | `grey-14` | `grey-14` | `--o-color-info1` | rgb(0,0,0) → rgb(255,255,255) |
 
 > **说明**：Actived 状态描边颜色 Light 模式为 rgb(0,47,167)（brand-6），Dark 模式为 rgb(110,148,243)（brand-6 Dark 值）。
+
+---
+
+### 交互状态规格
+
+> 📋 **交互状态总览**：OSearch 搜索框支持四种核心交互状态（默认、悬浮、激活、禁用），每种状态在无文本和有文本场景下有不同的视觉表现。
+
+#### 状态矩阵表
+
+| 状态 | 文本场景 | 描边 | 填充 | 文本/占位符字号 | 文本/占位符色值 | 特殊元素 |
+|------|---------|------|------|----------------|----------------|----------|
+| **默认** | 无文本 | `--o-color-control1` | `--o-color-fill2` | 16px (Regular) | `--o-color-info4` | 仅搜索图标 |
+| **默认** | 有文本 | `--o-color-control1` | `--o-color-fill2` | 16px (Regular) | `--o-color-info1` | 搜索图标 + 文本 |
+| **悬浮** | 无文本 | `--o-color-control2` | `#FFFFFF` (`--o-color-fill2`) | 16px (Regular) | `--o-color-info4` | 仅搜索图标 |
+| **悬浮** | 有文本 | `#002FA7` (`--o-color-control2`) | `#FFFFFF` (`--o-color-fill2`) | 16px (Regular) | `--o-color-info1` | 搜索图标 + 文本 |
+| **激活** | 无文本 | `--o-color-control3` | `--o-color-fill2` | 16px (Regular) | `--o-color-info4` | 搜索图标 + 光标 |
+| **激活** | 有文本 | `--o-color-control3` | `--o-color-fill2` | 16px (Regular) | `--o-color-info1` | 搜索图标 + 文本 + 清除按钮 + 建议列表 |
+| **禁用** | 无文本 | `--o-color-control4` | `--o-color-control4-light` | 16px (Regular) | `--o-color-info4` | 仅搜索图标（置灰） |
+| **禁用** | 有文本 | `--o-color-control4` | `--o-color-control4-light` | 16px (Regular) | `--o-color-info4` | 搜索图标 + 文本（置灰） |
+
+---
+
+#### 详细状态说明
+
+##### 1️⃣ 默认状态（Default）
+
+**无文本场景**
+```
+描边: --o-color-control1
+填充: --o-color-fill2
+├── [搜索图标]
+└── [占位文字 "搜索"]
+     字号: 16px (Regular)
+     色值: --o-color-info4
+```
+
+**有文本场景**
+```
+描边: --o-color-control1
+填充: --o-color-fill2
+├── [搜索图标]
+└── [输入文字 "openEuler"]
+     字号: 16px (Regular)
+     色值: --o-color-info1
+```
+
+---
+
+##### 2️⃣ 悬浮状态（Hover）
+
+**无文本场景**
+```
+描边: --o-color-control2
+填充: #FFFFFF (--o-color-fill2)
+├── [搜索图标]
+└── [占位文字 "搜索"]
+     字号: 16px (Regular)
+     色值: --o-color-info4
+```
+
+**有文本场景**
+```
+描边: #002FA7 (--o-color-control2)
+填充: #FFFFFF (--o-color-fill2)
+├── [搜索图标]
+└── [输入文字 "openEuler"]
+     字号: 16px (Regular)
+     色值: --o-color-info1
+```
+
+---
+
+##### 3️⃣ 激活状态（Active/Focus）
+
+**无文本场景**
+```
+描边: --o-color-control3
+填充: --o-color-fill2
+├── [搜索图标]
+├── [光标] ← 显示光标
+└── [占位文字 "搜索"]
+     字号: 16px (Regular)
+     色值: --o-color-info4
+```
+
+**有文本场景**
+```
+描边: --o-color-control3
+填充: --o-color-fill2
+├── [搜索图标]
+├── [输入文字 "openEuler"]
+│    字号: 16px (Regular)
+│    色值: --o-color-info1
+├── [光标] ← 显示在文字后
+├── [清除按钮 ✕] ← 右侧显示
+│
+└── [搜索建议下拉列表]
+     ├── [建议项 "openEuler迁移"]
+     │    字号: 16px (Semibold)
+     │    色值: --o-color-primary1
+     │    背景: --o-color-control2-light (悬浮时)
+     │
+     ├── [建议项 "openEuler安装"] ← 当前悬浮项
+     │    字号: 16px (Semibold)
+     │    色值: --o-color-primary1
+     │    背景: --o-color-control2-light ✓
+     │
+     └── [建议项 "openEuler下载"]
+          字号: 16px (Semibold)
+          色值: --o-color-primary1
+          背景: --o-color-control2-light (悬浮时)
+```
+
+> **激活状态特殊行为**：
+> - 显示输入光标（位于文字末尾）
+> - 显示清除按钮（✕ 图标，点击可清空输入）
+> - 自动展开搜索建议下拉列表（基于输入内容动态匹配）
+> - 支持键盘上下键选择建议项
+> - 建议项支持鼠标悬浮高亮（背景 `--o-color-control2-light`）
+
+---
+
+##### 4️⃣ 禁用状态（Disabled）
+
+**无文本场景**
+```
+描边: --o-color-control4
+填充: --o-color-control4-light
+├── [搜索图标] ← 置灰显示
+└── [占位文字 "搜索"]
+     字号: 16px (Regular)
+     色值: --o-color-info4 ← 降低透明度或使用禁用色
+```
+
+**有文本场景**
+```
+描边: --o-color-control4
+填充: --o-color-control4-light
+├── [搜索图标] ← 置灰显示
+└── [预设文字 "openEuler"] ← 不可编辑
+     字号: 16px (Regular)
+     色值: --o-color-info4 ← 禁用态文字色
+```
+
+> **禁用状态特性**：
+> - 整体降低视觉对比度（描边 `--o-color-control4` + 填充 `--o-color-control4-light`）
+> - 不响应鼠标事件（无 Hover 效果）
+> - 不可获取焦点（不显示光标）
+> - 不显示清除按钮
+> - 文字色降级为 `--o-color-info4`（与占位符同色）
+
+---
+
+#### 状态转换流程
+
+```
+用户操作流程:
+┌─────────────┐    鼠标移入    ┌─────────────┐    点击聚焦    ┌─────────────┐
+│             │ ─────────────→ │             │ ─────────────→ │             │
+│   默认状态   │               │   悬浮状态   │               │   激活状态   │
+│ (Default)   │ ←──────────── │   (Hover)    │ ←──────────── │   (Active)  │
+│             │    鼠标移出    │             │    失去焦点    │             │
+└─────────────┘               └─────────────┘               └─────────────┘
+       ↑                                                           │
+       │                    设置 disabled=true                     │
+       └───────────────────────────────────────────────────────────┘
+                              │
+                    ┌─────────▼─────────┐
+                    │                   │
+                    │    禁用状态       │
+                    │    (Disabled)     │
+                    │                   │
+                    └───────────────────┘
+```
+
+---
+
+#### 交互状态颜色 Token 汇总
+
+| Token 名称 | 用途 | 使用状态 | RGB 示例值（Light 模式） |
+|-----------|------|---------|------------------------|
+| `--o-color-control1` | 默认描边 | Default | rgba(0,0,0,0.25) |
+| `--o-color-control2` | 悬浮描边 | Hover | rgb(0,47,167) 或 #002FA7 |
+| `--o-color-control3` | 激活描边 | Active/Focus | brand-6 主色调 |
+| `--o-color-control4` | 禁用描边 | Disabled | grey-14 @ 低对比度 |
+| `--o-color-fill2` | 输入框填充 | 所有可用状态 | rgb(255,255,255) / #FFFFFF |
+| `--o-color-control4-light` | 禁用态填充 | Disabled | 浅灰色背景 |
+| `--o-color-info1` | 输入文字 | 有文本状态 | rgb(0,0,0) 或深色 |
+| `--o-color-info2` | 建议项非匹配文字 | Active 态建议列表 | rgba(0,0,0,0.8) - 80%黑 |
+| `--o-color-info4` | 占位符/禁用文字 | 无文本/Disabled | rgba(0,0,0,0.4) |
+| `--o-color-primary1` | 建议项匹配关键词 | Active 态下拉列表 | brand-6 主色调 (rgb(0,47,167)) |
+| `--o-color-primary1` | 建议列表匹配文字 | Active 态下拉列表 | brand-6 主色调 |
+| `--o-color-control2-light` | 建议项悬浮背景 | Active 态建议项 Hover | 极浅蓝色背景 (#E8F0FE) |
+
+---
+
+#### 🔍 搜索建议下拉面板规格（参考 ODropdown 面板）
+
+> **说明**：激活状态（Active）下，当搜索框有输入内容时，自动展开搜索建议下拉面板。面板样式严格遵循 ODropdown 下拉菜单规范。
+
+**面板容器**
+
+```
+搜索建议下拉面板（FRAME）
+├── 与搜索框间距: 4px（垂直方向）
+├── Width: 与搜索框同宽（自适应）
+├── Height: 4px（上内边距）+ N × 40px（菜单项）+ 0px（项间距）+ 4px（下内边距）
+├── cornerRadius: 4px → Token: `radius_control-xs`
+├── fill: rgb(255,255,255) → Token: `--o-color-fill2`（Light）/ rgb(36,36,39)（Dark）
+├── boxShadow: DROP_SHADOW x=0 y=6 blur=24 spread=0 rgba(18,20,23,0.08)
+├── padding: 4px（四周）
+└── autoLayout: VERTICAL，子项自适应宽度
+```
+
+**菜单项结构**
+
+```
+菜单项 × N（Height: 40px = control_size-l）
+├── padding: 上下 8px，左右 12px
+├── margin-bottom: 8px（最后一项为 0）
+├── cursor: pointer
+│
+├── [匹配关键词 SPAN] ← 输入框中已输入的内容
+│    fontSize: 16px
+│    fontWeight: 600（Semibold）
+│    color: --o-color-primary1（rgb(0,47,167) 品牌蓝）
+│
+└── [补充文本] ← 联想/推荐的补充内容
+     fontSize: 16px
+     fontWeight: 400（Regular）
+     color: --o-color-info2（rgba(0,0,0,0.8) 80%黑）
+```
+
+**菜单项交互状态**
+
+```
+默认态:
+├── 背景: transparent
+├── 文字: 匹配关键词(--o-color-primary1 Semibold) + 补充文本(--o-color-info2 Regular)
+│
+Hover/Active 态:
+├── 背景: --o-color-control2-light (#E8F0FE 极浅蓝)
+├── 文字: 保持不变
+└── 圆角: 2px
+```
+
+> **⚠️ 关键词高亮逻辑（硬约束）**：
+> - 输入框中的文本内容必须在建议列表中**高亮显示**
+> - 匹配部分使用 `--o-color-primary1` (蓝色) + **Semibold** 字重
+> - 非匹配部分使用 `--o-color-info2` (80%黑) + **Regular** 字重
+> - 示例：输入 "openEuler" → 建议 "**openEuler**迁移" （"openEuler" 蓝色粗体，"迁移" 黑色常规）
+
+**面板详细规格表**
+
+| 规格项 | 值 | Token |
+|--------|-----|-------|
+| **与触发元素间距** | 4px | - |
+| **面板圆角** | 4px | `radius_control-xs` |
+| **面板内边距** | 4px（四周） | - |
+| **面板背景（Light）** | rgb(255,255,255) | `--o-color-fill2` |
+| **面板背景（Dark）** | rgb(36,36,39) | `--o-color-fill2` (Dark值) |
+| **面板阴影** | x=0 y=6 blur=24 spread=0 rgba(18,20,23,0.08) | DROP_SHADOW |
+| **菜单项高度** | 40px | `control_size-l` |
+| **菜单项内边距** | 上下 8px，左右 12px | - |
+| **菜单项间距** | 0px | -（hover背景色块上下各减1px放量） |
+| **菜单项字号** | 16px | `font_size-text1` |
+| **匹配关键词字重** | 600 (Semibold) | - |
+| **匹配关键词颜色** | rgb(0,47,167) | `--o-color-primary1` |
+| **非匹配文本字重** | 400 (Regular) | - |
+| **非匹配文本颜色** | rgba(0,0,0,0.8) | `--o-color-info2` |
+| **Hover 背景色** | #E8F0FE | `--o-color-control2-light` |
+| **Hover 圆角** | 2px | - |
+
+---
+
+### ✅ HTML 实例验证清单
+
+基于 [search-demo.html](./search-demo.html) 实例，以下规格已验证通过：
+
+#### 尺寸规格验证
+- [x] Medium 尺寸高度：**40px** (`control_size-l`) - PC端默认
+- [x] 图标尺寸：搜索图标 **24×24px**，清除图标 **24×24px**
+- [x] 圆角：**4px** (`radius_control-xs`)
+- [x] 字号：**16px** (`font_size-text1`)
+- [x] 行高：**24px** (`line_height-text1`)
+
+#### 交互状态验证
+- [x] **默认状态**：描边 `color-control1`，仅显示搜索图标
+- [x] **悬浮状态**：描边变为 `color-control2` (#002FA7)
+- [x] **激活状态**：描边 `color-control3`，显示光标 + 清除按钮 + 下拉面板
+- [x] **禁用状态**：描边 `color-control4` + 填充 `color-control4-light`，图标 opacity 0.4
+
+#### 图标资源验证
+- [x] 使用 `assets/public icons/icon-搜索.svg` 作为搜索图标
+- [x] 使用 `assets/public icons/icon-关闭.svg` 作为清除图标
+- [x] 图标路径正确：相对于 components 目录的 `../assets/` 路径
+
+#### 下拉面板验证
+- [x] 面板与搜索框间距：**4px**
+- [x] 面板圆角：**4px**，内边距：**4px**
+- [x] 阴影：DROP_SHADOW (x=0 y=6 blur=24)
+- [x] 菜单项高度：**40px**，内边距：**8px 12px**，间距：**0px**
+- [x] **关键词高亮**：匹配文本 `color-primary1` (Semibold) + 非匹配文本 `color-info2` (Regular)
+- [x] Hover 背景：`color-control2-light` (#E8F0FE)
+
+#### 颜色 Token 验证
+- [x] `--o-color-info2` = **rgba(0,0,0,0.8)** (80%黑，二级文字色)
+- [x] `--o-color-primary1` = **rgb(0,47,167)** (品牌蓝)
+- [x] `--o-color-control2-light` = **#E8F0FE** (极浅蓝)
 
 ---
 
