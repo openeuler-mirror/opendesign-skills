@@ -53,4 +53,4 @@ description: OpenDesign 脚手架模板维护指南。当需要修改 `skills/op
 
 ## 变更记录
 
-本 skill 属于第一层（生产指导），变更不记入根 `CHANGELOG.md`——其受众是 AI 编码工具（写作者），而非 Skill 使用者，变更不影响已交付产物。
+本 skill 属于第一层（生产指导），变更不记入 CHANGELOG——其受众是 AI 编码工具（写作者），而非 Skill 使用者，变更不影响已交付产物。
