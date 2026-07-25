@@ -18,7 +18,6 @@
 ```
 .
 ├── README.md                      ← 总入口，包含所有 Skill 的索引和概览
-├── CHANGELOG.md                   ← 变更记录总览（第二层：共享约定）
 ├── LICENSE
 ├── AGENTS.md                      ← 本文件，AI 编码工具工作指导（第一层：生产指导）
 ├── package.json                   ← pnpm 工作流：skills:install / update / sync-agents + git hooks
@@ -51,6 +50,7 @@
 └── skills/
     ├── opendesign-application/     ← 工程化落地指南（主题集成 + 样式基础设施 + 脚手架 + code review）
     │   ├── SKILL.md               ← 工程化总纲 + 红线 + 起手式 + 参考文件索引（第二层）
+    │   ├── CHANGELOG.md           ← 本 skill 变更记录（第二层）
     │   ├── references/
     │   │   ├── getting-started.md      ← 依赖安装、入口文件、样式引入顺序、useScreen()
     │   │   ├── theme-system.md         ← Pinia store、SSR hydration、社区切换、ThemeToggle（OSwitch）
@@ -70,22 +70,26 @@
     │           └── package.json
     ├── opendesign-components/     ← 46 个 Vue 3 UI 组件的 Skill（代码侧）
     │   ├── SKILL.md               ← 组件 Skill 索引与使用指南（第二层）
+    │   ├── CHANGELOG.md           ← 本 skill 变更记录（第二层）
     │   └── references/
     │       ├── {component}.md     ← 各组件详细文档（第三层：Skill 本体）
     │       ├── {component}.review.md  ← 自评报告（仅开发期间，gitignore）
     │       └── _skill-gen-status.md   ← 进度追踪（仅开发期间，gitignore）
     ├── opendesign-scripts/        ← 5 个 CLI 命令的 Skill
     │   ├── SKILL.md
+    │   ├── CHANGELOG.md           ← 本 skill 变更记录
     │   └── references/
     │       ├── {command}.md
     │       └── {command}.review.md
     ├── opendesign-tokens/         ← 设计令牌参考
     │   ├── SKILL.md
+    │   ├── CHANGELOG.md           ← 本 skill 变更记录
     │   └── references/
     │       ├── tokens.md
     │       └── tokens-{theme}.md
     ├── opendesign-design/         ← Pixso 设计稿生产 Skill（设计侧，21 组件）
     │   ├── SKILL.md               ← 工作流 + 图标处理规范 + componentKey 速查（第二层）
+    │   ├── CHANGELOG.md           ← 本 skill 变更记录（第二层）
     │   └── references/
     │       ├── components/        ← 21 个组件设计规范（第三层）
     │       │   └── {name}.md
@@ -93,6 +97,7 @@
     │       └── icon-keys.md       ← 187 个图标 componentKey 索引
     └── opendesign-codegen/        ← 代码直出 Skill（设计师侧，从设计意图直出合规 Vue+OpenDesign 代码）
         ├── SKILL.md               ← 四大约束 + 硬规则 + 工作流（第二层）
+        ├── CHANGELOG.md           ← 本 skill 变更记录（第二层）
         └── references/
             ├── starter-page.vue        ← 合规 SFC 起手模板（真实 O 组件 + token + 响应式）
             ├── component-cheatsheet.md ← 设计意图 → OpenDesign 组件选用速查
@@ -110,7 +115,7 @@
 | 层级 | 名称 | 受众 | 典型文件 |
 |------|------|------|---------|
 | **第一层** | 生产指导 | AI 编码工具（写作者） | `AGENTS.md`、`packages/skills/skill-gen-guide/`、`*.review.md`、`_skill-gen-status.md` |
-| **第二层** | 共享约定 | Skill 调用者（跨 Skill 公共上下文） | `skills/*/SKILL.md`（含 `last_update` 字段）、`CHANGELOG.md` |
+| **第二层** | 共享约定 | Skill 调用者（跨 Skill 公共上下文） | `skills/*/SKILL.md`（含 `last_update` 字段）、`skills/*/CHANGELOG.md` |
 | **第三层** | Skill 本体 | Skill 调用者（AI 工具 / 开发者） | `skills/*/references/{name}.md` |
 
 **判断标准：这段内容是否需要随 Skill 一起分发给使用者？**
@@ -118,7 +123,7 @@
 - **是** → 放入 Skill 本体（第三层）或跨 Skill 共享约定（第二层）
 - **否，只在生成时有用** → 放入第一层文件
 
-> **与 CHANGELOG 的对应**：只有第二层和第三层（`skills/` 目录）的变更才记入 `CHANGELOG.md`。第一层内容（`packages/skills/`、`AGENTS.md`）的受众是 AI 写作者而非 Skill 使用者，变更不影响已交付产物，使用者无需据此判断是否重新安装——因此不记入。
+> **与 CHANGELOG 的对应**：只有第二层和第三层（`skills/` 目录）的变更才记入对应 skill 的 `CHANGELOG.md`。第一层内容（`packages/skills/`、`AGENTS.md`）的受众是 AI 写作者而非 Skill 使用者，变更不影响已交付产物，使用者无需据此判断是否重新安装——因此不记入。
 
 
 ## Agent 目录同步
@@ -216,6 +221,7 @@ pnpm skills:update               # 拉取最新版并更新 lock 文件
 | 要查什么 | 去哪看 |
 |---------|--------|
 | **记录范围**（只有 `skills/` 目录下的 Skill 变更才记入；`packages/skills/` 内部 Skill 不记入） | changelog-guide → changelog |
+| **文件位置**（各 skill 自带 `CHANGELOG.md`，根目录不再设总览） | changelog-guide → changelog |
 | `last_update` 字段格式与语义 | changelog-guide → changelog |
 | CHANGELOG 条目格式与分类（新增 / 更新 / 修正 / 移除 / ⚠️ 破坏性） | changelog-guide → changelog |
 | ⚠️ 破坏性的判定标准 | changelog-guide → changelog |

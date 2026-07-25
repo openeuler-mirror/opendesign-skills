@@ -147,4 +147,4 @@
 | AGENTS.md 同步 | 两套 AGENTS.md 反映了最新改动 | 某套 AGENTS.md 过时 |
 | `pnpm dev` 验证 | 两套模板均正常运行 | 某套报错或样式错乱 |
 | pnpm-lock.yaml | 两套都已 `pnpm install` | lock 文件过期 |
-| CHANGELOG | 变更已记入根 CHANGELOG.md | 未记录 |
+| CHANGELOG | 变更已记入所改 skill 的 `CHANGELOG.md` | 未记录 |

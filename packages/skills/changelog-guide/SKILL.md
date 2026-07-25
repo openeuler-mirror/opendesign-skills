@@ -19,7 +19,7 @@ description: OpenDesign Skills 仓库的变更记录维护规范。当用户完�
 
 ## 一句话速查
 
-> **每次修改 Skill 内容后：** ① 按 `skill-gen-guide → skill-review` 做自评 → ② 把变更要点写入根 `CHANGELOG.md` → ③ 更新该 skill `SKILL.md` 的 `last_update` 字段。
+> **每次修改 Skill 内容后：** ① 按 `skill-gen-guide → skill-review` 做自评 → ② 把变更要点写入该 skill 目录下的 `CHANGELOG.md` → ③ 更新该 skill `SKILL.md` 的 `last_update` 字段。
 
 ## 与 skill-gen-guide 的关系
 

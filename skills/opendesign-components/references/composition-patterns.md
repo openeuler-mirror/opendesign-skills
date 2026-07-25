@@ -280,7 +280,8 @@ OTab > OPopup / ODialog（标签选择器）
 ### 关键约束
 - OTabPane 必须作为 OTab 子组件使用
 - `value` 是 OTabPane 的唯一标识，必须唯一
-- 标签溢出时自动出现"更多"按钮
+- 标签溢出时自动出现省略号按钮，点击展开被隐藏的页签
+- 溢出弹层的显隐控制须遵循 [OPopup 显隐控制范式](#opopup-显隐控制范式)：禁止混用 `trigger` + `v-model:visible` + `@click` 三套控制
 
 ### 设计稿页面特征
 顶部一行水平标签项 + 下方内容面板，标签项有底部指示器高亮 → 标签页模式。区别于 OAnchor 水平模式（无面板内容切换）。
@@ -427,9 +428,103 @@ OPopup > 触发元素（#target 插槽）+ 浮层内容
 - `trigger` 支持 hover / click / focus
 - `position` 控制弹出方向（top/bottom/left/right 及变体）
 - OPopover 是 OPopup 的高级封装，多数场景用 OPopover 即可
+- `trigger="hover"` 在触屏设备上不可靠，详见 [OPopup 显隐控制范式](#opopup-显隐控制范式)
 
 ### 设计稿页面特征
 元素附近的小浮层面板（带箭头指向触发元素）→ OPopover；无箭头的定位浮层 → OPopup。
+
+---
+
+## OPopup 显隐控制范式
+
+OPopup 提供两套互斥的显隐控制机制：**trigger 驱动**（OPopup 内部通过事件监听器管理显隐）和 **v-model 驱动**（父组件通过 `v-model:visible` 声明式控制）。当两者混用时，会产生控制权冲突。
+
+### 反模式：混用三套控制
+
+```html
+<!-- ❌ 反模式：同一弹层上混用三套控制机制 -->
+<div ref="ellipsisRef"
+     @click="() => (isEllipsisOptionShow = true)">  <!-- 机制①：手动命令式 -->
+  ...
+</div>
+
+<OPopup v-model:visible="isEllipsisOptionShow"      <!-- 机制②：声明式 v-model -->
+        :target="ellipsisRef"
+        trigger="hover">                             <!-- 机制③：OPopup 内部事件 -->
+  ...
+</OPopup>
+```
+
+**冲突场景**（触屏设备 + `trigger="hover"`）：
+1. `@click` 设 `isEllipsisOptionShow = true` → 弹层打开
+2. `trigger="hover"` 的 `mouseleave` → `setVisible(false, 100)` → 100ms 后弹层关闭
+
+桌面端鼠标点击后留在目标元素上，不触发 `mouseleave`，所以不会复现。但触屏设备的触摸操作会触发模拟 `mouseleave`，导致弹层"出现后马上消失"。
+
+### 正确用法：二选一
+
+**方案 A：trigger 驱动（推荐）**
+
+由 OPopup 管控显隐，父组件只用 `v-model:visible` 同步状态（如高亮激活态），不在 target 上加 `@click`：
+
+```html
+<!-- ✅ trigger 驱动：OPopup 管开关，v-model 只同步状态 -->
+<div ref="ellipsisRef" :class="{ active: isEllipsisOptionShow }">
+  ...
+</div>
+
+<OPopup v-model:visible="isEllipsisOptionShow"
+        trigger="click-outclick"
+        :target="ellipsisRef">
+  ...
+</OPopup>
+```
+
+**方案 B：v-model 驱动**
+
+用 `trigger="none"` 禁用 OPopup 的事件绑定，由父组件全权管理显隐：
+
+```html
+<!-- ✅ v-model 驱动：trigger="none"，父组件完全控制 -->
+<div ref="ellipsisRef"
+     @click="isEllipsisOptionShow = true">
+  ...
+</div>
+
+<OPopup v-model:visible="isEllipsisOptionShow"
+        trigger="none"
+        :target="ellipsisRef">
+  ...
+</OPopup>
+```
+
+> 注意：方案 B 失去"点击外部关闭"能力，需父组件自行处理。
+
+### trigger 选用速查
+
+| trigger 值 | 行为 | 适用场景 |
+|---|---|---|
+| `click-outclick` | 点击目标始终打开，外部点击关闭 | 按钮/省略号触发弹出选项列表 |
+| `click` | 点击目标切换开关 | 需要点击同一元素开关弹层 |
+| `hover` | 悬停打开，离开关闭 | 桌面端纯 hover 预览（触屏设备不可用） |
+| `none` | 不绑定事件，纯 v-model 控制 | 父组件需要完全自定义显隐逻辑 |
+
+### 关键约束
+
+- **禁止在 target 元素上加 `@click` 来控制 `v-model:visible`，同时设置 `trigger`**——两套机制会冲突
+- `trigger="hover"` 在触屏设备上会产生模拟 `mouseleave`，导致弹层闪关；触屏场景应使用 `click-outclick`
+- `click`（toggle 模式）在触屏设备上可能因模拟事件产生二次 click，导致"打开又关闭"
+- `click-outclick`（非 toggle）始终调用 `setVisible(true)`，多次点击不会关闭，是触屏场景的稳妥选择
+
+### 典型案例：OTab 溢出省略号
+
+> **引入版本**：commit `adb0ed0f`（1.2.5 之后）
+>
+> OTab 在 >840px（`lePadV=false`）时使用 OPopup 展示溢出的页签。省略号元素上同时存在三套控制：`trigger="hover"` + `v-model:visible` + `@click`。在 841px 触屏设备上（`isTouchDevice=false`），`trigger="hover"` 绑定的 `mouseleave` 处理器直接调用 `setVisible(false, 100)`，100ms 后关闭了由 `@click` 打开的弹层。
+>
+> **根因**：将 ODialog/OPopup 切换条件从 `isPhonePad`（含 `isTouchDevice` 判断）改为 `lePadV`（纯宽度判断）时，>840px 的触屏设备不再走 ODialog（click 模式），而是走 OPopup（hover 模式），暴露了三套控制混用的冲突。
+>
+> **修复**：`trigger="hover"` → `trigger="click-outclick"`，删除省略号上的 `@click`，由 OPopup 统一管控显隐。
 
 ---
 
@@ -592,4 +687,4 @@ OAnchor（侧边栏/顶部）+ 内容区（带 id 的标题）
 
 ## 版本变更记录
 
-本文件为组件组合范式文档，近期无重大版本变更。
+- 2026-07-15：新增「OPopup 显隐控制范式」章节，记录 trigger + v-model + @click 三套控制混用导致的触屏弹层闪关问题及正确用法
