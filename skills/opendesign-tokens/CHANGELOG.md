@@ -7,6 +7,52 @@
 
 ---
 
+## 2026-07-31
+
+### 新增
+
+- **值→token 反查命令（`convert`）**：新增 `convert <value>` 子命令，从设计稿的 hex/rgb/rgba 色值、px/ms 尺寸、
+  cubic-bezier 缓动、shadow 定义等反向匹配对应 token。反向映射表从 `@opensig/opendesign-token` 的 CSS 产物**动态构建**
+  （直接 RGB 元组 + `var()` 引用链追踪 + `rgba(var(--o-x), alpha)` 解析），始终与实际包版本同步，替代旧版
+  `convert_to_token.py` 的硬编码映射表。支持 `--color`/`--value` 强制模式、`--tolerance` 颜色容差、`--all` 显示全部匹配、
+  `--json` 结构化输出。匹配结果按语义优先级排序：语义颜色（fill/primary/success/...）> 响应式 > 语义尺寸 > 调色板 > 基础色
+  （white/black）。
+- Token 真实性校验 CLI（`scripts/check-tokens.mjs`）——零依赖 Node.js ≥ 18 脚本，支持 `check`（单 token 校验）/ `scan`
+  （文件/目录批量扫描）/ `list`（按 glob 列举）/
+  `info`（跨主题 light/dark 值 + 响应式各断点值）/ `versions` / `clear-cache` 六个子命令；支持 `--version` / `-t` / `-m` /
+  `--json` / `--offline` / `--strict` 等选项；扫描出的无效 token 会附带 Levenshtein 距离 + 数值后缀匹配的最近 3 个真实
+  token 建议（如 `--o-color-bg2` → `--o-color-fill2`）。
+- **CSS 产物为唯一真值源**：变量存在性、值、响应式各断点值全部从 `themes/*.css` 解析（`@media` 块追踪 + JSDoc 注释 `@group`/
+  `@description`/`@type` 提取），JSON 降级为可选富化——schema 变更或 JSON 缺失不影响核心功能（已用 v0.0.3 验证：无
+  `responsive-token.json` 时 `--o-r-*` 正确判为不存在，`--o-color-*` 的分类/描述从 CSS 注释正确提取）。
+- **本地包优先，下载兜底**：包解析按优先级 `--version` > 就近 `node_modules`（从被扫描文件目录逐层向上查找，
+  monorepo-aware，支持 pnpm symlink / npm hoisting）> `--offline` 缓存 > 下载 `latest`。本地有安装时无需联网、无需缓存，
+  直接用项目实际依赖的版本。SKILL.md 同步新增「Token 真实性校验 CLI」章节，列出常见捏造模式（`bg*` / `border*` / `text*` /
+  越界档位）与工作流建议。
+
+### 更新
+
+- **CLI 架构重构为多模块项目**：将原 1806 行的 `check-tokens.mjs` 拆分为 `lib/` 下 6 个共享模块
+  （`package-resolver.mjs` 包解析/下载/缓存、`registry.mjs` CSS 解析/注册表、`lookup.mjs` 查找/建议、`convert.mjs` 反向映射、
+  `file-scan.mjs` 文件扫描、`shared.mjs` 单例/格式化），统一入口为 `bin.mjs`。`check-tokens.mjs` 保留为向后兼容入口
+  （等价于 `bin.mjs`，旧调用方式不受影响）。
+- **CSS 解析器升级为字符级状态机**：原行级解析器替换为五状态字符级状态机（CODE / STRING_DQ / STRING_SQ / COMMENT /
+  JSDOC），正确处理字符串内的花括号和注释定界符不被误判为代码结构、跨行值（如 `calc()` 跨行表达式）自然累积、注释内的
+  `@media` 不被误判为媒体查询、缺失末尾分号的最后一个声明也能被捕获。移除了不再使用的 `CSS_VAR_REGEX` 常量和多行值
+  死代码分支。
+- **嵌套 `var()` 扫描修复**：扫描正则从 `var\(\s*(--o-[a-z0-9_-]+)\s*(?:,[^)]*)?\)` 简化为 `var\(\s*(--o-[a-z0-9_-]+)`，
+  不再要求闭合 `)`。`lastIndex` 停在 token 名之后，使 `var(--o-x, var(--o-y))` 能同时捕获 `--o-x` 和 `--o-y`（旧正则
+  因 `[^)]*` 在第一个 `)` 处停止，会漏检 fallback 中的内层 `--o-*`）。
+- **`normalizeTokenName` 逻辑简化**：移除冗余的双重条件判断 `!s.startsWith('o-') && !s.startsWith('o')`，简化为
+  `if (!s.startsWith('o-')) s = 'o-' + s`，行为一致且更易读。
+
+### 移除
+
+- `scripts/convert_to_token.py`——Python 版设计稿值→token 转换脚本。功能已完全由 `bin.mjs convert` 命令替代
+  （动态构建反向映射表、支持主题/模式切换、校验 token 真实性、语义优先级排序），硬编码映射表不再需要维护。
+
+---
+
 ## 2026-07-08
 
 ### 更新

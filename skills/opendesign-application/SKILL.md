@@ -1,7 +1,7 @@
 ---
 name: opendesign-application
 description: OpenDesign 工程化落地指南。当开发者要新建或改造项目采用 @opensig/opendesign 设计系统、集成主题系统（Pinia store + SSR/SPA 差异 + 社区切换）、搭建全局样式基础设施（SCSS mixin 全局注入 + 栅格容器 + 楼层结构）、对比 Nuxt vs Vite SPA 工程形态、或在 code review 时检视 OpenDesign 是否被正确使用（:deep 禁令、token 优先、组件优先）时使用此 skill。提供两套可运行脚手架（templates/nuxt、templates/vue-spa）与工程化专题参考。不重复组件 API（→ opendesign-components）、token 表（→ opendesign-tokens）、设计稿生产（→ opendesign-design）、设计师侧代码直出（→ opendesign-codegen）、CLI 命令（→ opendesign-scripts）。
-last_update: 2026-07-08
+last_update: 2026-07-31
 ---
 
 # OpenDesign 工程化落地指南

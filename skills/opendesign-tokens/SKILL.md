@@ -1,22 +1,27 @@
 ---
 name: opendesign-tokens
 description: OpenDesign 设计 Token 指南。当需要使用 @opensig/opendesign-token 包中的 CSS 变量时使用此 skill。包含六套主题（openEuler/Ascend/Kunpeng/Mindspore/openGauss/openUBMC）的完整 token 体系，支持颜色、间距、圆角、字体、阴影、响应式排版、栅格系统等所有设计令牌。使用场景：(1) 查找颜色值对应的语义 token，(2) 获取间距/圆角/字体的 token 名称，(3) 了解六套主题的差异，(4) 代码中使用 CSS 变量替代硬编码值，(5) 使用响应式 token 实现多断点适配，(6) 引入鸿蒙字体文件并使用字体族/字重 token（含七档字重、拉丁/中文自动分流、按字重按需引入）
-last_update: 2026-07-08
+last_update: 2026-07-25
 ---
 
 # OpenDesign 设计 Token 指南
 
 > 本 Skill 对应 @opensig/opendesign-token **v0.1.1**（2026-06 生成），最低依赖版本 ≥0.1.1
 
-`@opensig/opendesign-token` 是 OpenDesign 组件库的设计令牌包，所有 token 使用 `--o-` 前缀。若项目使用了更早版本（<0.1.1），部分 token（如七档字重、按需引入、拉丁/中文分流）可能不存在——使用 Skill 推荐的 token 时应先检查项目 `package.json` 中该包的版本，低于 0.1.1 时提醒用户升级。具体某个 token 在哪个版本引入/变更/删除，查 [`ReleaseNote`](https://raw.atomgit.com/openeuler/opendesign-token/blobs/9315d89bfe0c8538b75df2907f6ad8c2e9e235ba/ReleaseNote.md)。
+`@opensig/opendesign-token` 是 OpenDesign 组件库的设计令牌包，所有 token 使用 `--o-` 前缀。若项目使用了更早版本（<0.1.1），部分
+token（如七档字重、按需引入、拉丁/中文分流）可能不存在——使用 Skill 推荐的 token 时应先检查项目 `package.json` 中该包的版本，低于
+0.1.1 时提醒用户升级。具体某个 token 在哪个版本引入/变更/删除，查 [
+`ReleaseNote`](https://raw.atomgit.com/openeuler/opendesign-token/blobs/9315d89bfe0c8538b75df2907f6ad8c2e9e235ba/ReleaseNote.md)。
 
-组件库有六套独立主题（openEuler / Ascend / Kunpeng / Mindspore / openGauss / openUBMC），**每个社区项目在初始化时选定一套，不在六套主题之间运行时切换**。选定主题后，只需在浅色/深色模式之间切换。
+组件库有六套独立主题（openEuler / Ascend / Kunpeng / Mindspore / openGauss / openUBMC），
+**每个社区项目在初始化时选定一套，不在六套主题之间运行时切换**。选定主题后，只需在浅色/深色模式之间切换。
 
 ---
 
 ## 各社区主题的使用方式
 
-每个社区项目在初始化时选定一套主题，在入口文件（`main.ts`）引入对应的主题 CSS。如需启用鸿蒙字体（HarmonyOS Sans SC），需在主题 CSS 之后引入字体 CSS（`@opensig/opendesign-token/fonts/css`），具体见第 6 节「字体 Token」。
+每个社区项目在初始化时选定一套主题，在入口文件（`main.ts`）引入对应的主题 CSS。如需启用鸿蒙字体（HarmonyOS Sans SC），需在主题
+CSS 之后引入字体 CSS（`@opensig/opendesign-token/fonts/css`），具体见第 6 节「字体 Token」。
 
 ### openEuler 主题（`e`）
 
@@ -26,12 +31,13 @@ import '@opensig/opendesign-token/themes/e.token.css'
 ```
 
 运行时切换 light/dark（设置在 `<html>` 或 `<body>` 上）：
+
 ```javascript
 document.documentElement.setAttribute('data-o-theme', 'e.light') // 浅色
 document.documentElement.setAttribute('data-o-theme', 'e.dark')  // 深色
 ```
 
-品牌色：**Klein Blue（品牌蓝）**，控件悬浮时使用品牌色浅色调。
+品牌色： **Klein Blue（品牌蓝）**，控件悬浮时使用品牌色浅色调。
 
 ---
 
@@ -43,12 +49,13 @@ import '@opensig/opendesign-token/themes/a.token.css'
 ```
 
 运行时切换 light/dark：
+
 ```javascript
 document.documentElement.setAttribute('data-o-theme', 'a.light') // 浅色
 document.documentElement.setAttribute('data-o-theme', 'a.dark')  // 深色
 ```
 
-品牌色：**Ascend 品牌色**，控件悬浮时使用中性灰调。
+品牌色： **Ascend 品牌色**，控件悬浮时使用中性灰调。
 
 ---
 
@@ -60,12 +67,13 @@ import '@opensig/opendesign-token/themes/k.token.css'
 ```
 
 运行时切换 light/dark：
+
 ```javascript
 document.documentElement.setAttribute('data-o-theme', 'k.light') // 浅色
 document.documentElement.setAttribute('data-o-theme', 'k.dark')  // 深色
 ```
 
-品牌色：**Kunpeng 品牌色**，控件悬浮时使用中性灰调。
+品牌色： **Kunpeng 品牌色**，控件悬浮时使用中性灰调。
 
 ---
 
@@ -77,12 +85,13 @@ import '@opensig/opendesign-token/themes/m.token.css'
 ```
 
 运行时切换 light/dark：
+
 ```javascript
 document.documentElement.setAttribute('data-o-theme', 'm.light') // 浅色
 document.documentElement.setAttribute('data-o-theme', 'm.dark')  // 深色
 ```
 
-品牌色：**Vivid Blue（鲜蓝）**，控件悬浮时使用品牌蓝浅色调。
+品牌色： **Vivid Blue（鲜蓝）**，控件悬浮时使用品牌蓝浅色调。
 
 ---
 
@@ -94,12 +103,13 @@ import '@opensig/opendesign-token/themes/g.token.css'
 ```
 
 运行时切换 light/dark：
+
 ```javascript
 document.documentElement.setAttribute('data-o-theme', 'g.light') // 浅色
 document.documentElement.setAttribute('data-o-theme', 'g.dark')  // 深色
 ```
 
-品牌色：**Purple（紫色）**，控件悬浮时使用品牌紫浅色调。
+品牌色： **Purple（紫色）**，控件悬浮时使用品牌紫浅色调。
 
 ---
 
@@ -111,12 +121,13 @@ import '@opensig/opendesign-token/themes/u.token.css'
 ```
 
 运行时切换 light/dark：
+
 ```javascript
 document.documentElement.setAttribute('data-o-theme', 'u.light') // 浅色
 document.documentElement.setAttribute('data-o-theme', 'u.dark')  // 深色
 ```
 
-品牌色：**Azure Blue（天蓝）**，控件悬浮时使用品牌蓝浅色调。
+品牌色： **Azure Blue（天蓝）**，控件悬浮时使用品牌蓝浅色调。
 
 ---
 
@@ -132,6 +143,7 @@ document.documentElement.setAttribute('data-o-theme', 'u.dark')  // 深色
 ```
 
 **使用原则：**
+
 - **推荐使用语义 token**（`--o-color-*`、`--o-gap-*` 等），它们会随 light/dark 自动适配
 - **不要直接使用调色板 token**（`--o-kleinblue-*`、`--o-green-*` 等），这些是内部实现
 
@@ -157,24 +169,24 @@ Pixso 节点属性值（颜色 / 字号 / 间距 / 圆角 / 阴影 / 宽度）
 
 ### 属性类型速查
 
-| Pixso 属性 | 判断规则 | 推荐 Token | 查阅章节 |
-|-----------|---------|-----------|---------|
-| Fill color（填充色）| 背景色、卡片/区块填充 | `--o-color-fill*` | 第 1 节 |
-| Fill color（填充色）| 功能色（绿/橙/红/品牌色） | `--o-color-success/warning/danger/primary*` | 第 1 节 |
-| Fill color（填充色）| 品牌主色、Primary — **主题特有** | 查对应主题 reference | 主题 reference |
-| Stroke / Border color | 控件边框 | `--o-color-control*` | 第 1 节 |
-| Text color（文字色）| 主次辅助文字（透明度写法） | `--o-color-info1` ~ `info4` | 第 1 节 |
-| Font size（字号）| 页面标题、正文、提示文字 | **`--o-r-font_size-*`（优先）** | 第 2 节 |
-| Font size（字号）| 组件内部固定字号 | `--o-font_size-*` | 第 6 节 |
-| Line height（行高）| 页面级文字 | **`--o-r-line_height-*`（优先）** | 第 2 节 |
-| Padding / Gap（间距）| 页面区块、模块间距 | **`--o-r-gap-*`（优先）** | 第 2 节 |
-| Padding / Gap（间距）| 组件内部固定间距 | `--o-gap-*` | 第 4 节 |
-| Frame width（列宽）| 多栏布局、侧边栏 + 主内容 | `--o-r-grid-N`（查第 3 节像素对照表确定 N） | 第 3 节 |
-| Auto-layout gap | 模块水平间距（栅格水槽） | `--o-r-grid-column-gutter` | 第 3 节 |
-| Corner radius（圆角）| 卡片、容器圆角 | `--o-radius-*` | 第 5 节 |
-| Corner radius（圆角）| 按钮、输入框等控件圆角 | `--o-radius_control-*` | 第 5 节 |
-| Drop shadow（阴影）| 卡片、弹窗 | `--o-shadow-*` | 第 7 节 |
-| Opacity 降低（约 0.4）| 禁用状态 | 组件 `disabled` prop，非 token | — |
+| Pixso 属性             | 判断规则                         | 推荐 Token                                  | 查阅章节       |
+|------------------------|----------------------------------|---------------------------------------------|----------------|
+| Fill color（填充色）   | 背景色、卡片/区块填充            | `--o-color-fill*`                           | 第 1 节        |
+| Fill color（填充色）   | 功能色（绿/橙/红/品牌色）        | `--o-color-success/warning/danger/primary*` | 第 1 节        |
+| Fill color（填充色）   | 品牌主色、Primary — **主题特有** | 查对应主题 reference                        | 主题 reference |
+| Stroke / Border color  | 控件边框                         | `--o-color-control*`                        | 第 1 节        |
+| Text color（文字色）   | 主次辅助文字（透明度写法）       | `--o-color-info1` ~ `info4`                 | 第 1 节        |
+| Font size（字号）      | 页面标题、正文、提示文字         | **`--o-r-font_size-*`（优先）**             | 第 2 节        |
+| Font size（字号）      | 组件内部固定字号                 | `--o-font_size-*`                           | 第 6 节        |
+| Line height（行高）    | 页面级文字                       | **`--o-r-line_height-*`（优先）**           | 第 2 节        |
+| Padding / Gap（间距）  | 页面区块、模块间距               | **`--o-r-gap-*`（优先）**                   | 第 2 节        |
+| Padding / Gap（间距）  | 组件内部固定间距                 | `--o-gap-*`                                 | 第 4 节        |
+| Frame width（列宽）    | 多栏布局、侧边栏 + 主内容        | `--o-r-grid-N`（查第 3 节像素对照表确定 N） | 第 3 节        |
+| Auto-layout gap        | 模块水平间距（栅格水槽）         | `--o-r-grid-column-gutter`                  | 第 3 节        |
+| Corner radius（圆角）  | 卡片、容器圆角                   | `--o-radius-*`                              | 第 5 节        |
+| Corner radius（圆角）  | 按钮、输入框等控件圆角           | `--o-radius_control-*`                      | 第 5 节        |
+| Drop shadow（阴影）    | 卡片、弹窗                       | `--o-shadow-*`                              | 第 7 节        |
+| Opacity 降低（约 0.4） | 禁用状态                         | 组件 `disabled` prop，非 token              | —              |
 
 ### 颜色识别优先级
 
@@ -194,14 +206,15 @@ Pixso 颜色值
 
 响应式 token 的实际值取决于画板所在断点，读取 Pixso 画板宽度时按此对应：
 
-| Pixso 画板宽度 | 对应断点 | 响应式 token 实际值参考列 |
-|--------------|---------|----------------------|
-| ≤840px | Phone | 第 2 节表格 Phone 列 |
-| 841–1200px | Pad | 第 2 节表格 Pad 列 |
-| 1201–1680px | Laptop | 第 2 节表格 Laptop 列 |
-| >1680px | Desktop | 第 2 节表格 Desktop 列（= 静态 token 值） |
+| Pixso 画板宽度 | 对应断点 | 响应式 token 实际值参考列                 |
+|----------------|----------|-------------------------------------------|
+| ≤840px         | Phone    | 第 2 节表格 Phone 列                      |
+| 841–1200px     | Pad      | 第 2 节表格 Pad 列                        |
+| 1201–1680px    | Laptop   | 第 2 节表格 Laptop 列                     |
+| >1680px        | Desktop  | 第 2 节表格 Desktop 列（= 静态 token 值） |
 
-> 从 Pixso 读到字号 `22px` 且画板宽度为 1440px（Laptop 断点）→ 查第 2 节 Laptop 列 → 对应 `--o-r-font_size-h3`（Laptop: 18px）或 `--o-r-font_size-display3`（Laptop: 32px）中选最接近的。
+> 从 Pixso 读到字号 `22px` 且画板宽度为 1440px（Laptop 断点）→ 查第 2 节 Laptop 列 → 对应 `--o-r-font_size-h3`（Laptop:
+> 18px）或 `--o-r-font_size-display3`（Laptop: 32px）中选最接近的。
 
 ---
 
@@ -209,88 +222,117 @@ Pixso 颜色值
 
 ### 主色系（Primary）
 
-| Token | 用途 | light 示例值 | dark 示例值 |
-|-------|------|-------------|------------|
-| `--o-color-primary1` | 常规主色 | `rgb(0, 47, 167)` | `rgb(72, 116, 220)` |
-| `--o-color-primary2` | 悬浮主色 | `rgb(81, 119, 202)` | `rgb(40, 68, 149)` |
-| `--o-color-primary3` | 激活主色 | `rgb(0, 39, 147)` | `rgb(0, 39, 147)` |
-| `--o-color-primary4` | 禁用主色 | `rgb(132, 161, 220)` | `rgb(27, 48, 113)` |
-| `--o-color-primary1-light` | 主色浅色（背景） | `rgb(190, 206, 237)` | — |
-| `--o-color-primary2-light` | 主色浅色（悬浮背景） | `rgb(132, 161, 220)` | — |
-| `--o-color-primary3-light` | 主色浅色（激活背景） | `rgb(81, 119, 202)` | — |
-| `--o-color-primary4-light` | 主色浅色（禁用背景） | `rgb(227, 234, 246)` | — |
+| Token                      | 用途                 | light 示例值         | dark 示例值         |
+|----------------------------|----------------------|----------------------|---------------------|
+| `--o-color-primary1`       | 常规主色             | `rgb(0, 47, 167)`    | `rgb(72, 116, 220)` |
+| `--o-color-primary2`       | 悬浮主色             | `rgb(81, 119, 202)`  | `rgb(40, 68, 149)`  |
+| `--o-color-primary3`       | 激活主色             | `rgb(0, 39, 147)`    | `rgb(0, 39, 147)`   |
+| `--o-color-primary4`       | 禁用主色             | `rgb(132, 161, 220)` | `rgb(27, 48, 113)`  |
+| `--o-color-primary1-light` | 主色浅色（背景）     | `rgb(190, 206, 237)` | —                   |
+| `--o-color-primary2-light` | 主色浅色（悬浮背景） | `rgb(132, 161, 220)` | —                   |
+| `--o-color-primary3-light` | 主色浅色（激活背景） | `rgb(81, 119, 202)`  | —                   |
+| `--o-color-primary4-light` | 主色浅色（禁用背景） | `rgb(227, 234, 246)` | —                   |
 
 > 注：以上颜色值为 openEuler 主题的 light 模式示例，其他主题的品牌色会有所不同。
 
 ### 成功色（Success）
 
-| Token | 用途 |
-|-------|------|
-| `--o-color-success1` | 常规成功色（`rgb(11, 177, 81)` light） |
-| `--o-color-success2` | 悬浮成功色 |
-| `--o-color-success3` | 激活成功色 |
-| `--o-color-success4` | 禁用成功色 |
-| `--o-color-success1-light` | 成功色浅色（背景） |
-| `--o-color-success2-light` | 成功色悬浮浅色 |
-| `--o-color-success3-light` | 成功色激活浅色 |
-| `--o-color-success4-light` | 成功色禁用浅色 |
+| Token                      | 用途                                   |
+|----------------------------|----------------------------------------|
+| `--o-color-success1`       | 常规成功色（`rgb(11, 177, 81)` light） |
+| `--o-color-success2`       | 悬浮成功色                             |
+| `--o-color-success3`       | 激活成功色                             |
+| `--o-color-success4`       | 禁用成功色                             |
+| `--o-color-success1-light` | 成功色浅色（背景）                     |
+| `--o-color-success2-light` | 成功色悬浮浅色                         |
+| `--o-color-success3-light` | 成功色激活浅色                         |
+| `--o-color-success4-light` | 成功色禁用浅色                         |
 
 ### 告警色（Warning）
 
-| Token | 用途 |
-|-------|------|
-| `--o-color-warning1` | 常规告警色（`rgb(250, 115, 5)` light） |
-| `--o-color-warning2` | 悬浮告警色 |
-| `--o-color-warning3` | 激活告警色 |
-| `--o-color-warning4` | 禁用告警色 |
-| `--o-color-warning1-light` | 告警色浅色（背景） |
-| `--o-color-warning2-light` ~ `--o-color-warning4-light` | 其他状态浅色 |
+| Token                                                   | 用途                                   |
+|---------------------------------------------------------|----------------------------------------|
+| `--o-color-warning1`                                    | 常规告警色（`rgb(250, 115, 5)` light） |
+| `--o-color-warning2`                                    | 悬浮告警色                             |
+| `--o-color-warning3`                                    | 激活告警色                             |
+| `--o-color-warning4`                                    | 禁用告警色                             |
+| `--o-color-warning1-light`                              | 告警色浅色（背景）                     |
+| `--o-color-warning2-light` ~ `--o-color-warning4-light` | 其他状态浅色                           |
 
 ### 危险色（Danger）
 
-| Token | 用途 |
-|-------|------|
-| `--o-color-danger1` | 常规危险色（`rgb(230, 0, 18)` light） |
-| `--o-color-danger2` | 悬浮危险色 |
-| `--o-color-danger3` | 激活危险色 |
-| `--o-color-danger4` | 禁用危险色 |
-| `--o-color-danger1-light` | 危险色浅色（背景） |
-| `--o-color-danger2-light` ~ `--o-color-danger4-light` | 其他状态浅色 |
+| Token                                                 | 用途                                  |
+|-------------------------------------------------------|---------------------------------------|
+| `--o-color-danger1`                                   | 常规危险色（`rgb(230, 0, 18)` light） |
+| `--o-color-danger2`                                   | 悬浮危险色                            |
+| `--o-color-danger3`                                   | 激活危险色                            |
+| `--o-color-danger4`                                   | 禁用危险色                            |
+| `--o-color-danger1-light`                             | 危险色浅色（背景）                    |
+| `--o-color-danger2-light` ~ `--o-color-danger4-light` | 其他状态浅色                          |
 
 ### 信息色 / 文字颜色（Info）
 
-| Token | 用途 | 说明 |
-|-------|------|------|
-| `--o-color-info1` | 一级文字 | 标题、强调文本（不透明） |
-| `--o-color-info2` | 二级文字 | 正文（80% 不透明度） |
-| `--o-color-info3` | 三级文字 | 辅助信息（60% 不透明度） |
-| `--o-color-info4` | 四级文字 | 禁用/占位文本（40% 不透明度） |
-| `--o-color-info1-inverse` | 反色一级文字 | 深色背景上的白色文字 |
-| `--o-color-info2-inverse` | 反色二级文字 | 深色背景上的次要白色文字 |
-| `--o-color-info3-inverse` | 反色三级文字 | — |
-| `--o-color-info4-inverse` | 反色四级文字 | — |
+| Token                     | 用途         | 说明                          |
+|---------------------------|--------------|-------------------------------|
+| `--o-color-info1`         | 一级文字     | 标题、强调文本（不透明）      |
+| `--o-color-info2`         | 二级文字     | 正文（80% 不透明度）          |
+| `--o-color-info3`         | 三级文字     | 辅助信息（60% 不透明度）      |
+| `--o-color-info4`         | 四级文字     | 禁用/占位文本（40% 不透明度） |
+| `--o-color-info1-inverse` | 反色一级文字 | 深色背景上的白色文字          |
+| `--o-color-info2-inverse` | 反色二级文字 | 深色背景上的次要白色文字      |
+| `--o-color-info3-inverse` | 反色三级文字 | —                             |
+| `--o-color-info4-inverse` | 反色四级文字 | —                             |
 
 ### 填充色 / 背景色（Fill）
 
-| Token | 用途 | 说明 |
-|-------|------|------|
-| `--o-color-fill1` | 一级填充 | 页面背景 |
+| Token             | 用途     | 说明                        |
+|-------------------|----------|-----------------------------|
+| `--o-color-fill1` | 一级填充 | 页面背景                    |
 | `--o-color-fill2` | 二级填充 | 区块/卡片背景（**最常用**） |
-| `--o-color-fill3` | 三级填充 | 嵌套卡片背景 |
+| `--o-color-fill3` | 三级填充 | 嵌套卡片背景                |
 
 **背景色选择规则：**
+
 ```css
 /* 页面背景 */
-background-color: var(--o-color-fill1);
+background-color:
+
+var
+(
+--o-color-fill1
+
+)
+;
 
 /* 卡片/区块背景（最常用） */
-background-color: var(--o-color-fill2);
+background-color:
+
+var
+(
+--o-color-fill2
+
+)
+;
 
 /* 嵌套卡片背景 */
-background-color: var(--o-color-fill3);
+background-color:
+
+var
+(
+--o-color-fill3
+
+)
+;
 
 /* 纯白色（极少使用，特殊场景） */
-background-color: var(--o-color-white);
+background-color:
+
+var
+(
+--o-color-white
+
+)
+;
 ```
 
 > ⚠️ **不存在的 token 命名——严禁使用**：
@@ -305,22 +347,22 @@ background-color: var(--o-color-white);
 
 ### 控件色（Control）
 
-| Token | 用途 |
-|-------|------|
-| `--o-color-control1` | 常规边框色（25% 透明度） |
-| `--o-color-control2` | 悬浮边框色（60% 透明度） |
-| `--o-color-control3` | 激活边框色（80% 透明度） |
-| `--o-color-control4` | 禁用边框色（10% 透明度） |
-| `--o-color-control1-light` | 常规控件背景 |
-| `--o-color-control2-light` | 悬浮控件背景 |
-| `--o-color-control3-light` | 激活控件背景 |
-| `--o-color-control4-light` | 禁用控件背景 |
-| `--o-color-control-light` | 很浅控件色（常用于表格背景） |
+| Token                      | 用途                         |
+|----------------------------|------------------------------|
+| `--o-color-control1`       | 常规边框色（25% 透明度）     |
+| `--o-color-control2`       | 悬浮边框色（60% 透明度）     |
+| `--o-color-control3`       | 激活边框色（80% 透明度）     |
+| `--o-color-control4`       | 禁用边框色（10% 透明度）     |
+| `--o-color-control1-light` | 常规控件背景                 |
+| `--o-color-control2-light` | 悬浮控件背景                 |
+| `--o-color-control3-light` | 激活控件背景                 |
+| `--o-color-control4-light` | 禁用控件背景                 |
+| `--o-color-control-light`  | 很浅控件色（常用于表格背景） |
 
 ### 链接色（Link）
 
-| Token | 用途 |
-|-------|------|
+| Token             | 用途       |
+|-------------------|------------|
 | `--o-color-link1` | 常规链接色 |
 | `--o-color-link2` | 悬浮链接色 |
 | `--o-color-link3` | 激活链接色 |
@@ -328,107 +370,124 @@ background-color: var(--o-color-white);
 
 ### 遮罩色（Mask）
 
-| Token | 用途 |
-|-------|------|
+| Token             | 用途                 |
+|-------------------|----------------------|
 | `--o-color-mask1` | 全局遮罩（40% 透明） |
 | `--o-color-mask2` | 局部遮罩（20% 透明） |
 
 ### 基础色（Base）
 
-| Token | 用途 |
-|-------|------|
+| Token             | 用途                                        |
+|-------------------|---------------------------------------------|
 | `--o-color-white` | 纯白色 `rgb(255, 255, 255)`（极少直接使用） |
-| `--o-color-black` | 纯黑色 `rgb(0, 0, 0)`（极少直接使用） |
+| `--o-color-black` | 纯黑色 `rgb(0, 0, 0)`（极少直接使用）       |
 
 ---
 
 ## 2. 响应式 Token（Responsive）— 页面级首选
 
-> **优先使用响应式 Token**。对于字号、行高、间距，响应式变量（`--o-r-*`）会根据视口自动缩放，是纠正硬编码值的首选。静态 Token（`--o-font_size-*`、`--o-gap-*`）仅在需要固定不变的场景下使用。
+> **优先使用响应式 Token**。对于字号、行高、间距，响应式变量（`--o-r-*`）会根据视口自动缩放，是纠正硬编码值的首选。静态 Token（
+> `--o-font_size-*`、`--o-gap-*`）仅在需要固定不变的场景下使用。
 
 响应式变量前缀为 `--o-r-`，引入主题 CSS 后自动生效，无需额外导入。共 4 个断点：
 
-| 断点 | 视口范围 | 典型设备 |
-|------|---------|---------|
-| Phone | ≤840px | 手机、平板竖屏 |
-| Pad | 841–1200px | 平板横屏 |
-| Laptop | 1201–1680px | 笔记本 |
-| Desktop | >1680px | 桌面大屏 |
+| 断点    | 视口范围    | 典型设备       |
+|---------|-------------|----------------|
+| Phone   | ≤840px      | 手机、平板竖屏 |
+| Pad     | 841–1200px  | 平板横屏       |
+| Laptop  | 1201–1680px | 笔记本         |
+| Desktop | >1680px     | 桌面大屏       |
 
 ### 响应式字号 + 行高
 
-| 语义 | Token 名称 | Phone | Pad | Laptop | Desktop |
-|------|-----------|-------|-----|--------|---------|
-| 一级数据展示 | `--o-r-font_size-display1` / `line_height` | 22/30 | 40/56 | 48/64 | 56/80 |
-| 二级数据展示 | `--o-r-font_size-display2` / `line_height` | 20/28 | 32/44 | 40/56 | 48/64 |
-| 三级数据展示 | `--o-r-font_size-display3` / `line_height` | 18/26 | 24/32 | 32/44 | 40/56 |
-| 一级标题 | `--o-r-font_size-h1` / `line_height` | 18/26 | 20/28 | 20/28 | 32/44 |
-| 二级标题 | `--o-r-font_size-h2` / `line_height` | 16/24 | 18/26 | 20/28 | 24/32 |
-| 三级标题 | `--o-r-font_size-h3` / `line_height` | 16/24 | 16/24 | 18/26 | 22/30 |
-| 四级标题 | `--o-r-font_size-h4` / `line_height` | 16/24 | 16/24 | 18/26 | 20/28 |
-| 大号正文 | `--o-r-font_size-text2` / `line_height` | 14/22 | 14/22 | 16/24 | 18/26 |
-| 常规正文 | `--o-r-font_size-text1` / `line_height` | 14/22 | 14/22 | 14/22 | 16/24 |
-| 提示文本1 | `--o-r-font_size-tip1` / `line_height` | 12/18 | 12/18 | 14/22 | 14/22 |
-| 提示文本2 | `--o-r-font_size-tip2` / `line_height` | 10/16 | 12/18 | 12/18 | 12/18 |
+| 语义         | Token 名称                                 | Phone | Pad   | Laptop | Desktop |
+|--------------|--------------------------------------------|-------|-------|--------|---------|
+| 一级数据展示 | `--o-r-font_size-display1` / `line_height` | 22/30 | 40/56 | 48/64  | 56/80   |
+| 二级数据展示 | `--o-r-font_size-display2` / `line_height` | 20/28 | 32/44 | 40/56  | 48/64   |
+| 三级数据展示 | `--o-r-font_size-display3` / `line_height` | 18/26 | 24/32 | 32/44  | 40/56   |
+| 一级标题     | `--o-r-font_size-h1` / `line_height`       | 18/26 | 20/28 | 20/28  | 32/44   |
+| 二级标题     | `--o-r-font_size-h2` / `line_height`       | 16/24 | 18/26 | 20/28  | 24/32   |
+| 三级标题     | `--o-r-font_size-h3` / `line_height`       | 16/24 | 16/24 | 18/26  | 22/30   |
+| 四级标题     | `--o-r-font_size-h4` / `line_height`       | 16/24 | 16/24 | 18/26  | 20/28   |
+| 大号正文     | `--o-r-font_size-text2` / `line_height`    | 14/22 | 14/22 | 16/24  | 18/26   |
+| 常规正文     | `--o-r-font_size-text1` / `line_height`    | 14/22 | 14/22 | 14/22  | 16/24   |
+| 提示文本1    | `--o-r-font_size-tip1` / `line_height`     | 12/18 | 12/18 | 14/22  | 14/22   |
+| 提示文本2    | `--o-r-font_size-tip2` / `line_height`     | 10/16 | 12/18 | 12/18  | 12/18   |
 
 > 单位均为 px。Token 名称中 `font_size` 和 `line_height` 共享后缀（如 `--o-r-font_size-h1` 配 `--o-r-line_height-h1`）。
 
 ### 响应式间距
 
-| Token 名称 | Phone | Pad | Laptop | Desktop |
-|-----------|-------|-----|--------|---------|
-| `--o-r-gap-10` | 32px | 40px | 56px | 72px |
-| `--o-r-gap-9` | 24px | 32px | 48px | 64px |
-| `--o-r-gap-8` | 16px | 24px | 40px | 48px |
-| `--o-r-gap-7` | 12px | 16px | 24px | 40px |
-| `--o-r-gap-6` | 12px | 16px | 24px | 32px |
-| `--o-r-gap-5` | 12px | 12px | 16px | 24px |
-| `--o-r-gap-4` | 8px | 8px | 12px | 16px |
-| `--o-r-gap-3` | 8px | 8px | 8px | 12px |
-| `--o-r-gap-2` | 8px | 8px | 8px | 8px |
-| `--o-r-gap-1` | 4px | 4px | 4px | 4px |
+| Token 名称     | Phone | Pad  | Laptop | Desktop |
+|----------------|-------|------|--------|---------|
+| `--o-r-gap-10` | 32px  | 40px | 56px   | 72px    |
+| `--o-r-gap-9`  | 24px  | 32px | 48px   | 64px    |
+| `--o-r-gap-8`  | 16px  | 24px | 40px   | 48px    |
+| `--o-r-gap-7`  | 12px  | 16px | 24px   | 40px    |
+| `--o-r-gap-6`  | 12px  | 16px | 24px   | 32px    |
+| `--o-r-gap-5`  | 12px  | 12px | 16px   | 24px    |
+| `--o-r-gap-4`  | 8px   | 8px  | 12px   | 16px    |
+| `--o-r-gap-3`  | 8px   | 8px  | 8px    | 12px    |
+| `--o-r-gap-2`  | 8px   | 8px  | 8px    | 8px     |
+| `--o-r-gap-1`  | 4px   | 4px  | 4px    | 4px     |
 
 > **对照关系**：`--o-r-gap-N` 的 Desktop 值 = `--o-gap-N` 的静态值。响应式变量在小屏上自动压缩间距。
 
 ### 响应式 vs 静态 Token 选择
 
-| 场景 | 推荐 | 原因 |
-|------|------|------|
-| 页面标题、正文、区块间距 | `--o-r-*`（响应式） | 随视口自动适配，无需写 media query |
-| 组件内部固定尺寸（如图标旁 4px 间距） | `--o-gap-*`（静态） | 尺寸不应随视口变化 |
-| 设计稿硬编码的字号/间距纠正 | `--o-r-*`（响应式） | **首选**，确保多端一致 |
+| 场景                                  | 推荐                | 原因                               |
+|---------------------------------------|---------------------|------------------------------------|
+| 页面标题、正文、区块间距              | `--o-r-*`（响应式） | 随视口自动适配，无需写 media query |
+| 组件内部固定尺寸（如图标旁 4px 间距） | `--o-gap-*`（静态） | 尺寸不应随视口变化                 |
+| 设计稿硬编码的字号/间距纠正           | `--o-r-*`（响应式） | **首选**，确保多端一致             |
 
-> **字号/行高的引用方式**：① 字号 + 行高成对输出到当前元素时，使用 `font.scss` mixin（`@include h1;`），保证配对且调用简洁；② 只需单独引用某一项时，直接使用 `var(--o-r-font_size-*)` + `var(--o-r-line_height-*)` 响应式变量。mixin 的全局注入配置与完整用法详见 **opendesign-application** skill → styles-infrastructure 第 4 节。
+> **字号/行高的引用方式**：① 字号 + 行高成对输出到当前元素时，使用 `font.scss` mixin（`@include h1;`），保证配对且调用简洁；②
+> 只需单独引用某一项时，直接使用 `var(--o-r-font_size-*)` + `var(--o-r-line_height-*)` 响应式变量。mixin 的全局注入配置与完整用法详见
+> **opendesign-application** skill → styles-infrastructure 第 4 节。
 
 ---
 
 ## 3. 栅格系统 Token（Grid）— 页面级模块布局
 
-> **栅格系统用于页面级布局**，是控制页面各模块在水平方向（X 轴）上宽度与间距的核心配置形式。多栏布局、侧边栏 + 主内容区、模块间的水平分割均应优先使用栅格变量，而非手动写死宽度或 padding。
+> **栅格系统用于页面级布局**，是控制页面各模块在水平方向（X 轴）上宽度与间距的核心配置形式。多栏布局、侧边栏 +
+> 主内容区、模块间的水平分割均应优先使用栅格变量，而非手动写死宽度或 padding。
 
 24 列响应式栅格，共 6 个断点。引入主题 CSS 后自动生效。
 
-| 断点 | 视口范围 | 列数 | 留白(单侧) | 水槽 |
-|------|---------|------|-----------|------|
-| 超大屏 | >1920px | 24 | 64px | 32px |
-| 桌面 | 1441–1920px | 24 | 64px | 32px |
-| 小桌面 | 1201–1440px | 24 | 40px | 24px |
-| 平板横屏 | 841–1200px | 12 | 32px | 16px |
-| 平板竖屏 | 601–840px | 8 | 32px | 16px |
-| 手机 | ≤600px | 4 | 24px | 12px |
+| 断点     | 视口范围    | 列数 | 留白(单侧) | 水槽 |
+|----------|-------------|------|------------|------|
+| 超大屏   | >1920px     | 24   | 64px       | 32px |
+| 桌面     | 1441–1920px | 24   | 64px       | 32px |
+| 小桌面   | 1201–1440px | 24   | 40px       | 24px |
+| 平板横屏 | 841–1200px  | 12   | 32px       | 16px |
+| 平板竖屏 | 601–840px   | 8    | 32px       | 16px |
+| 手机     | ≤600px      | 4    | 24px       | 12px |
 
-**关键变量**：`--o-r-grid-1` ~ `--o-r-grid-24`（N 列宽度），`--o-r-grid-column-gutter`（水槽宽度），`--o-r-grid-full`（全栅格宽度），`--o-r-grid-padding`（栅格外侧留白），`--o-r-grid-section-width`（楼层宽度），`--o-r-grid-section-padding`（楼层边缘到视口边缘距离）。
+**关键变量**：`--o-r-grid-1` ~ `--o-r-grid-24`（N 列宽度），`--o-r-grid-column-gutter`（水槽宽度），`--o-r-grid-full`（全栅格宽度），
+`--o-r-grid-padding`（栅格外侧留白），`--o-r-grid-section-width`（楼层宽度），`--o-r-grid-section-padding`（楼层边缘到视口边缘距离）。
 
-**栅格容器**：直接使用 `.o-r-grid-container` 类即可（`display:flex; max-width:1920px; margin:0 auto; padding:var(--o-r-grid-padding)`）。
+**栅格容器**：直接使用 `.o-r-grid-container` 类即可（
+`display:flex; max-width:1920px; margin:0 auto; padding:var(--o-r-grid-padding)`）。
 
 ```css
 /* 使用栅格列宽变量 */
-.column-6 { width: var(--o-r-grid-6); }
-.column-8 { width: var(--o-r-grid-8); }
-.column-12 { width: var(--o-r-grid-12); }
+.column-6 {
+    width: var(--o-r-grid-6);
+}
+
+.column-8 {
+    width: var(--o-r-grid-8);
+}
+
+.column-12 {
+    width: var(--o-r-grid-12);
+}
 
 /* 并排元素间距使用水槽 */
-.row { display: flex; gap: 0 var(--o-r-grid-column-gutter); }
+.row {
+    display: flex;
+    gap: 0 var(--o-r-grid-column-gutter);
+}
 ```
 
 ### Pixso 画板 → grid-N 像素对照表
@@ -438,20 +497,21 @@ background-color: var(--o-color-white);
 **列宽公式**：`col = (画板宽 - 2×留白 - (最大列数-1)×水槽) / 最大列数`
 **grid-N 宽度**：`grid-N = N × col + (N-1) × 水槽`
 
-| 画板宽度 | 断点 | col | 水槽 | grid-4 | grid-6 | grid-8 | grid-12 | grid-16 | grid-18 |
-|---------|------|-----|------|--------|--------|--------|---------|---------|---------|
-| 1920px | 超大屏 | 44px | 32px | 272px | 424px | 576px | 880px | 1184px | 1336px |
-| 1680px | 桌面 | 34px | 32px | 232px | 364px | 496px | 760px | 1024px | 1156px |
-| 1440px | 小桌面 | ~33.7px | 24px | ~207px | ~322px | ~437px | ~668px | ~899px | ~1014px |
-| 1200px | 平板横屏 | 80px | 16px | 368px | 560px | 752px | 1136px | *(超出12列)* | *(超出12列)* |
-| 840px | 平板竖屏 | 83px | 16px | 380px | 578px | 776px | *(超出8列)* | — | — |
-| 375px | 手机 | ~72.75px | 12px | 327px | *(超出4列)* | — | — | — | — |
+| 画板宽度 | 断点     | col      | 水槽 | grid-4 | grid-6      | grid-8 | grid-12     | grid-16      | grid-18      |
+|----------|----------|----------|------|--------|-------------|--------|-------------|--------------|--------------|
+| 1920px   | 超大屏   | 44px     | 32px | 272px  | 424px       | 576px  | 880px       | 1184px       | 1336px       |
+| 1680px   | 桌面     | 34px     | 32px | 232px  | 364px       | 496px  | 760px       | 1024px       | 1156px       |
+| 1440px   | 小桌面   | ~33.7px  | 24px | ~207px | ~322px      | ~437px | ~668px      | ~899px       | ~1014px      |
+| 1200px   | 平板横屏 | 80px     | 16px | 368px  | 560px       | 752px  | 1136px      | *(超出12列)* | *(超出12列)* |
+| 840px    | 平板竖屏 | 83px     | 16px | 380px  | 578px       | 776px  | *(超出8列)* | —            | —            |
+| 375px    | 手机     | ~72.75px | 12px | 327px  | *(超出4列)* | —      | —           | —            | —            |
 
 > **说明**：平板横屏最多 12 列，超出部分等于全宽（grid-12 值）；平板竖屏最多 8 列；手机最多 4 列。
 
 ### 水槽分隔原则（核心规则）
 
-X 轴方向上相邻的大块元素（Card、楼层区块、内容模块等）之间的间距**固定为 1 个水槽**（`--o-r-grid-column-gutter`），不使用 gap token。
+X 轴方向上相邻的大块元素（Card、楼层区块、内容模块等）之间的间距 **固定为 1 个水槽**（`--o-r-grid-column-gutter`），不使用 gap
+token。
 
 **列数分配约束**：N 个并排块的列数之和 = 当前断点的总列数。
 
@@ -462,29 +522,29 @@ grid-N₁ + gutter + grid-N₂ + gutter + ... + grid-Nₙ = 内容区全宽
 
 **等宽 N 块**：每块列数 = 总列数 ÷ N
 
-| 并排块数 | 超大屏/桌面/小桌面（24列） | 平板横屏（12列） | 平板竖屏（8列） | 手机（4列） |
-|---------|--------------------------|----------------|----------------|-----------|
-| 2 块等宽 | grid-12 + grid-12 | grid-6 + grid-6 | grid-4 + grid-4 | grid-2 + grid-2 |
-| 3 块等宽 | grid-8 × 3 | grid-4 × 3 | — (不整除) | — |
-| 4 块等宽 | grid-6 × 4 | grid-3 × 4 | grid-2 × 4 | — |
-| 6 块等宽 | grid-4 × 6 | grid-2 × 6 | — | — |
+| 并排块数 | 超大屏/桌面/小桌面（24列） | 平板横屏（12列） | 平板竖屏（8列） | 手机（4列）     |
+|----------|----------------------------|------------------|-----------------|-----------------|
+| 2 块等宽 | grid-12 + grid-12          | grid-6 + grid-6  | grid-4 + grid-4 | grid-2 + grid-2 |
+| 3 块等宽 | grid-8 × 3                 | grid-4 × 3       | — (不整除)      | —               |
+| 4 块等宽 | grid-6 × 4                 | grid-3 × 4       | grid-2 × 4      | —               |
+| 6 块等宽 | grid-4 × 6                 | grid-2 × 6       | —               | —               |
 
 ### 楼层栅格适配规范
 
 楼层（页面整体区块）的宽度应居中显示，两侧留出适当空白。以下变量已在 token 包中预定义，无需手动创建：
 
-| 变量名 | 用途 |
-|--------|------|
-| `--o-r-grid-section-width` | 楼层宽度 |
+| 变量名                       | 用途                         |
+|------------------------------|------------------------------|
+| `--o-r-grid-section-width`   | 楼层宽度                     |
 | `--o-r-grid-section-padding` | 从视口边缘到楼层边缘的总距离 |
 
 **各断点宽度规则**：
 
-| 断点 | 楼层宽度 | 一侧空白栅格数 |
-|------|---------|---------------|
-| >1680px | `var(--o-r-grid-20)` | 2 列 |
-| 1201–1680px | `var(--o-r-grid-22)` | 1 列 |
-| ≤1200px | `var(--o-r-grid-full)` | 0 列（占满） |
+| 断点        | 楼层宽度               | 一侧空白栅格数 |
+|-------------|------------------------|----------------|
+| >1680px     | `var(--o-r-grid-20)`   | 2 列           |
+| 1201–1680px | `var(--o-r-grid-22)`   | 1 列           |
+| ≤1200px     | `var(--o-r-grid-full)` | 0 列（占满）   |
 
 **使用方式**：
 
@@ -526,30 +586,30 @@ Pad及以下 (≤1200px):  grid-padding               | grid-full | grid-padding
 
 **多列表单：每行项数与列宽分配**
 
-| 断点 | 总列数 | 每行项数 | 每项宽度 Token | 标签位置 |
-|------|-------|---------|-------------|---------|
-| Desktop >1680px | 24 | **4** 项/行 | `--o-r-grid-6` | 左置水平 |
-| Laptop 1201–1680px | 24 | **4** 项/行 | `--o-r-grid-6` | 左置水平 |
-| Pad 841–1200px | 12 | **3** 项/行 | `--o-r-grid-4` | 左置水平 |
-| Phone ≤840px | 4 | **1** 项/行 | 全宽 | 上置堆叠 |
+| 断点               | 总列数 | 每行项数    | 每项宽度 Token | 标签位置 |
+|--------------------|--------|-------------|----------------|----------|
+| Desktop >1680px    | 24     | **4** 项/行 | `--o-r-grid-6` | 左置水平 |
+| Laptop 1201–1680px | 24     | **4** 项/行 | `--o-r-grid-6` | 左置水平 |
+| Pad 841–1200px     | 12     | **3** 项/行 | `--o-r-grid-4` | 左置水平 |
+| Phone ≤840px       | 4      | **1** 项/行 | 全宽           | 上置堆叠 |
 
 > **验证**（桌面端，4 项×grid-6）：4×grid-6 + 3×gutter = 4×424 + 3×32 = 1696 + 96 = **1792px** = 24列内容区 ✓
 > **验证**（平板横屏，3 项×grid-4）：3×grid-4 + 2×gutter = 3×368 + 2×16 = 1104 + 32 = **1136px** = 12列内容区（1200px画板）✓
 
 **行间距（form item 垂直方向）**
 
-| 断点 | 每行 form item 间距 |
-|------|-------------------|
-| >840px（水平标签） | `32px` |
-| ≤840px（堆叠标签） | `12px` |
+| 断点               | 每行 form item 间距 |
+|--------------------|---------------------|
+| >840px（水平标签） | `32px`              |
+| ≤840px（堆叠标签） | `12px`              |
 
 **标签宽度与内部间距**
 
-| 区域 | >840px（PC 水平模式） | ≤840px（手机堆叠模式） |
-|------|---------------------|----------------------|
-| 标签区域宽度 | 固定 **96px** | 全宽（100%） |
-| 标签到输入框间距 | `4px`（标签文字到冒号间距） | `8px`（标签文字到输入框） |
-| Hint/帮助文字位置 | 输入框右侧，右侧留 **24px** | 输入框下方，间距 `12px` |
+| 区域              | >840px（PC 水平模式）       | ≤840px（手机堆叠模式）    |
+|-------------------|-----------------------------|---------------------------|
+| 标签区域宽度      | 固定 **96px**               | 全宽（100%）              |
+| 标签到输入框间距  | `4px`（标签文字到冒号间距） | `8px`（标签文字到输入框） |
+| Hint/帮助文字位置 | 输入框右侧，右侧留 **24px** | 输入框下方，间距 `12px`   |
 
 **分组约束**
 
@@ -596,62 +656,69 @@ Pad及以下 (≤1200px):  grid-padding               | grid-full | grid-padding
 
 间距 token 适用于 `gap`、`padding`、`margin` 等属性。
 
-| Token | 值 | 用途 |
-|-------|----|------|
-| `--o-gap-1` | `4px` | 最小间距（紧凑元素内部） |
-| `--o-gap-2` | `8px` | 小间距（组件内部元素） |
-| `--o-gap-3` | `12px` | 中小间距（相关元素之间） |
-| `--o-gap-4` | `16px` | **常规间距（默认，最常用）** |
-| `--o-gap-5` | `24px` | 中等间距（区块之间） |
-| `--o-gap-6` | `32px` | 大间距（页面级布局） |
-| `--o-gap-7` | `40px` | 较大间距 |
-| `--o-gap-8` | `48px` | 很大间距 |
-| `--o-gap-9` | `64px` | 超大间距 |
-| `--o-gap-10` | `72px` | 最大间距 |
+| Token        | 值     | 用途                         |
+|--------------|--------|------------------------------|
+| `--o-gap-1`  | `4px`  | 最小间距（紧凑元素内部）     |
+| `--o-gap-2`  | `8px`  | 小间距（组件内部元素）       |
+| `--o-gap-3`  | `12px` | 中小间距（相关元素之间）     |
+| `--o-gap-4`  | `16px` | **常规间距（默认，最常用）** |
+| `--o-gap-5`  | `24px` | 中等间距（区块之间）         |
+| `--o-gap-6`  | `32px` | 大间距（页面级布局）         |
+| `--o-gap-7`  | `40px` | 较大间距                     |
+| `--o-gap-8`  | `48px` | 很大间距                     |
+| `--o-gap-9`  | `64px` | 超大间距                     |
+| `--o-gap-10` | `72px` | 最大间距                     |
 
 ---
 
 ## 5. 圆角 Token（Radius）
 
-> **⚠️ 圆角值因主题而异**：以下 `值` 列是通用参考值，实际值取决于主题。例如 openEuler 主题所有圆角均为 **4px**（接近直角风格），而 Mindspore 主题则更圆润。使用时请查阅对应主题 reference 文件中的圆角表格。
+> **⚠️ 圆角值因主题而异**：以下 `值` 列是通用参考值，实际值取决于主题。例如 openEuler 主题所有圆角均为 **4px**（接近直角风格），而
+> Mindspore 主题则更圆润。使用时请查阅对应主题 reference 文件中的圆角表格。
 > 也不存在 `--o-r-radius-1` 等带 `r-` 前缀的圆角变量，圆角 token 没有响应式变体。
 
 ### 内容圆角（用于卡片、容器等）
 
-| Token | 通用参考值 | 用途 |
-|-------|----------|------|
-| `--o-radius-xs` | `4px` | 超小圆角 |
-| `--o-radius-s` | `8px` | 小圆角 |
-| `--o-radius-m` | `12px` | 中等圆角 |
-| `--o-radius-l` | `16px` | 大圆角 |
-| `--o-radius-xl` | `24px` | 超大圆角（一般用于卡片） |
+| Token           | 通用参考值 | 用途                     |
+|-----------------|------------|--------------------------|
+| `--o-radius-xs` | `4px`      | 超小圆角                 |
+| `--o-radius-s`  | `8px`      | 小圆角                   |
+| `--o-radius-m`  | `12px`     | 中等圆角                 |
+| `--o-radius-l`  | `16px`     | 大圆角                   |
+| `--o-radius-xl` | `24px`     | 超大圆角（一般用于卡片） |
 
 ### 控件圆角（用于按钮、输入框等组件）
 
-| Token | 通用参考值 | 用途 |
-|-------|----------|------|
-| `--o-radius_control-xs` | `4px` | 超小控件圆角 |
-| `--o-radius_control-s` | `8px` | 小控件圆角 |
-| `--o-radius_control-m` | `12px` | 中等控件圆角 |
-| `--o-radius_control-l` | `16px` | 大控件圆角 |
+| Token                   | 通用参考值 | 用途         |
+|-------------------------|------------|--------------|
+| `--o-radius_control-xs` | `4px`      | 超小控件圆角 |
+| `--o-radius_control-s`  | `8px`      | 小控件圆角   |
+| `--o-radius_control-m`  | `12px`     | 中等控件圆角 |
+| `--o-radius_control-l`  | `16px`     | 大控件圆角   |
 
 ---
 
 ## 6. 字体 Token（Font）
 
-> **页面级文字推荐使用响应式 token `--o-r-font_size-*` / `--o-r-line_height-*`**（见第 2 节），以下静态 token 适用于不随视口变化的固定字号场景。
+> **页面级文字推荐使用响应式 token `--o-r-font_size-*` / `--o-r-line_height-*`**（见第 2 节），以下静态 token
+> 适用于不随视口变化的固定字号场景。
 
 ### 字体族（Font Family）— 鸿蒙字体
 
-OpenDesign 默认使用 **HarmonyOS Sans SC**（鸿蒙黑体简体）作为中文字体族，并以 **HarmonyOS Sans** 作为拉丁字体族。字体文件随 `@opensig/opendesign-token` 包发布，需在入口文件显式引入后，`--o-font_family` 才会真正指向鸿蒙字体。
+OpenDesign 默认使用 **HarmonyOS Sans SC**（鸿蒙黑体简体）作为中文字体族，并以 **HarmonyOS Sans** 作为拉丁字体族。字体文件随
+`@opensig/opendesign-token` 包发布，需在入口文件显式引入后，`--o-font_family` 才会真正指向鸿蒙字体。
 
 > ⚠️ **0.1.1 破坏性变更**：
-> - `@font-face` 注册的字体族由旧版 `"HarmonyOS"` / `HarmonyOS-Hans` 更名为 `'HarmonyOS Sans SC'`（中文）与 `'HarmonyOS Sans'`（拉丁）。若项目中硬编码了旧字体族名，需改为 `'HarmonyOS Sans SC'`，或直接使用变量 `var(--o-font_family)`（推荐）。
-> - **旧版引入字体文件后会自动对 `body` 应用 `var(--o-font_family)`，本版不再自动应用**，仅注册 `@font-face`。升级后需自行在根容器设置字体：
+> - `@font-face` 注册的字体族由旧版 `"HarmonyOS"` / `HarmonyOS-Hans` 更名为 `'HarmonyOS Sans SC'`（中文）与
+    `'HarmonyOS Sans'`（拉丁）。若项目中硬编码了旧字体族名，需改为 `'HarmonyOS Sans SC'`，或直接使用变量
+    `var(--o-font_family)`（推荐）。
+> - **旧版引入字体文件后会自动对 `body` 应用 `var(--o-font_family)`，本版不再自动应用**，仅注册 `@font-face`
+    。升级后需自行在根容器设置字体：
 >   ```css
 >   :root { font-family: var(--o-font_family); }
 >   ```
-> - `--o-font_weight-bold` 由 `600` 改为 `700`（对应 `SansSC_Bold` 字体文件）；旧版 `600` 现有独立的 `--o-font_weight-semibold` 变量对应。设计师通常使用 semibold（`600`）作为加粗，请确认加粗效果符合预期。
+> - `--o-font_weight-bold` 由 `600` 改为 `700`（对应 `SansSC_Bold` 字体文件）；旧版 `600` 现有独立的
+    `--o-font_weight-semibold` 变量对应。设计师通常使用 semibold（`600`）作为加粗，请确认加粗效果符合预期。
 
 ```typescript
 // main.ts（在主题 CSS 之后引入）
@@ -667,43 +734,47 @@ import '@opensig/opendesign-token/fonts/css'          // 鸿蒙字体（仅注�
 > import '@opensig/opendesign-token/fonts/sans-regular/font.min.css'
 > ```
 
-| Token | 值 | 说明 |
-|-------|-----|------|
-| `--o-font_family` | `'HarmonyOS Sans', 'HarmonyOS Sans SC', Inter, -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', Arial, sans-serif` | 默认字体族 |
-| `--o-font_family-code` | `SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace` | 等宽代码字体族 |
+| Token                  | 值                                                                                                                                     | 说明           |
+|------------------------|----------------------------------------------------------------------------------------------------------------------------------------|----------------|
+| `--o-font_family`      | `'HarmonyOS Sans', 'HarmonyOS Sans SC', Inter, -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', Arial, sans-serif` | 默认字体族     |
+| `--o-font_family-code` | `SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace`                                                                | 等宽代码字体族 |
 
-> **字体族自动分流**：`--o-font_family` 将 `'HarmonyOS Sans'`（拉丁族）排在 `'HarmonyOS Sans SC'`（中文族）之前。浏览器逐族匹配：拉丁字符命中 `'HarmonyOS Sans'`（含独立 italic 面，`font-style: italic` 可直接渲染真斜体）；中文字符在 `'HarmonyOS Sans'` 字体文件中无对应 glyph（该字体仅含拉丁字形），浏览器自动穿透到下一族 `'HarmonyOS Sans SC'`。中文无源文件斜体，`font-style: italic` 会合成伪斜体。
+> **字体族自动分流**：`--o-font_family` 将 `'HarmonyOS Sans'`（拉丁族）排在 `'HarmonyOS Sans SC'`（中文族）之前。浏览器逐族匹配：拉丁字符命中
+> `'HarmonyOS Sans'`（含独立 italic 面，`font-style: italic` 可直接渲染真斜体）；中文字符在 `'HarmonyOS Sans'` 字体文件中无对应
+> glyph（该字体仅含拉丁字形），浏览器自动穿透到下一族 `'HarmonyOS Sans SC'`。中文无源文件斜体，`font-style: italic` 会合成伪斜体。
 
 ### 字体应用与加载
 
-引入字体 CSS 后仅完成 `@font-face` 注册，**不会自动应用到任何元素**。需在根容器手动应用字体变量：
+引入字体 CSS 后仅完成 `@font-face` 注册， **不会自动应用到任何元素**。需在根容器手动应用字体变量：
 
 ```css
 /* 全局应用鸿蒙字体（推荐在根容器设置） */
 :root {
-  font-family: var(--o-font_family);
+    font-family: var(--o-font_family);
 }
 
 code, pre {
-  font-family: var(--o-font_family-code);
+    font-family: var(--o-font_family-code);
 }
 ```
 
-> ⚠️ 仅设置 `font-family: var(--o-font_family)` 不会自动加载字体文件，必须在入口文件 `import '@opensig/opendesign-token/fonts/css'`。中文字体（`HarmonyOS Sans SC`）按 `unicode-range` 分片，仅按需加载实际用到的字符；拉丁字体（`HarmonyOS Sans`）不分片，但文件体量小（~28KB/字重），整体按需加载影响不大。
+> ⚠️ 仅设置 `font-family: var(--o-font_family)` 不会自动加载字体文件，必须在入口文件
+> `import '@opensig/opendesign-token/fonts/css'`。中文字体（`HarmonyOS Sans SC`）按 `unicode-range` 分片，仅按需加载实际用到的字符；拉丁字体（
+> `HarmonyOS Sans`）不分片，但文件体量小（~28KB/字重），整体按需加载影响不大。
 
 ### 字重（Font Weight）
 
 鸿蒙字体共七档字重，与 `@font-face` 注册的七个字面一一对应（CSS `font-weight` 数值与字面精确匹配，无需就近匹配）。
 
-| Token | 值 | 说明 |
-|-------|-----|------|
-| `--o-font_weight-thin` | `250` | 极细 |
-| `--o-font_weight-light` | `300` | 细体 |
-| `--o-font_weight-regular` | `400` | 常规 |
-| `--o-font_weight-medium` | `500` | 中等 |
+| Token                      | 值    | 说明               |
+|----------------------------|-------|--------------------|
+| `--o-font_weight-thin`     | `250` | 极细               |
+| `--o-font_weight-light`    | `300` | 细体               |
+| `--o-font_weight-regular`  | `400` | 常规               |
+| `--o-font_weight-medium`   | `500` | 中等               |
 | `--o-font_weight-semibold` | `600` | 半粗（标题、强调） |
-| `--o-font_weight-bold` | `700` | 加粗 |
-| `--o-font_weight-black` | `900` | 超粗 |
+| `--o-font_weight-bold`     | `700` | 加粗               |
+| `--o-font_weight-black`    | `900` | 超粗               |
 
 > **实际开发**：日常使用以 `--o-font_weight-regular`（`400`）和 `--o-font_weight-semibold`（`600`）两档为主，前者用于正文，后者用于标题、强调等场景。
 
@@ -716,52 +787,55 @@ code, pre {
 
 ### 字体大小（Font Size）
 
-| Token | 值 | 用途 |
-|-------|----|------|
-| `--o-font_size-display1` | `56px` | 一级数据展示 |
-| `--o-font_size-display2` | `48px` | 二级数据展示 |
-| `--o-font_size-display3` | `40px` | 三级数据展示 |
-| `--o-font_size-h1` | `32px` | 一级标题 |
-| `--o-font_size-h2` | `24px` | 二级标题 |
-| `--o-font_size-h3` | `22px` | 三级标题 |
-| `--o-font_size-h4` | `20px` | 四级标题 |
-| `--o-font_size-text2` | `18px` | 大号正文 |
-| `--o-font_size-text1` | `16px` | **常规正文（最常用）** |
-| `--o-font_size-tip1` | `14px` | 提示文本（小字） |
-| `--o-font_size-tip2` | `12px` | 辅助提示文本（最小） |
+| Token                    | 值     | 用途                   |
+|--------------------------|--------|------------------------|
+| `--o-font_size-display1` | `56px` | 一级数据展示           |
+| `--o-font_size-display2` | `48px` | 二级数据展示           |
+| `--o-font_size-display3` | `40px` | 三级数据展示           |
+| `--o-font_size-h1`       | `32px` | 一级标题               |
+| `--o-font_size-h2`       | `24px` | 二级标题               |
+| `--o-font_size-h3`       | `22px` | 三级标题               |
+| `--o-font_size-h4`       | `20px` | 四级标题               |
+| `--o-font_size-text2`    | `18px` | 大号正文               |
+| `--o-font_size-text1`    | `16px` | **常规正文（最常用）** |
+| `--o-font_size-tip1`     | `14px` | 提示文本（小字）       |
+| `--o-font_size-tip2`     | `12px` | 辅助提示文本（最小）   |
 
 ### 行高（Line Height）
 
-| Token | 值 | 配套字号 |
-|-------|----|---------|
+| Token                      | 值     | 配套字号 |
+|----------------------------|--------|----------|
 | `--o-line_height-display1` | `80px` | display1 |
 | `--o-line_height-display2` | `64px` | display2 |
 | `--o-line_height-display3` | `56px` | display3 |
-| `--o-line_height-h1` | `44px` | h1 |
-| `--o-line_height-h2` | `32px` | h2 |
-| `--o-line_height-h3` | `30px` | h3 |
-| `--o-line_height-h4` | `28px` | h4 |
-| `--o-line_height-text2` | `26px` | text2 |
-| `--o-line_height-text1` | `24px` | text1 |
-| `--o-line_height-tip1` | `22px` | tip1 |
-| `--o-line_height-tip2` | `18px` | tip2 |
+| `--o-line_height-h1`       | `44px` | h1       |
+| `--o-line_height-h2`       | `32px` | h2       |
+| `--o-line_height-h3`       | `30px` | h3       |
+| `--o-line_height-h4`       | `28px` | h4       |
+| `--o-line_height-text2`    | `26px` | text2    |
+| `--o-line_height-text1`    | `24px` | text1    |
+| `--o-line_height-tip1`     | `22px` | tip1     |
+| `--o-line_height-tip2`     | `18px` | tip2     |
 
 **字体和行高应配套使用：**
+
 ```css
 /* 响应式（推荐，自动适配多端） */
 .title {
-  font-size: var(--o-r-font_size-h3);
-  line-height: var(--o-r-line_height-h3);
+    font-size: var(--o-r-font_size-h3);
+    line-height: var(--o-r-line_height-h3);
 }
 
 /* 需要字号 + 行高成对输出时，可用 font.scss mixin */
 /* 全局注入配置与完整用法见 opendesign-application skill → styles-infrastructure §4 */
-.title { @include h3; }
+.title {
+    @include h3;
+}
 
 /* 静态（仅在需要固定值时使用） */
 .fixed-label {
-  font-size: var(--o-font_size-tip1);
-  line-height: var(--o-line_height-tip1);
+    font-size: var(--o-font_size-tip1);
+    line-height: var(--o-line_height-tip1);
 }
 ```
 
@@ -769,11 +843,11 @@ code, pre {
 
 ## 7. 阴影 Token（Shadow）
 
-| Token | 值 | 用途 |
-|-------|----|------|
-| `--o-shadow-1` | `0 3px 8px rgba(..., 0.08)` | 卡片、小弹窗、楼层阴影 |
-| `--o-shadow-2` | `0 2px 24px rgba(..., 0.15)` | 卡片悬浮阴影 |
-| `--o-shadow-3` | `0 8px 40px rgba(..., 0.1)` | 大弹窗、抽屉阴影 |
+| Token          | 值                           | 用途                   |
+|----------------|------------------------------|------------------------|
+| `--o-shadow-1` | `0 3px 8px rgba(..., 0.08)`  | 卡片、小弹窗、楼层阴影 |
+| `--o-shadow-2` | `0 2px 24px rgba(..., 0.15)` | 卡片悬浮阴影           |
+| `--o-shadow-3` | `0 8px 40px rgba(..., 0.1)`  | 大弹窗、抽屉阴影       |
 
 ---
 
@@ -781,44 +855,56 @@ code, pre {
 
 ### 持续时间（Duration）
 
-| Token | 值 | 用途 |
-|-------|----|------|
-| `--o-duration-s` | `200ms` | 退出屏幕的动画 |
-| `--o-duration-m1` | `250ms` | standard-in 曲线进入动画 |
-| `--o-duration-m2` | `300ms` | standard 曲线开始/结束动画 |
-| `--o-duration-m3` | `400ms` | emphasized-in 曲线进入动画 |
-| `--o-duration-l` | `500ms` | emphasized 曲线开始/结束动画 |
-| `--o-duration-xl` | `1000ms` | 轮播切换动画 |
+| Token             | 值       | 用途                         |
+|-------------------|----------|------------------------------|
+| `--o-duration-s`  | `200ms`  | 退出屏幕的动画               |
+| `--o-duration-m1` | `250ms`  | standard-in 曲线进入动画     |
+| `--o-duration-m2` | `300ms`  | standard 曲线开始/结束动画   |
+| `--o-duration-m3` | `400ms`  | emphasized-in 曲线进入动画   |
+| `--o-duration-l`  | `500ms`  | emphasized 曲线开始/结束动画 |
+| `--o-duration-xl` | `1000ms` | 轮播切换动画                 |
 
 ### 缓动曲线（Easing）
 
-| Token | 值 | 用途 |
-|-------|----|------|
-| `--o-easing-linear` | `cubic-bezier(0, 0, 1, 1)` | 线性 |
-| `--o-easing-standard` | `cubic-bezier(0.2, 0, 0, 1)` | 标准（组件动画，**推荐**） |
-| `--o-easing-standard-in` | `cubic-bezier(0, 0, 0, 1)` | 标准进入 |
-| `--o-easing-standard-out` | `cubic-bezier(0.3, 0, 1, 1)` | 标准退出 |
-| `--o-easing-emphasized` | `cubic-bezier(0.2, 0, 0, 1)` | 强调（大卡片/场景切换） |
-| `--o-easing-emphasized-in` | `cubic-bezier(0.3, 0, 0.8, 0.15)` | 强调进入 |
-| `--o-easing-emphasized-out` | `cubic-bezier(0.05, 0.7, 0.1, 1)` | 强调退出 |
+| Token                       | 值                                | 用途                       |
+|-----------------------------|-----------------------------------|----------------------------|
+| `--o-easing-linear`         | `cubic-bezier(0, 0, 1, 1)`        | 线性                       |
+| `--o-easing-standard`       | `cubic-bezier(0.2, 0, 0, 1)`      | 标准（组件动画，**推荐**） |
+| `--o-easing-standard-in`    | `cubic-bezier(0, 0, 0, 1)`        | 标准进入                   |
+| `--o-easing-standard-out`   | `cubic-bezier(0.3, 0, 1, 1)`      | 标准退出                   |
+| `--o-easing-emphasized`     | `cubic-bezier(0.2, 0, 0, 1)`      | 强调（大卡片/场景切换）    |
+| `--o-easing-emphasized-in`  | `cubic-bezier(0.3, 0, 0.8, 0.15)` | 强调进入                   |
+| `--o-easing-emphasized-out` | `cubic-bezier(0.05, 0.7, 0.1, 1)` | 强调退出                   |
 
 ```css
 /* 推荐的动画写法 */
-transition: all var(--o-duration-m1) var(--o-easing-standard);
+transition: all
+
+var
+(
+--o-duration-m1
+
+)
+var
+(
+--o-easing-standard
+
+)
+;
 ```
 
 ---
 
 ## 9. 组件尺寸 Token（Control Size）
 
-| Token | 值 | 用途 |
-|-------|----|------|
+| Token                  | 值     | 用途       |
+|------------------------|--------|------------|
 | `--o-control_size-2xs` | `14px` | 超超小控件 |
-| `--o-control_size-xs` | `16px` | 超小控件 |
-| `--o-control_size-s` | `24px` | 小控件 |
-| `--o-control_size-m` | `32px` | 中等控件 |
-| `--o-control_size-l` | `40px` | 大控件 |
-| `--o-control_size-xl` | `48px` | 超大控件 |
+| `--o-control_size-xs`  | `16px` | 超小控件   |
+| `--o-control_size-s`   | `24px` | 小控件     |
+| `--o-control_size-m`   | `32px` | 中等控件   |
+| `--o-control_size-l`   | `40px` | 大控件     |
+| `--o-control_size-xl`  | `48px` | 超大控件   |
 | `--o-control_size-2xl` | `56px` | 超超大控件 |
 
 ---
@@ -827,54 +913,54 @@ transition: all var(--o-duration-m1) var(--o-easing-standard);
 
 ### 独立图标
 
-| Token | 值 |
-|-------|----|
-| `--o-icon_size-xs` | `16px` |
-| `--o-icon_size-s` | `20px` |
-| `--o-icon_size-m` | `24px` |
-| `--o-icon_size-l` | `32px` |
-| `--o-icon_size-xl` | `40px` |
+| Token               | 值     |
+|---------------------|--------|
+| `--o-icon_size-xs`  | `16px` |
+| `--o-icon_size-s`   | `20px` |
+| `--o-icon_size-m`   | `24px` |
+| `--o-icon_size-l`   | `32px` |
+| `--o-icon_size-xl`  | `40px` |
 | `--o-icon_size-2xl` | `48px` |
 | `--o-icon_size-3xl` | `56px` |
 | `--o-icon_size-4xl` | `64px` |
 
 ### 控件内图标（组件使用）
 
-| Token | 值 |
-|-------|----|
+| Token                      | 值     |
+|----------------------------|--------|
 | `--o-icon_size_control-xs` | `16px` |
-| `--o-icon_size_control-s` | `20px` |
-| `--o-icon_size_control-m` | `24px` |
-| `--o-icon_size_control-l` | `32px` |
+| `--o-icon_size_control-s`  | `20px` |
+| `--o-icon_size_control-m`  | `24px` |
+| `--o-icon_size_control-l`  | `32px` |
 | `--o-icon_size_control-xl` | `40px` |
 
 ---
 
 ## 11. 调色板 Token（参考，不推荐直接使用）
 
-调色板 token 是原始颜色值，为语义 token 提供基础，**不应在业务代码中直接使用**。
+调色板 token 是原始颜色值，为语义 token 提供基础， **不应在业务代码中直接使用**。
 
 每个色系均有 10 个色阶（1=最浅，10=最深），light/dark 模式下颜色相反。
 
-| 色系 | Token 前缀 | 主色代表 | 用途 |
-|------|-----------|---------|------|
-| 品牌蓝 | `--o-kleinblue-*` | `#002FA7` | 主色/链接色 |
-| 绿色 | `--o-green-*` | `#0BB151` | 成功色 |
-| 橘红色 | `--o-orange-*` | `#FA7305` | 告警色 |
-| 红色 | `--o-red-*` | `#E60012` | 危险色 |
-| 黄色 | `--o-yellow-*` | `#F0BC06` | 辅助色 |
-| 琥珀色 | `--o-amber-*` | `#E78900` | 辅助色 |
-| 黄绿色 | `--o-lime-*` | `#A7C900` | 辅助色 |
-| 浅绿色 | `--o-light-green-*` | `#70B31B` | 辅助色 |
-| 蓝绿色 | `--o-teal-*` | `#00B385` | 辅助色 |
-| 青色 | `--o-cyan-*` | `#00A7B3` | 辅助色 |
-| 浅蓝色 | `--o-light-blue-*` | `#009CE5` | 辅助色 |
-| 蓝色 | `--o-blue-*` | `#1075E8` | 辅助色 |
-| 紫罗兰 | `--o-violet-*` | `#5E12CB` | 辅助色 |
-| 紫色 | `--o-purple-*` | `#8702B3` | 辅助色 |
-| 粉红色 | `--o-pink-*` | `#E00070` | 辅助色 |
-| 白色 | `--o-white` | `#FFFFFF` | 基础 |
-| 黑色 | `--o-black` | `#000000` | 基础 |
+| 色系   | Token 前缀          | 主色代表  | 用途        |
+|--------|---------------------|-----------|-------------|
+| 品牌蓝 | `--o-kleinblue-*`   | `#002FA7` | 主色/链接色 |
+| 绿色   | `--o-green-*`       | `#0BB151` | 成功色      |
+| 橘红色 | `--o-orange-*`      | `#FA7305` | 告警色      |
+| 红色   | `--o-red-*`         | `#E60012` | 危险色      |
+| 黄色   | `--o-yellow-*`      | `#F0BC06` | 辅助色      |
+| 琥珀色 | `--o-amber-*`       | `#E78900` | 辅助色      |
+| 黄绿色 | `--o-lime-*`        | `#A7C900` | 辅助色      |
+| 浅绿色 | `--o-light-green-*` | `#70B31B` | 辅助色      |
+| 蓝绿色 | `--o-teal-*`        | `#00B385` | 辅助色      |
+| 青色   | `--o-cyan-*`        | `#00A7B3` | 辅助色      |
+| 浅蓝色 | `--o-light-blue-*`  | `#009CE5` | 辅助色      |
+| 蓝色   | `--o-blue-*`        | `#1075E8` | 辅助色      |
+| 紫罗兰 | `--o-violet-*`      | `#5E12CB` | 辅助色      |
+| 紫色   | `--o-purple-*`      | `#8702B3` | 辅助色      |
+| 粉红色 | `--o-pink-*`        | `#E00070` | 辅助色      |
+| 白色   | `--o-white`         | `#FFFFFF` | 基础        |
+| 黑色   | `--o-black`         | `#000000` | 基础        |
 
 ---
 
@@ -882,17 +968,20 @@ transition: all var(--o-duration-m1) var(--o-easing-standard);
 
 ### OpenDesign 组件样式原则
 
-使用 `@opensig/opendesign` 组件库中的组件时，**组件应作为一个整体使用，不应修改组件内部样式**（除非有明确的特殊需求并经过确认）。组件的视觉表现由 Token 体系统一控制：
+使用 `@opensig/opendesign` 组件库中的组件时， **组件应作为一个整体使用，不应修改组件内部样式**（除非有明确的特殊需求并经过确认）。组件的视觉表现由
+Token 体系统一控制：
+
 - 通过切换主题（`data-o-theme`）改变组件的品牌色和圆角风格
 - 通过组件暴露的 props 控制尺寸、颜色变体等
 - **不要**通过 CSS 覆盖组件内部的 class 样式（如 `.o-btn__text`）
 - **不要**通过 `::v-deep` / `:deep()` 穿透修改组件内部结构
 
-Token 变量主要用于**自定义业务区域**的样式（如页面布局、自定义卡片、业务容器等），而非覆盖组件内部。
+Token 变量主要用于 **自定义业务区域**的样式（如页面布局、自定义卡片、业务容器等），而非覆盖组件内部。
 
 ### ✅ 推荐做法
 
-> ⚠️ **边框规则**：**只在设计稿 DSL 中有 `strokes` 属性时才加边框，绝对不要默认给卡片/容器加边框。** 设计稿没有描边就不写 `border`。
+> ⚠️ **边框规则**： **只在设计稿 DSL 中有 `strokes` 属性时才加边框，绝对不要默认给卡片/容器加边框。** 设计稿没有描边就不写
+> `border`。
 
 ```css
 .card {
@@ -973,55 +1062,55 @@ Token 变量主要用于**自定义业务区域**的样式（如页面布局、�
 
 ### 背景色
 
-| 场景 | Token |
-|------|-------|
-| 页面背景 | `--o-color-fill1` |
+| 场景          | Token                           |
+|---------------|---------------------------------|
+| 页面背景      | `--o-color-fill1`               |
 | 卡片/区块背景 | `--o-color-fill2`（**最常用**） |
-| 嵌套卡片 | `--o-color-fill3` |
-| 纯白（特殊） | `--o-color-white` |
+| 嵌套卡片      | `--o-color-fill3`               |
+| 纯白（特殊）  | `--o-color-white`               |
 
 ### 文字颜色
 
-| 场景 | Token |
-|------|-------|
-| 标题/强调 | `--o-color-info1` |
-| 正文 | `--o-color-info2` |
-| 辅助信息 | `--o-color-info3` |
-| 禁用/占位 | `--o-color-info4` |
+| 场景         | Token                     |
+|--------------|---------------------------|
+| 标题/强调    | `--o-color-info1`         |
+| 正文         | `--o-color-info2`         |
+| 辅助信息     | `--o-color-info3`         |
+| 禁用/占位    | `--o-color-info4`         |
 | 深色背景白字 | `--o-color-info1-inverse` |
 
 ### 边框颜色
 
-| 场景 | Token |
-|------|-------|
-| 默认边框 | `--o-color-control1` |
-| 悬浮边框 | `--o-color-control2` |
+| 场景          | Token                                        |
+|---------------|----------------------------------------------|
+| 默认边框      | `--o-color-control1`                         |
+| 悬浮边框      | `--o-color-control2`                         |
 | 激活/聚焦边框 | `--o-color-primary1` 或 `--o-color-control3` |
-| 禁用边框 | `--o-color-control4` |
+| 禁用边框      | `--o-color-control4`                         |
 
 ### 间距
 
 > 页面级间距优先使用响应式 token `--o-r-gap-*`，组件内部固定间距可用静态 `--o-gap-*`。
 
-| 场景 | Token（响应式优先） | Desktop 值 |
-|------|-------------------|-----------|
-| 图标与文字间距 | `--o-r-gap-1` / `--o-gap-1` | 4px |
-| 组件内部元素 | `--o-r-gap-2` / `--o-gap-2` | 8px |
-| 相关元素间 | `--o-r-gap-3` | 12px |
-| 默认内边距 | `--o-r-gap-4` | 16px |
-| 区块间距 | `--o-r-gap-5` | 24px |
-| 页面布局 | `--o-r-gap-6` | 32px |
+| 场景           | Token（响应式优先）         | Desktop 值 |
+|----------------|-----------------------------|------------|
+| 图标与文字间距 | `--o-r-gap-1` / `--o-gap-1` | 4px        |
+| 组件内部元素   | `--o-r-gap-2` / `--o-gap-2` | 8px        |
+| 相关元素间     | `--o-r-gap-3`               | 12px       |
+| 默认内边距     | `--o-r-gap-4`               | 16px       |
+| 区块间距       | `--o-r-gap-5`               | 24px       |
+| 页面布局       | `--o-r-gap-6`               | 32px       |
 
 ### 字号
 
 > 字号和行高优先使用响应式 token `--o-r-font_size-*` / `--o-r-line_height-*`。
 
-| 场景 | Token（响应式优先） | Desktop 值 |
-|------|-------------------|-----------|
-| 页面大标题 | `--o-r-font_size-h1` + `--o-r-line_height-h1` | 32/44px |
-| 区块标题 | `--o-r-font_size-h3` + `--o-r-line_height-h3` | 22/30px |
-| 正文 | `--o-r-font_size-text1` + `--o-r-line_height-text1` | 16/24px |
-| 辅助/提示 | `--o-r-font_size-tip1` + `--o-r-line_height-tip1` | 14/22px |
+| 场景       | Token（响应式优先）                                 | Desktop 值 |
+|------------|-----------------------------------------------------|------------|
+| 页面大标题 | `--o-r-font_size-h1` + `--o-r-line_height-h1`       | 32/44px    |
+| 区块标题   | `--o-r-font_size-h3` + `--o-r-line_height-h3`       | 22/30px    |
+| 正文       | `--o-r-font_size-text1` + `--o-r-line_height-text1` | 16/24px    |
+| 辅助/提示  | `--o-r-font_size-tip1` + `--o-r-line_height-tip1`   | 14/22px    |
 
 ---
 
@@ -1034,10 +1123,14 @@ Token 变量主要用于**自定义业务区域**的样式（如页面布局、�
 ```
 1. 确认截取色值时的模式（light / dark）
 2. 确认项目使用的主题（e / a / k / m / g / u）
-3. 在下方通用表或对应主题 reference 中查找色值
+3. 用 CLI 自动反查：node scripts/bin.mjs convert '#XXX' -t <主题> -m <模式>
+   或在下方通用表 / 对应主题 reference 中手动查找
 4. 将写死的值替换为 var(--o-xxx)
 5. 字号/行高/间距优先替换为响应式 token var(--o-r-xxx)
 ```
+
+> CLI `convert` 命令从 `@opensig/opendesign-token` 的 CSS 产物动态构建反向表，
+> 匹配结果始终与实际包版本同步，无需维护静态映射表。下方表格为离线速查参考。
 
 > 注意：同一 token 在 light 和 dark 模式下对应不同色值，确保对应正确的模式。
 
@@ -1045,64 +1138,64 @@ Token 变量主要用于**自定义业务区域**的样式（如页面布局、�
 
 ### 通用色值反查（六套主题相同）
 
-以下 token 的色值在六套主题中**完全相同**，可直接反查。
+以下 token 的色值在六套主题中 **完全相同**，可直接反查。
 
 #### 功能色（Light 模式）
 
-| Hex | RGB | Token | 语义 |
-|-----|-----|-------|------|
-| `#0BB151` | `rgb(11, 177, 81)` | `--o-color-success1` | 成功色 |
-| `#54D07F` | `rgb(84, 208, 127)` | `--o-color-success2` | 成功悬浮 |
-| `#07984A` | `rgb(7, 152, 72)` | `--o-color-success3` | 成功激活 |
-| `#80E09E` | `rgb(128, 224, 158)` | `--o-color-success4` | 成功禁用 |
+| Hex       | RGB                  | Token                      | 语义         |
+|-----------|----------------------|----------------------------|--------------|
+| `#0BB151` | `rgb(11, 177, 81)`   | `--o-color-success1`       | 成功色       |
+| `#54D07F` | `rgb(84, 208, 127)`  | `--o-color-success2`       | 成功悬浮     |
+| `#07984A` | `rgb(7, 152, 72)`    | `--o-color-success3`       | 成功激活     |
+| `#80E09E` | `rgb(128, 224, 158)` | `--o-color-success4`       | 成功禁用     |
 | `#B1EFC3` | `rgb(177, 239, 195)` | `--o-color-success1-light` | 成功浅色背景 |
-| `#FA7305` | `rgb(250, 115, 5)` | `--o-color-warning1` | 告警色 |
-| `#FCB05F` | `rgb(252, 176, 95)` | `--o-color-warning2` | 告警悬浮 |
-| `#CF5803` | `rgb(207, 88, 3)` | `--o-color-warning3` | 告警激活 |
-| `#FDCA8C` | `rgb(253, 202, 140)` | `--o-color-warning4` | 告警禁用 |
+| `#FA7305` | `rgb(250, 115, 5)`   | `--o-color-warning1`       | 告警色       |
+| `#FCB05F` | `rgb(252, 176, 95)`  | `--o-color-warning2`       | 告警悬浮     |
+| `#CF5803` | `rgb(207, 88, 3)`    | `--o-color-warning3`       | 告警激活     |
+| `#FDCA8C` | `rgb(253, 202, 140)` | `--o-color-warning4`       | 告警禁用     |
 | `#FEE2BA` | `rgb(254, 226, 186)` | `--o-color-warning1-light` | 告警浅色背景 |
-| `#E60012` | `rgb(230, 0, 18)` | `--o-color-danger1` | 危险色 |
-| `#F0575A` | `rgb(240, 87, 90)` | `--o-color-danger2` | 危险悬浮 |
-| `#C00016` | `rgb(192, 0, 22)` | `--o-color-danger3` | 危险激活 |
-| `#F58886` | `rgb(245, 136, 134)` | `--o-color-danger4` | 危险禁用 |
-| `#FAB9B6` | `rgb(250, 185, 182)` | `--o-color-danger1-light` | 危险浅色背景 |
+| `#E60012` | `rgb(230, 0, 18)`    | `--o-color-danger1`        | 危险色       |
+| `#F0575A` | `rgb(240, 87, 90)`   | `--o-color-danger2`        | 危险悬浮     |
+| `#C00016` | `rgb(192, 0, 22)`    | `--o-color-danger3`        | 危险激活     |
+| `#F58886` | `rgb(245, 136, 134)` | `--o-color-danger4`        | 危险禁用     |
+| `#FAB9B6` | `rgb(250, 185, 182)` | `--o-color-danger1-light`  | 危险浅色背景 |
 
 #### 文字色（透明度写法，Light 模式）
 
-| 设计稿常见写法 | Token | 语义 |
-|--------------|-------|------|
-| `rgba(0,0,0,1)` 或 `#000000` | `--o-color-info1` | 一级文字/标题 |
-| `rgba(0,0,0,0.8)` 或 `#000000 80%` | `--o-color-info2` | 二级文字/正文 |
-| `rgba(0,0,0,0.6)` 或 `#000000 60%` | `--o-color-info3` | 三级文字/辅助 |
-| `rgba(0,0,0,0.4)` 或 `#000000 40%` | `--o-color-info4` | 四级文字/禁用 |
-| `rgba(255,255,255,1)` | `--o-color-info1-inverse` | 深色背景白字 |
-| `rgba(255,255,255,0.8)` | `--o-color-info2-inverse` | 深色背景次要白字 |
+| 设计稿常见写法                     | Token                     | 语义             |
+|------------------------------------|---------------------------|------------------|
+| `rgba(0,0,0,1)` 或 `#000000`       | `--o-color-info1`         | 一级文字/标题    |
+| `rgba(0,0,0,0.8)` 或 `#000000 80%` | `--o-color-info2`         | 二级文字/正文    |
+| `rgba(0,0,0,0.6)` 或 `#000000 60%` | `--o-color-info3`         | 三级文字/辅助    |
+| `rgba(0,0,0,0.4)` 或 `#000000 40%` | `--o-color-info4`         | 四级文字/禁用    |
+| `rgba(255,255,255,1)`              | `--o-color-info1-inverse` | 深色背景白字     |
+| `rgba(255,255,255,0.8)`            | `--o-color-info2-inverse` | 深色背景次要白字 |
 
 #### 遮罩和边框（Light 模式）
 
-| 设计稿常见写法 | Token | 语义 |
-|--------------|-------|------|
-| `rgba(0,0,0,0.4)` | `--o-color-mask1` | 全局遮罩 |
-| `rgba(255,255,255,0.2)` | `--o-color-mask2` | 局部遮罩 |
-| `rgba(0,0,0,0.25)` | `--o-color-control1` | 默认边框 |
-| `rgba(0,0,0,0.1)` | `--o-color-control4` | 禁用边框 |
+| 设计稿常见写法          | Token                | 语义     |
+|-------------------------|----------------------|----------|
+| `rgba(0,0,0,0.4)`       | `--o-color-mask1`    | 全局遮罩 |
+| `rgba(255,255,255,0.2)` | `--o-color-mask2`    | 局部遮罩 |
+| `rgba(0,0,0,0.25)`      | `--o-color-control1` | 默认边框 |
+| `rgba(0,0,0,0.1)`       | `--o-color-control4` | 禁用边框 |
 
 #### 间距（六套主题完全相同）
 
 > 硬编码间距应优先替换为响应式 token `--o-r-gap-*`。
 
-| 硬编码值 | 响应式 Token（推荐） | 静态 Token |
-|---------|-------------------|-----------|
-| `4px` | `--o-r-gap-1` | `--o-gap-1` |
-| `8px` | `--o-r-gap-2` | `--o-gap-2` |
-| `12px` | `--o-r-gap-3` | `--o-gap-3` |
-| `16px` | `--o-r-gap-4` | `--o-gap-4` |
-| `24px` | `--o-r-gap-5` | `--o-gap-5` |
-| `32px` | `--o-r-gap-6` | `--o-gap-6` |
-| `40px` | `--o-r-gap-7` | `--o-gap-7` |
-| `48px` | `--o-r-gap-8` | `--o-gap-8` |
-| `64px` | `--o-r-gap-9` | `--o-gap-9` |
-| `72px` | `--o-r-gap-10` | `--o-gap-10` |
+| 硬编码值 | 响应式 Token（推荐） | 静态 Token   |
+|----------|----------------------|--------------|
+| `4px`    | `--o-r-gap-1`        | `--o-gap-1`  |
+| `8px`    | `--o-r-gap-2`        | `--o-gap-2`  |
+| `12px`   | `--o-r-gap-3`        | `--o-gap-3`  |
+| `16px`   | `--o-r-gap-4`        | `--o-gap-4`  |
+| `24px`   | `--o-r-gap-5`        | `--o-gap-5`  |
+| `32px`   | `--o-r-gap-6`        | `--o-gap-6`  |
+| `40px`   | `--o-r-gap-7`        | `--o-gap-7`  |
+| `48px`   | `--o-r-gap-8`        | `--o-gap-8`  |
+| `64px`   | `--o-r-gap-9`        | `--o-gap-9`  |
+| `72px`   | `--o-r-gap-10`       | `--o-gap-10` |
 
 > 注意：上表硬编码值对应的是 Desktop 断点（>1680px）的响应式值。小屏下响应式 token 会自动缩小。
 
@@ -1110,19 +1203,19 @@ Token 变量主要用于**自定义业务区域**的样式（如页面布局、�
 
 > 硬编码字号应优先替换为响应式 token `--o-r-font_size-*` + `--o-r-line_height-*`。
 
-| 硬编码 font-size | 响应式 Token（推荐） | 静态 Token |
-|-----------------|-------------------|-----------|
-| `56px` | `--o-r-font_size-display1` | `--o-font_size-display1` |
-| `48px` | `--o-r-font_size-display2` | `--o-font_size-display2` |
-| `40px` | `--o-r-font_size-display3` | `--o-font_size-display3` |
-| `32px` | `--o-r-font_size-h1` | `--o-font_size-h1` |
-| `24px` | `--o-r-font_size-h2` | `--o-font_size-h2` |
-| `22px` | `--o-r-font_size-h3` | `--o-font_size-h3` |
-| `20px` | `--o-r-font_size-h4` | `--o-font_size-h4` |
-| `18px` | `--o-r-font_size-text2` | `--o-font_size-text2` |
-| `16px` | `--o-r-font_size-text1` | `--o-font_size-text1` |
-| `14px` | `--o-r-font_size-tip1` | `--o-font_size-tip1` |
-| `12px` | `--o-r-font_size-tip2` | `--o-font_size-tip2` |
+| 硬编码 font-size | 响应式 Token（推荐）       | 静态 Token               |
+|------------------|----------------------------|--------------------------|
+| `56px`           | `--o-r-font_size-display1` | `--o-font_size-display1` |
+| `48px`           | `--o-r-font_size-display2` | `--o-font_size-display2` |
+| `40px`           | `--o-r-font_size-display3` | `--o-font_size-display3` |
+| `32px`           | `--o-r-font_size-h1`       | `--o-font_size-h1`       |
+| `24px`           | `--o-r-font_size-h2`       | `--o-font_size-h2`       |
+| `22px`           | `--o-r-font_size-h3`       | `--o-font_size-h3`       |
+| `20px`           | `--o-r-font_size-h4`       | `--o-font_size-h4`       |
+| `18px`           | `--o-r-font_size-text2`    | `--o-font_size-text2`    |
+| `16px`           | `--o-r-font_size-text1`    | `--o-font_size-text1`    |
+| `14px`           | `--o-r-font_size-tip1`     | `--o-font_size-tip1`     |
+| `12px`           | `--o-r-font_size-tip2`     | `--o-font_size-tip2`     |
 
 ---
 
@@ -1136,3 +1229,181 @@ Token 变量主要用于**自定义业务区域**的样式（如页面布局、�
 - **Mindspore (m)**：[references/tokens-mindspore.md](references/tokens-mindspore.md) → 末尾「反查速查表」
 - **openGauss (g)**：[references/tokens-opengauss.md](references/tokens-opengauss.md) → 末尾「反查速查表」
 - **openUBMC (u)**：[references/tokens-openubmc.md](references/tokens-openubmc.md) → 末尾「反查速查表」
+
+---
+
+## Token CLI（校验 + 反查）
+
+> **写代码前先看这里**：本仓库自带一个零依赖的 Node.js CLI，用于检验代码中使用的 `var(--o-*)` 变量是否真实存在于
+> `@opensig/opendesign-token` 包中，并将设计稿中的 hex/rgb 色值、px/ms 尺寸等反向匹配为对应 token。
+> **大模型生成 OpenDesign 相关代码后，强烈建议用此工具扫描一遍，剔除捏造的变量名**（如把
+> `--o-color-fill2` 误写成 `--o-color-bg2`、把 `--o-r-font_size-h4` 误写成 `--o-r-font_size-h5`）。
+
+### 为什么要校验
+
+OpenDesign 的 token 命名遵循自身规范，与 Bootstrap / Element Plus / Tailwind 等其他设计系统 **不一致**：
+
+| 常见错误（捏造）                                    | 实际不存在的原因               | 正确替换                              |
+|-----------------------------------------------------|--------------------------------|---------------------------------------|
+| `--o-color-bg1` / `--o-color-bg2` / `--o-color-bg3` | opendesign 用 `fill` 不用 `bg` | `--o-color-fill1` / `fill2` / `fill3` |
+| `--o-color-border1`                                 | 边框用 `control` 不用 `border` | `--o-color-control1`                  |
+| `--o-r-font_size-h5` / `--o-r-font_size-h6`         | 响应式标题只有 h1–h4           | `--o-r-font_size-h4`                  |
+| `--o-color-text1` / `--o-color-text2`               | 文字用 `info` 不用 `text`      | `--o-color-info1` / `info2`           |
+| `--o-radius-medium` / `--o-radius-large`            | 圆角用尺寸缩写（xs/s/m/l/xl）  | `--o-radius-m` / `--o-radius-l`       |
+| `--o-color-primary5`                                | 主色只有 1–4 档                | `--o-color-primary4`                  |
+| `--o-r-gap-11` / `--o-r-gap-12`                     | 响应式间距只有 1–10 档         | `--o-r-gap-10`                        |
+
+这些错误变量名在 CSS 中会解析为 `transparent` / `0` / `initial`，导致样式静默失效，很难排查。
+
+### CLI 位置
+
+```
+skills/opendesign-tokens/scripts/
+├── bin.mjs               ← 统一入口（所有命令）
+├── check-tokens.mjs      ← 向后兼容入口（等价于 bin.mjs）
+├── lib/
+│   ├── package-resolver.mjs  ← npm 包解析 + 下载 + 缓存
+│   ├── registry.mjs          ← CSS 解析 + token 注册表
+│   ├── lookup.mjs            ← token 查找 + 归一化 + 建议
+│   ├── convert.mjs           ← 值→token 反向映射（动态构建）
+│   ├── file-scan.mjs         ← 文件扫描
+│   └── shared.mjs            ← 注册表单例 + 输出格式化
+└── package.json
+```
+
+零外部依赖（仅用 Node.js ≥ 18 内置模块），首次运行时从 npm registry 下载 `@opensig/opendesign-token` tarball 并缓存到
+`~/.cache/opendesign-token-cache/`（Windows: `%LOCALAPPDATA%/opendesign-token-cache/`），后续运行直接用缓存。
+两个入口文件等价——`check-tokens.mjs` 向后兼容旧调用方式，`bin.mjs` 是统一入口（含 `convert` 等新命令）。
+
+### 真值源：CSS 产物，非 JSON 源码
+
+CLI **以 `themes/*.css` 产物为唯一真值源**——变量存在性、值、响应式各断点值全部从 CSS 解析（`@media` 块追踪 + JSDoc 注释
+`@group`/`@description`/`@type` 提取）。`tokens/*.json` 仅作为可选富化（补充 CSS 注释里缺失的 `@name`、断点标签映射等），
+**JSON schema 变更或缺失不影响核心功能**。这样设计的理由：CSS 变量名是面向使用者的稳定契约，而 JSON 是包内部的中间产物，不同版本
+schema 可能不同（如 v0.0.3 无 `responsive-token.json`，v0.0.4 前文件名大小写不一致）。
+
+### 包解析：本地优先，下载兜底
+
+CLI 按以下优先级确定用哪个版本的包做校验：
+
+1. `--version <ver>` 显式指定（如 `--version 0.0.3`）→ 下载或用缓存中该版本
+2. **就近查找本地 `node_modules`** → 从被扫描文件的目录开始 **逐层向上**查找 `node_modules/@opensig/opendesign-token/`
+   ，找到则直接用该本地包（无需联网、无需缓存）
+3. 本地没找到 + `--offline` → 用缓存中最高版本
+4. 以上都没找到 → 从 npm registry 下载 `latest`（首次下载后缓存）
+
+**就近查找**是核心策略——不依赖 `process.cwd()`，而是从被扫描文件的位置开始查找。这天然支持 monorepo：
+
+- pnpm workspace：包通常 symlink 在子包的 `node_modules/`，真实文件在 root 的 `.pnpm/` 下
+- npm/yarn hoisting：包在 monorepo root 的 `node_modules/`，子包目录逐层向上可找到
+
+`scan src/App.vue` 时，CLI 从 `src/App.vue` 所在目录开始向上查找，无论 CLI 是从项目根还是从 monorepo 外调起，都能正确定位项目依赖的包版本。
+
+若项目装的是 v0.0.3（无响应式 token），`--o-r-font_size-h1` 会被判为不存在——这正是期望的行为。
+
+### 命令速查
+
+```bash
+# ① 校验单个 token（接受三种输入形式）
+node skills/opendesign-tokens/scripts/bin.mjs check --o-color-fill2
+node skills/opendesign-tokens/scripts/bin.mjs check "var(--o-color-bg1)"
+node skills/opendesign-tokens/scripts/bin.mjs check color-primary1
+
+# ② 扫描文件/目录，找出所有捏造的 var(--o-*) 用法
+node skills/opendesign-tokens/scripts/bin.mjs scan src/App.vue
+node skills/opendesign-tokens/scripts/bin.mjs scan src/ --theme e --strict
+node skills/opendesign-tokens/scripts/bin.mjs scan src/components/ --json
+
+# ③ 列出所有 token（支持 glob 模式）
+node skills/opendesign-tokens/scripts/bin.mjs list "--o-color-*"
+node skills/opendesign-tokens/scripts/bin.mjs list "--o-r-*" --json
+
+# ④ 查看单个 token 的完整信息（跨主题 light/dark 值）
+node skills/opendesign-tokens/scripts/bin.mjs info --o-brand-6
+
+# ⑤ 设计稿值 → token 反查（颜色 / 尺寸 / 时长 / 缓动 / 阴影）
+node skills/opendesign-tokens/scripts/bin.mjs convert '#FFFFFF'
+node skills/opendesign-tokens/scripts/bin.mjs convert 'rgb(0, 47, 167)'
+node skills/opendesign-tokens/scripts/bin.mjs convert 16px
+node skills/opendesign-tokens/scripts/bin.mjs convert 200ms
+node skills/opendesign-tokens/scripts/bin.mjs convert 'cubic-bezier(0.2, 0, 0, 1)' --all
+node skills/opendesign-tokens/scripts/bin.mjs convert '0 3px 8px rgba(var(--o-grey-14), 0.08)'
+
+# ⑥ 列出包的所有版本
+node skills/opendesign-tokens/scripts/bin.mjs versions
+
+# ⑦ 清空本地缓存
+node skills/opendesign-tokens/scripts/bin.mjs clear-cache
+```
+
+> `check-tokens.mjs` 向后兼容旧调用方式（`node check-tokens.mjs check ...`），与 `bin.mjs` 等价。
+
+### 常用选项
+
+| 选项                             | 说明                             | 默认值   |
+|----------------------------------|----------------------------------|----------|
+| `-V, --version <ver>`            | 指定包版本                       | 自动解析 |
+| `-t, --theme <e\|a\|k\|m\|g\|u>` | 主题                             | `e`      |
+| `-m, --mode <light\|dark>`       | 模式                             | `light`  |
+| `--json`                         | 输出 JSON（便于 LLM 程序化消费） | 关       |
+| `--offline`                      | 仅用缓存，不联网                 | 关       |
+| `--strict`                       | scan 时发现无效 token 则退出码 1 | 关       |
+| `--no-suggest`                   | 不计算建议                       | 关       |
+| `-v, --verbose`                  | 详细输出                         | 关       |
+| `--color`                        | convert 专用：强制按颜色解析     | 关       |
+| `--value`                        | convert 专用：强制按普通值解析   | 关       |
+| `--tolerance <n>`                | convert 专用：颜色容差           | `5`      |
+| `--all`                          | convert 专用：显示全部匹配       | 关       |
+
+### 工作流建议
+
+1. **生成代码后立即扫描**：写完一段含 `var(--o-*)` 的样式后，用 `scan` 命令检查所在文件。
+   ```bash
+   node skills/opendesign-tokens/scripts/bin.mjs scan path/to/your.vue --theme e
+   ```
+2. **CI / git hook**：加 `--strict` 让扫描发现无效 token 时非零退出，阻断提交。
+   ```bash
+   node skills/opendesign-tokens/scripts/bin.mjs scan src/ --theme e --strict
+   ```
+3. **不确定某个 token 名时**：用 `check` 单查；CLI 会给出最接近的 3 个真实 token 作为建议。
+   ```bash
+   node skills/opendesign-tokens/scripts/bin.mjs check --o-color-bg2
+   # ❌ --o-color-bg2 does not exist
+   #    💡 closest: --o-color-fill2 (d=4), --o-color-info2 (d=4), ...
+   ```
+4. **设计稿值 → token 反查**：从 Pixso/Figma 取到色值或尺寸后，用 `convert` 反查对应 token。CLI 会从
+   `@opensig/opendesign-token` 的 CSS 产物动态构建反向表，匹配结果始终与实际包版本同步。
+   ```bash
+   # 色值反查
+   node skills/opendesign-tokens/scripts/bin.mjs convert '#FFFFFF'
+   # → var(--o-color-fill2) [fill] 二级填充：区块、卡片
+
+   # 尺寸反查（响应式 token 优先）
+   node skills/opendesign-tokens/scripts/bin.mjs convert 16px
+   # → var(--o-r-font_size-text1) [font_size] 响应式常规正文
+
+   # 缓动曲线反查
+   node skills/opendesign-tokens/scripts/bin.mjs convert 'cubic-bezier(0.2, 0, 0, 1)'
+   # → var(--o-easing-emphasized) [easing] 用于大卡片、场景切换
+
+   # 显示全部匹配（一个值可能对应多个 token）
+   node skills/opendesign-tokens/scripts/bin.mjs convert 16px --all
+   ```
+5. **JSON 模式**：加 `--json` 可把结果结构化输出，便于其他工具或 LLM 解析。
+6. **离线环境**：首次运行需联网下载包；之后 `--offline` 即可离线校验。
+
+### 主题特异性注意
+
+部分 token 不是所有主题都定义。例如 `--o-brand-1` ~ `--o-brand-10` 仅在 **e/m/g/u** 四套主题中存在；Ascend (a) 和 Kunpeng
+(k) 只定义了 `--o-brand-6`。用 `-t` 指定主题时，CLI 会按该主题校验：
+
+```bash
+node skills/opendesign-tokens/scripts/check-tokens.mjs check --o-brand-1 -t e  # ✅ exists
+node skills/opendesign-tokens/scripts/check-tokens.mjs check --o-brand-1 -t a  # ❌ not in theme a
+```
+
+### CLI 不做的事
+
+- **不修改你的代码**：只读文件、只输出报告；不会自动替换变量名。
+- **不校验 SCSS mixin**：只校验 `var(--o-*)` 形式的 CSS 变量引用。`@include h1;` 这类 mixin 调用不在扫描范围内（mixin 的合法性由
+  `opendesign-application` skill 的 `styles-infrastructure` 约束）。
