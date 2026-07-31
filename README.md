@@ -10,15 +10,15 @@ OpenDesign 生态的 AI Skill 集合，为 AI 编码工具提供 OpenDesign 组�
 
 ```bash
 # 安装全部 skill（推荐）
-pnpx skills add git@atomgit.com:openeuler/opendesign-skills.git --all
+pnpx skills add https://atomgit.com/openeuler/opendesign-skills.git --all
 
 # 安装单个 skill
-pnpx skills add git@atomgit.com:openeuler/opendesign-skills.git --skill opendesign-application
-pnpx skills add git@atomgit.com:openeuler/opendesign-skills.git --skill opendesign-components
-pnpx skills add git@atomgit.com:openeuler/opendesign-skills.git --skill opendesign-scripts
-pnpx skills add git@atomgit.com:openeuler/opendesign-skills.git --skill opendesign-tokens
-pnpx skills add git@atomgit.com:openeuler/opendesign-skills.git --skill opendesign-design
-pnpx skills add git@atomgit.com:openeuler/opendesign-skills.git --skill opendesign-codegen
+pnpx skills add https://atomgit.com/openeuler/opendesign-skills.git --skill opendesign-application
+pnpx skills add https://atomgit.com/openeuler/opendesign-skills.git --skill opendesign-components
+pnpx skills add https://atomgit.com/openeuler/opendesign-skills.git --skill opendesign-scripts
+pnpx skills add https://atomgit.com/openeuler/opendesign-skills.git --skill opendesign-tokens
+pnpx skills add https://atomgit.com/openeuler/opendesign-skills.git --skill opendesign-design
+pnpx skills add https://atomgit.com/openeuler/opendesign-skills.git --skill opendesign-codegen
 ```
 
 > opendesign-application 指导工程化集成与脚手架起手；opendesign-components / scripts / tokens 生产 Vue 代码；opendesign-design 生产 Pixso 设计稿；opendesign-codegen 让 AI 从设计意图直出合规的 Vue+OpenDesign 代码（面向设计师）。各 skill 互补，可按需安装。
@@ -33,14 +33,14 @@ pnpx skills experimental_install
 
 ## Skill 总览
 
-| Skill | 包名 | 覆盖范围 | 入口文件 |
-|-------|------|---------|---------|
-| [opendesign-application](#opendesign-application) | `@opensig/opendesign` + `@opensig/opendesign-token` | 工程化落地指南（主题集成 + 样式基础设施 + 脚手架 + Code Review） | [SKILL.md](skills/opendesign-application/SKILL.md) |
-| [opendesign-components](#opendesign-components) | `@opensig/opendesign` | 46 个 Vue 3 UI 组件 | [SKILL.md](skills/opendesign-components/SKILL.md) |
-| [opendesign-scripts](#opendesign-scripts) | `@opensig/open-scripts` | 5 个 CLI 构建命令 | [SKILL.md](skills/opendesign-scripts/SKILL.md) |
-| [opendesign-tokens](#opendesign-tokens) | `@opensig/opendesign-token` | 3 套主题的设计令牌体系 | [SKILL.md](skills/opendesign-tokens/SKILL.md) |
-| [opendesign-design](#opendesign-design) | Pixso MCP（无 npm 包） | 21 个组件设计规范 + 536 变体 + 187 图标 | [SKILL.md](skills/opendesign-design/SKILL.md) |
-| [opendesign-codegen](#opendesign-codegen) | `@opensig/opendesign` + `@opensig/opendesign-token` | 设计意图直出合规 Vue+OpenDesign 代码（约束 + SFC 模板 + 示例） | [SKILL.md](skills/opendesign-codegen/SKILL.md) |
+| Skill | 包名 | 覆盖范围 | 入口文件 | 变更记录 |
+|-------|------|---------|---------|---------|
+| [opendesign-application](#opendesign-application) | `@opensig/opendesign` + `@opensig/opendesign-token` | 工程化落地指南（主题集成 + 样式基础设施 + 脚手架 + Code Review） | [SKILL.md](skills/opendesign-application/SKILL.md) | [CHANGELOG.md](skills/opendesign-application/CHANGELOG.md) |
+| [opendesign-components](#opendesign-components) | `@opensig/opendesign` | 46 个 Vue 3 UI 组件 | [SKILL.md](skills/opendesign-components/SKILL.md) | [CHANGELOG.md](skills/opendesign-components/CHANGELOG.md) |
+| [opendesign-scripts](#opendesign-scripts) | `@opensig/open-scripts` | 5 个 CLI 构建命令 | [SKILL.md](skills/opendesign-scripts/SKILL.md) | [CHANGELOG.md](skills/opendesign-scripts/CHANGELOG.md) |
+| [opendesign-tokens](#opendesign-tokens) | `@opensig/opendesign-token` | 3 套主题的设计令牌体系 | [SKILL.md](skills/opendesign-tokens/SKILL.md) | [CHANGELOG.md](skills/opendesign-tokens/CHANGELOG.md) |
+| [opendesign-design](#opendesign-design) | Pixso MCP（无 npm 包） | 21 个组件设计规范 + 536 变体 + 187 图标 | [SKILL.md](skills/opendesign-design/SKILL.md) | [CHANGELOG.md](skills/opendesign-design/CHANGELOG.md) |
+| [opendesign-codegen](#opendesign-codegen) | `@opensig/opendesign` + `@opensig/opendesign-token` | 设计意图直出合规 Vue+OpenDesign 代码（约束 + SFC 模板 + 示例） | [SKILL.md](skills/opendesign-codegen/SKILL.md) | [CHANGELOG.md](skills/opendesign-codegen/CHANGELOG.md) |
 
 ---
 
@@ -209,8 +209,11 @@ skills/opendesign-scripts/
 ```
 skills/opendesign-tokens/
 ├── SKILL.md                          # 主 skill 文件（含 token 体系说明）
-├── scripts/
-│   └── convert_to_token.py           # Token 转换脚本
+├── scripts/                          # Token CLI（校验 + 反查）
+│   ├── bin.mjs                      # 统一入口
+│   ├── check-tokens.mjs             # 向后兼容入口
+│   ├── lib/                         # 共享模块（包解析/CSS解析/查找/反查/扫描）
+│   └── package.json
 └── references/
     ├── tokens.md                     # 通用 token 参考
     ├── tokens-openeuler.md           # openEuler 主题 token

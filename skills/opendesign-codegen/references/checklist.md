@@ -12,6 +12,7 @@ AI 生成 Vue + OpenDesign 代码后**逐项核对**，全部通过方可交付�
 - [ ] 背景用 `--o-color-fill1/2/3`，**没有** `--o-color-bg1/2/3`
 - [ ] 页面级字号用 `--o-r-font_size-*` + 配套 `--o-r-line_height-*`
 - [ ] 页面级间距用 `--o-r-gap-*`；圆角 `--o-radius-*`、阴影 `--o-shadow-*`
+- [ ] **所有 `var(--o-*)` 已用 Token CLI 验证存在性**：`node skills/opendesign-tokens/scripts/bin.mjs scan <file> --theme <主题> --strict`，零 invalid（完整命令与选项见 [opendesign-tokens SKILL.md §Token CLI](../../opendesign-tokens/SKILL.md)）
 
 ## ② 组件用法
 - [ ] 凡 OpenDesign 有的控件均用真实组件（`OButton`/`OTable`/`OSelect`…），无原生 `<button>`/`<select>`/`<table>` 或手写 div 替代
@@ -52,6 +53,21 @@ AI 生成 Vue + OpenDesign 代码后**逐项核对**，全部通过方可交付�
 ---
 
 ## 快速自检命令（对生成的 .vue 跑）
+
+**第一步：Token 存在性校验**（最重要——grep 抓不到拼写错误和捏造 token，CLI 会从包产物精确比对）：
+```bash
+# 校验所有 var(--o-*) 是否真实存在于 @opensig/opendesign-token
+node skills/opendesign-tokens/scripts/bin.mjs scan your.vue --theme e --strict
+# 扫描整个目录
+node skills/opendesign-tokens/scripts/bin.mjs scan src/ --theme e --strict
+# 不确定某个 token 名时，单查 + 自动建议最接近的真实 token
+node skills/opendesign-tokens/scripts/bin.mjs check --o-color-bg2
+# 设计稿色值 / 尺寸 → token 反查
+node skills/opendesign-tokens/scripts/bin.mjs convert '#FFFFFF'
+node skills/opendesign-tokens/scripts/bin.mjs convert 16px
+```
+
+**第二步：模式与硬编码快速扫描**（辅助 grep，捕获 CLI 不覆盖的违规模式）：
 ```bash
 grep -nE '#[0-9a-fA-F]{3,8}\b|rgba?\(' your.vue      # 硬编码色值
 grep -nE 'var\(--o-(kleinblue|blue|grey|green|red|orange|yellow|brand|amber|lime|teal|cyan|violet|purple|pink)-' your.vue  # 色板变量（应改语义 token）

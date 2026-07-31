@@ -32,7 +32,7 @@ OTab 是标签页组件，用于在不同内容区域之间切换。包含 OTab�
 
 排查以上两点后再考虑调整 `maxShow` 等溢出属性。
 
-**maxShow**（属性）：最大显示页签数量。超出的页签收入"更多"菜单，桌面端为 Popup 弹出，移动端为 Dialog 底部弹出。
+**maxShow**（属性）：最大显示页签数量。超出的页签收入"更多"菜单，桌面端为 Popup 弹出，移动端为横向滚动模式（v1.2.5-sp1 起，溢出页签区域改为横向滚动，移除了对 ODialog 的依赖）。
 
 **moreLabel**（属性）：超出时"更多"按钮的文案。默认"更多"。
 
@@ -86,7 +86,7 @@ OTab 是标签页组件，用于在不同内容区域之间切换。包含 OTab�
 
 **default 插槽**（插槽）：面板内容。
 
-📱 **响应式行为**：在笔记本尺寸及以下（≤1440px），页签文字和图标缩小，间距减小；在平板竖屏及以下（≤840px），文字进一步缩小、间距紧凑、指示线高度减小。button 模式在各断点下内边距随之调整。溢出的页签在移动端使用 Dialog 底部弹出菜单（而非 Popup）。v1.2.3-sp1 修复了移动端溢出菜单的 SSR 水合错误。
+📱 **响应式行为**：在笔记本尺寸及以下（≤1440px），页签文字和图标缩小，间距减小；在平板竖屏及以下（≤840px），文字进一步缩小、间距紧凑、指示线高度减小。button 模式在各断点下内边距随之调整。v1.2.5-sp1 起溢出页签在移动端改为横向滚动模式（移除了 ODialog 依赖），并增加了溢出阴影遮罩效果。v1.2.3-sp1 修复了移动端溢出菜单的 SSR 水合错误。
 
 🧩 **布局结构**：标签页整体为垂直两栏结构，上方为导航栏（head），下方为内容面板区（body）。导航栏水平排列，包含可选前缀区（prefix 插槽）、页签导航列表（navs，内含多个页签项和可选"更多"按钮）、可选添加按钮、可选后缀区（suffix 插槽）。text 模式下导航列表底部有滑动指示线（anchor）；button 模式下页签项有背景填充和边框。内容面板区一次只显示一个 OTabPane 的内容。
 
@@ -331,6 +331,8 @@ const onDelete = (val) => {
 | `--tab-nav-icon-gap`              | `8px`                                    | 图标与文字间距          |
 | `--tab-nav-ellipsis-padding-x`    | `16px`                                   | 更多按钮水平内边距      |
 | `--tab-nav-ellipsis-shadow-width` | `8px`                                    | 更多按钮遮罩宽度        |
+| `--tab-nav-ellipsis-shadow-color`  | `var(--o-grey-14)`                       | 更多按钮遮罩颜色（v1.2.5-sp1 新增，≤840px 下遮罩宽度扩大为 48px） |
+| `--tab-nav-ellipsis-shadow-gradient` | 渐变值                               | 更多按钮遮罩渐变（v1.2.5-sp1 新增） |
 | `--tab-nav-text-size`             | `var(--o-font_size-text2)`（medium）     | 页签文字字号            |
 | `--tab-nav-text-height`           | `var(--o-line_height-text2)`（medium）   | 页签文字行高            |
 | `--tab-nav-gap`                   | `32px`（medium）                         | 页签间距                |
@@ -355,13 +357,13 @@ const onDelete = (val) => {
 | large 图标   | 控件 s          | 控件 m     | 标准       |
 | large 间距   | 16px            | 32px       | 标准       |
 | small 间距   | 12px            | 24px       | 标准       |
-| 溢出更多菜单 | Dialog 底部弹出 | Popup 弹出 | Popup 弹出 |
+| 溢出更多菜单 | 横向滚动模式 | Popup 弹出 | Popup 弹出 |
 
 触控 vs 指针差异：
 
-| 场景     | 触控设备         | 指针设备          |
-| -------- | ---------------- | ----------------- |
-| 溢出菜单 | ODialog 底部弹出 | OPopup hover 触发 |
+| 场景     | 触控设备             | 指针设备          |
+| -------- | ------------------ | ----------------- |
+| 溢出菜单 | 横向滚动模式（≤840px） | OPopup hover 触发 |
 
 ### 组件布局结构
 
@@ -518,3 +520,5 @@ layout:
 | 1.2.3-sp1 | fix | 修复溢出计算逻辑；修复移动端 SSR 水合错误；修复 lazy 模式导航渲染问题 |
 | 1.2.3-sp2 | fix | 再次修复 `--tab-nav-justify` 不生效；修复 teleport 渲染顺序；修复按需导入缺失样式 |
 | 1.2.4 | docs | 文档注释改进 |
+| 1.2.5-sp1 | fix | 移动端页签溢出改为横向滚动模式，移除 ODialog 依赖；新增 `--tab-nav-ellipsis-shadow-color` 和 `--tab-nav-ellipsis-shadow-gradient` CSS 变量；≤840px 下溢出阴影遮罩宽度扩大为 48px |
+| 1.2.6 | fix | 修复 gtPadV 但触摸屏时的溢出气泡显示问题 |

@@ -6,6 +6,15 @@
 
 ---
 
+## 2026-07-31
+
+### 更新
+- Token 优先规则（conventions.md §1.2）补充写完样式后用 Token CLI `scan --strict` 验证 token 存在性的要求。
+- Code Review 检查清单（§3.3）新增「Token 存在性」检视项——所有 `var(--o-*)` 须通过 CLI `scan --strict`，零 invalid。
+- 自动化检视提示（§5）新增 Token CLI `scan`/`check` 命令段，与正则初筛互补——正则抓模式违规，CLI 抓拼写错误和捏造 token。
+
+---
+
 ## 2026-07-08
 
 ### 更新

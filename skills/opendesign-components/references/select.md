@@ -300,6 +300,10 @@ const value = ref('');
 | `--select-multiple-max-height` | `64px` | 多选时输入框最大高度 |
 | `--select-tag-padding` | `2px 8px` | 多选标签内边距 |
 | `--select-tag-radius` | `24px` | 多选标签圆角 |
+| `--select-bg-color` | `var(--o-color-fill2)` | 选择框背景色（v1.2.6 从 control5-light 改为 fill2） |
+| `--select-bg-color-hover` | `var(--o-color-fill2)` | hover 背景色（v1.2.6 从 control5-light 改为 fill2） |
+| `--select-bg-color-focus` | `var(--o-color-fill2)` | 聚焦背景色（v1.2.6 从 control5-light 改为 fill2） |
+| `--select-bg-color-disabled` | `var(--o-color-fill2)` | 禁用背景色（v1.2.6 从 control4-light 改为 fill2） |
 
 > **注意**：`width` 不由组件变量控制，直接在调用处设置 CSS `width` 即可。
 
@@ -508,6 +512,7 @@ layout:
 
 | 版本 | 变更内容 |
 |------|---------|
+| v1.2.6 | 背景色 CSS 变量从 control5-light/control4-light 改为 fill2；关闭按钮（clear icon）尺寸跟随 `--select-icon-size`；内部改用 defineSlots 替代 useSlots；响应式判定从 isPhonePad 改为 isPhonePadSize |
 | v0.0.69 | scrollbar 参数从 `scroller` 改名为 `scrollbar` |
 | v0.0.64 | 修复多选 v-model 绑定问题 |
 | v0.0.63 | 新增下拉分组（OOptionGroup） |

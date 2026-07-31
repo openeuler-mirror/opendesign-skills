@@ -64,6 +64,7 @@ ODialog 是模态对话框组件，在页面上方弹出一个浮层，用于提
 
 📱 **响应式行为**：
 - **手机尺寸**（≤600px）：对话框从底部滑入、宽度铺满、关闭按钮隐藏、按钮宽度均分；phoneHalfFull 模式下顶部保留圆角
+- **平板竖屏及以下**（≤840px）：圆角由主题和断点共同决定（默认 control-xs，此断点下使用 control-s）
 - **平板尺寸**（≤1200px）：对话框固定定位、按钮间用竖线分隔、间距和字号缩小
 - **大尺寸（exlarge/large）**在平板竖屏及以下全屏铺满、无圆角
 - 触控设备上动画改为从中心/底部展开（而非跟随鼠标位置）
@@ -261,11 +262,11 @@ const actions = [
 | `--dlg-color` | `var(--o-color-info1)` | 内容文字颜色 |
 | `--dlg-header-color` | `var(--o-color-info1)` | 标题文字颜色 |
 | `--dlg-bg-color` | `var(--o-color-control5-light)` | 对话框背景色 |
-| `--dlg-radius` | `var(--o-radius_control-l)` | 对话框圆角 |
+| `--dlg-radius` | `var(--o-radius_control-xs)` | 对话框圆角。由断点和主题共同决定：默认 control-xs，≤840px 断点下使用 control-s，手机端半屏贴边时为 0 |
 | `--dlg-shadow` | `var(--o-shadow-1)` | 对话框阴影 |
 | `--dlg-max-height` | `100%` | 对话框最大高度（auto 模式为 80%） |
 | `--dlg-min-width` | `272px` | 对话框最小宽度 |
-| `--dlg-margin` | `0px` | 对话框外边距 |
+| `--dlg-margin` | `24px` | 对话框外边距 |
 | `--dlg-edge-gap` | `32px` | 对话框内边距（四周） |
 | `--dlg-inner-gap` | `24px` | header/body/footer 区域间距 |
 | `--dlg-actions-justify` | `center` | 底部按钮对齐方式（可设为 `flex-end` 等） |
@@ -286,6 +287,7 @@ const actions = [
 | 对话框位置 | 底部弹出 | 居中 | 居中固定 | 居中 |
 | 关闭按钮 | 隐藏 | 显示 | 显示 | 显示 |
 | 按钮样式 | 均分宽度 | 竖线分隔 | 竖线分隔 | 标准 |
+| 圆角 | control-s（由主题决定） | control-s | 标准 | control-xs（由主题决定） |
 | 边距 | 16px | 16px | 16px | 24px |
 | 标题字号 | text2 | text2 | text2 | h4 |
 | exlarge 宽度 | 100% | 100%全屏 | 80% | 75% |
@@ -413,4 +415,10 @@ layout:
 | ODialog | OLayer | ODialog 是 OLayer 的上层封装，自带 header/body/footer 三段式结构；OLayer 是纯浮层容器无内部结构 |
 | ODialog | OMessage/OToast | OMessage/OToast 是轻量提示自动消失，ODialog 是模态交互需用户主动关闭 |
 | ODialog（手机端） | 底部抽屉 | ODialog 手机端从底部滑入但仍是居中模态逻辑，有遮罩和关闭机制 |
+
+### 版本变更记录
+
+| 版本 | 变更内容 |
+|------|---------|
+| v1.2.6 | 优化圆角响应式策略：`--dlg-radius` 默认值从 control-l 改为 control-xs，由断点和主题共同决定（≤840px 断点下使用 control-s）；`--dlg-margin` 默认值从 0 改为 24px |
 

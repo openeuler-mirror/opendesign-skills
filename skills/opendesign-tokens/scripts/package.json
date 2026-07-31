@@ -1,0 +1,9 @@
+{
+  "name": "opendesign-tokens-cli",
+  "version": "0.1.0",
+  "description": "OpenDesign Token CLI — 校验、列举、反查 @opensig/opendesign-token 的 CSS 变量",
+  "type": "module",
+  "bin": {
+    "odt": "./bin.mjs"
+  }
+}

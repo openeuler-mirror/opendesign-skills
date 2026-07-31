@@ -57,7 +57,7 @@ color: var(--o-grey-14);
 background: var(--o-kleinblue-6);
 ```
 
-token 变量名查 [`../opendesign-tokens/SKILL.md`](../opendesign-tokens/SKILL.md)。
+token 变量名查 [`../opendesign-tokens/SKILL.md`](../opendesign-tokens/SKILL.md)。写完含 `var(--o-*)` 的样式后，用 Token CLI 扫描验证存在性（`node skills/opendesign-tokens/scripts/bin.mjs scan <file> --theme <主题> --strict`），避免拼写错误或捏造的 token 溜进代码。
 
 ### 1.3 `:deep` 禁令
 
@@ -219,6 +219,7 @@ code review 时遇到 OpenDesign 相关调用，按下表逐项检视：
 | 动画时间 / 缓动 | `var(--o-duration-*)` + `var(--o-easing-*)` | 硬编码 `transition: all 300ms` / `cubic-bezier(...)` |
 | 字号引用方式 | `@include h*`（字号行高成对输出）或 `var(--o-r-font_size-*)` + `var(--o-r-line_height-*)`（单独引用）；刻意只用一项须注释 | 硬编码字号行高；只写字号漏行高且无注释说明 |
 | 组件样式定制途径 | CSS 变量覆盖（如 `--switch-color`）、slot 内容替换、props 传参 | 用 `:deep` 穿透组件内部 class；全局 CSS 覆盖非渲染类组件内部 class（`.o-btn__text`） |
+| Token 存在性 | 所有 `var(--o-*)` 经 Token CLI `scan --strict` 验证存在，零 invalid | 存在拼写错误或捏造的 token 名（如 `--o-color-brand6` 漏连字符）；CLI 退出码非 0 |
 | 表单控件宽度 | `global.scss` 中通过渲染类（`.o-form .o-input`）引用 OForm 导出的宽度变量（`--form-item-main-box-width-*`）统一约束；参考脚手架模板 `global.scss` | 组件 scoped 内 `:deep` 修改控件宽度；硬编码 `width: 200px` |
 
 ### 3.4 响应式与 hover
@@ -471,3 +472,14 @@ code review 时可用正则快速扫描违规信号：
 | 硬编码字号行高 | `font-size:\s*\d+px` （在 `.vue` / `.scss`，排除注释） |
 
 > 正则只做初筛，命中后人工判断是否属于动态值等例外情况。
+
+**Token 存在性校验**（正则抓不到拼写错误和捏造 token，必须用 CLI 精确比对）：
+
+```bash
+# 扫描单文件——无效 token 非零退出
+node skills/opendesign-tokens/scripts/bin.mjs scan src/App.vue --theme e --strict
+# 扫描整个目录，输出 JSON 供 CI 消费
+node skills/opendesign-tokens/scripts/bin.mjs scan src/ --theme e --strict --json
+# 单查某个 token 是否存在 + 自动建议最接近的真实 token
+node skills/opendesign-tokens/scripts/bin.mjs check --o-color-bg2
+```
