@@ -6,6 +6,24 @@
 
 ---
 
+## 2026-07-31
+
+### 更新
+
+- SKILL.md 版本标注更新为 v1.2.6，最低依赖版本 ≥1.2.6。
+- **OTag**：color 新增 `pending`/`disabled`/`main2` 三种颜色（v1.2.6）；新增 `interactive` 属性控制 hover 交互态（v1.2.6）；CSS 变量新增 `--tag-bd`/`--tag-bg-image`/`--tag-bg-color-hover`/`--tag-bd-color-hover`/`--tag-color-hover`；关闭按钮颜色默认改为 inherit。
+- **OVirtualList**：`itemSize` 支持函数（按项定高模式）（v1.2.6）；新增 `layout` 属性支持水平滚动（v1.2.6）；新增 `threshold` 属性控制虚拟化阈值（v1.2.6）；`scrollToView` 的 `align` 参数支持数字偏移量；新增 `scrollToOffset` 方法（v1.2.6）。
+- **ODialog**：圆角默认值从 control-l 改为 control-xs，由断点和主题共同决定（v1.2.6）；`--dlg-margin` 默认值从 0 改为 24px（v1.2.6）。
+- **OSelect**：背景色 CSS 变量从 control5-light/control4-light 改为 fill2（v1.2.6）；关闭按钮尺寸跟随 `--select-icon-size`（v1.2.6）；响应式判定从 isPhonePad 改为 isPhonePadSize（v1.2.6）。
+- **OTab**：移动端溢出改为横向滚动模式，移除 ODialog 依赖（v1.2.5-sp1）；新增 `--tab-nav-ellipsis-shadow-color` 和 `--tab-nav-ellipsis-shadow-gradient` CSS 变量（v1.2.5-sp1）；修复触摸屏溢出气泡显示（v1.2.6）。
+- **OPopup**：`beforeShow`/`beforeHide` 文档完善，明确为纯函数不应包含副作用（v1.2.6）；触摸设备 trigger 兜底策略改为追加 click（v1.2.6）。
+- **OInput**：`extra` 插槽添加到 defineSlots 声明（v1.2.6）；修复背景色（v1.2.6）。
+- **OAnchor**：修复横向 sticky 检测在无滚动祖先时不生效（v1.2.5-sp1）；示例改用 OScroller 滚动（v1.2.5-sp1）。
+- **OCarousel**：使用 normalizeClass 重构 activeClass 处理逻辑（v1.2.6）。
+- **OOption**：修复多选激活时字重为 regular（v1.2.6）。
+
+---
+
 ## 2026-07-07
 
 ### 更新

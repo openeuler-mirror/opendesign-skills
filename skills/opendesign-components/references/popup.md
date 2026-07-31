@@ -62,9 +62,9 @@ OPopup 是通用弹出层组件，是 OPopover、ODropdown、OSelect 等组件�
 
 **hideWhenTargetInvisible**（属性）：触发元素滚出视口时是否自动隐藏。默认开启。
 
-**beforeShow**（属性）：显示前回调。返回 false 阻止显示。
+**beforeShow**（属性）：显示前的回调函数。返回 `false` 取消显示，返回 `true` 或 `undefined`（或 Promise resolve 为 `true`/`undefined`）则继续显示。注意：该函数中不应包含副作用，仅用于判断。
 
-**beforeHide**（属性）：隐藏前回调。返回 false 阻止隐藏。
+**beforeHide**（属性）：隐藏前的回调函数。返回 `false` 取消隐藏，返回 `true` 或 `undefined`（或 Promise resolve 为 `true`/`undefined`）则继续隐藏。注意：该函数中不应包含副作用，仅用于判断。
 
 ### 插槽区域
 
@@ -136,8 +136,8 @@ type PopupTriggerT = 'none' | 'click' | 'click-outclick' | 'hover' | 'hover-outc
 | transition | `string` | — | `'o-zoom-fade'` | 过渡动画 | — |
 | autoHide | `boolean` | — | `true` | 自动隐藏 | — |
 | adaptive | `boolean` | — | `true` | 自适应边缘 | @since 0.0.75 |
-| beforeShow | `() => Promise<boolean> \| boolean` | — | — | 显示前回调 | — |
-| beforeHide | `() => Promise<boolean> \| boolean` | — | — | 隐藏前回调 | — |
+| beforeShow | `() => Promise<boolean> \| boolean` | — | — | 显示前回调，返回 false 取消显示。纯函数，不应包含副作用 | — |
+| beforeHide | `() => Promise<boolean> \| boolean` | — | — | 隐藏前回调，返回 false 取消隐藏。纯函数，不应包含副作用 | — |
 | hideWhenTargetInvisible | `boolean` | — | `true` | 目标不可见时隐藏 | — |
 
 ### Events 表
@@ -352,6 +352,7 @@ layout:
 
 | 版本 | 变更内容 |
 |------|---------|
+| v1.2.6 | `beforeShow`/`beforeHide` 回调文档完善，明确为纯函数不应包含副作用；触摸设备 trigger 兜底策略由过滤替换改为追加 click |
 | v1.2.2 | 修复目标元素更新时浮层位置未同步的问题 |
 | v1.1.0 | 调整边框位置 |
 | v0.0.75 | 新增 `adaptive` prop，空间不足时自动翻转弹出方向 |

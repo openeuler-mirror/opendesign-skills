@@ -1,12 +1,12 @@
 ---
 name: opendesign-components
 description: OpenDesign 组件库使用指南。当需要使用 OpenDesign Vue 组件库快速搭建页面时使用此 skill。支持所有 OpenDesign 组件（46 个），包括按钮、表单、表格、对话框、卡片、图标、滑块、步骤条、轻提示等常用 UI 组件。使用场景：(1) 使用 OpenDesign 组件构建 Vue 页面，(2) 查找组件使用方法和属性说明，(3) 获取组件代码示例
-last_update: 2026-07-06
+last_update: 2026-07-31
 ---
 
 # OpenDesign 组件库使用指南
 
-> 本 Skill 对应 @opensig/opendesign **v1.2.5**（2026-07 生成），最低依赖版本 ≥1.2.5。具体组件 API 在哪个版本引入/变更/废弃，查 [`ReleaseNote`](https://raw.atomgit.com/openeuler/opendesign-components/blobs/bb8e66ef9d79e2fd08fb841de9340ef00e5a841d/ReleaseNote.opendesign.md)。
+> 本 Skill 对应 @opensig/opendesign **v1.2.6**（2026-07 生成），最低依赖版本 ≥1.2.6。具体组件 API 在哪个版本引入/变更/废弃，查 [`ReleaseNote`](https://raw.atomgit.com/openeuler/opendesign-components/blobs/bb8e66ef9d79e2fd08fb841de9340ef00e5a841d/ReleaseNote.opendesign.md)。
 
 OpenDesign 是一个面向 openEuler 生态的 Vue 3 组件库，提供 59 个可复用 UI 组件。组件库有六套独立主题，**每个社区项目在初始化时选定一套，运行时只切换 dark/light 模式**。
 
@@ -1862,13 +1862,15 @@ IP 地址输入框，自动分段处理 IPv4 地址。
 
 ## OTag
 
-**主题色 `color`**：`normal`（默认）、`primary`、`success`、`warning`、`danger`
+**主题色 `color`**：`normal`（默认）、`info`、`primary`、`success`、`warning`、`danger`、`pending`（蓝色待处理态）、`disabled`（灰色禁用态）、`main2`（品牌渐变色）
 
 **形状 `variant`**：`solid`（默认）、`outline`
 
 **尺寸 `size`**：`large`（默认）、`medium`、`small`
 
 **`round`**：圆角值
+
+**交互态**：`interactive`（v1.2.6 新增，设为 true 后 hover 时有背景/边框变化；`closable` 为 true 时自动开启）
 
 **可关闭**：`closable`、`v-model:visible`（控制显示/隐藏）、`beforeClose`（关闭前钩子）
 
@@ -1885,6 +1887,10 @@ IP 地址输入框，自动分段处理 IPv4 地址。
 
 <!-- 受控显示 -->
 <OTag v-model:visible="tagVisible" closable>可关闭标签</OTag>
+
+<!-- v1.2.6 新增：待处理态 + 品牌渐变色 -->
+<OTag color="pending">待审核</OTag>
+<OTag color="main2" variant="outline">品牌标签</OTag>
 ```
 
 > 详细使用说明和完整属性列表，请查看 [references/tag.md](references/tag.md)
@@ -2034,12 +2040,14 @@ const handleClick = () => showToast('操作成功');
 
 | 属性 | 类型 | 默认 | 说明 |
 |------|------|------|------|
-| `list` | `unknown[]` | — | 数据列表（必需） |
-| `itemSize` | `number` | — | 列表项固定高度（已知时设置可提升性能） |
-| `defaultItemSize` | `number` | `80` | 默认列表项高度（未知时的估算值） |
+| `list` | `unknown[]` | `[]` | 数据列表（必需，需含 id） |
+| `itemSize` | `number \| ((item, index) => number)` | — | 项高度。数字=定高；函数=按项定高；不传=不定高（运行时测量） |
+| `defaultItemSize` | `number` | `80` | 不定高时每项的预估默认高度 |
 | `buffer` | `number` | `1` | 缓冲区倍数（相对可视区域的上下额外渲染量） |
 | `defaultStartIndex` | `number` | `0` | 初始滚动到的索引 |
 | `scrollbar` | `boolean \| Object` | `true` | 滚动条配置 |
+| `layout` | `'vertical' \| 'horizontal'` | `'vertical'` | 布局方向（v1.2.6 新增） |
+| `threshold` | `number \| null` | `null` | 数据量阈值，低于此值不启用虚拟化（v1.2.6 新增） |
 
 **插槽**：
 - `#default` — 列表项模板，`props: { item: any, index: number }`
@@ -2048,7 +2056,8 @@ const handleClick = () => showToast('操作成功');
 - `@renderChange` — 渲染范围变化，`props: { start, end, visible, count }`
 
 **暴露方法**：
-- `scrollToView(index, align?, behavior?)` — 滚动到指定索引项
+- `scrollToView(index, align?, behavior?)` — 滚动到指定索引项。align 支持 `'start'`/`'end'`/`'center'`/`'nearest'`/数字偏移量
+- `scrollToOffset(px)` — 滚动到指定像素偏移量（v1.2.6 新增）
 
 ### 示例代码
 

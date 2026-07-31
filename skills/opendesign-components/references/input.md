@@ -468,4 +468,5 @@ layout:
 | 1.2.3-sp2 | fix | `input` 事件现在在 `update:model-value` 之后触发（修正 v1.1.0 引入的错误顺序） |
 | 1.2.3-sp2 | feature | 内部 InInput 组件新增 `noKeyboard` 属性（禁止移动端虚拟键盘） |
 | 1.2.4 | docs | OInput.vue 所有事件和暴露方法添加 JSDoc 注释 |
+| 1.2.6 | feature | `extra` 插槽添加到 defineSlots 声明；修复背景色 |
 

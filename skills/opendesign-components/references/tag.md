@@ -4,11 +4,11 @@
 
 ## Part A：设计理解卡
 
-OTag 是标签组件，用于标记和分类信息。支持六种颜色、两种样式、三种尺寸、可关闭、关闭前拦截、自定义图标。
+OTag 是标签组件，用于标记和分类信息。支持九种颜色、两种样式、三种尺寸、可交互态、可关闭、关闭前拦截、自定义图标。
 
 ### 外观
 
-**color**（属性）：标签颜色。"normal" 默认、"info" 信息、"primary" 主色、"success" 成功、"warning" 警告、"danger" 危险。默认 normal。
+**color**（属性）：标签颜色。"normal" 默认灰色、"info" 信息（同 normal 外观，语义区分用）、"primary" 主色蓝、"success" 成功绿、"warning" 警告橙、"danger" 危险红、"pending" 待处理蓝（v1.2.6 新增，使用 `--o-blue-6`）、"disabled" 禁用灰（v1.2.6 新增，无 hover 交互态）、"main2" 品牌渐变色（v1.2.6 新增，使用 `--o-color-main2` 渐变，outline 模式下文字和边框均为渐变效果）。默认 normal。
 
 **variant**（属性）：标签样式。"solid" 实心填充、"outline" 线框描边。默认 solid。
 
@@ -27,6 +27,10 @@ OTag 是标签组件，用于标记和分类信息。支持六种颜色、两种
 **closable**（属性）：是否显示关闭按钮。默认关闭。
 
 **beforeClose**（属性）：关闭前的钩子函数。返回 true 或 Promise\<true\> 允许关闭，返回 false 或 Promise\<false\> 阻止关闭。
+
+### 交互态
+
+**interactive**（属性）：是否可交互，用于渲染不同的交互态样式（v1.2.6 新增）。设为 true 后标签在 hover 时会有背景色、边框色变化。当 `closable` 为 true 时自动开启。默认 false。
 
 ### 插槽区域
 
@@ -67,7 +71,7 @@ import { OTag } from '@opensig/opendesign';
 ### 类型定义
 
 ```typescript
-type TagColorT = 'normal' | 'info' | 'primary' | 'success' | 'warning' | 'danger';
+type TagColorT = 'normal' | 'info' | 'primary' | 'success' | 'warning' | 'danger' | 'pending' | 'disabled' | 'main2';
 type TagVariantT = 'solid' | 'outline';
 type SizeT = 'large' | 'medium' | 'small';
 ```
@@ -76,10 +80,11 @@ type SizeT = 'large' | 'medium' | 'small';
 
 | 参数名 | 类型 | 可选值 | 默认值 | 说明 | 引入版本 |
 |--------|------|--------|--------|------|--------|
-| color | `TagColorT` | `'normal'` / `'info'` / `'primary'` / `'success'` / `'warning'` / `'danger'` | `'normal'` | 颜色 | — |
+| color | `TagColorT` | `'normal'` / `'info'` / `'primary'` / `'success'` / `'warning'` / `'danger'` / `'pending'` / `'disabled'` / `'main2'` | `'normal'` | 颜色 | `'pending'`/`'disabled'`/`'main2'` 为 v1.2.6 新增 |
 | variant | `TagVariantT` | `'solid'` / `'outline'` | `'solid'` | 样式 | — |
 | size | `SizeT` | `'large'` / `'medium'` / `'small'` | `'large'` | 尺寸 | — |
 | round | `RoundT` | `'pill'` / CSS 值 | — | 圆角。`pill` 时组件 JS 注入 `--tag-radius: 100vh` 内联样式（完全圆形） | — |
+| interactive | `boolean` | — | `false` | 是否可交互，渲染 hover 交互态样式。closable 为 true 时自动开启 | 1.2.6 |
 | closable | `boolean` | — | `false` | 可关闭 | — |
 | visible | `boolean` | — | `undefined` | 是否可见（v-model） | — |
 | defaultVisible | `boolean` | — | `true` | 默认可见 | — |
@@ -151,6 +156,31 @@ const visible = ref(true);
 <OTag size="small">小号</OTag>
 ```
 
+**场景 7：待处理/禁用状态标签（v1.2.6）**
+适用于：标记任务状态
+```vue
+<OTag color="pending">待审核</OTag>
+<OTag color="disabled">已禁用</OTag>
+```
+
+**场景 8：品牌渐变色标签（v1.2.6）**
+适用于：品牌专属标识，使用渐变背景
+```vue
+<!-- 实心渐变 -->
+<OTag color="main2">品牌标签</OTag>
+<!-- 渐变描边（文字和边框均为渐变效果） -->
+<OTag color="main2" variant="outline">品牌标签</OTag>
+```
+
+**场景 9：交互态标签（v1.2.6）**
+适用于：需要 hover 反馈的非关闭标签
+```vue
+<!-- 手动开启交互态 -->
+<OTag color="normal" interactive>可交互标签</OTag>
+<!-- closable 自动开启交互态 -->
+<OTag color="primary" closable>可关闭标签（自动交互态）</OTag>
+```
+
 ### 常见 prop 组合速查
 
 | 场景 | 推荐 prop 组合 | 说明 |
@@ -171,8 +201,13 @@ const visible = ref(true);
 | `--tag-color` | `var(--o-color-info1)`（normal） | 标签文字颜色（随 color 变化） |
 | `--tag-bg-color` | `var(--o-color-control2-light)`（normal） | 标签背景色（随 color/variant 变化）。**⚠️ 仅支持纯色**，渐变色无效（见下方「渐变背景」说明） |
 | `--tag-bd-color` | `var(--o-color-control2-light)`（normal） | 标签边框颜色（随 color/variant 变化） |
-| `--tag-icon-close-color` | `var(--o-color-info2)`（normal） | 关闭按钮图标颜色 |
-| `--tag-icon-close-color-hover` | `var(--o-color-info1)`（normal） | 关闭按钮 hover 颜色 |
+| `--tag-icon-close-color` | `inherit`（默认） | 关闭按钮图标颜色。v1.2.6 起默认改为 inherit（继承文字色） |
+| `--tag-icon-close-color-hover` | `inherit`（默认） | 关闭按钮 hover 颜色 |
+| `--tag-bd` | `1px solid var(--tag-bd-color)` | 边框完整样式（v1.2.6 新增，main2 模式下为 none） |
+| `--tag-bg-image` | `none` | 背景图片（v1.2.6 新增，main2 模式下使用 `--o-color-main2` 渐变） |
+| `--tag-bg-color-hover` | 随 color 变化 | hover 背景色（v1.2.6 新增，interactive/closable 时生效） |
+| `--tag-bd-color-hover` | 随 color 变化 | hover 边框色（v1.2.6 新增） |
+| `--tag-color-hover` | 随 color 变化 | hover 文字色（v1.2.6 新增，仅 outline 模式生效） |
 | `--tag-padding` | `0 11px`（large） | 标签水平内边距（随 size 变化） |
 | `--tag-text-size` | `var(--o-font_size-tip2)` | 标签文字字号 |
 | `--tag-text-height` | `var(--o-line_height-tip2)` | 标签文字行高 |
@@ -307,5 +342,6 @@ layout:
 
 | 版本 | 变更内容 |
 |------|---------|
+| v1.2.6 | 重构颜色与交互态体系：color 新增 `pending`/`disabled`/`main2` 三种颜色；新增 `interactive` 属性控制 hover 交互态；CSS 变量新增 `--tag-bd`/`--tag-bg-image`/`--tag-bg-color-hover`/`--tag-bd-color-hover`/`--tag-color-hover`；关闭按钮颜色默认改为 inherit（继承文字色）；outline 模式 normal 边框色从 control1 改为 control4；Ascend/Kunpeng 主题下 primary solid 标签文字色使用 `--o-color-info1-inverse` |
 | v1.1.0 | 修复受控模式下的问题 |
 
