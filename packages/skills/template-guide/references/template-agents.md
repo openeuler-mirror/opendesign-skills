@@ -134,7 +134,7 @@
 | 数据获取 | ✅ `useFetch` / `useAsyncData` / `$fetch` | ❌ 无内置数据获取 |
 | 社区切换同步点 | 2 处（nuxt.config.ts + store 常量） | 2 处（main.ts + store 常量） |
 | 入口文件 | `nuxt.config.ts` + `app/app.vue` | `main.ts` + `App.vue` + `index.html` |
-| 页面路由 | `pages/` 目录自动路由 | 无 `pages/` 目录 |
+| 页面路由 | `pages/` 目录自动路由 | `vue-router` + `router/index.ts` 配置 |
 | DOM 同步注入 | `useHead`（Nuxt 自动注入 `htmlAttrs`） | `watchEffect`（直接 `setAttribute`） |
 
 > **通用改动的同步**：如果 AGENTS.md 的某个通用章节（如组件拆分规范、AppSection 用法、最佳实践）需要更新，两套 AGENTS.md 都要同步改——特异章节只改对应模板。详见 [`template-sync.md`](template-sync.md)。
