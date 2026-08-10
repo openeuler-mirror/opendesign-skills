@@ -21,14 +21,16 @@ export default defineNuxtConfig({
     // 2. 鸿蒙字体（分片加载，按 unicode-range 切片懒加载）—— body font-family 由 global.scss 应用）
     // 会在 Nuxt dev/SSR 经 Node 原生 ESM loader 加载，Node 无法识别 .css 扩展名导致启动报错
     '@opensig/opendesign-token/fonts/font-harmony.css',
-    // 3. OpenDesign 组件库样式（使用上述 Token 变量）
-    '@opensig/opendesign/es/index.css',
-    // 4. 项目全局样式（可在上述基础上覆盖）
+    // 3. OpenDesign 组件库 OpenEuler 主题样式（使用上述 Token 变量，含 OButton/OInput/ODivider 等基础组件）
+    '@opensig/opendesign/es/theme/openeuler/index.css',
+    // 4. @opendesign-plus 组件样式（OHeader/OFooter/OHeaderTheme 等布局组件）
+    '@opendesign-plus/components/styles',
+    // 5. 项目全局样式（可在上述基础上覆盖）
     '~/assets/styles/global.scss',
   ],
   vite: {
     optimizeDeps: {
-      include: ['@opensig/opendesign'],
+      include: ['@opensig/opendesign', '@opendesign-plus/components'],
     },
     css: {
       preprocessorOptions: {

@@ -112,6 +112,7 @@
 | ScreenDetector.vue | `app/components/ScreenDetector.vue` | `src/components/ScreenDetector.vue` | 代码通常完全相同 |
 | Token* 演示组件 | `app/components/Token*.vue` | `src/components/Token*.vue` | 代码通常完全相同 |
 | theme.ts | `app/stores/theme.ts` | `src/stores/theme.ts` | **逻辑相同，DOM 同步特异**（`useHead` vs `watchEffect`） |
+| opendesign-plus 插件 | `app/plugins/opendesign-plus.ts` | `src/main.ts`（v-analytics 指令） | **特异**（Nuxt 用插件文件，SPA 在 main.ts 内联） |
 | mixin/*.scss | `app/assets/styles/mixin/*.scss` | `src/assets/styles/mixin/*.scss` | 完全相同 |
 | reset.scss | `app/assets/styles/reset.scss` | `src/assets/styles/reset.scss` | 完全相同 |
 | global.scss | `app/assets/styles/global.scss` | `src/assets/styles/global.scss` | 完全相同 |
@@ -123,15 +124,17 @@
 | 文件 | 路径 | 说明 |
 |------|------|------|
 | nuxt.config.ts | `nuxt.config.ts` | 模块注册 + css 数组 + SCSS 注入 |
-| app.vue | `app/app.vue` | 应用入口编排（NuxtLayout + NuxtPage） |
+| app.vue | `app/app.vue` | 应用入口编排（OPlusConfigProvider + NuxtLayout + NuxtPage）+ SSR 主题默认值 |
+| plugins/theme.ts | `app/plugins/theme.ts` | createTheme 主题插件（SSR + 客户端） |
+| plugins/opendesign-plus.ts | `app/plugins/opendesign-plus.ts` | v-analytics 埋点指令注册（no-op） |
 
 ### SPA 特异文件
 
 | 文件 | 路径 | 说明 |
 |------|------|------|
 | vite.config.ts | `vite.config.ts` | SCSS 注入 + 别名 |
-| main.ts | `src/main.ts` | createApp + 样式引入顺序 + Pinia + Router 注册 |
-| App.vue | `src/App.vue` | 主题初始化 + DefaultLayout 包裹 RouterView |
+| main.ts | `src/main.ts` | createApp + 样式引入顺序 + Pinia + Router + createTheme 注册 |
+| App.vue | `src/App.vue` | DefaultLayout 包裹 RouterView |
 | router/index.ts | `src/router/index.ts` | createWebHistory + 路由懒加载 |
 | index.html | `index.html` | `<html lang="zh-CN" data-o-theme="e.light">` |
 

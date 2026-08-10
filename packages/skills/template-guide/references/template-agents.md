@@ -127,15 +127,15 @@
 |------|---------------|---------------|
 | SSR 安全守卫 | ✅ 必含（服务端不可用 API 表 + hydration 防范 + ClientOnly 规范） | ❌ 不含（无 SSR） |
 | `<ClientOnly>` | ✅ 必含使用规范 | ❌ 不含 |
-| DOM 同步 | `useHead`（Nuxt HTML 注入通道） | `watchEffect` + `document.setAttribute` |
+| DOM 同步 | `createTheme`（客户端插件）+ `useHead`（SSR 默认值） | `createTheme`（main.ts 注册） |
 | 客户端守卫 | `import.meta.client` | ❌ 不需要 |
 | 自动导入 | ✅ Nuxt 自动导入规则 + 禁手动 import | ❌ 需显式 import |
 | Plugin 分类 | ✅ `.client.ts` / `.server.ts` / `.ts` | ❌ 无 Plugin 目录 |
 | 数据获取 | ✅ `useFetch` / `useAsyncData` / `$fetch` | ❌ 无内置数据获取 |
-| 社区切换同步点 | 2 处（nuxt.config.ts + store 常量） | 2 处（main.ts + store 常量） |
+| 社区切换同步点 | 3 处（nuxt.config.ts + theme 插件 + app.vue） | 2 处（main.ts token CSS + createTheme） |
 | 入口文件 | `nuxt.config.ts` + `app/app.vue` | `main.ts` + `App.vue` + `index.html` |
 | 页面路由 | `pages/` 目录自动路由 | `vue-router` + `router/index.ts` 配置 |
-| DOM 同步注入 | `useHead`（Nuxt 自动注入 `htmlAttrs`） | `watchEffect`（直接 `setAttribute`） |
+| DOM 同步注入 | `useHead`（SSR 默认值）+ `createTheme`（客户端接管） | `createTheme`（main.ts 直接注册） |
 
 > **通用改动的同步**：如果 AGENTS.md 的某个通用章节（如组件拆分规范、AppSection 用法、最佳实践）需要更新，两套 AGENTS.md 都要同步改——特异章节只改对应模板。详见 [`template-sync.md`](template-sync.md)。
 

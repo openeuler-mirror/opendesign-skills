@@ -1,67 +1,108 @@
 <script setup lang="ts">
 /**
- * @description 顶部导航栏组件。内含品牌 Logo 与主题切换按钮，
- *   使用 o-r-grid-container 做水平居中，消费设计令牌承担导航栏高度、间距与排版规范。
+ * @description 顶部导航栏。使用 @opendesign-plus/components 的 OHeader / OHeaderMobile
+ *   实现与 openEuler 官网一致的导航体验（Mega Menu、响应式切换、主题开关）。
+ *   导航数据在 data/nav.ts 中配置，主题切换使用 OHeaderTheme。
  */
-import ThemeToggle from '@/components/ThemeToggle.vue'
+import { computed, onMounted, ref } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+import { OHeader, OHeaderMobile, OHeaderTheme } from '@opendesign-plus/components'
+import { useTheme } from '@opendesign-plus/composables'
+
+import { useScreen } from '@opendesign-plus/composables'
+import { navData } from '@/data/nav'
+
+import logoLight from '@/assets/logo.png'
+import logoDark from '@/assets/logo-dark.png'
+
+const router = useRouter()
+const route = useRoute()
+const { theme, setTheme } = useTheme()
+const { lePadV } = useScreen()
+
+const isMounted = ref(false)
+onMounted(() => { isMounted.value = true })
+
+/** logo 跟随主题切换 */
+const logoUrl = computed(() => theme.value === 'dark' ? logoDark : logoLight)
+
+/** 当前激活的导航项 —— 按路由 path 匹配 navData 中的 id */
+const activeIndex = computed(() => {
+  const path = route.path.replace(/\/$/, '') || '/'
+  for (const item of navData) {
+    if (item.href === path || (item.href === '/' && path === '')) {
+      return item.id
+    }
+  }
+  return ''
+})
+
+/** 导航项点击 —— 路由跳转 */
+const handleNavClick = (val: { href?: string }) => {
+  if (val?.href) {
+    router.push(val.href)
+  }
+}
+
+/** Logo 点击 —— 回首页 */
+const goHome = () => {
+  router.push('/')
+}
+
+/** 主题切换 */
+const currentTheme = computed(() => theme.value)
+const onChangeTheme = (val: string) => {
+  setTheme(val as 'light' | 'dark')
+}
 </script>
 
 <template>
-  <header class="page-header">
-    <div class="o-r-grid-container header-inner">
-      <slot name="brand">
-        <div class="header-brand">
-          <svg
-            class="brand-logo"
-            viewBox="0 0 32 32"
-            width="28"
-            height="28"
-            fill="currentColor"
-          >
-            <path
-              d="M14.667 4c5.891 0 10.667 4.776 10.667 10.667 0 2.464-.836 4.733-2.239 6.539l4.448 4.451-1.886 1.886-4.449-4.449a10.62 10.62 0 0 1-6.541 2.24C8.776 25.334 4 20.558 4 14.667S8.776 4 14.667 4zm0 2.667a8 8 0 1 0 0 16 8 8 0 0 0 0-16z"/>
-          </svg>
-          <h1 class="brand-title">OpenDesign Token</h1>
-        </div>
-      </slot>
-      <slot name="actions">
-        <ThemeToggle/>
-      </slot>
-    </div>
-  </header>
+  <!-- 桌面端导航 -->
+  <OHeader
+    v-if="isMounted && !lePadV"
+    :logo="logoUrl"
+    :nav-data="navData"
+    :active-index="activeIndex"
+    community="OpenDesign"
+    @go-home="goHome"
+    @handle-click="handleNavClick"
+  >
+    <template #toolbar>
+      <div class="header-toolbar">
+        <OHeaderTheme
+          type="common"
+          :theme="currentTheme"
+          @change="onChangeTheme"
+        />
+      </div>
+    </template>
+  </OHeader>
+
+  <!-- 移动端导航 -->
+  <OHeaderMobile
+    v-if="isMounted && lePadV"
+    :logo="logoUrl"
+    :nav-data="navData"
+    :active-index="activeIndex"
+    community="OpenDesign"
+    @go-home="goHome"
+    @handle-click="handleNavClick"
+  >
+    <template #tool>
+      <OHeaderTheme
+        type="mobile"
+        :theme="currentTheme"
+        @change="onChangeTheme"
+      />
+    </template>
+  </OHeaderMobile>
 </template>
 
 <style lang="scss" scoped>
-.page-header {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background-color: var(--o-color-fill2);
-  border-bottom: 1px solid var(--o-color-control1);
-  box-shadow: var(--o-shadow-1);
-}
-
-.header-inner {
+.header-toolbar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  height: var(--o-control_size-2xl);
-}
-
-.header-brand {
-  display: flex;
-  align-items: center;
-  gap: var(--o-gap-2);
-}
-
-.brand-logo {
-  color: var(--o-color-primary1);
-  flex-shrink: 0;
-}
-
-.brand-title {
-  @include h3;
-  color: var(--o-color-info1);
-  margin: 0;
+  height: 100%;
 }
 </style>
+

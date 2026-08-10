@@ -11,10 +11,13 @@
     "gen:icon": "open-scripts gen:icon --config ./icons/icon.config.ts"
   },
   "dependencies": {
+    "@opendesign-plus/components": "0.0.1-rc.62",
+    "@opendesign-plus/composables": "0.0.1-rc.10",
     "@opensig/opendesign": "^1.2.5",
     "@opensig/opendesign-token": "^0.1.1",
     "@pinia/nuxt": "^0.11.3",
     "@vueuse/nuxt": "^14.3.0",
+    "js-cookie": "^3.0.8",
     "nuxt": "^4.4.8",
     "pinia": "^3.0.4",
     "vue": "^3.5.38",

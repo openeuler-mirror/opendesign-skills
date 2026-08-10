@@ -19,8 +19,12 @@
 | 文件 | Nuxt 路径 | SPA 路径 | 通用/特异 | 作用 | 联动范围 |
 |------|----------|----------|----------|------|---------|
 | 配置文件 | `nuxt.config.ts` | `vite.config.ts` | **特异**（结构不同） | 模块注册 + 样式引入顺序 + SCSS 全局注入 | 改样式顺序影响全站视觉；改 SCSS 注入影响所有组件 |
-| theme store | `app/stores/theme.ts` | `src/stores/theme.ts` | **通用**（逻辑相同，DOM 同步特异） | DOM 同步 + 社区常量 | 改社区常量需联动配置文件 |
-| 主题切换 | `app/components/ThemeToggle.vue` | `src/components/ThemeToggle.vue` | **通用** | 主题切换按钮 | 改切换逻辑需联动 store |
+| theme 插件 | `app/plugins/theme.ts` | `src/main.ts`（createTheme 调用） | **特异**（Nuxt 用插件，SPA 在 main.ts） | createTheme 管理 data-o-theme | 改社区常量需联动配置文件 |
+| opendesign-plus 插件 | `app/plugins/opendesign-plus.ts` | `src/main.ts`（v-analytics 指令注册） | **特异**（Nuxt 用插件，SPA 在 main.ts） | v-analytics 埋点指令 no-op 注册 | 改社区常量需联动配置文件 |
+| AppHeader | `app/components/AppHeader.vue` | `src/components/AppHeader.vue` | **通用**（使用 OHeader，数据驱动） | OHeader + OHeaderTheme + 导航数据 | 改导航数据需联动 data/nav.ts |
+| AppFooter | `app/components/AppFooter.vue` | `src/components/AppFooter.vue` | **通用**（使用 OFooter，数据驱动） | OFooter 深色页脚 + 页脚数据 | 改页脚数据需联动 data/footer.ts |
+| 导航数据 | `app/data/nav.ts` | `src/data/nav.ts` | **通用** | OHeader 导航菜单配置 | 改导航结构需联动 AppHeader |
+| 页脚数据 | `app/data/footer.ts` | `src/data/footer.ts` | **通用** | OFooter 页脚内容配置 | 改页脚结构需联动 AppFooter |
 | 楼层容器 | `app/components/AppSection.vue` | `src/components/AppSection.vue` | **通用** | 宽度/间距/标题排版规范 | 改排版规则影响全站楼层 |
 | 断点检测 | `app/components/ScreenDetector.vue` | `src/components/ScreenDetector.vue` | **通用** | 响应式断点检测（初始化 `useScreen()`） | 改检测逻辑影响全站响应式 |
 | 三套 mixin | `app/assets/styles/mixin/*.scss` | `src/assets/styles/mixin/*.scss` | **通用** | common / font / screen | 改 mixin 影响所有使用该 mixin 的组件 |
@@ -44,15 +48,16 @@
 
 切换社区主题时，必须**同时修改**以下位置，缺一即视觉错乱——这是最典型的**通用意图 + 特异实现**案例：
 
-### Nuxt（2 处）
+### Nuxt（3 处）
 
 1. **`nuxt.config.ts`** 的 `css` 数组中 token CSS 引入路径（如 `e.light.token.css` → `a.light.token.css`）
-2. **`stores/theme.ts`** 的 `OPENDESIGN_COMMUNITY` 常量（如 `'e'` → `'a'`）
+2. **`plugins/theme.ts`** 的 `attributeLightValue` / `attributeDarkValue`（如 `'e.light'` → `'a.light'`）
+3. **`app.vue`** 的 `useHead` 默认 `data-o-theme` 值（如 `'e.light'` → `'a.light'`）
 
 ### SPA（2 处）
 
 1. **`main.ts`** 的 token CSS 引入路径
-2. **`stores/theme.ts`** 的 `OPENDESIGN_COMMUNITY` 常量
+2. **`main.ts`** 的 `createTheme` 调用中 `attributeLightValue` / `attributeDarkValue`
 
 ---
 
@@ -60,7 +65,7 @@
 
 两套脚手架的样式引入顺序必须严格保持，违反即视觉错乱——**通用意图，特异实现**：
 
-**CSS Reset → Token CSS → 鸿蒙字体 → 组件库样式 → 项目全局样式**
+**CSS Reset → Token CSS → 鸿蒙字体 → OpenDesign OpenEuler 主题样式 → @opendesign-plus 组件样式 → 项目全局样式**
 
 | 脚手架 | 机制 | 位置 |
 |--------|------|------|
