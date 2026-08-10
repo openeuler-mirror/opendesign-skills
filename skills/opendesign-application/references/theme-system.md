@@ -207,7 +207,7 @@ const { isDark } = storeToRefs(useThemeStore())
 </style>
 ```
 
-> `OSwitch` 的 `--switch-color` 覆盖无需 `:deep`，直接在样式块中设置即可。详见 [switch.md](../opendesign-components/references/switch.md) 的「可覆盖的 CSS 变量」章节。
+> `OSwitch` 的 `--switch-color` 覆盖无需 `:deep`，直接在样式块中设置即可。详见 [switch.style.md](../opendesign-components/references/switch.style.md) 的「可覆盖的 CSS 变量」章节。
 >
 > `isDark` 是 store 的 writable computed，getter 读取当前模式，setter 调用 `setMode`。**必须通过 `storeToRefs` 解构**——直接 `const { isDark } = useThemeStore()` 会丢失响应性，v-model 绑定失效。
 >

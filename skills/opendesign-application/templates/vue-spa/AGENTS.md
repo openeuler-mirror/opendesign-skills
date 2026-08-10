@@ -19,8 +19,11 @@
 | 构建工具 | Vite 8 | webpack / rollup |
 | 框架 | Vue 3（Composition API） | React / Angular / Vue 2 Options API |
 | 状态管理 | Pinia 3 | Vuex / Redux / 手写 reactive |
+| 路由 | Vue Router 5（createWebHistory） | 手写路由 / hash 路由 |
+| 主题管理 | @opendesign-plus/composables createTheme | 手写主题切换 / localStorage 方案 |
 | CSS 预处理 | SCSS（sass-embedded） | Less / Stylus / 纯 CSS |
 | 设计系统 | @opensig/opendesign + @opensig/opendesign-token | 自造 UI / 其他组件库 |
+| 导航与页脚 | @opendesign-plus/components（OHeader / OFooter） | 手写导航 / 其他布局方案 |
 | 图标生成 | @opensig/open-scripts gen:icon | 手写 SVG 内联 / 其他图标方案 |
 | 工具库 | @vueuse/core | 手写 composables 替代 VueUse 已有功能 |
 
@@ -31,16 +34,19 @@
 | 文件 | 职责 | 严禁做的事 |
 |------|------|-----------|
 | `index.html` | `<div id="app">` | 不在此引入外部 CSS/JS、不写业务逻辑 |
-| `main.ts` | createApp + Pinia 注册 + **样式引入（顺序不可调换）** | 不在此注册全局组件、不在此写业务逻辑、不在此调 API |
-| `App.vue` | 应用入口（主题初始化 + DefaultLayout 包裹页面） | 不在此写骨架、不在此写楼层内容、不在此做数据请求 |
+| `main.ts` | createApp + Pinia 注册 + Router 注册 + **createTheme 主题插件** + **样式引入（顺序不可调换）** | 不在此注册全局组件、不在此写业务逻辑、不在此调 API |
+| `router/index.ts` | 路由配置（createWebHistory + routes + 懒加载） | 不在此写业务逻辑、不在此写组件 |
+| `App.vue` | 应用入口（OPlusConfigProvider 包裹 + DefaultLayout 包裹 RouterView） | 不在此写骨架、不在此写楼层内容、不在此做数据请求 |
 | `layouts/DefaultLayout.vue` | 页面骨架（AppHeader + slot + AppFooter） | 不在此写楼层内容、不在此做数据请求 |
 | `pages/*.vue` | 页面楼层内容编排 | 不在此写骨架结构 |
+| `data/nav.ts` | OHeader 导航数据配置 | 不在此写业务逻辑 |
+| `data/footer.ts` | OFooter 页脚数据配置 | 不在此写业务逻辑 |
 | `vite.config.ts` | SCSS 注入 + 别名（`@` + `#icons`） | 不在此写业务逻辑 |
 | `icons/icon.config.ts` | gen:icon 配置（SVG 源目录 → Vue 图标组件输出） | 不在此写业务逻辑 |
 
 ### 1.3 样式引入顺序
 
-**红线，违反即视觉错乱。** 顺序：CSS Reset → Token CSS → 鹦鸿字体 → 组件库样式 → 项目全局样式。原理详见 opendesign-application skill → getting-started。SPA 中在 `main.ts` 用 `import` 语句保证，**不可调换，不可跳过任何一项**。
+**红线，违反即视觉错乱。** 顺序：CSS Reset → Token CSS → 鹦鸿字体 → OpenDesign OpenEuler 主题样式 → @opendesign-plus 组件样式 → 项目全局样式。原理详见 opendesign-application skill → getting-started。SPA 中在 `main.ts` 用 `import` 语句保证，**不可调换，不可跳过任何一项**。
 
 > CSS Reset（`reset.scss`）必须在 Token 之前——归零规则最早生效，后续 Token / 组件样式 / global.scss 覆盖可正常叠加。reset.scss 详解见 opendesign-application skill → styles-infrastructure。
 
@@ -61,8 +67,10 @@
 | 页面级组件 | `components/XxxPage.vue` | 大驼峰 + `Page` 后缀 |
 | 通用 UI 片段 | `components/XxxSection.vue` | 大驼峰 + 语义后缀 |
 | 子组件（被父组件引用） | `components/父组件名/XxxItem.vue` | 父组件名子目录 + 大驼峰 |
+| 路由配置 | `router/index.ts` | `createRouter` + `createWebHistory`，路由懒加载 |
+| 页面路由组件 | `pages/XxxPage.vue` | 大驼峰 + `Page` 后缀，在 router 中懒加载引用 |
 
-> 本项目是 SPA，无 vue-router 文件路由。页面内容在 `pages/*.vue` 中按楼层编排，由 `DefaultLayout` 统一包裹骨架（AppHeader + AppFooter）。
+> 页面内容在 `pages/*.vue` 中按楼层编排，由 `DefaultLayout` 统一包裹骨架（AppHeader + AppFooter）。路由出口 `<RouterView />` 在 `App.vue` 中注入，路由配置在 `router/index.ts` 中管理。
 
 ---
 
@@ -130,24 +138,17 @@
 
 ### 3.2 AppHeader 导航栏组件
 
-`AppHeader` 是页面顶部导航栏组件，内含品牌 Logo 与主题切换按钮，使用 `o-r-grid-container` 做水平居中，消费设计令牌承担导航栏高度、间距与排版规范。
+`AppHeader` 使用 `@opendesign-plus/components` 的 `OHeader` / `OHeaderMobile` 实现与 openEuler 官网一致的导航体验。包含品牌 Logo、导航菜单（Mega Menu）、主题切换（`OHeaderTheme`）。导航数据在 `data/nav.ts` 中配置。
 
-**Slots**：
-
-| Slot | 说明 |
-|------|------|
-| `brand` | 品牌区域，不传时回退到默认 Logo + 标题组合 |
-| `actions` | 右侧操作区，不传时回退到默认 ThemeToggle |
+**关键特性**：
+- 桌面端使用 `OHeader`（固定定位 + Mega Menu 下拉面板）
+- 移动端使用 `OHeaderMobile`（抽屉式导航）
+- 主题切换使用 `OHeaderTheme`（自动响应 light/dark）
+- 导航项点击通过 `@handle-click` 事件处理路由跳转
 
 ### 3.3 AppFooter 页脚组件
 
-`AppFooter` 是页面底部页脚组件，内含版权信息，使用 `o-r-grid-container` 做水平居中，消费设计令牌承担页脚间距与排版规范。
-
-**Slots**：
-
-| Slot | 说明 |
-|------|------|
-| `default` | 页脚内容区，不传时回退到默认 Powered by 文本 |
+`AppFooter` 使用 `@opendesign-plus/components` 的 `OFooter` 实现与 openEuler 官网一致的深色页脚设计。包含快速导航链接、友情链接、Logo + 邮箱、法律链接与版权信息。数据在 `data/footer.ts` 中配置。
 
 ### 3.4 布局与页面分层
 
@@ -155,11 +156,11 @@ SPA 采用三层分离：`App.vue` → `layouts/DefaultLayout.vue` → `pages/*.
 
 | 层级 | 文件 | 职责 |
 |------|------|------|
-| 入口 | `src/App.vue` | 主题初始化（useThemeStore）+ DefaultLayout 包裹页面 |
-| 骨架 | `src/layouts/DefaultLayout.vue` | AppHeader + `<slot />`（楼层内容）+ AppFooter |
+| 入口 | `src/App.vue` | OPlusConfigProvider 包裹 + DefaultLayout 包裹 RouterView |
+| 骨架 | `src/layouts/DefaultLayout.vue` | AppHeader（含导航链接）+ `<slot />`（楼层内容）+ AppFooter |
 | 页面 | `src/pages/*.vue` | 楼层编排（AppSection 包裹业务组件） |
 
-> **App.vue 不承载骨架或楼层内容**——骨架由 layout 承担，楼层内容由 page 承担。新增页面只需在 `pages/` 下新建 `.vue` 文件，在 App.vue 中引用即可，骨架自动复用。
+> **App.vue 不承载骨架或楼层内容**——骨架由 layout 承担，楼层内容由 page 承担。新增页面只需在 `pages/` 下新建 `.vue` 文件并在 `router/index.ts` 中注册路由，骨架自动复用。
 
 **关键约束**:
 
@@ -208,19 +209,24 @@ SPA 采用三层分离：`App.vue` → `layouts/DefaultLayout.vue` → `pages/*.
 > AppSection 组件详解见本章「业务组件 / AppSection 楼层组件」章节，AppSection 的设计令牌与楼层结构原理见 opendesign-application skill → styles-infrastructure 的「栅格容器」与「楼层式页面结构」章节。
 
 ```vue
-<!-- App.vue：应用入口，主题初始化 + 页面编排 -->
+<!-- App.vue：应用入口，主题初始化 + 路由出口 -->
 <template>
   <DefaultLayout>
-    <HomePage />
+    <RouterView />
   </DefaultLayout>
 </template>
 ```
 
 ```vue
-<!-- layouts/DefaultLayout.vue：页面骨架 -->
+<!-- layouts/DefaultLayout.vue：页面骨架 + 导航链接 -->
 <template>
   <div>
-    <AppHeader />
+    <AppHeader>
+      <template #nav>
+        <RouterLink to="/" class="nav-link">首页</RouterLink>
+        <RouterLink to="/about" class="nav-link">关于</RouterLink>
+      </template>
+    </AppHeader>
     <main>
       <slot />
     </main>
@@ -425,9 +431,11 @@ import { AppIconSun, AppIconMoon } from '#icons'
 
 ### 7.1 页面组装与楼层结构
 
-新页面内容按**楼层**添加到 `pages/*.vue`——全宽页面楼层统一使用 `<AppSection>` 组件，标题通过 `title` / `subtitle` prop 传入，主体内容通过默认插槽传入。`pages/*.vue` 只编排楼层，不写具体业务内容。骨架（AppHeader + AppFooter）由 `layouts/DefaultLayout.vue` 承担，`App.vue` 只做主题初始化与页面编排。
+新页面内容按**楼层**添加到 `pages/*.vue`——全宽页面楼层统一使用 `<AppSection>` 组件，标题通过 `title` / `subtitle` prop 传入，主体内容通过默认插槽传入。`pages/*.vue` 只编排楼层，不写具体业务内容。骨架（AppHeader + AppFooter）由 `layouts/DefaultLayout.vue` 承担，`App.vue` 只做主题初始化与路由出口编排。
 
 > AppSection 组件详解见本章「业务组件 / AppSection 楼层组件」章节。AppSection 的设计令牌与楼层结构原理见 opendesign-application skill → styles-infrastructure 的「栅格容器」与「楼层式页面结构」章节。
+
+> 新增页面只需在 `pages/` 下新建 `.vue` 文件，并在 `router/index.ts` 中注册路由（懒加载 import），骨架自动复用。
 
 ### 7.2 组件内部结构规范
 
@@ -478,13 +486,13 @@ SPA 专属补充：
 
 ### 7.6 主题切换
 
-> 完整主题系统集成（Pinia store、社区切换、ThemeToggle）见 opendesign-application skill → theme-system。
+> 完整主题系统集成（createTheme 插件、OHeaderTheme 组件）见 opendesign-application skill → theme-system。
 
-业务代码统一走 `useThemeStore()` 的 `isDark`（writable computed）或 `setMode`，不直接操作 DOM。
+主题由 `main.ts` 中的 `createTheme` 插件统一管理（`@opendesign-plus/composables`），自动设置 `data-o-theme` 属性。组件中使用 `useTheme()` 获取主题状态和切换方法。`OHeaderTheme` 组件提供 UI 开关。
 
 改社区时需同步修改两处：
 1. `main.ts` 的 token CSS 引入
-2. `stores/theme.ts` 的 `OPENDESIGN_COMMUNITY` 常量
+2. `createTheme` 的 `attributeLightValue` / `attributeDarkValue` 参数
 
 ---
 
@@ -507,11 +515,12 @@ SPA 专属补充：
 
 | 文件 | 作用 |
 |------|------|
-| `main.ts` | 入口 + 样式引入顺序 |
+| `main.ts` | 入口 + 样式引入顺序 + Pinia + Router + createTheme 注册 + v-analytics 指令注册 |
 | `index.html` | SPA 入口 HTML |
+| `router/index.ts` | 路由配置（createWebHistory + routes + 懒加载） |
 | `vite.config.ts` | SCSS 全局注入 + 别名（`@` + `#icons`） |
-| `stores/theme.ts` | 主题 store |
-| `components/ThemeToggle.vue` | 主题切换开关（OSwitch） |
+| `data/nav.ts` | OHeader 导航数据 |
+| `data/footer.ts` | OFooter 页脚数据 |
 | `components/AppSection.vue` | 楼层通用容器（标题/主体/底部 + 宽度/间距/排版规范） |
 | `assets/styles/mixin/*.scss` | 三套 mixin |
 | `assets/styles/reset.scss` | CSS Reset（归零 UA 默认样式，必须在 Token 之前） |
@@ -541,4 +550,4 @@ SPA 专属补充：
 
 ---
 
-**最后更新**：2026-07-07
+**最后更新**：2026-08-10（集成 @opendesign-plus/components OHeader/OFooter + createTheme 主题管理 + Vue Router）
