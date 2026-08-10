@@ -5,7 +5,7 @@
 Skill 自评与进度管理的操作指南。每完成一个 Skill 后按此流程执行。
 
 > 本指南覆盖两类 Skill 的自评：
-> - **代码 Skill**：组件/脚本（`skills/opendesign-{components,scripts}/references/{name}.md`）
+> - **代码 Skill**：组件（`skills/opendesign-components/references/{name}.{visual|usage|style}.md` 三文件）/ 脚本（`skills/opendesign-scripts/references/{name}.md`）
 > - **设计 Skill**：Pixso 组件设计规范（`skills/opendesign-design/references/components/{name}.md`）
 >
 > 维度表中「适用类型」列指明该维度对哪类 Skill 生效。
@@ -26,13 +26,13 @@ Skill 自评与进度管理的操作指南。每完成一个 Skill 后按此流�
 | **结构准确性** | 组件层级结构树是否与 Pixso DSL 实际结构吻合；尺寸约束（固定/填充/自适应）是否正确标注。 | 设计 |
 | **响应式覆盖** | 代码：是否体现 4 个断点（≤840 / 841–1200 / 1201–1680 / >1680px）+ 触控 vs 指针差异。<br>设计：是否参照远端 grid-token.json / responsive-token.json 描述各断点下的布局变化。 | 两者 |
 | **场景覆盖** | 代码：典型场景是否覆盖 `__docs__/__case__/` 中的实际用法；推演有源码依据、无凭空假设。<br>设计：适用场景是否覆盖主要使用情况；易混淆组件是否列出。 | 两者 |
-| **可用性 / 可读性** | 设计理解卡（Part A）真不含代码术语、类型签名；非开发/设计师能直接读懂组件能做什么。 | 两者 |
+| **可用性 / 可读性** | `visual.md` 真不含代码术语、类型签名；非开发/设计师能直接读懂组件能做什么。 | 两者 |
 | **可拼装性** | 代码模板能直接复制使用；Props/Events/Slots 名拼写正确；示例的 prop 值都在可选值范围内。 | 代码 |
 | **Pixso 可操作性** | 设计师能否仅凭此 Skill 在 Pixso 中正确插入组件、切换变体、应用 Token？ | 设计 |
-| **一致性** | Part A 与 Part B 之间对齐，无矛盾或遗漏。 | 两者 |
+| **一致性** | `visual.md` 与 `usage.md`/`style.md` 之间对齐，无矛盾或遗漏。 | 两者 |
 | **LLM 友好度** | AI 能否仅凭此 Skill 正确使用该组件？检查：①信息自包含；②无歧义表述；③模板/规范完整可直接套用；④约束和互斥关系显式声明。 | 两者 |
 | **布局准确性** | 布局结构图与 Playwright 快照吻合；slot/prop 标注位置与实际视觉位置一致；多断点布局差异有体现。 | 代码 |
-| **Pixso MCP 协同（代码侧）** | 设计师在 Pixso 中看到的视觉结构，能否通过布局结构图与设计理解卡快速映射到组件 API；设计工具术语使用恰当。 | 代码 |
+| **Pixso MCP 协同（代码侧）** | 设计师在 Pixso 中看到的视觉结构，能否通过布局结构图与 `visual.md` 快速映射到组件 API；设计工具术语使用恰当。 | 代码 |
 | **AI 可用性（设计侧）** | AI 能否仅凭此 Skill 精准匹配组件、应用正确 Token、识别设计稿中的该组件？ | 设计 |
 | **识别可靠性** | 识别特征是否足够唯一；易混淆组件的区分标准是否清晰可操作。 | 设计 |
 

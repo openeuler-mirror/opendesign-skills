@@ -145,6 +145,7 @@
 | 文件类型 | 放在哪里 | 注意事项 |
 |---------|---------|---------|
 | 入口样式引入 | `src/main.ts` | 新增样式按引入顺序追加 import |
+| Router 配置 | `src/router/index.ts` | `createWebHistory` + 路由懒加载；在 `main.ts` 中 `app.use(router)` 注册 |
 | HTML 入口 | `index.html` | `<html lang="zh-CN" data-o-theme="e.light">` |
 
 ---

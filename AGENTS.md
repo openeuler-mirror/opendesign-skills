@@ -72,7 +72,9 @@
     │   ├── SKILL.md               ← 组件 Skill 索引与使用指南（第二层）
     │   ├── CHANGELOG.md           ← 本 skill 变更记录（第二层）
     │   └── references/
-    │       ├── {component}.md     ← 各组件详细文档（第三层：Skill 本体）
+    │       ├── {component}.visual.md  ← 视觉识别（第三层：Skill 本体）
+    │       ├── {component}.usage.md   ← 代码使用（第三层：Skill 本体）
+    │       ├── {component}.style.md   ← 样式定制（第三层：Skill 本体）
     │       ├── {component}.review.md  ← 自评报告（仅开发期间，gitignore）
     │       └── _skill-gen-status.md   ← 进度追踪（仅开发期间，gitignore）
     ├── opendesign-scripts/        ← 5 个 CLI 命令的 Skill
@@ -116,7 +118,7 @@
 |------|------|------|---------|
 | **第一层** | 生产指导 | AI 编码工具（写作者） | `AGENTS.md`、`packages/skills/skill-gen-guide/`、`*.review.md`、`_skill-gen-status.md` |
 | **第二层** | 共享约定 | Skill 调用者（跨 Skill 公共上下文） | `skills/*/SKILL.md`（含 `last_update` 字段）、`skills/*/CHANGELOG.md` |
-| **第三层** | Skill 本体 | Skill 调用者（AI 工具 / 开发者） | `skills/*/references/{name}.md` |
+| **第三层** | Skill 本体 | Skill 调用者（AI 工具 / 开发者） | `skills/*/references/{name}.{visual|usage|style}.md`（组件 skill 三文件拆分） |
 
 **判断标准：这段内容是否需要随 Skill 一起分发给使用者？**
 
@@ -199,7 +201,7 @@ pnpm skills:update               # 拉取最新版并更新 lock 文件
 - **Slot 约定**：未传入时不渲染；外层 slot 使用时内部子 slot 全失效
 - **触控 vs 指针**：通过 `isTouchDevice` 区分，影响 hover 交互
 - **CSS 变量覆盖**：无需 `:deep`，直接在样式中覆盖
-- **文件组织**：平铺结构（每组件/命令一个 `.md`），reference 文件头部包含返回链接（格式见 `skill-gen-guide`）
+- **文件组织**：组件 Skill 按用途拆分为三文件（`{name}.visual.md` + `{name}.usage.md` + `{name}.style.md`），脚本/Token Skill 保持单文件（`{name}.md`），reference 文件头部包含交叉引用导航链接（格式见 `skill-gen-guide`）
 
 ## 内容更新原则：融合而非补丁
 
@@ -235,7 +237,7 @@ pnpm skills:update               # 拉取最新版并更新 lock 文件
 
 1. 指定组件名（如 "Dialog"）
 2. 读取 [`skill-gen-guide`](packages/skills/skill-gen-guide/SKILL.md) 的代码侧 reference，按 7 步流程执行
-3. 生成 Skill 文件到 `skills/opendesign-components/references/dialog.md`
+3. 生成 Skill 文件到 `skills/opendesign-components/references/dialog.usage.md`（参见 SKILL.md 命名约定：`{name}.{visual|usage|style}.md`）
 4. 按 [`skill-gen-guide/references/skill-review.md`](packages/skills/skill-gen-guide/references/skill-review.md) 完成自评，生成 `dialog.review.md`
 5. 更新 `_skill-gen-status.md`
 
@@ -249,7 +251,7 @@ pnpm skills:update               # 拉取最新版并更新 lock 文件
 ### 场景 3：支持 Pixso MCP 协同（代码侧 Skill）
 
 1. 确保布局结构图的准确性（与 Playwright 快照对齐）
-2. 在设计理解卡中使用设计工具术语（"自动布局""固定宽度"等）
+2. 在 `visual.md` 中使用设计工具术语（"自动布局""固定宽度"等）
 3. 标注各 slot/prop 在视觉上的位置和尺寸规律
 4. 响应式行为表清晰地展示多断点变化
 

@@ -1,7 +1,7 @@
 ---
 name: opendesign-components
 description: OpenDesign 组件库使用指南。当需要使用 OpenDesign Vue 组件库快速搭建页面时使用此 skill。支持所有 OpenDesign 组件（46 个），包括按钮、表单、表格、对话框、卡片、图标、滑块、步骤条、轻提示等常用 UI 组件。使用场景：(1) 使用 OpenDesign 组件构建 Vue 页面，(2) 查找组件使用方法和属性说明，(3) 获取组件代码示例
-last_update: 2026-07-31
+last_update: 2026-08-10
 ---
 
 # OpenDesign 组件库使用指南
@@ -404,62 +404,67 @@ export default defineNuxtConfig({
 
 ## 组件索引
 
-- [OAnchor](#oanchor) — 锚点 · [参考文档](references/anchor.md)
-- [OAvatar / OAvatarGroup](#oavatar--oavatargroup) — 头像 · [参考文档](references/avatar.md)
-- [OBadge](#obadge) — 徽标 · [参考文档](references/badge.md)
-- [OBreadcrumb](#obreadcrumb) — 面包屑 · [参考文档](references/breadcrumb.md)
-- [OButton](#obutton) — 按钮 · [参考文档](references/button.md)
-- [OCard](#ocard) — 卡片 · [参考文档](references/card.md)
-- [OCarousel](#ocarousel) — 幻灯片 · [参考文档](references/carousel.md)
-- [OCascader](#ocascader) — 级联选择 · [参考文档](references/cascader.md)
-- [OCascaderV2](#ocascaderV2) — 级联选择(PC重构版) · [参考文档](references/cascader-v2.md)
-- [OCheckbox / OCheckboxGroup](#ocheckbox--ocheckboxgroup) — 多选框 · [参考文档](references/checkbox.md)
-- [OCollapse](#ocollapse) — 折叠面板 · [参考文档](references/collapse.md)
-- [OConfigProvider](#oconfigprovider) — 全局配置 · [参考文档](references/config-provider.md)
-- [ODataTable](#odatatable) — 数据表格（高级） · [参考文档](references/data-table.md)
-- [ODatePicker 系列](#odatepicker) — 日期选择器 · [参考文档](references/date-picker.md)
-- [ODialog](#odialog) — 对话框 · [参考文档](references/dialog.md)
-- [ODivider](#odivider) — 分割线 · [参考文档](references/divider.md)
-- [ODropdown](#odropdown) — 下拉菜单 · [参考文档](references/dropdown.md)
-- [OFigure](#ofigure) — 图片 · [参考文档](references/figure.md)
-- [OForm / OFormItem](#oform--oformitem) — 表单 · [参考文档](references/form.md)
-- [ORow / OCol](#orow--ocol) — 栅格布局 · [参考文档](references/grid.md)
-- [OIcon](#oicon) — 图标 · [参考文档](references/icon.md)
-- [OInput](#oinput) — 输入框 · [参考文档](references/input.md)
-- [OInputNumber](#oinputnumber) — 数字输入框 · [参考文档](references/input-number.md)
-- [OIpInput](#oipinput) — IP 地址输入框 · [参考文档](references/ip-input.md)
-- [OLayer](#olayer) — 浮层 · [参考文档](references/layer.md)
-- [OLink](#olink) — 链接 · [参考文档](references/link.md)
-- [OLoading](#oloading) — 加载中 · [参考文档](references/loading.md)
-- [OMenu](#omenu) — 菜单 · [参考文档](references/menu.md)
-- [OMessage](#omessage) — 消息提示 · [参考文档](references/message.md)
-- [OPagination](#opagination) — 分页 · [参考文档](references/pagination.md)
-- [OPopover](#opopover) — 气泡卡片 · [参考文档](references/popover.md)
-- [OPopup](#opopup) — 弹出层 · [参考文档](references/popup.md)
-- [OProgress](#oprogress) — 进度条 · [参考文档](references/progress.md)
-- [ORadio / ORadioGroup](#oradio--oradiogroup) — 单选框 · [参考文档](references/radio.md)
-- [ORate](#orate) — 评分 · [参考文档](references/rate.md)
-- [OResult](#oresult) — 结果 · [参考文档](references/result.md)
-- [OScrollbar / OScroller](#oscrollbar--oscroller) — 滚动条 · [参考文档](references/scrollbar.md)
-- [OSelect](#oselect) — 选择器 · [参考文档](references/select.md)
-- [OSkeleton](#oskeleton) — 骨架屏 · [参考文档](references/skeleton.md)
-- [OSlider](#oslider) — 滑块 · [参考文档](references/slider.md)
-- [OStep / OStepItem](#ostep--ostepitem) — 步骤条 · [参考文档](references/step.md)
-- [OSwitch](#oswitch) — 开关 · [参考文档](references/switch.md)
-- [OTab / OTabPane](#otab--otabpane) — 标签页 · [参考文档](references/tab.md)
-- [OTag](#otag) — 标签 · [参考文档](references/tag.md)
-- [OTextarea](#otextarea) — 文本域 · [参考文档](references/textarea.md)
-- [OTimePicker 系列](#otimepicker) — 时间选择器 · [参考文档](references/time-picker.md)
-- [OToast](#otoast) — 轻提示 · [参考文档](references/toast.md)
-- [OToggle](#otoggle) — 选择块 · [参考文档](references/toggle.md)
-- [OUpload](#oupload) — 上传 · [参考文档](references/upload.md)
-- [OVirtualList](#ovirtuallist) — 虚拟列表 · [参考文档](references/virtual-list.md)
+> 每个组件的参考文档按用途拆分为三个文件：
+> - `{name}.visual.md` — 视觉识别（视觉特征指纹、Token→Prop 映射、易混淆组件区分）
+> - `{name}.usage.md` — 代码使用（API 表、代码模板、prop 组合速查、变更记录）
+> - `{name}.style.md` — 样式定制（CSS 变量、布局结构 YAML、响应式行为表）
+
+- [OAnchor](#oanchor) — 锚点 · `references/anchor.{visual|usage|style}.md`
+- [OAvatar / OAvatarGroup](#oavatar--oavatargroup) — 头像 · `references/avatar.{visual|usage|style}.md`
+- [OBadge](#obadge) — 徽标 · `references/badge.{visual|usage|style}.md`
+- [OBreadcrumb](#obreadcrumb) — 面包屑 · `references/breadcrumb.{visual|usage|style}.md`
+- [OButton](#obutton) — 按钮 · `references/button.{visual|usage|style}.md`
+- [OCard](#ocard) — 卡片 · `references/card.{visual|usage|style}.md`
+- [OCarousel](#ocarousel) — 幻灯片 · `references/carousel.{visual|usage|style}.md`
+- [OCascader](#ocascader) — 级联选择 · `references/cascader.{visual|usage|style}.md`
+- [OCascaderV2](#ocascaderV2) — 级联选择(PC重构版) · `references/cascader-v2.{visual|usage|style}.md`
+- [OCheckbox / OCheckboxGroup](#ocheckbox--ocheckboxgroup) — 多选框 · `references/checkbox.{visual|usage|style}.md`
+- [OCollapse](#ocollapse) — 折叠面板 · `references/collapse.{visual|usage|style}.md`
+- [OConfigProvider](#oconfigprovider) — 全局配置 · `references/config-provider.{visual|usage|style}.md`
+- [ODataTable](#odatatable) — 数据表格（高级） · `references/data-table.{visual|usage|style}.md`
+- [ODatePicker 系列](#odatepicker) — 日期选择器 · `references/date-picker.{visual|usage|style}.md`
+- [ODialog](#odialog) — 对话框 · `references/dialog.{visual|usage|style}.md`
+- [ODivider](#odivider) — 分割线 · `references/divider.{visual|usage|style}.md`
+- [ODropdown](#odropdown) — 下拉菜单 · `references/dropdown.{visual|usage|style}.md`
+- [OFigure](#ofigure) — 图片 · `references/figure.{visual|usage|style}.md`
+- [OForm / OFormItem](#oform--oformitem) — 表单 · `references/form.{visual|usage|style}.md`
+- [ORow / OCol](#orow--ocol) — 栅格布局 · `references/grid.{visual|usage|style}.md`
+- [OIcon](#oicon) — 图标 · `references/icon.{visual|usage|style}.md`
+- [OInput](#oinput) — 输入框 · `references/input.{visual|usage|style}.md`
+- [OInputNumber](#oinputnumber) — 数字输入框 · `references/input-number.{visual|usage|style}.md`
+- [OIpInput](#oipinput) — IP 地址输入框 · `references/ip-input.{visual|usage|style}.md`
+- [OLayer](#olayer) — 浮层 · `references/layer.{visual|usage|style}.md`
+- [OLink](#olink) — 链接 · `references/link.{visual|usage|style}.md`
+- [OLoading](#oloading) — 加载中 · `references/loading.{visual|usage|style}.md`
+- [OMenu](#omenu) — 菜单 · `references/menu.{visual|usage|style}.md`
+- [OMessage](#omessage) — 消息提示 · `references/message.{visual|usage|style}.md`
+- [OPagination](#opagination) — 分页 · `references/pagination.{visual|usage|style}.md`
+- [OPopover](#opopover) — 气泡卡片 · `references/popover.{visual|usage|style}.md`
+- [OPopup](#opopup) — 弹出层 · `references/popup.{visual|usage|style}.md`
+- [OProgress](#oprogress) — 进度条 · `references/progress.{visual|usage|style}.md`
+- [ORadio / ORadioGroup](#oradio--oradiogroup) — 单选框 · `references/radio.{visual|usage|style}.md`
+- [ORate](#orate) — 评分 · `references/rate.{visual|usage|style}.md`
+- [OResult](#oresult) — 结果 · `references/result.{visual|usage|style}.md`
+- [OScrollbar / OScroller](#oscrollbar--oscroller) — 滚动条 · `references/scrollbar.{visual|usage|style}.md`
+- [OSelect](#oselect) — 选择器 · `references/select.{visual|usage|style}.md`
+- [OSkeleton](#oskeleton) — 骨架屏 · `references/skeleton.{visual|usage|style}.md`
+- [OSlider](#oslider) — 滑块 · `references/slider.{visual|usage|style}.md`
+- [OStep / OStepItem](#ostep--ostepitem) — 步骤条 · `references/step.{visual|usage|style}.md`
+- [OSwitch](#oswitch) — 开关 · `references/switch.{visual|usage|style}.md`
+- [OTab / OTabPane](#otab--otabpane) — 标签页 · `references/tab.{visual|usage|style}.md`
+- [OTag](#otag) — 标签 · `references/tag.{visual|usage|style}.md`
+- [OTextarea](#otextarea) — 文本域 · `references/textarea.{visual|usage|style}.md`
+- [OTimePicker 系列](#otimepicker) — 时间选择器 · `references/time-picker.{visual|usage|style}.md`
+- [OToast](#otoast) — 轻提示 · `references/toast.{visual|usage|style}.md`
+- [OToggle](#otoggle) — 选择块 · `references/toggle.{visual|usage|style}.md`
+- [OUpload](#oupload) — 上传 · `references/upload.{visual|usage|style}.md`
+- [OVirtualList](#ovirtuallist) — 虚拟列表 · `references/virtual-list.{visual|usage|style}.md`
 
 ---
 
 ## Pixso MCP 设计稿识别指南
 
-> 通过 Pixso MCP 读取设计稿节点时，使用本节将图层数据映射到 OpenDesign 组件，再调用该组件的 `references/{name}.md` 获取完整 API。
+> 通过 Pixso MCP 读取设计稿节点时，使用本节将图层数据映射到 OpenDesign 组件，再调用该组件的 `references/{name}.visual.md` 获取视觉识别信息、`references/{name}.usage.md` 获取完整 API。
 
 ### 匹配流程
 
@@ -474,7 +479,7 @@ Pixso 图层信息（节点类型 / 图层名称 / 视觉属性 / 布局结构�
   ↓
 ④ 提取 Pixso 视觉属性 → 「属性映射表」转为 Props
   ↓
-⑤ 调用 references/{name}.md 获取完整代码模板
+⑤ 调用 references/{name}.visual.md 获取完整代码模板
 ```
 
 ---
@@ -485,51 +490,51 @@ Pixso 图层或组件实例名通常含有以下关键词，可直接映射：
 
 | 名称含有（不区分大小写） | 优先匹配组件 | Reference |
 |----------------------|------------|-----------|
-| button / btn / 按钮 | OButton | references/button.md |
-| input / 输入框 / text-field | OInput | references/input.md |
-| textarea / 文本域 / 多行输入 | OTextarea | references/textarea.md |
-| input-number / 数字输入 | OInputNumber | references/input-number.md |
-| ip-input / ip输入 | OIpInput | references/ip-input.md |
-| select / 下拉 / dropdown-select | OSelect | references/select.md |
-| cascader / 级联 | OCascader | references/cascader.md |
-| checkbox / 多选框 / 复选框 | OCheckbox | references/checkbox.md |
-| radio / 单选框 | ORadio | references/radio.md |
-| switch / 开关 | OSwitch | references/switch.md |
-| slider / 滑块 | OSlider | references/slider.md |
-| toggle / 选择块 | OToggle | references/toggle.md |
-| tag / 标签 | OTag | references/tag.md |
-| badge / 徽标 / 角标 | OBadge | references/badge.md |
-| progress / 进度条 / 进度环 | OProgress | references/progress.md |
-| rate / 评分 / 星级 | ORate | references/rate.md |
-| result / 结果页 | OResult | references/result.md |
-| skeleton / 骨架屏 / 占位 | OSkeleton | references/skeleton.md |
-| loading / 加载 | OLoading | references/loading.md |
-| message / 消息 / 提示条 | OMessage | references/message.md |
-| toast / 轻提示 / 浮动提示 | OToast | references/toast.md |
-| dialog / 弹窗 / modal | ODialog | references/dialog.md |
-| popover / 气泡 | OPopover | references/popover.md |
-| popup / 弹出层 | OPopup | references/popup.md |
-| dropdown / 下拉菜单 | ODropdown | references/dropdown.md |
-| layer / 浮层 | OLayer | references/layer.md |
-| card / 卡片 | OCard | references/card.md |
-| carousel / 幻灯片 / 轮播 | OCarousel | references/carousel.md |
-| collapse / 折叠 | OCollapse | references/collapse.md |
-| menu / 菜单 / sidebar-nav | OMenu | references/menu.md |
-| tab / 标签页 | OTab | references/tab.md |
-| step / 步骤条 | OStep | references/step.md |
-| breadcrumb / 面包屑 | OBreadcrumb | references/breadcrumb.md |
-| anchor / 锚点 | OAnchor | references/anchor.md |
-| pagination / 分页 | OPagination | references/pagination.md |
-| figure / 图片 / image | OFigure | references/figure.md |
-| icon / 图标 | OIcon | references/icon.md |
-| link / 链接 | OLink | references/link.md |
-| divider / 分割线 | ODivider | references/divider.md |
-| upload / 上传 | OUpload | references/upload.md |
-| scrollbar / scroller / 滚动 | OScrollbar | references/scrollbar.md |
-| virtual-list / 虚拟列表 | OVirtualList | references/virtual-list.md |
-| data-table / 表格 / table | ODataTable | references/data-table.md |
-| row / col / grid / 栅格 | ORow/OCol | references/grid.md |
-| form / 表单 | OForm | references/form.md |
+| button / btn / 按钮 | OButton | references/button.visual.md |
+| input / 输入框 / text-field | OInput | references/input.visual.md |
+| textarea / 文本域 / 多行输入 | OTextarea | references/textarea.visual.md |
+| input-number / 数字输入 | OInputNumber | references/input-number.visual.md |
+| ip-input / ip输入 | OIpInput | references/ip-input.visual.md |
+| select / 下拉 / dropdown-select | OSelect | references/select.visual.md |
+| cascader / 级联 | OCascader | references/cascader.visual.md |
+| checkbox / 多选框 / 复选框 | OCheckbox | references/checkbox.visual.md |
+| radio / 单选框 | ORadio | references/radio.visual.md |
+| switch / 开关 | OSwitch | references/switch.visual.md |
+| slider / 滑块 | OSlider | references/slider.visual.md |
+| toggle / 选择块 | OToggle | references/toggle.visual.md |
+| tag / 标签 | OTag | references/tag.visual.md |
+| badge / 徽标 / 角标 | OBadge | references/badge.visual.md |
+| progress / 进度条 / 进度环 | OProgress | references/progress.visual.md |
+| rate / 评分 / 星级 | ORate | references/rate.visual.md |
+| result / 结果页 | OResult | references/result.visual.md |
+| skeleton / 骨架屏 / 占位 | OSkeleton | references/skeleton.visual.md |
+| loading / 加载 | OLoading | references/loading.visual.md |
+| message / 消息 / 提示条 | OMessage | references/message.visual.md |
+| toast / 轻提示 / 浮动提示 | OToast | references/toast.visual.md |
+| dialog / 弹窗 / modal | ODialog | references/dialog.visual.md |
+| popover / 气泡 | OPopover | references/popover.visual.md |
+| popup / 弹出层 | OPopup | references/popup.visual.md |
+| dropdown / 下拉菜单 | ODropdown | references/dropdown.visual.md |
+| layer / 浮层 | OLayer | references/layer.visual.md |
+| card / 卡片 | OCard | references/card.visual.md |
+| carousel / 幻灯片 / 轮播 | OCarousel | references/carousel.visual.md |
+| collapse / 折叠 | OCollapse | references/collapse.visual.md |
+| menu / 菜单 / sidebar-nav | OMenu | references/menu.visual.md |
+| tab / 标签页 | OTab | references/tab.visual.md |
+| step / 步骤条 | OStep | references/step.visual.md |
+| breadcrumb / 面包屑 | OBreadcrumb | references/breadcrumb.visual.md |
+| anchor / 锚点 | OAnchor | references/anchor.visual.md |
+| pagination / 分页 | OPagination | references/pagination.visual.md |
+| figure / 图片 / image | OFigure | references/figure.visual.md |
+| icon / 图标 | OIcon | references/icon.visual.md |
+| link / 链接 | OLink | references/link.visual.md |
+| divider / 分割线 | ODivider | references/divider.visual.md |
+| upload / 上传 | OUpload | references/upload.visual.md |
+| scrollbar / scroller / 滚动 | OScrollbar | references/scrollbar.visual.md |
+| virtual-list / 虚拟列表 | OVirtualList | references/virtual-list.visual.md |
+| data-table / 表格 / table | ODataTable | references/data-table.visual.md |
+| row / col / grid / 栅格 | ORow/OCol | references/grid.visual.md |
+| form / 表单 | OForm | references/form.visual.md |
 
 ---
 
@@ -541,72 +546,72 @@ Pixso 图层或组件实例名通常含有以下关键词，可直接映射：
 
 | 视觉特征 | 组件 | Reference |
 |---------|------|-----------|
-| 圆角矩形 + 文本，有填充背景或描边，可点击触发操作 | OButton | references/button.md |
-| 横向矩形描边框 + 内部文本/占位符，可自由输入字符 | OInput | references/input.md |
-| 横向矩形描边框 + 内部文本 + **右侧固定 chevron 下箭头** | OSelect | references/select.md |
-| 多行可输入区域，有描边，支持垂直拉伸（或固定高度多行） | OTextarea | references/textarea.md |
-| 数字输入框 + **左右（或上下）加减控制按钮** | OInputNumber | references/input-number.md |
-| **四段**横向输入框，各段接受 0-255，段间有圆点 `.` 分隔 | OIpInput | references/ip-input.md |
-| 小**方形**框（或勾选图标）+ 右侧标签文本 | OCheckbox | references/checkbox.md |
-| 小**圆形**框（有内圆点状态）+ 右侧标签文本 | ORadio | references/radio.md |
-| 横向**胶囊形**轨道 + 圆形滑块（开/关两态，无数值） | OSwitch | references/switch.md |
-| 横向**长条**轨道 + 可拖动圆形滑块（有数值刻度） | OSlider | references/slider.md |
-| 矩形/胶囊形区域 + 文本，**可切换选中/未选中**两态 | OToggle | references/toggle.md |
-| 多层**逐级展开**的下拉面板（选择时触发下一级） | OCascader | references/cascader.md |
+| 圆角矩形 + 文本，有填充背景或描边，可点击触发操作 | OButton | references/button.visual.md |
+| 横向矩形描边框 + 内部文本/占位符，可自由输入字符 | OInput | references/input.visual.md |
+| 横向矩形描边框 + 内部文本 + **右侧固定 chevron 下箭头** | OSelect | references/select.visual.md |
+| 多行可输入区域，有描边，支持垂直拉伸（或固定高度多行） | OTextarea | references/textarea.visual.md |
+| 数字输入框 + **左右（或上下）加减控制按钮** | OInputNumber | references/input-number.visual.md |
+| **四段**横向输入框，各段接受 0-255，段间有圆点 `.` 分隔 | OIpInput | references/ip-input.visual.md |
+| 小**方形**框（或勾选图标）+ 右侧标签文本 | OCheckbox | references/checkbox.visual.md |
+| 小**圆形**框（有内圆点状态）+ 右侧标签文本 | ORadio | references/radio.visual.md |
+| 横向**胶囊形**轨道 + 圆形滑块（开/关两态，无数值） | OSwitch | references/switch.visual.md |
+| 横向**长条**轨道 + 可拖动圆形滑块（有数值刻度） | OSlider | references/slider.visual.md |
+| 矩形/胶囊形区域 + 文本，**可切换选中/未选中**两态 | OToggle | references/toggle.visual.md |
+| 多层**逐级展开**的下拉面板（选择时触发下一级） | OCascader | references/cascader.visual.md |
 
 #### 状态 / 反馈类
 
 | 视觉特征 | 组件 | Reference |
 |---------|------|-----------|
-| 小圆角矩形或胶囊 + **短文本**，**内嵌在内容流**中 | OTag | references/tag.md |
-| 悬浮在其他元素**右上角/角落**的小圆点或数字气泡 | OBadge | references/badge.md |
-| 横向**细线进度条**（有背景轨道，只读展示百分比） | OProgress(line) | references/progress.md |
-| **圆形进度环**（只读展示百分比） | OProgress(circle) | references/progress.md |
-| 一排 ★ 星形图标（部分填充或半填充） | ORate | references/rate.md |
-| 页面**居中大图标** + 粗标题 + 描述文字（成功/警告/错误状态页） | OResult | references/result.md |
-| 多个**灰色矩形占位块**，模拟文字/图片加载中 | OSkeleton | references/skeleton.md |
-| 旋转动画图标或全屏蒙层 + "加载中" 文字 | OLoading | references/loading.md |
-| 嵌入页面内容流的横向条形，含图标 + 文字（**不自动消失**） | OMessage | references/message.md |
-| **浮于页面上层**底部或顶部出现的短提示条，带消失动画 | OToast | references/toast.md |
+| 小圆角矩形或胶囊 + **短文本**，**内嵌在内容流**中 | OTag | references/tag.visual.md |
+| 悬浮在其他元素**右上角/角落**的小圆点或数字气泡 | OBadge | references/badge.visual.md |
+| 横向**细线进度条**（有背景轨道，只读展示百分比） | OProgress(line) | references/progress.visual.md |
+| **圆形进度环**（只读展示百分比） | OProgress(circle) | references/progress.visual.md |
+| 一排 ★ 星形图标（部分填充或半填充） | ORate | references/rate.visual.md |
+| 页面**居中大图标** + 粗标题 + 描述文字（成功/警告/错误状态页） | OResult | references/result.visual.md |
+| 多个**灰色矩形占位块**，模拟文字/图片加载中 | OSkeleton | references/skeleton.visual.md |
+| 旋转动画图标或全屏蒙层 + "加载中" 文字 | OLoading | references/loading.visual.md |
+| 嵌入页面内容流的横向条形，含图标 + 文字（**不自动消失**） | OMessage | references/message.visual.md |
+| **浮于页面上层**底部或顶部出现的短提示条，带消失动画 | OToast | references/toast.visual.md |
 
 #### 导航 / 结构类
 
 | 视觉特征 | 组件 | Reference |
 |---------|------|-----------|
-| 横向 文本 > 文本 > 文本 链式结构（箭头/斜线分隔） | OBreadcrumb | references/breadcrumb.md |
-| 垂直侧边导航，层级**缩进**，有折叠子项和选中高亮 | OMenu | references/menu.md |
-| 顶部横向**标签行** + 下方**可切换内容区** | OTab | references/tab.md |
-| 横向数字/图标**序列 + 连接线**（流程步骤） | OStep | references/step.md |
-| 垂直排列的**锚点链接列表**，通常悬浮在页面侧边 | OAnchor | references/anchor.md |
-| 横向**数字页码按钮组**（含上下页、跳转输入） | OPagination | references/pagination.md |
+| 横向 文本 > 文本 > 文本 链式结构（箭头/斜线分隔） | OBreadcrumb | references/breadcrumb.visual.md |
+| 垂直侧边导航，层级**缩进**，有折叠子项和选中高亮 | OMenu | references/menu.visual.md |
+| 顶部横向**标签行** + 下方**可切换内容区** | OTab | references/tab.visual.md |
+| 横向数字/图标**序列 + 连接线**（流程步骤） | OStep | references/step.visual.md |
+| 垂直排列的**锚点链接列表**，通常悬浮在页面侧边 | OAnchor | references/anchor.visual.md |
+| 横向**数字页码按钮组**（含上下页、跳转输入） | OPagination | references/pagination.visual.md |
 
 #### 容器 / 叠加层类
 
 | 视觉特征 | 组件 | Reference |
 |---------|------|-----------|
-| 圆角矩形卡片，内部有**封面图/图标 + 标题 + 描述 + 操作**结构 | OCard | references/card.md |
-| **居中弹窗 + 半透明全屏蒙层** + 标题栏 + 关闭按钮 | ODialog | references/dialog.md |
-| 附着触发元素的小弹框，**有指向箭头** | OPopover | references/popover.md |
-| 贴合触发元素展开的菜单面板，**无指向箭头** | ODropdown | references/dropdown.md |
-| 通用弹出层容器（自身无样式，定位在触发元素附近） | OPopup | references/popup.md |
-| 通用蒙层/全屏浮层容器（无固定内部结构） | OLayer | references/layer.md |
-| 可展开/收起的内容面板，**标题区可点击切换** | OCollapse | references/collapse.md |
-| 横向或垂直**弹性列**布局容器（flex 排列子元素） | ORow/OCol | references/grid.md |
-| 表单容器，内部为**标签 + 控件**成对排列 | OForm | references/form.md |
+| 圆角矩形卡片，内部有**封面图/图标 + 标题 + 描述 + 操作**结构 | OCard | references/card.visual.md |
+| **居中弹窗 + 半透明全屏蒙层** + 标题栏 + 关闭按钮 | ODialog | references/dialog.visual.md |
+| 附着触发元素的小弹框，**有指向箭头** | OPopover | references/popover.visual.md |
+| 贴合触发元素展开的菜单面板，**无指向箭头** | ODropdown | references/dropdown.visual.md |
+| 通用弹出层容器（自身无样式，定位在触发元素附近） | OPopup | references/popup.visual.md |
+| 通用蒙层/全屏浮层容器（无固定内部结构） | OLayer | references/layer.visual.md |
+| 可展开/收起的内容面板，**标题区可点击切换** | OCollapse | references/collapse.visual.md |
+| 横向或垂直**弹性列**布局容器（flex 排列子元素） | ORow/OCol | references/grid.visual.md |
+| 表单容器，内部为**标签 + 控件**成对排列 | OForm | references/form.visual.md |
 
 #### 媒体 / 其他
 
 | 视觉特征 | 组件 | Reference |
 |---------|------|-----------|
-| 图片容器（固定宽高比矩形，hover 可预览/放大） | OFigure | references/figure.md |
-| **多张图片/内容轮播**，有指示点和左右切换箭头 | OCarousel | references/carousel.md |
-| **虚线边框**区域 + 上传图标 + 提示文字 | OUpload | references/upload.md |
-| 长列表容器，有**自定义滚动条**样式 | OScrollbar/OScroller | references/scrollbar.md |
-| 多行多列**表格**（有表头，支持排序/筛选/多选） | ODataTable | references/data-table.md |
-| 纯**文字 + 下划线**，点击跳转，无背景无边框 | OLink | references/link.md |
-| 单个 SVG 图标元素 | OIcon | references/icon.md |
-| 水平或垂直**细线分割线** | ODivider | references/divider.md |
-| 超长列表，**可见区域之外的列表项不渲染** | OVirtualList | references/virtual-list.md |
+| 图片容器（固定宽高比矩形，hover 可预览/放大） | OFigure | references/figure.visual.md |
+| **多张图片/内容轮播**，有指示点和左右切换箭头 | OCarousel | references/carousel.visual.md |
+| **虚线边框**区域 + 上传图标 + 提示文字 | OUpload | references/upload.visual.md |
+| 长列表容器，有**自定义滚动条**样式 | OScrollbar/OScroller | references/scrollbar.visual.md |
+| 多行多列**表格**（有表头，支持排序/筛选/多选） | ODataTable | references/data-table.visual.md |
+| 纯**文字 + 下划线**，点击跳转，无背景无边框 | OLink | references/link.visual.md |
+| 单个 SVG 图标元素 | OIcon | references/icon.visual.md |
+| 水平或垂直**细线分割线** | ODivider | references/divider.visual.md |
+| 超长列表，**可见区域之外的列表项不渲染** | OVirtualList | references/virtual-list.visual.md |
 
 ---
 
@@ -679,7 +684,7 @@ Pixso 图层或组件实例名通常含有以下关键词，可直接映射：
 1. 图层名含 "button" → **OButton**
 2. 视觉特征：圆角矩形 + 文字 + 填充 → 确认 OButton
 3. 视觉属性映射：品牌蓝填充 → `color="brand" variant="solid"`；高度 40px → `size="large"`；圆角 20px = 高度一半 → `round="pill"`；右侧图标 → `#suffix` 插槽
-4. 调用 `references/button.md`
+4. 调用 `references/button.visual.md`
 
 **生成代码**：
 ```vue
@@ -778,7 +783,7 @@ getNodeDSL({ itemId: "内部子元素的guid" })
 </OAnchor>
 ```
 
-> 详细使用说明和完整属性列表，请查看 [references/anchor.md](references/anchor.md)
+> 详细使用说明和完整属性列表，请查看 [references/anchor.usage.md](references/anchor.usage.md)
 
 ---
 
@@ -792,7 +797,7 @@ getNodeDSL({ itemId: "内部子元素的guid" })
 
 徽标可以通过 `offset` 设置偏移位置。
 
-> 详细使用说明和完整属性列表，请查看 [references/badge.md](references/badge.md)
+> 详细使用说明和完整属性列表，请查看 [references/badge.usage.md](references/badge.usage.md)
 
 ---
 
@@ -812,7 +817,7 @@ getNodeDSL({ itemId: "内部子元素的guid" })
 </OBreadcrumb>
 ```
 
-> 详细使用说明和完整属性列表，请查看 [references/breadcrumb.md](references/breadcrumb.md)
+> 详细使用说明和完整属性列表，请查看 [references/breadcrumb.usage.md](references/breadcrumb.usage.md)
 
 ---
 
@@ -857,7 +862,7 @@ getNodeDSL({ itemId: "内部子元素的guid" })
 </OButton>
 ```
 
-> 详细使用说明和完整属性列表，请查看 [references/button.md](references/button.md)
+> 详细使用说明和完整属性列表，请查看 [references/button.usage.md](references/button.usage.md)
 
 ---
 
@@ -889,7 +894,7 @@ OCard 分为图文卡片和图标卡片。
 - `cursor` — 鼠标悬停样式
 - `noResponsive` — 禁用响应式尺寸
 
-> 详细使用说明和完整属性列表，请查看 [references/card.md](references/card.md)
+> 详细使用说明和完整属性列表，请查看 [references/card.usage.md](references/card.usage.md)
 
 ---
 
@@ -907,7 +912,7 @@ OCard 分为图文卡片和图标卡片。
 
 其他：`clickToSwitch`、`manualInit`、`activeIndex`（可双向绑定）
 
-> 详细使用说明和完整属性列表，请查看 [references/carousel.md](references/carousel.md)
+> 详细使用说明和完整属性列表，请查看 [references/carousel.usage.md](references/carousel.usage.md)
 
 ---
 
@@ -939,7 +944,7 @@ type CascaderOptionT = {
 <OCascader v-model="selectedValue" :options="options" />
 ```
 
-> 详细使用说明和完整属性列表，请查看 [references/cascader.md](references/cascader.md)
+> 详细使用说明和完整属性列表，请查看 [references/cascader.usage.md](references/cascader.usage.md)
 
 ---
 
@@ -962,7 +967,7 @@ type CascaderOptionT = {
 </OCheckboxGroup>
 ```
 
-> 详细使用说明和完整属性列表，请查看 [references/checkbox.md](references/checkbox.md)
+> 详细使用说明和完整属性列表，请查看 [references/checkbox.usage.md](references/checkbox.usage.md)
 
 ---
 
@@ -977,7 +982,7 @@ type CascaderOptionT = {
 </OCollapse>
 ```
 
-> 详细使用说明和完整属性列表，请查看 [references/collapse.md](references/collapse.md)
+> 详细使用说明和完整属性列表，请查看 [references/collapse.usage.md](references/collapse.usage.md)
 
 ---
 
@@ -1017,7 +1022,7 @@ const linkConfig = {
 </template>
 ```
 
-> 详细使用说明和完整属性列表，请查看 [references/config-provider.md](references/config-provider.md)
+> 详细使用说明和完整属性列表，请查看 [references/config-provider.usage.md](references/config-provider.usage.md)
 
 ---
 
@@ -1072,7 +1077,7 @@ const linkConfig = {
 </ODataTable>
 ```
 
-> 详细使用说明和完整属性列表，请查看 [references/data-table.md](references/data-table.md)
+> 详细使用说明和完整属性列表，请查看 [references/data-table.usage.md](references/data-table.usage.md)
 
 ---
 
@@ -1087,7 +1092,7 @@ const linkConfig = {
 
 **移动端半屏**：`phoneHalfFull="true"` 在小屏幕（<600px）上全宽显示在底部
 
-> 详细使用说明和完整属性列表，请查看 [references/dialog.md](references/dialog.md)
+> 详细使用说明和完整属性列表，请查看 [references/dialog.usage.md](references/dialog.usage.md)
 
 ---
 
@@ -1109,7 +1114,7 @@ const linkConfig = {
 </ODivider>
 ```
 
-> 详细使用说明和完整属性列表，请查看 [references/divider.md](references/divider.md)
+> 详细使用说明和完整属性列表，请查看 [references/divider.usage.md](references/divider.usage.md)
 
 ---
 
@@ -1136,7 +1141,7 @@ const linkConfig = {
 </ODropdown>
 ```
 
-> 详细使用说明和完整属性列表，请查看 [references/dropdown.md](references/dropdown.md)
+> 详细使用说明和完整属性列表，请查看 [references/dropdown.usage.md](references/dropdown.usage.md)
 
 ---
 
@@ -1158,7 +1163,7 @@ const linkConfig = {
 
 **注意**：`preview` 和 `href` 不能同时使用
 
-> 详细使用说明和完整属性列表，请查看 [references/figure.md](references/figure.md)
+> 详细使用说明和完整属性列表，请查看 [references/figure.usage.md](references/figure.usage.md)
 
 ---
 
@@ -1211,7 +1216,7 @@ const linkConfig = {
 </OForm>
 ```
 
-> 详细使用说明和完整属性列表，请查看 [references/form.md](references/form.md)
+> 详细使用说明和完整属性列表，请查看 [references/form.usage.md](references/form.usage.md)
 
 ---
 
@@ -1231,7 +1236,7 @@ const linkConfig = {
 - `align` — 辅轴对齐方式
 - 响应式属性：`pcS`、`laptop`、`pad`、`padV`、`phone`（控制不同断点下的 flex）
 
-> 详细使用说明和完整属性列表，请查看 [references/grid.md](references/grid.md)
+> 详细使用说明和完整属性列表，请查看 [references/grid.usage.md](references/grid.usage.md)
 
 ---
 
@@ -1266,7 +1271,7 @@ import { OIcon, OIconAdd, OIconDelete } from '@opensig/opendesign';
 </template>
 ```
 
-> 详细使用说明和完整图标清单，请查看 [references/icon.md](references/icon.md)
+> 详细使用说明和完整图标清单，请查看 [references/icon.usage.md](references/icon.usage.md)
 
 ---
 
@@ -1304,7 +1309,7 @@ import { OIcon, OIconAdd, OIconDelete } from '@opensig/opendesign';
 <OInput v-model="inputVal" placeholder="请输入" clearable show-length="always" :max-length="100" />
 ```
 
-> 详细使用说明和完整属性列表，请查看 [references/input.md](references/input.md)
+> 详细使用说明和完整属性列表，请查看 [references/input.usage.md](references/input.usage.md)
 
 ---
 
@@ -1340,7 +1345,7 @@ import { OIcon, OIconAdd, OIconDelete } from '@opensig/opendesign';
 <OInputNumber v-model="count" :min="0" :max="100" :step="5" controls="right" />
 ```
 
-> 详细使用说明和完整属性列表，请查看 [references/input-number.md](references/input-number.md)
+> 详细使用说明和完整属性列表，请查看 [references/input-number.usage.md](references/input-number.usage.md)
 
 ---
 
@@ -1371,7 +1376,7 @@ IP 地址输入框，自动分段处理 IPv4 地址。
 <OIpInput v-model="ipAddress" @change="(valid, ip) => console.log(valid, ip)" />
 ```
 
-> 详细使用说明和完整属性列表，请查看 [references/ip-input.md](references/ip-input.md)
+> 详细使用说明和完整属性列表，请查看 [references/ip-input.usage.md](references/ip-input.usage.md)
 
 ---
 
@@ -1393,7 +1398,7 @@ IP 地址输入框，自动分段处理 IPv4 地址。
 
 `buttonClose`：是否渲染关闭按钮
 
-> 详细使用说明和完整属性列表，请查看 [references/layer.md](references/layer.md)
+> 详细使用说明和完整属性列表，请查看 [references/layer.usage.md](references/layer.usage.md)
 
 ---
 
@@ -1413,7 +1418,7 @@ IP 地址输入框，自动分段处理 IPv4 地址。
 </OLink>
 ```
 
-> 详细使用说明和完整属性列表，请查看 [references/link.md](references/link.md)
+> 详细使用说明和完整属性列表，请查看 [references/link.usage.md](references/link.usage.md)
 
 ---
 
@@ -1431,7 +1436,7 @@ IP 地址输入框，自动分段处理 IPv4 地址。
 <OLoading :visible="isLoading" label="加载中..." />
 ```
 
-> 详细使用说明和完整属性列表，请查看 [references/loading.md](references/loading.md)
+> 详细使用说明和完整属性列表，请查看 [references/loading.usage.md](references/loading.usage.md)
 
 ---
 
@@ -1459,7 +1464,7 @@ IP 地址输入框，自动分段处理 IPv4 地址。
 </OMenu>
 ```
 
-> 详细使用说明和完整属性列表，请查看 [references/menu.md](references/menu.md)
+> 详细使用说明和完整属性列表，请查看 [references/menu.usage.md](references/menu.usage.md)
 
 ---
 
@@ -1474,7 +1479,7 @@ IP 地址输入框，自动分段处理 IPv4 地址。
 <OMessage type="info">提示信息</OMessage>
 ```
 
-> 详细使用说明和完整属性列表，请查看 [references/message.md](references/message.md)
+> 详细使用说明和完整属性列表，请查看 [references/message.usage.md](references/message.usage.md)
 
 ---
 
@@ -1503,7 +1508,7 @@ IP 地址输入框，自动分段处理 IPv4 地址。
 />
 ```
 
-> 详细使用说明和完整属性列表，请查看 [references/pagination.md](references/pagination.md)
+> 详细使用说明和完整属性列表，请查看 [references/pagination.usage.md](references/pagination.usage.md)
 
 ---
 
@@ -1528,7 +1533,7 @@ IP 地址输入框，自动分段处理 IPv4 地址。
 </OPopover>
 ```
 
-> 详细使用说明和完整属性列表，请查看 [references/popover.md](references/popover.md)
+> 详细使用说明和完整属性列表，请查看 [references/popover.usage.md](references/popover.usage.md)
 
 ---
 
@@ -1549,7 +1554,7 @@ IP 地址输入框，自动分段处理 IPv4 地址。
 
 **事件**：`@update:visible`、`@change`
 
-> 详细使用说明和完整属性列表，请查看 [references/popup.md](references/popup.md)
+> 详细使用说明和完整属性列表，请查看 [references/popup.usage.md](references/popup.usage.md)
 
 ---
 
@@ -1571,7 +1576,7 @@ IP 地址输入框，自动分段处理 IPv4 地址。
 <OProgress type="circle" :percentage="75" color="success" :stroke-width="8" />
 ```
 
-> 详细使用说明和完整属性列表，请查看 [references/progress.md](references/progress.md)
+> 详细使用说明和完整属性列表，请查看 [references/progress.usage.md](references/progress.usage.md)
 
 ---
 
@@ -1592,7 +1597,7 @@ IP 地址输入框，自动分段处理 IPv4 地址。
 </ORadioGroup>
 ```
 
-> 详细使用说明和完整属性列表，请查看 [references/radio.md](references/radio.md)
+> 详细使用说明和完整属性列表，请查看 [references/radio.usage.md](references/radio.usage.md)
 
 ---
 
@@ -1628,7 +1633,7 @@ IP 地址输入框，自动分段处理 IPv4 地址。
 <ORate v-model="score" readonly :labels="['很差', '较差', '一般', '较好', '很好']" />
 ```
 
-> 详细使用说明和完整属性列表，请查看 [references/rate.md](references/rate.md)
+> 详细使用说明和完整属性列表，请查看 [references/rate.usage.md](references/rate.usage.md)
 
 ---
 
@@ -1644,7 +1649,7 @@ IP 地址输入框，自动分段处理 IPv4 地址。
 <OResult status="success" title="提交成功" description="您的申请已成功提交，请等待审核" />
 ```
 
-> 详细使用说明和完整属性列表，请查看 [references/result.md](references/result.md)
+> 详细使用说明和完整属性列表，请查看 [references/result.usage.md](references/result.usage.md)
 
 ---
 
@@ -1664,7 +1669,7 @@ IP 地址输入框，自动分段处理 IPv4 地址。
 </OScroller>
 ```
 
-> 详细使用说明和完整属性列表，请查看 [references/scrollbar.md](references/scrollbar.md)
+> 详细使用说明和完整属性列表，请查看 [references/scrollbar.usage.md](references/scrollbar.usage.md)
 
 ---
 
@@ -1702,7 +1707,7 @@ IP 地址输入框，自动分段处理 IPv4 地址。
 </OSelect>
 ```
 
-> 详细使用说明和完整属性列表，请查看 [references/select.md](references/select.md)
+> 详细使用说明和完整属性列表，请查看 [references/select.usage.md](references/select.usage.md)
 
 ---
 
@@ -1738,7 +1743,7 @@ IP 地址输入框，自动分段处理 IPv4 地址。
 <OSlider v-model="level" show-stops :step="10" :marks="{ 0: '低', 50: '中', 100: '高' }" />
 ```
 
-> 详细使用说明和完整属性列表，请查看 [references/slider.md](references/slider.md)
+> 详细使用说明和完整属性列表，请查看 [references/slider.usage.md](references/slider.usage.md)
 
 ---
 
@@ -1756,7 +1761,7 @@ IP 地址输入框，自动分段处理 IPv4 地址。
 </OSkeleton>
 ```
 
-> 详细使用说明和完整属性列表，请查看 [references/skeleton.md](references/skeleton.md)
+> 详细使用说明和完整属性列表，请查看 [references/skeleton.usage.md](references/skeleton.usage.md)
 
 ---
 
@@ -1787,7 +1792,7 @@ IP 地址输入框，自动分段处理 IPv4 地址。
 </OStep>
 ```
 
-> 详细使用说明和完整属性列表，请查看 [references/step.md](references/step.md)
+> 详细使用说明和完整属性列表，请查看 [references/step.usage.md](references/step.usage.md)
 
 ---
 
@@ -1805,7 +1810,7 @@ IP 地址输入框，自动分段处理 IPv4 地址。
 <OSwitch v-model="enabled" checked-value="on" unchecked-value="off" />
 ```
 
-> 详细使用说明和完整属性列表，请查看 [references/switch.md](references/switch.md)
+> 详细使用说明和完整属性列表，请查看 [references/switch.usage.md](references/switch.usage.md)
 
 ---
 
@@ -1856,7 +1861,7 @@ IP 地址输入框，自动分段处理 IPv4 地址。
 </OTab>
 ```
 
-> 详细使用说明和完整属性列表，请查看 [references/tab.md](references/tab.md)
+> 详细使用说明和完整属性列表，请查看 [references/tab.usage.md](references/tab.usage.md)
 
 ---
 
@@ -1893,7 +1898,7 @@ IP 地址输入框，自动分段处理 IPv4 地址。
 <OTag color="main2" variant="outline">品牌标签</OTag>
 ```
 
-> 详细使用说明和完整属性列表，请查看 [references/tag.md](references/tag.md)
+> 详细使用说明和完整属性列表，请查看 [references/tag.usage.md](references/tag.usage.md)
 
 ---
 
@@ -1925,7 +1930,7 @@ IP 地址输入框，自动分段处理 IPv4 地址。
 <OTextarea v-model="content" :auto-size="{ minRows: 3, maxRows: 8 }" :max-length="500" show-length />
 ```
 
-> 详细使用说明和完整属性列表，请查看 [references/textarea.md](references/textarea.md)
+> 详细使用说明和完整属性列表，请查看 [references/textarea.usage.md](references/textarea.usage.md)
 
 ---
 
@@ -1971,7 +1976,7 @@ const handleClick = () => showToast('操作成功');
 </template>
 ```
 
-> 详细使用说明和完整属性列表，请查看 [references/toast.md](references/toast.md)
+> 详细使用说明和完整属性列表，请查看 [references/toast.usage.md](references/toast.usage.md)
 
 ---
 
@@ -1995,7 +2000,7 @@ const handleClick = () => showToast('操作成功');
 </ORadioGroup>
 ```
 
-> 详细使用说明和完整属性列表，请查看 [references/toggle.md](references/toggle.md)
+> 详细使用说明和完整属性列表，请查看 [references/toggle.usage.md](references/toggle.usage.md)
 
 ---
 
@@ -2028,7 +2033,7 @@ const handleClick = () => showToast('操作成功');
 />
 ```
 
-> 详细使用说明和完整属性列表，请查看 [references/upload.md](references/upload.md)
+> 详细使用说明和完整属性列表，请查看 [references/upload.usage.md](references/upload.usage.md)
 
 ---
 
@@ -2071,7 +2076,7 @@ const handleClick = () => showToast('操作成功');
 </OVirtualList>
 ```
 
-> 详细使用说明和完整属性列表，请查看 [references/virtual-list.md](references/virtual-list.md)
+> 详细使用说明和完整属性列表，请查看 [references/virtual-list.usage.md](references/virtual-list.usage.md)
 
 ---
 

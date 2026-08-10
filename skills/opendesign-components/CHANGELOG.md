@@ -6,6 +6,15 @@
 
 ---
 
+## 2026-08-10
+
+### ⚠️ 破坏性
+
+- **组件参考文档按用途拆分为三文件**：每个组件原有的单文件 `{name}.md` 拆分为 `{name}.visual.md`（视觉识别：视觉特征指纹、Token→Prop 映射、易混淆组件区分）、`{name}.usage.md`（代码使用：API 表、代码模板、prop 组合速查、变更记录）、`{name}.style.md`（样式定制：CSS 变量、布局结构 YAML、响应式行为表）。SKILL.md 组件索引、Pixso MCP 设计稿识别指南、各组件 mini-section 链接均已同步更新。旧的单文件路径（如 `references/button.md`）不再存在，需改用 `references/{name}.{visual|usage|style}.md`。
+- Part A 的自然语言属性/插槽/事件描述已合并进 usage 文件的正式表格，不再独立存在。两段式的设计稿识别指南（Part A 要点版 + Part B 详细版）已合并为 visual 文件中的唯一版本。
+
+---
+
 ## 2026-07-31
 
 ### 更新

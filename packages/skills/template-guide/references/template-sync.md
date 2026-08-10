@@ -130,8 +130,9 @@
 | 文件 | 路径 | 说明 |
 |------|------|------|
 | vite.config.ts | `vite.config.ts` | SCSS 注入 + 别名 |
-| main.ts | `src/main.ts` | createApp + 样式引入顺序 |
-| App.vue | `src/App.vue` | 主题初始化 + DefaultLayout 包裹页面 |
+| main.ts | `src/main.ts` | createApp + 样式引入顺序 + Pinia + Router 注册 |
+| App.vue | `src/App.vue` | 主题初始化 + DefaultLayout 包裹 RouterView |
+| router/index.ts | `src/router/index.ts` | createWebHistory + 路由懒加载 |
 | index.html | `index.html` | `<html lang="zh-CN" data-o-theme="e.light">` |
 
 ---
