@@ -1,31 +1,19 @@
 ---
 name: opendesign-design
-description: OpenDesign Pixso 设计稿生产指南。当需要在 Pixso 中创建/编辑 UI 组件（按钮、输入框、卡片、导航等）、应用设计规范（栅格/颜色/字号/间距/圆角）、搭建页面框架、调用 Pixso 组件库（Symbol）或读取设计变量（Tokens）时使用此 skill。包含 PC/MB 双断点的变量映射硬约束（字号/行高/间距/栅格/图标尺寸的合法取值白名单），覆盖 23 个组件设计规范、536 个 componentKey 变体与 187 个图标 componentKey。本 skill 仅生产 Pixso 设计稿，不输出代码。
-last_update: 2026-06-30
+description: OpenDesign Pixso 设计稿生产指南。当需要在 Pixso 中创建/编辑 UI 组件（按钮、输入框、卡片、导航等）、应用设计规范（栅格/颜色/字号/间距/圆角）、搭建页面框架、调用 Pixso 组件库（Symbol）或读取设计变量（Tokens）时使用此 skill。包含 PC/MB 双断点的变量映射硬约束（字号/行高/间距/栅格/图标尺寸的合法取值白名单），覆盖 26 个组件设计规范、536 个 componentKey 变体与 187 个图标 componentKey。本 skill 仅生产 Pixso 设计稿，不输出代码。
+last_update: 2026-08-18
 ---
 
 # Design Skill · Pixso 组件系统
 
-> 🔴 **生成任何设计稿前，必读以下两份硬约束文档**：
-> 1. [references/hard-constraints/skill.md](references/hard-constraints/skill.md) — **变量映射硬约束**：PC / MB 双断点下，字号 / 行高 / 间距 / 栅格 / 图标尺寸的合法取值白名单。所有几何数值必须严格选自该白名单，禁止四舍五入、推断或造数。
-> 2. [references/hard-constraints/rules.md](references/hard-constraints/rules.md) — **组件组合规则**：按钮对齐 / 排列 / 间距、组件栅格挂靠、卡片间距、禁止组合黑名单及自动校验清单。
+> 🎨 **设计师第一次使用？** → 先读 [references/designer-guide.md](references/designer-guide.md)，里面有角色决策树、规范速览卡和推荐交互方式。核心建议：**逐楼层生成，不要一次性生成整页**——逐楼层还原度远高于整页一次性生成。
+
+> 💡 本文件为 AI 执行入口，仅包含生成设计稿所需的指令与约束。完整使用说明、目录结构、协议信息请查看 [README.md](README.md)；请勿全量加载所有子文件，按工作流按需读取即可。
+
+> 🔴 **生成任何设计稿前，必读以下硬约束文档**：
+> 1. [global/hard-constraints.md](global/hard-constraints.md) — **变量映射硬约束 + 组件组合规则**（合并版）：PC / MB 双断点下，字号 / 行高 / 间距 / 栅格 / 图标尺寸的合法取值白名单，以及按钮对齐 / 排列 / 间距、组件栅格挂靠、卡片间距、禁止组合黑名单及自动校验清单。所有几何数值必须严格选自该白名单，禁止四舍五入、推断或造数。
 >
-> 以上两份约束**最高优先级**，与下文 [#图标处理规范（核心约束）](#图标处理规范核心约束) 并列，缺一不可。
-
-## 概述
-
-基于 Pixso MCP 工具实现的可复用设计系统工作流，支持：
-- 读取并应用栅格与设计变量（Tokens）
-- 调用现有 Symbol 组件库
-- 自动生成符合规范的可编辑设计稿
-
-## 设计能力
-
-- 栅格系统布局规范（数据来源见 [#数据资源](#数据资源)）
-- 全局设计变量（Tokens）管理（数据来源见 [#数据资源](#数据资源)）
-- Pixso Symbol 组件库维护与调用
-- 组件化、规范化界面快速生成
-- 统一视觉风格与交互逻辑
+> 以上约束**最高优先级**，与下文 [#图标处理规范（核心约束）](#图标处理规范核心约束) 并列，缺一不可。
 
 ## 数据资源
 
@@ -39,27 +27,31 @@ last_update: 2026-06-30
 
 本 skill 内 bundled 的索引文件（设计稿生产专用，无上游真源）：
 
-- [references/component-keys.md](references/component-keys.md) — 536 个 UI 组件变体的 componentKey 索引
-- [references/icon-keys.md](references/icon-keys.md) — 187 个图标的 componentKey 索引
+- [references/pixso-mcp-adapter/component-keys.md](references/pixso-mcp-adapter/component-keys.md) — 536 个 UI 组件变体的 componentKey 索引
+- [references/pixso-mcp-adapter/icon-keys.md](references/pixso-mcp-adapter/icon-keys.md) — 187 个图标的 componentKey 索引
 
 ## 组件索引
 
-每个组件的详细设计规范见 `references/components/{name}.md`，涵盖适用场景、变体说明、布局规格、颜色/字体 Token 映射、识别特征。
+每个组件的详细设计规范见 `components/{name}.md`，涵盖适用场景、变体说明、布局规格、颜色/字体 Token 映射、识别特征。
 
 | 组件 | 说明 | 组件 | 说明 |
 |------|------|------|------|
-| [OAnchor](references/components/anchor.md) | 锚点 | [OMessage](references/components/message.md) | 全局消息 |
-| [OBreadcrumb](references/components/breadcrumb.md) | 面包屑 | [ONavigation](references/components/navigation.md) | 导航 |
-| [OButton](references/components/button.md) | 按钮 | [OPagination](references/components/pagination.md) | 分页 |
-| [OCard](references/components/card.md) | 卡片 | [ORadio](references/components/radio.md) | 单选框 |
-| [OCarousel](references/components/carousel.md) | 幻灯片指示器 | [OCheckbox](references/components/checkbox.md) | 复选框 |
-| [ODivider](references/components/divider.md) | 分割线 | [OStep](references/components/step.md) | 步骤条 |
-| [ODropdown](references/components/dropdown.md) | 下拉菜单 | [OScrollbar](references/components/scrollbar.md) | 滚动条 |
-| [OInput](references/components/input.md) | 输入框 | [OTab](references/components/tab.md) | 标签页 |
-| [OLink](references/components/link.md) | 链接 | [OTable](references/components/table.md) | 数据表格 |
-| [OLoading](references/components/loading.md) | 加载 | [OTag](references/components/tag.md) | 标签 |
-| [OMenu](references/components/menu.md) | 菜单 | [OToggle](references/components/toggle.md) | 切换按钮 |
-| [OSelect](references/components/select.md) | 选择器 | | |
+| [OAnchor](components/anchor.md) | 锚点 | [OMessage](components/message.md) | 全局消息 |
+| [OBanner](components/banner.md) | 横幅 | [ONavigation](components/navigation.md) | 导航 |
+| [OBreadcrumb](components/breadcrumb.md) | 面包屑 | [OPagination](components/pagination.md) | 分页 |
+| [OButton](components/button.md) | 按钮 | [ORadio](components/radio.md) | 单选框 |
+| [OCard](components/card.md) | 卡片 | [OScrollbar](components/scrollbar.md) | 滚动条 |
+| [OCarousel](components/carousel.md) | 幻灯片指示器 | [OSelect](components/select.md) | 选择器 |
+| [OCheckbox](components/checkbox.md) | 复选框 | [OStep](components/step.md) | 步骤条 |
+| [ODataTable](components/data-table.md) | 数据表格 | [OSwitch](components/switch.md) | 开关 |
+| [ODialog](components/dialog.md) | 对话框 | [OTab](components/tab.md) | 标签页 |
+| [ODivider](components/divider.md) | 分割线 | [OTag](components/tag.md) | 标签 |
+| [ODropdown](components/dropdown.md) | 下拉菜单 | [OToggle](components/toggle.md) | 切换按钮 |
+| [OInput](components/input.md) | 输入框 | | |
+| [OLink](components/link.md) | 链接 | | |
+| [OLoading](components/loading.md) | 加载 | | |
+| [OMenu](components/menu.md) | 菜单 | | |
+| [OSearch](components/search.md) | 搜索框 | | |
 
 ## 图标处理规范（核心约束）
 
@@ -75,24 +67,20 @@ OpenEuler 设计系统中，图标以 `svgSha` 外部引用方式存储在 Pixso
 
 ### 图标库资源
 
-OpenEuler 拥有独立图标库 Pixso 文件 `kbqInwBrCTGnM0MsPJDgvA`，包含 **187 个线性图标**（24×24px）。完整索引见 [references/icon-keys.md](references/icon-keys.md)。
-
-| 分类 | 路径前缀 | 数量 |
-|------|----------|------|
-| 公共图标（线性） | `icon/01公共图标/线性/` | 185 |
-| 开关 | `icon/开关/` | 2 |
+OpenEuler 拥有独立图标库 Pixso 文件 `kbqInwBrCTGnM0MsPJDgvA`，包含 **187 个线性图标**（24×24px）。完整索引见 [references/pixso-mcp-adapter/icon-keys.md](references/pixso-mcp-adapter/icon-keys.md)。
 
 ### 图标使用规则
 
-| 场景 | 方式 |
-|------|------|
-| 组件状态图标（Radio 圆形、Checkbox 方框、Switch 等） | **生成前必须先 `ls references/assets/<组件名>/`**；有 SVG → Read 后内联；无文件 → 才用 CSS，并注释说明 |
-| 含图标的 UI 组件（导航、搜索、按钮、分页、下拉等） | **同上，生成前必须先 `ls references/assets/<组件名>/`**；有 SVG → Read 后内联；无文件 → 才用手写 SVG 路径 |
-| 独立图标（自定义布局中的功能图标） | **同上，先检查 `references/assets/`**；有文件直接内联；无文件 → 查 [icon-keys.md](references/icon-keys.md) 手写线性 SVG |
-| 纯布局结构（背景、容器、栅格、文字区块） | `code_to_design` |
-| SVG 来源优先级（所有场景统一） | ① `references/assets/` 已有文件（Read 内联）→ ② 手写符合线性风格的 SVG 路径 → ③ CSS（兜底，需注释） |
+**SVG 来源优先级（所有场景统一）**：① `references/assets/` 已有文件（Read 内联）→ ② 手写符合线性风格的 SVG 路径 → ③ CSS（兜底，需注释）
 
 **SVG 内嵌方式**：直接将 `<svg>` 标签写入 HTML，不使用 `<img src>`。图标颜色跟随设计系统 Token，默认使用 `currentColor` 继承父元素色值。
+
+| 属性 | 规格 |
+|------|------|
+| 尺寸 | 与设计系统图标一致（通常 24×24px，使用 `icon_size-m` Token） |
+| 风格 | 线性（stroke），与 OpenEuler 图标库保持一致 |
+| 颜色 | `currentColor`（继承父元素文字色）或对应 Token 色值 |
+| 写法 | `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" ...>` 直接内嵌 |
 
 > `create_instance` 仍可用于需要 live Symbol 绑定或 Token 联动的特殊场景，但不再作为图标的强制路径。
 
@@ -100,22 +88,51 @@ OpenEuler 拥有独立图标库 Pixso 文件 `kbqInwBrCTGnM0MsPJDgvA`，包含 *
 
 ## 执行工作流
 
-### 第零步：读取硬约束文档（强制起手式，两份均须读取）
+> ⚠️ **核心原则：逐楼层生成，不要一次性生成整页。** 一次性处理整页所有组件规范会导致上下文溢出、细节丢失。逐楼层生成时，AI 每次只需处理 1~2 个组件规范，还原度显著更高。
+
+### 第零步：读取硬约束文档 + 拉取上游Token（强制起手式）
 
 ```
-① 读取 references/hard-constraints/skill.md
+读取 global/hard-constraints.md
    — 锁定当前目标设备（MB 或 PC）
    — 明确该设备下字号 / 行高 / 间距 / 栅格 / 图标尺寸的合法取值集合
-
-② 读取 references/hard-constraints/rules.md
    — 明确按钮对齐 / 排列优先级 / 间距规则
    — 明确组件栅格挂靠要求、卡片间距规则
    — 明确禁止组合黑名单（Banner 嵌套、多尺寸 Banner 并排、按钮位置等）
+
+WebFetch 拉取 openEuler 主题 Token（必须执行！）
+   → https://raw.atomgit.com/openeuler/opendesign-token/raw/master/packages/opendesign-token/tokens/openeuler-token.json
+   — 将 JSON 中的颜色/字号/间距变量翻译为 :root CSS 变量
+   — ⚠️ 禁止凭训练数据"猜测"颜色值！尤其是 --o-color-fill1（页面背景=浅灰，不是纯白）
+   — 拉取失败时：使用 references/designer-guide.md 中的 Token 语义速查表作为降级数据源
 ```
 
-后续所有步骤的几何数值必须落在 ① 的白名单内，组件排布必须符合 ② 的组合规则。无法对应到约束的需求 → 停下询问用户，禁止造数或静默放行。
+后续所有步骤的几何数值必须落在硬约束的白名单内，组件排布必须符合组合规则。无法对应到约束的需求 → 停下询问用户，禁止造数或静默放行。
 
-### 第一步：读取设计规范
+### 第一步：规划页面楼层结构
+
+根据用户需求，将页面拆解为楼层序列。所有落地页遵循固定结构（见 [hard-constraints.md §8](global/hard-constraints.md)）：
+
+```
+导航楼层（必选）→ [Banner 楼层]（可选）→ 楼层 1 → 楼层 2 → … → 页脚楼层（必选）
+```
+
+向用户输出楼层规划，**等待确认后才能继续**：
+
+```
+我理解本次页面由以下楼层组成，请确认或调整：
+  1. 导航楼层（ONavigation）
+  2. Banner 楼层（OBanner，XL/L/M/无）
+  3. 功能介绍楼层（OCard × N 栅格）
+  4. 数据统计楼层（自定义数字 + 描述）
+  5. 页脚楼层（ONavigation Footer）
+
+请确认每个楼层的类型和内容，确认后我将逐楼层读取规范并生成。
+```
+
+楼层模板速查见 [#楼层模板索引](#楼层模板索引)。用户确认后，进入逐楼层循环。
+
+### 第二步：读取设计规范（全局，仅执行一次）
 
 ```
 使用 get_variable_sets 获取当前文件所有变量集合
@@ -125,179 +142,129 @@ OpenEuler 拥有独立图标库 Pixso 文件 `kbqInwBrCTGnM0MsPJDgvA`，包含 *
 
 如需对照上游 Token 真源（语义化变量名、栅格断点），通过 WebFetch 拉取 [#数据资源](#数据资源) 中的三个 atomgit URL。
 
-### 第二步：读取组件库
-
-```
-使用 get_all_components 列出所有可用 Symbol 组件
-根据需求筛选目标组件名称和 componentKey
-```
-
-**所有含图形的组件（Radio / Checkbox / Switch / 导航 / 搜索框 / 按钮 / 下拉等）**：在生成包含任何图形、图标、状态图形的 HTML 前，**必须先执行以下检查**，不可跳过：
-
-```
-1. ls references/assets/<组件名>/          ← 确认 assets 下是否有该组件的 SVG
-2. 有文件 → Read 每个文件，全部内联到 HTML 对应位置
-3. 无文件 → 才允许手写 SVG 路径或 CSS，并在 HTML 注释中注明「assets 中无资源」
-```
-
-> ⚠️ 此规则覆盖所有场景：组件状态图标（Radio 圆形、Checkbox 方框）、UI 组件内嵌图标（导航 Logo、搜索图标、按钮 Icon）、独立功能图标，**一律先查 assets，有就用**。
-
-**独立图标查找**：需要独立图标时，查阅 [references/icon-keys.md](references/icon-keys.md) 按中文图标名称匹配，然后从 [references/assets/](references/assets/) 目录取对应 SVG 文件内嵌；若 assets 中无该图标，使用线性风格 SVG 路径手写。
-
-### 第三步：确认本次涉及的组件（强制询问用户）
-
-> 🚨 **禁止自行决定使用哪些组件后直接跳到生成。必须先向用户确认。**
-
-根据设计需求，列出你认为本次将用到的所有组件，以清单形式展示给用户，**等待用户确认或修正后才能继续**：
-
-```
-我理解本次设计需要以下组件，请确认或补充：
-  - ONavigation（顶部导航）
-  - OCard × N（卡片列表）
-  - OButton（按钮）
-  - OPagination（分页）
-  - …（按需列出）
-
-如有遗漏或需要调整，请告知，确认后我将读取对应规范再生成。
-```
-
-用户确认后，逐一读取每个组件的 `references/components/{name}.md`，全部读取完毕才能进入下一步。
-
 ---
 
-### 第四步：选择生成模式
+### 逐楼层循环（第三步 ~ 第六步，每个楼层执行一轮）
 
-根据用户需求在两种模式中选择：
+> 🔄 对第一步规划中的每个楼层，依次执行第三步到第六步。**每次只处理一个楼层**，完成验证后再进入下一个楼层。
+
+#### 第三步：确认本楼层涉及的组件
+
+仅列出**当前楼层**用到的组件，不是整页所有组件：
+
+```
+当前楼层：[楼层名称]
+涉及组件：
+  - OCard（封面卡片，vertical）
+  - OButton（solid + outline）
+  - OTag（分类标签）
+
+确认后我将读取对应规范。
+```
+
+用户确认后，逐一读取每个组件的 `components/{name}.md`，**全部读取完毕才能进入下一步**。
+
+#### 第四步：读取本楼层组件规范与资源
+
+```
+1. 读取本楼层涉及的每个 components/{name}.md
+2. 如有楼层模板（floors/{type}.md），读取模板获取完整规格
+3. 检查图标资源：
+   ls references/assets/<组件名>/
+   有文件 → Read 每个文件，全部内联到 HTML 对应位置
+   无文件 → 手写线性风格 SVG 路径，注释注明「assets 中无资源」
+4. 独立图标：查 references/pixso-mcp-adapter/icon-keys.md 按中文名匹配
+```
+
+#### 第五步：生成本楼层
+
+选择生成模式（全页统一，首次确定后后续楼层沿用）：
 
 | 条件 | 选择 |
 |------|------|
 | 用户需要 Pixso 可编辑画布、Token 绑定或交互原型 | 模式 A |
 | 用户需要可在浏览器直接打开的网站页面 / 未明确说明 | 模式 B（默认） |
 
-> ## 🚨 无论模式 A 还是模式 B——强制读取规范，禁止自定义
+**模式 A**：`code_to_design(htmlStr)` — 当前楼层的 HTML 片段，包含精确位置与像素级样式
+
+**模式 B**：生成当前楼层的独立 HTML 片段（含内联 CSS），后续在第七步组装为完整页面
+
+#### 第六步：验证本楼层
+
+```
+逐项核对本楼层的硬约束自检清单：
+□ 字号是否来自该设备列的字号集合？字号与行高是否成对？
+□ 间距是否来自该设备列的间距集合？
+□ 卡片间距是否为 PC 32px / MB 12px？
+□ 按钮是否左对齐、solid 唯一、间距 24px？
+□ 所有组件是否挂靠栅格容器？
+□ 【HTML栅格】楼层内容容器 width + max-width 是否为 1488px（PC）/ 312px（MB）？（禁止 1200px / 1140px / 960px）
+□ 【HTML栅格】楼层内容容器是否使用 margin-left: 216px + margin-right: 216px（PC）/ margin-left: 24px + margin-right: 24px（MB）？（禁止 `margin: 0 auto` + `padding: 0 216px` 组合）
+□ 【HTML栅格】楼层内容容器 padding 是否为 0？（禁止用 padding 控制楼层边距，padding 仅用于组件内部间距）
+□ 【HTML栅格】验证：margin-left + width + margin-right = 画布宽度（PC: 216+1488+216=1920 / MB: 24+312+24=360）
+□ 【HTML颜色】`:root` 中的颜色值是否来自上游Token（openeuler-token.json），而非凭训练数据猜测？（尤其检查 `--o-color-fill1` 是否误写为纯白 `#FFFFFF`）
+□ 【HTML颜色】`body` 的 `background-color` 是否使用 `var(--o-color-fill1)`？（禁止 `#FFFFFF` / `white`）
+
+模式 A：get_node_dsl(itemId) + get_image(itemId) 验证
+模式 B：在浏览器中打开 HTML 片段验证
+```
+
+验证不通过 → 修正后重验，**通过后才进入下一个楼层**。
+
+---
+
+### 第七步：组装所有楼层为完整页面
+
+所有楼层验证通过后，按楼层顺序组装为完整页面：
+
+```
+导航楼层 → Banner 楼层 → 楼层 1 → 楼层 2 → … → 页脚楼层
+
+楼层间距统一使用间距 10（PC 72px / MB 32px）
+```
+
+**模式 A**：将所有楼层 HTML 拼接为完整页面，通过 `code_to_design` 输出
+
+**模式 B**：将所有楼层 HTML 片段组装为完整 HTML 文件，包含统一的 `<head>` / CSS Reset / Token 引入
+
+### 第八步：最终验证
+
+```
+□ 页面结构是否符合：导航 → [Banner] → 楼层(s) → 页脚？
+□ 楼层间距是否统一为间距 10（PC 72px / MB 32px）？
+□ 全页组件组合是否无黑名单违规？
+□ 整体视觉一致性检查
+```
+
+---
+
+### 通用生成约束（所有楼层共用）
+
+> 🚨 以下约束无论哪种模式、哪个楼层均强制生效，违反即违规：
 >
-> **生成任何内容前，必须逐一读取所有涉及组件的规范文档 `references/components/{name}.md`。**
->
-> - 禁止！禁止！！根据经验、记忆或推断生成任何视觉属性（色值、字号、行高、间距、圆角、变体参数……）
+> - **必须逐一读取**当前楼层涉及组件的规范文档 `components/{name}.md`
 > - 合法的参数来源只有三个：① 对应组件规范文档 ② 硬约束白名单（第零步） ③ 上游 Token 真源
 > - 三者之外的任何取值均属**自定义内容，一律禁止**，包括但不限于：近似色值、估算间距、推断圆角、猜测默认变体
 > - 如果规范文档中找不到所需参数 → 停下，询问用户，**禁止自行填充**
+> - 图标：直接内嵌 `<svg>` 路径，禁止色块占位符或 `<img src>` 引用
+> - SVG 颜色：`currentColor` 继承父元素色值，或对应 Token CSS 变量
 
----
+## 楼层模板索引
 
-#### 模式 A：Pixso 可编辑画布模式（单阶段）
+每个楼层模板是一个**自包含的生成单元**——AI 读了这个文件就能精确生成该楼层，无需再拼凑多个组件规范。模板包含：布局结构、精确尺寸/间距/字号值（直接取自硬约束白名单）、PC 和 MB 双端规格。
 
-无需 `create_instance`，`code_to_design` 一次输出完整设计稿，所有元素位置与样式自动到位，Pixso 中可直接编辑每个图层。
-
-> **【强制前置：读取规范文档】** 执行前必须读取所有涉及组件的 `references/components/{name}.md`，严格按规范文档中的变体参数、颜色 Token、间距规格、字号规格生成。**禁止！禁止！！自定义任何视觉属性。**
-
-**所有场景统一执行**：
-
-```
-【前置】Read references/components/{name}.md  ← 涉及哪些组件就读哪些，不可跳过
-code_to_design(htmlStr)
-  — 完整页面 HTML，包含所有组件的精确位置与像素级样式还原
-  — 所有样式值必须来自规范文档或 Token 白名单，禁止自定义
-  — 图标：直接内嵌 <svg> 路径（不使用占位符，不使用 <img src>）
-  — SVG 颜色使用 currentColor 继承父元素，或按 Token 硬编码对应色值
-  — 产出为 Pixso 可直接编辑的设计稿画布
-```
-
----
-
-#### 模式 B：可视化 HTML 网站模式（单阶段，默认）
-
-生成可独立运行于浏览器的完整 HTML 网站页面，像素级还原设计系统视觉风格。
-
-> **【强制前置：读取规范文档】** 执行前必须读取所有涉及组件的 `references/components/{name}.md`，严格按规范文档中的变体参数、颜色 Token、间距规格、字号规格生成。**禁止！禁止！！自定义任何视觉属性。**
-
-**所有场景统一执行**：
-
-```
-【前置】Read references/components/{name}.md  ← 涉及哪些组件就读哪些，不可跳过
-生成独立 HTML 文件
-  — 完整页面 HTML + 内联 CSS，包含所有组件的精确位置与像素级样式
-  — 所有样式值必须来自规范文档或 Token 白名单，禁止自定义
-  — 图标：直接内嵌 <svg> 路径（不使用占位符，不使用 <img src>）
-  — SVG 颜色使用 currentColor 或按 Token 硬编码对应 CSS 变量
-  — 产出为可在浏览器直接打开 / 部署的网站页面
-```
-
-**SVG 图标规范**：
-
-| 属性 | 规格 |
-|------|------|
-| 尺寸 | 与设计系统图标一致（通常 24×24px，使用 `icon_size-m` Token） |
-| 风格 | 线性（stroke），与 OpenEuler 图标库保持一致 |
-| 颜色 | `currentColor`（继承父元素文字色）或对应 Token 色值 |
-| 写法 | `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" ...>` 直接内嵌 |
-
----
-
-### 第五步：应用设计变量与样式
-
-```
-set_fill_style(itemId, styleKey) — 应用填充色样式
-set_text_style(itemId, styleKey) — 应用文字样式
-set_stroke_style(itemId, styleKey) — 应用描边样式
-set_bound_variables(bindings) — 绑定设计变量（Token）
-```
-
-### 第六步：验证视觉结果
-
-```
-get_node_dsl(itemId) — 读取节点 DSL 结构，验证层级与属性
-get_image(itemId) — 生成节点预览图，确认视觉结果
-```
+| 楼层 | 模板文件 | 典型用途 |
+|------|---------|---------|
+| 导航 | [floors/navigation.md](floors/navigation.md) | 页面顶部导航栏（PC/Mb） |
+| Banner | [floors/banner.md](floors/banner.md) | 首页/栏目页顶部横幅（XL/L/M） |
+| 卡片栅格 | [floors/card-grid.md](floors/card-grid.md) | 功能展示、产品列表、特性介绍 |
+| 图文特色 | [floors/feature-section.md](floors/feature-section.md) | 左图右文/左文右图特色介绍 |
+| 页脚 | [floors/footer.md](floors/footer.md) | 站点地图、版权信息、社交入口 |
 
 ## 节点 ID 获取方式
 
 - 从 Pixso 画布 URL 提取：`?item-id=1:2` → itemId 为 `1:2`
 - 使用 `mcp__pixso-desktop__get_all_components` 或 `mcp__pixso-desktop__get_local_styles` 返回结果中查找对应 key/id
-
-## 组件文档规范
-
-生成组件设计规范文档（`skills/opendesign-design/references/components/{name}.md`）时，**必须**将设计稿中的色值、字号、间距等匹配上游 Token 的变量名（数据从 [#数据资源](#数据资源) 中的远端 URL 拉取）：
-
-### 必须匹配的属性
-
-| 属性类型 | Token 格式 | 示例 |
-|---|---|---|
-| 颜色 | `color-*` | `color-info3`、`color-primary1`、`color-link1` |
-| 字号 | `font_size-*` | `font_size-tip1` (14px) |
-| 行高 | `line_height-*` | `line_height-tip1` (22px) |
-| 字重 | `font_weight-*` | `font_weight-regular` (400)、`font_weight-bold` (600) |
-| 间距 | `gap-*` | `gap-1` (4px)、`gap-2` (8px) |
-| 圆角 | `radius_control-*` | `radius_control-m` (4px) |
-| 图标尺寸 | `icon_size-*` / `icon_size_control-*` | `icon_size-m` (24px) |
-| 阴影 | `shadow-*` | `shadow-1` |
-
-### 颜色 Token 对照表
-
-| 语义 | Token | 用途 |
-|---|---|---|
-| 一级文字/标题 | `color-info1` | 强调信息 |
-| 二级文字/正文 | `color-info2` | 次强调 |
-| 三级文字/辅助 | `color-info3` | 辅助信息、面包屑层级 |
-| 禁用文字 | `color-info4` | 禁用状态 |
-| 链接文字 | `color-link1` | 链接常规状态 |
-| 强调色/主色 | `color-primary1` | 当前页面、激活状态 |
-| 成功色 | `color-success1` | 成功提示 |
-| 告警色 | `color-warning1` | 告警提示 |
-| 危险色 | `color-danger1` | 错误/危险提示 |
-| 控件边框 | `color-control1` | 输入框边框等 |
-
-### 文档格式要求
-
-样式规范表格中必须包含 Token 列：
-
-```markdown
-### 颜色
-
-| 元素 | Token | Dark=off | Dark=on |
-|---|---|---|---|
-| 文字 | `color-info3` | `rgba(var(--o-grey-14), 0.6)` | `rgba(var(--o-grey-1), 0.6)` |
-```
 
 ## 注意事项
 
@@ -306,14 +273,23 @@ get_image(itemId) — 生成节点预览图，确认视觉结果
 - 若未指定 itemId，工具默认操作当前 Pixso 画布中已选中的节点
 - 导出图片时使用 `get_export_image` 并配置 exportSettings（PNG/SVG/PDF 等）
 - **组件文档中所有色值、字号、间距必须匹配上游 Token 的变量名**，禁止使用硬编码值
-- **图标规则**：两种模式均直接内嵌 `<svg>` 路径，禁止使用色块占位符或 `<img src>` 引用
-- **SVG 颜色**：使用 `currentColor` 继承父元素，或直接填写对应 Token 的 CSS 变量值
-- **禁止自定义（最终兜底）**：模式 A / 模式 B 生成时，凡未在组件规范文档、硬约束白名单、上游 Token 真源中找到依据的样式值，**一律禁止输出**。不得以"常见默认值""经验估算""视觉近似"为由跳过读取规范直接生成。
+- 编写组件文档时，参见 [global/component-doc-spec.md](global/component-doc-spec.md) 中的 Token 匹性要求和格式规范
+
+## 异常与降级策略
+
+| 异常场景 | 处理方式 |
+|----------|----------|
+| WebFetch 拉取上游 Token 失败（超时 / 404） | 使用 Pixso 本地 `get_variables` / `get_local_styles` 作为降级数据源，在输出中注明「Token 真源未拉取，使用本地变量」 |
+| `components/{name}.md` 不存在 | 停下告知用户该组件暂无设计规范，询问是否继续（无规范 = 无合法参数来源，禁止自行推断） |
+| componentKey 在索引中找不到匹配变体 | 使用 `get_all_components` 实时搜索组件库，按名称模糊匹配；仍无结果 → 停下询问用户 |
+| 硬约束白名单无法覆盖需求值 | 停下告知用户该值不在合法取值集合内，给出最接近的白名单值供选择，禁止静默取近似值 |
+| `references/assets/` 中无目标 SVG | 按图标使用规则降级：手写线性风格 SVG 路径，并在 HTML 注释中注明「assets 中无资源」 |
+| Pixso MCP 工具调用失败（连接断开 / 权限不足） | 停下告知用户具体报错，建议检查 Pixso 桌面端连接状态；不可跳过该步骤继续生成 |
 
 ## componentKey 速查
 
-> - 完整 536 个 UI 组件变体：[references/component-keys.md](references/component-keys.md)
-> - 完整 187 个图标 componentKey：[references/icon-keys.md](references/icon-keys.md)
+> - 完整 536 个 UI 组件变体：[references/pixso-mcp-adapter/component-keys.md](references/pixso-mcp-adapter/component-keys.md)
+> - 完整 187 个图标 componentKey：[references/pixso-mcp-adapter/icon-keys.md](references/pixso-mcp-adapter/icon-keys.md)
 
 常用高频变体（Light 模式默认变体，已验证）：
 
@@ -340,3 +316,9 @@ get_image(itemId) — 生成节点预览图，确认视觉结果
 | OCard 卡片 | cover, horizontal, Light | `0fceafcdae43547862ffb167bdcce89f510c3c35` |
 | OCard 卡片 | icon, vertical, Light | `6103b3265e752087a546bf1b77a0f1b5bfef888b` |
 | OCard 卡片 | icon, horizontal, Light | `e2a10a804dc8cb9ab507d237c712f65c7cf12f5e` |
+
+<!-- 以下内容仅为人类维护者参考，AI 执行时请忽略 -->
+### 📎 人工参考附录
+- 更新日志：[CHANGELOG.md](CHANGELOG.md)
+- 项目说明与目录结构：[README.md](README.md)
+- 组件文档编写规范：[global/component-doc-spec.md](global/component-doc-spec.md)
