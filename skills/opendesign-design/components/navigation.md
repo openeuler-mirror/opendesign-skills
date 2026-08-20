@@ -46,7 +46,7 @@
 
 **Dark（主题，仅顶导）**
 - `off` — 浅色模式，背景白色（顶导默认）
-- `on` — 深色模式，背景 rgba(36,36,39,1)，底部加 1px 白色分割线
+- `on` — 深色模式，背景 `rgba(36,36,39,1)` (**`--o-color-fill2-dark`**)，底部加 1px 白色分割线
 
 **属性 2（内容类型）**
 - *(不填)* — 顶部导航栏（Header）
@@ -66,10 +66,10 @@ ONavigation Header PC（SYMBOL）
 │  Width: 1920px | Height: 72px
 │  display: flex | justify: space-between | align: center
 │  padding: 0px 216px
-│  background: rgba(255,255,255,1)（Light）/ rgba(36,36,39,1)（Dark）
-│  boxShadow: 0px 3px 9px 0px rgba(0,18,85,0.078)
+│  background: `rgba(255,255,255,1)` (**`--o-color-white`**)(Light) / `rgba(36,36,39,1)` (**`--o-color-fill2-dark`**)(Dark)
+│  boxShadow: 0px 3px 9px 0px `rgba(0,18,85,0.078)`
 │  backdropFilter: blur(4.53px)
-│  [Dark 专属] borderBottom: 1px solid rgba(255,255,255,0.149)
+│  [Dark 专属] borderBottom: 1px solid `rgba(255,255,255,0.149)`
 │
 ├── [左侧区域 FRAME]（gap 40px，align: flex-end）
 │   ├── [Logo FRAME]（padding: 20px 0）
@@ -82,16 +82,16 @@ ONavigation Header PC（SYMBOL）
 │             🔗 组件引用：[OTab 标签页](./tab.md) · text 变体 · medium 尺寸
 │             text: 下载 / 开发 / 文档 / 学习 / 支持 / 社区 / 动态
 │             fontSize: 16px | lineHeight: 24px | fontWeight: 400
-│             fill: rgba(0,0,0,1)（Light）/ rgba(255,255,255,1)（Dark）
+│             fill: `rgba(0,0,0,1)` (**`--o-color-black`**)(Light) / `rgba(255,255,255,1)` (**`--o-color-white`**)(Dark)
 │             交互状态（默认/Hover/Active/指示线）均遵循 OTab 规则
 │
 └── └── [右侧操作区 FRAME]（gap 20px，align: center）
     ├── [搜索框 → OSearch 插槽]（160px × 32px）
     │   🔗 组件引用：[OSearch 搜索框](./search.md) · small 尺寸
     │   Light: vector 背景图片 + 绝对定位图标/文字
-    │   Dark:  FRAME，background rgba(36,36,39,1)，borderRadius 4px
-    │          padding: 5px 16px，gap 8px（图标 16px + 文字 flex-grow）
-    │          占位文字 fill: rgba(255,255,255,0.4)，14px
+    │   Dark:  FRAME，background `rgba(36,36,39,1)` (**`--o-color-fill2-dark`**)，borderRadius 4px
+│          padding: 5px 16px，gap 8px（图标 16px + 文字 flex-grow）
+│          占位文字 fill: `rgba(255,255,255,0.4)` (**`--o-color-info4-dark`**)，14px
     │   交互状态（默认/Focus/清除/建议面板）均遵循 OSearch 规则
     ├── [源码下拉 → ODropdown 插槽]（48px × 24px）
     │   🔗 组件引用：[ODropdown 下拉菜单](./dropdown.md) · small 尺寸 · text 变体
@@ -109,8 +109,8 @@ ONavigation Header Mb（SYMBOL）
 │  node_id: 1303:11169（Light）/ 1303:11391（Dark）
 │  Width: 360px | Height: 76px
 │  position: relative（绝对定位内部子节点）
-│  background: rgba(255,255,255,0.95)（Light）/ Dark 待核实
-│  boxShadow: 0px 3px 8px 0px rgba(0,0,0,0.078)
+│  background: `rgba(255,255,255,0.95)` (**`--o-color-white@0.95`**)(Light) / Dark 待核实
+│  boxShadow: 0px 3px 8px 0px `rgba(0,0,0,0.078)`
 │  backdropFilter: blur(1.67px)
 │
 ├── [状态栏 FRAME]（348.5px × 18px，overflow: hidden，top: 0
@@ -136,11 +136,11 @@ ONavigation Header Mb（SYMBOL）
 ONavigation Footer PC（SYMBOL）
 │  node_id: 1303:12847
 │  Width: 1920px | Height: 460px
-│  background: rgba(18,18,20,1)（始终深色）
+│  background: `rgba(18,18,20,1)` (**`--o-color-footer-bg-pc`**)（始终深色）
 │  padding: 24px 216px 34px 216px（内容区宽 1488px）
 │
 ├── [顶部说明 FRAME]（居中，column，gap 12px，再外层 gap 16px）
-│   ├── [文字 PARAGRAPH]（20px，Regular，lineHeight 28px，white，居中）
+│   ├── [文字 PARAGRAPH]（20px，Regular，lineHeight 28px，**`white`** (**`--o-color-white`**)，居中）
 │   │   "openEuler 是由开放原子开源基金会（OpenAtom Foundation）孵化及运营的开源项目"
 │   └── [基金会 Logo RECTANGLE]（160.43px × 32px，图片填充）📌 → Part G
 │
@@ -152,31 +152,31 @@ ONavigation Footer PC（SYMBOL）
 │   ├── 支持与服务（FAQ/联系我们/反馈问题）
 │   ├── 互动与交流（邮件列表/活动/论坛）
 │   └── 贡献与成长（SIG中心/贡献攻略/课程中心）
-│   [列标题] fontSize: 20px | lineHeight: 28px | fontWeight: Regular | fill: white
-│   [链接文字] fontSize: 14px | lineHeight: 22px | fill: rgba(255,255,255,0.6)
+│   [列标题] fontSize: 20px | lineHeight: 28px | fontWeight: Regular | fill: **`white`** (**`--o-color-white`**)
+│   [链接文字] fontSize: 14px | lineHeight: 22px | fill: `rgba(255,255,255,0.6)` (**`--o-color-info3`**)
 │
 ├── [友情链接区 GROUP]（897px × 24px）
-│   [标题"友情链接"] fontSize: 12px，fontWeight: UltraLight，fill: rgba(255,255,255,1)
-│   [链接列] fontSize: 12px，fill: rgba(255,255,255,0.6)
+│   [标题"友情链接"] fontSize: 12px，fontWeight: UltraLight，fill: `rgba(255,255,255,1)` (**`--o-color-white`**)
+│   [链接列] fontSize: 12px，fill: `rgba(255,255,255,0.6)` (**`--o-color-info3`**)
 │   木兰开源社区 / 鲲鹏社区 / 鲲鹏小智 / 鹏城实验室 / InfoQ /
 │   开源社 / 中科微澜 / Authing / openGauss / 昇思MindSpore / Ebaina
 │
 ├── [分隔线 FRAME + RECTANGLE]
 │   Width: 1487.91px | Height: 2px
-│   fill: rgba(229,229,229,1) | opacity: 0.12
+│   fill: `rgba(229,229,229,1)` (**`--o-color-grey-1`**) | opacity: 0.12
 │
 └── [底部信息行 GROUP]（1487.91px × 78px）
     ├── [Logo区 GROUP]（150px × 68px，left: 0）📌 → Part G
     │   OpenEuler 白色 Logo（130px × 24.53px）
-    │   "contact@openeuler.org" fontSize: 14px，fill: white，top: 46px
+    │   "contact@openeuler.org" fontSize: 14px，fill: **`white`** (**`--o-color-white`**)，top: 46px
     ├── [版权信息区 GROUP]（266px × 78px，left: 611px）
-    │   品牌 | 隐私政策 | 法律声明（14px white，分隔线 1px×14px white）
-    │   "版权所有 © 2024 openEuler 保留一切权利"（14px white@0.6）
-    │   "遵循 木兰宽松许可证第2版（MulanPSL2）"（14px white@0.6）
+    │   品牌 | 隐私政策 | 法律声明（14px **`white`** (**`--o-color-white`**)，分隔线 1px×14px **`white`**）
+    │   "版权所有 © 2024 openEuler 保留一切权利"（14px **`white@0.6`** (**`--o-color-info3`**))
+    │   "遵循 木兰宽松许可证第2版（MulanPSL2）"（14px **`white@0.6`** (**`--o-color-info3`**))
     └── [社交媒体区 GROUP]（353.91px × 52px，left: 1134px）📌 → Part G
         二维码行（top: 0）：openEuler小助手 + openEuler公众号（各 126.96px × 20px）
         平台Logo行（top: 32px）：OSCHINA / CSDN / 新土提金 / bilibili / 头条
-        各平台 Logo 背景：rgba(43,43,47,1)，borderRadius: 4px
+        各平台 Logo 背景：`rgba(43,43,47,1)` (**`--o-color-control2-dark`**)，borderRadius: 4px
 ```
 
 #### 移动端页脚（type=Mb, 属性 2=openEuler）
@@ -185,9 +185,9 @@ ONavigation Footer PC（SYMBOL）
 ONavigation Footer Mb（SYMBOL）
 │  node_id: 1303:12977
 │  Width: 360px | Height: 458px
-│  background: rgba(18,18,18,1)（注意：与 PC 页脚 rgba(18,18,20,1) 有细微差异）
+│  background: `rgba(18,18,18,1)` (**`--o-color-footer-bg-mb`**)（注意：与 PC 页脚 `rgba(18,18,20,1)` (**`--o-color-footer-bg-pc`**) 有细微差异）
 │
-├── [顶部说明文字]（14px，Medium，white，居中，left: 68px，top: 24px）
+├── [顶部说明文字]（14px，Medium，**`white`** (**`--o-color-white`**)，居中，left: 68px，top: 24px）
 │   "openEuler 是由开放原子开源基金会"
 │   "（OpenAtom Foundation）"
 │   "孵化及运营的开源项目"
@@ -195,18 +195,18 @@ ONavigation Footer Mb（SYMBOL）
 ├── [基金会 Logo RECTANGLE]（150.4px × 30px，left: 105px，top: 102px，图片填充）📌 → Part G
 │
 ├── [分隔线 GROUP]（312px × 1px，left: 24px，top: 146px）
-│   fill: rgba(229,229,229,1) | opacity: 0.12
+│   fill: `rgba(229,229,229,1)` (**`--o-color-grey-1`**) | opacity: 0.12
 │
 ├── [底部链接行 GROUP]（207px × 18px，left: 77px，top: 161px）
-│   品牌 | 隐私政策 | 法律声明 | 服务状态（12px white，分隔线 1px×12px white）
+│   品牌 | 隐私政策 | 法律声明 | 服务状态（12px **`white`** (**`--o-color-white`**)，分隔线 1px×12px **`white`**)
 │   ⚠️ 注意：移动端比 PC 端多"服务状态"一项
 │
-├── [版权声明 PARAGRAPH]（12px，white，居中，left: 66.5px，top: 183px）
+├── [版权声明 PARAGRAPH]（12px，**`white`** (**`--o-color-white`**)，居中，left: 66.5px，top: 183px）
 │   "版权所有 © 2022 openEuler 保留一切权利"
 │   ⚠️ 注意：移动端版权年份为 2022，PC 端为 2024
 │
 ├── [OpenEuler Logo GROUP]（86px × 34px，left: 137px，top: 213px）📌 → Part G
-│   Logo 图形（86px × 20px）+ "contact@openeuler.org"（8px white，top: 24px）
+│   Logo 图形（86px × 20px）+ "contact@openeuler.org"（8px **`white`** (**`--o-color-white`**)，top: 24px）
 │
 ├── [QR 码区 GROUP]（243px × 102px，left: 60px，top: 264px）📌 → Part G
 │   openEuler公众号（78px × 78px 白底二维码 + 12px 标题）
@@ -215,8 +215,45 @@ ONavigation Footer Mb（SYMBOL）
 └── [平台 Logo 行 GROUP]（232px × 49px，left: 64px，top: 385px）📌 → Part G
     第一行（top: 0）：OSCHINA（77px）/ CSDN（58px）/ 新土提金（73px）
     第二行（top: 29px）：bilibili（48px，left: 57px）/ 头条（48px，left: 117px）
-    各平台 Logo 背景：rgba(43,43,47,1)，borderRadius: 4px
+    各平台 Logo 背景：`rgba(43,43,47,1)` (**`--o-color-control2-dark`**)，borderRadius: 4px
 ```
+
+> ### 📱 移动端页脚可视化速查表
+>
+> ```
+> 移动端页脚 (360×458px) | background: `rgba(18,18,18,1)` (**`--o-color-footer-bg-mb`**)
+> ┌─────────────────────────────────────┐
+> │         [顶部说明文字]               │ top:24px │ 14px Medium **`white`** (**`--o-color-white`**)
+> │     openEuler是由开放原子开源        │
+> │     基金会（OpenAtom Foundation）    │
+> │     孵化及运营的开源项目             │
+> │                                     │
+> │       [基金会Logo 150.4×30]         │ top:102px │ 图片填充
+> │                                     │
+> │ ─────────────────────────────────── │ 分隔线 312×1 │ top:146px
+> │                                     │
+> │ 品牌│隐私政策│法律声明│服务状态      │ 链接行 207×18 │ top:161px
+> │       (1px竖线分隔)                 │ 12px **`white`** (**`--o-color-white`**)
+> │                                     │
+> │   © 2022 openEuler 保留一切权利      │ 版权声明 │ top:183px
+> │                           12px **`white`** (**`--o-color-white`**) │
+> │                                     │
+> │     [OpenEuler Logo 86×34]          │ 含邮箱 │ top:213px
+> │     contact@openeuler.org            │ 8px **`white`** (**`--o-color-white`**)
+> │                                     │
+> │   [公众号QR 78×78] [小助手QR 78×78]  │ QR码区 │ top:264px
+> │   openEuler公众号   openEuler小助手  │ 12px标题
+> │                                     │
+> │ OSCHINA CSDN 新土提金                │ 平台Logo第1行 │ top:385px
+> │ bilibili 头条                       │ 平台Logo第2行
+> └─────────────────────────────────────┘
+> ```
+>
+> **关键差异提醒：**
+> - ⚠️ 背景色与PC不同：`rgba(18,18,18,1)` (**`--o-color-footer-bg-mb`**) vs PC `rgba(18,18,20,1)` (**`--o-color-footer-bg-pc`**)
+> - ⚠️ 版权年份：2022 vs PC 2024
+> - ⚠️ 链接多一项："服务状态"
+> - ⚠️ 邮箱字号：8px vs PC 14px
 
 ---
 
@@ -236,8 +273,8 @@ ONavigation Footer Mb（SYMBOL）
 > - PC 顶导 Light：1920×72px，白色背景，无底部线条
 > - PC 顶导 Dark：1920×72px，rgba(36,36,39) 深色背景，**底部 1px 白色@0.149 分割线**
 > - 移动端顶导：360×76px，含 18px 状态栏，左汉堡/中Logo/右操作
-> - PC 页脚：1920×460px，rgba(18,18,20) 深色，6 列导航
-> - 移动端页脚：360×458px，rgba(18,18,18) 深色，垂直单列布局
+> - PC 页脚：1920×460px，`rgba(18,18,20)` (**`--o-color-footer-bg-pc`**) 深色，6 列导航
+> - 移动端页脚：360×458px，`rgba(18,18,18)` (**`--o-color-footer-bg-mb`**) 深色，垂直单列布局
 
 > 🔄 **易混淆组件**：
 > - 与 **OTab 标签页**：Navigation 中间菜单区**直接引用** OTab 作为插槽组件，而非独立并列关系；OTab 单独使用时用于页面内区域切换
@@ -289,9 +326,9 @@ ONavigation Footer Mb（SYMBOL）
 | 搜索框（Dark）padding | 5px 16px，gap 8px，borderRadius 4px |
 | 源码下拉 GROUP 尺寸 | 48px × 24px |
 | 操作图标尺寸 | 24px × 24px |
-| boxShadow | 0px 3px 9px 0px rgba(0,18,85,0.078) |
+| boxShadow | 0px 3px 9px 0px `rgba(0,18,85,0.078)` |
 | backdropFilter | blur(4.53px) |
-| Dark 底部描边 | 1px bottom，rgba(255,255,255,0.149) |
+| Dark 底部描边 | 1px bottom，`rgba(255,255,255,0.149)` |
 
 #### 移动端顶导（1303:11169 / 1303:11391）
 
@@ -303,7 +340,7 @@ ONavigation Footer Mb（SYMBOL）
 | Logo GROUP | 85px × 20px，left: 138px，top: 38px |
 | 右侧操作 GROUP | 64px × 24px，left: 272px，top: 36px |
 | 头像（含出血区） | 31.5px × 31px，left: 40px（相对右侧 GROUP） |
-| boxShadow | 0px 3px 8px 0px rgba(0,0,0,0.078) |
+| boxShadow | 0px 3px 8px 0px `rgba(0,0,0,0.078)` |
 | backdropFilter | blur(1.67px) |
 
 #### PC 页脚（1303:12847）
@@ -315,29 +352,29 @@ ONavigation Footer Mb（SYMBOL）
 | 顶部说明文字 | 20px Regular，lineHeight 28px |
 | 基金会 Logo | 160.43px × 32px |
 | 导航列 GROUP | 1122.5px × 180px |
-| 导航列标题 | 20px Regular white |
-| 导航链接 | 14px Regular white@0.6 |
+| 导航列标题 | 20px Regular **`white`** (**`--o-color-white`**) |
+| 导航链接 | 14px Regular **`white@0.6`** (**`--o-color-info3`**) |
 | 友情链接行 | 897px × 24px（标题 + 链接横排） |
-| 分隔线 | 1487.91px × 2px，rgba(229,229,229) opacity 0.12 |
+| 分隔线 | 1487.91px × 2px，`rgba(229,229,229)` (**`--o-color-grey-1`**) opacity 0.12 |
 | 底部信息行 | 1487.91px × 78px |
 | 底部 Logo 区 | 150px × 68px，left: 0 |
 | 版权区 | 266px × 78px，left: 611px |
 | 社交媒体区 | 353.91px × 52px，left: 1134px |
 | 二维码尺寸 | 126.96px × 20px（含文字行） |
-| 平台 Logo 背景 | rgba(43,43,47,1)，borderRadius: 4px |
+| 平台 Logo 背景 | `rgba(43,43,47,1)` (**`--o-color-control2-dark`**)，borderRadius: 4px |
 
 #### 移动端页脚（1303:12977）
 
 | 规格项 | 值 |
 |--------|---|
 | 整体尺寸 | 360px × 458px |
-| 顶部说明文字 | 14px Medium，lineHeight 22px，white，居中，left: 68px，top: 24px |
+| 顶部说明文字 | 14px Medium，lineHeight 22px，**`white`** (**`--o-color-white`**)，居中，left: 68px，top: 24px |
 | 基金会 Logo | 150.4px × 30px，left: 105px，top: 102px |
-| 分隔线 | 312px × 1px，left: 24px，top: 146px，rgba(229,229,229) opacity 0.12 |
-| 底部链接行 | 207px × 18px，left: 77px，top: 161px，12px white |
-| 版权声明 | 12px white，居中，left: 66.5px，top: 183px |
+| 分隔线 | 312px × 1px，left: 24px，top: 146px，`rgba(229,229,229)` (**`--o-color-grey-1`**) opacity 0.12 |
+| 底部链接行 | 207px × 18px，left: 77px，top: 161px，12px **`white`** (**`--o-color-white`**) |
+| 版权声明 | 12px **`white`** (**`--o-color-white`**)，居中，left: 66.5px，top: 183px |
 | Logo GROUP | 86px × 34px，left: 137px，top: 213px |
-| 联系邮箱 | 8px white，top: 24px（相对 Logo GROUP） |
+| 联系邮箱 | 8px **`white`** (**`--o-color-white`**)，top: 24px（相对 Logo GROUP） |
 | QR 码区 GROUP | 243px × 102px，left: 60px，top: 264px |
 | 单个二维码 | 78px × 78px |
 | 平台 Logo 行 | 232px × 49px，left: 64px，top: 385px |
@@ -350,27 +387,27 @@ ONavigation Footer Mb（SYMBOL）
 
 | 区域 | Light 模式（rgba） | Dark 模式（rgba） |
 |------|-------------------|------------------|
-| 导航栏背景（PC） | (255,255,255,1) | (36,36,39,1) |
-| 导航栏背景（Mb） | (255,255,255,0.95) | 待核实 |
-| PC Dark 底部描边 | — | (255,255,255,0.149) |
-| 菜单文字 | (0,0,0,1) | (255,255,255,1) |
-| 源码文字 | (0,0,0,1) | (255,255,255,1) |
-| 搜索框背景（Dark） | — | (36,36,39,1) |
-| 搜索占位文字 | (0,0,0,0.4) | (255,255,255,0.4) |
-| boxShadow（PC） | (0,18,85,0.078) | (0,18,85,0.078) |
-| boxShadow（Mb） | (0,0,0,0.078) | 待核实 |
+| 导航栏背景（PC） | `(255,255,255,1)` (**`--o-color-white`**) | `(36,36,39,1)` (**`--o-color-fill2-dark`**) |
+| 导航栏背景（Mb） | `(255,255,255,0.95)` (**`--o-color-white@0.95`**) | 待核实 |
+| PC Dark 底部描边 | — | `(255,255,255,0.149)` |
+| 菜单文字 | `(0,0,0,1)` (**`--o-color-black`**) | `(255,255,255,1)` (**`--o-color-white`**) |
+| 源码文字 | `(0,0,0,1)` (**`--o-color-black`**) | `(255,255,255,1)` (**`--o-color-white`**) |
+| 搜索框背景（Dark） | — | `(36,36,39,1)` (**`--o-color-fill2-dark`**) |
+| 搜索占位文字 | `(0,0,0,0.4)` (**`--o-color-info4`**) | `(255,255,255,0.4)` (**`--o-color-info4-dark`**) |
+| boxShadow（PC） | `(0,18,85,0.078)` | `(0,18,85,0.078)` |
+| boxShadow（Mb） | `(0,0,0,0.078)` | 待核实 |
 
 #### 页脚颜色
 
 | 区域 | PC 页脚（rgba） | 移动端页脚（rgba） |
 |------|----------------|------------------|
-| 背景 | (18,18,20,1) | (18,18,18,1)⚠️细微差异 |
-| 顶部说明文字 | (255,255,255,1) | (255,255,255,1) |
-| 导航列标题 | (255,255,255,1) | — |
-| 导航链接/友情链接 | (255,255,255,0.6) | — |
-| 版权/底部链接 | (255,255,255,0.6) | (255,255,255,1) |
-| 分隔线 | (229,229,229) × opacity 0.12 | (229,229,229) × opacity 0.12 |
-| 平台 Logo 背景 | (43,43,47,1) | (43,43,47,1) |
+| 背景 | `(18,18,20,1)` (**`--o-color-footer-bg-pc`**) | `(18,18,18,1)` (**`--o-color-footer-bg-mb`**)⚠️细微差异 |
+| 顶部说明文字 | `(255,255,255,1)` (**`--o-color-white`**) | `(255,255,255,1)` (**`--o-color-white`**) |
+| 导航列标题 | `(255,255,255,1)` (**`--o-color-white`**) | — |
+| 导航链接/友情链接 | `(255,255,255,0.6)` (**`--o-color-info3`**) | — |
+| 版权/底部链接 | `(255,255,255,0.6)` (**`--o-color-info3`**) | `(255,255,255,1)` (**`--o-color-white`**) ⚠️差异 |
+| 分隔线 | `(229,229,229)` (**`--o-color-grey-1`**) × opacity 0.12 | `(229,229,229)` (**`--o-color-grey-1`**) × opacity 0.12 |
+| 平台 Logo 背景 | `(43,43,47,1)` (**`--o-color-control2-dark`**) | `(43,43,47,1)` (**`--o-color-control2-dark`**) |
 
 ---
 
@@ -380,33 +417,33 @@ ONavigation Footer Mb（SYMBOL）
 
 | 使用位置 | 字号 | 行高 | 字重 | 颜色 |
 |---------|------|------|------|------|
-| 主导航菜单文字 | 16px | 24px | 400 | 黑/白（主题） |
-| 源码下拉文字 | 14px | 24px | 400 | 黑/白（主题） |
-| 搜索占位文字 | 14px | 22px | 400 | black@0.4 / white@0.4 |
+| 主导航菜单文字 | 16px | 24px | 400 | **`black`** (**`--o-color-black`**)/**`white`** (**`--o-color-white`**)（主题） |
+| 源码下拉文字 | 14px | 24px | 400 | **`black`** (**`--o-color-black`**)/**`white`** (**`--o-color-white`**)（主题） |
+| 搜索占位文字 | 14px | 22px | 400 | **`black@0.4`** (**`--o-color-info4`**)/ **`white@0.4`** (**`--o-color-info4-dark`**) |
 
 #### PC 页脚
 
 | 使用位置 | 字号 | 行高 | 字重 | 颜色 |
 |---------|------|------|------|------|
-| 顶部说明文字 | 20px | 28px | Regular | white |
-| 导航列标题 | 20px | 28px | Regular | white |
-| 导航链接文字 | 14px | 22px | Regular | white@0.6 |
-| 友情链接标题 | 12px | 24px | UltraLight | white |
-| 友情链接文字 | 12px | 18px | Regular | white@0.6 |
-| 底部链接（品牌/政策）| 14px | 22px | Regular | white |
-| 版权/许可证声明 | 14px | 22px | Regular | white@0.6 |
-| 联系邮箱 | 14px | 22px | Regular | white |
-| QR 码标题 | 12px | — | Regular | white@0.6 |
+| 顶部说明文字 | 20px | 28px | Regular | **`white`** (**`--o-color-white`**) |
+| 导航列标题 | 20px | 28px | Regular | **`white`** (**`--o-color-white`**) |
+| 导航链接文字 | 14px | 22px | Regular | **`white@0.6`** (**`--o-color-info3`**) |
+| 友情链接标题 | 12px | 24px | UltraLight | **`white`** (**`--o-color-white`**) |
+| 友情链接文字 | 12px | 18px | Regular | **`white@0.6`** (**`--o-color-info3`**) |
+| 底部链接（品牌/政策）| 14px | 22px | Regular | **`white`** (**`--o-color-white`**) |
+| 版权/许可证声明 | 14px | 22px | Regular | **`white@0.6`** (**`--o-color-info3`**) |
+| 联系邮箱 | 14px | 22px | Regular | **`white`** (**`--o-color-white`**) |
+| QR 码标题 | 12px | — | Regular | **`white@0.6`** (**`--o-color-info3`**) |
 
 #### 移动端页脚
 
 | 使用位置 | 字号 | 行高 | 字重 | 颜色 |
 |---------|------|------|------|------|
-| 顶部说明文字 | 14px | 22px | **Medium** | white |
-| 底部链接（品牌/政策）| 12px | 18px | Regular | white |
-| 版权声明 | 12px | 18px | Regular | white |
-| 联系邮箱 | 8px | — | Regular | white |
-| QR 码标题 | 12px | 18px | Regular | white |
+| 顶部说明文字 | 14px | 22px | **Medium** | **`white`** (**`--o-color-white`**) |
+| 底部链接（品牌/政策）| 12px | 18px | Regular | **`white`** (**`--o-color-white`**) |
+| 版权声明 | 12px | 18px | Regular | **`white`** (**`--o-color-white`**) |
+| 联系邮箱 | 8px | — | Regular | **`white`** (**`--o-color-white`**) |
+| QR 码标题 | 12px | 18px | Regular | **`white`** (**`--o-color-white`**) |
 
 字体族：`HarmonyHeiTi`（Regular 400 / Medium 500 / UltraLight 200）
 
@@ -439,7 +476,7 @@ ONavigation Footer Mb（SYMBOL）
 ### 注意事项
 
 - **Dark 顶导有底部分割线**：PC Dark 变体底部有 1px `rgba(255,255,255,0.149)` 描边，Light 变体无此线
-- **PC 与 Mb 页脚背景色不同**：PC rgba(18,18,20,1) vs 移动端 rgba(18,18,18,1)，细微差异
+- **PC 与 Mb 页脚背景色不同**：PC `rgba(18,18,20,1)` (**`--o-color-footer-bg-pc`**) vs 移动端 `rgba(18,18,18,1)` (**`--o-color-footer-bg-mb`**)，细微差异
 - **移动端页脚多"服务状态"链接**：移动端底部链接栏比 PC 多出"服务状态"一项
 - **版权年份不一致**：PC 页脚为 2024，移动端为 2022（设计稿历史遗留，使用时注意统一）
 - **移动端页脚顶部文字字重不同**：14px Medium，而 PC 端为 20px Regular
@@ -468,11 +505,11 @@ ONavigation Footer Mb（SYMBOL）
 
 | 元素 | Light | Dark |
 |------|-------|------|
-| PC 导航背景 | rgba(255,255,255,1) | rgba(36,36,39,1) |
-| PC 底部描边 | 无 | 1px rgba(255,255,255,0.149) |
-| 菜单/操作文字 | rgba(0,0,0,1) | rgba(255,255,255,1) |
+| PC 导航背景 | `rgba(255,255,255,1)` (**`--o-color-white`**) | `rgba(36,36,39,1)` (**`--o-color-fill2-dark`**) |
+| PC 底部描边 | 无 | 1px `rgba(255,255,255,0.149)` |
+| 菜单/操作文字 | `rgba(0,0,0,1)` (**`--o-color-black`**) | `rgba(255,255,255,1)` (**`--o-color-white`**) |
 | 搜索框 | 图片背景（无描边） | FRAME + 描边布局 |
-| 搜索占位文字 | rgba(0,0,0,0.4) | rgba(255,255,255,0.4) |
+| 搜索占位文字 | `rgba(0,0,0,0.4)` (**`--o-color-info4`**) | `rgba(255,255,255,0.4)` (**`--o-color-info4-dark`**) |
 | 页脚 | 不受切换影响（始终深色） | 同左 |
 
 ---
@@ -483,18 +520,18 @@ ONavigation Footer Mb（SYMBOL）
 
 | 元素 | 属性 | 精确颜色值 |
 |------|------|-----------|
-| PC 顶导背景（Light） | fill | rgba(255,255,255,1) |
-| PC 顶导背景（Dark） | fill | rgba(36,36,39,1) |
-| PC Dark 底部描边 | stroke | rgba(255,255,255,0.149)，1px bottom |
-| 菜单文字（Light） | fill | rgba(0,0,0,1) |
-| 菜单文字（Dark） | fill | rgba(255,255,255,1) |
-| 搜索占位文字（Light） | fill | rgba(0,0,0,0.4) |
-| 搜索占位文字（Dark） | fill | rgba(255,255,255,0.4) |
-| PC 页脚背景 | fill | rgba(18,18,20,1) |
-| 移动端页脚背景 | fill | rgba(18,18,18,1) |
-| 页脚导航链接 | fill | rgba(255,255,255,0.6) |
-| 分隔线 | fill | rgba(229,229,229,1)，opacity 0.12 |
-| 平台 Logo 背景 | fill | rgba(43,43,47,1) |
+| PC 顶导背景（Light） | fill | `rgba(255,255,255,1)` (**`--o-color-white`**) |
+| PC 顶导背景（Dark） | fill | `rgba(36,36,39,1)` (**`--o-color-fill2-dark`**) |
+| PC Dark 底部描边 | stroke | `rgba(255,255,255,0.149)`，1px bottom |
+| 菜单文字（Light） | fill | `rgba(0,0,0,1)` (**`--o-color-black`**) |
+| 菜单文字（Dark） | fill | `rgba(255,255,255,1)` (**`--o-color-white`**) |
+| 搜索占位文字（Light） | fill | `rgba(0,0,0,0.4)` (**`--o-color-info4`**) |
+| 搜索占位文字（Dark） | fill | `rgba(255,255,255,0.4)` (**`--o-color-info4-dark`**) |
+| PC 页脚背景 | fill | `rgba(18,18,20,1)` (**`--o-color-footer-bg-pc`**) |
+| 移动端页脚背景 | fill | `rgba(18,18,18,1)` (**`--o-color-footer-bg-mb`**) |
+| 页脚导航链接 | fill | `rgba(255,255,255,0.6)` (**`--o-color-info3`**) |
+| 分隔线 | fill | `rgba(229,229,229,1)` (**`--o-color-grey-1`**)，opacity 0.12 |
+| 平台 Logo 背景 | fill | `rgba(43,43,47,1)` (**`--o-color-control2-dark`**) |
 
 ---
 
@@ -596,10 +633,10 @@ ONavigation Footer Mb（SYMBOL）
 
 | 文件 | 用途 | 尺寸 | Light 色 | Dark 色 |
 |---|---|---|---|---|
-| [`header-pc-search icon.svg`](../references/assets/navigation/header-pc-search icon.svg) | 搜索框图标 | 16×16 | `rgba(0,0,0,.4)` | `rgba(255,255,255,.4)` |
-| [`header-pc-语言切换 icon.svg`](../references/assets/navigation/header-pc-语言切换 icon.svg) | 国际化切换 | 20×20 | `rgba(0,0,0,.65)` | `rgba(255,255,255,.85)` |
-| [`header-pc-深浅模式.svg`](../references/assets/navigation/header-pc-深浅模式.svg) | 主题切换 | 20×20 | `rgba(0,0,0,.65)` | `rgba(255,255,255,.85)` |
-| [`header-pc-头像.svg`](../references/assets/navigation/header-pc-头像.svg) | 用户/登录 | 20×20 | `rgba(0,0,0,.65)` | `rgba(255,255,255,.85)` |
+| [`header-pc-search icon.svg`](../references/assets/navigation/header-pc-search icon.svg) | 搜索框图标 | 16×16 | `rgba(0,0,0,.4)` (**`--o-color-info4`**) | `rgba(255,255,255,.4)` (**`--o-color-info4-dark`**) |
+| [`header-pc-语言切换 icon.svg`](../references/assets/navigation/header-pc-语言切换 icon.svg) | 国际化切换 | 20×20 | `rgba(0,0,0,.65)` (**`--o-color-info3`**) | `rgba(255,255,255,.85)` (**`--o-color-info1-dark`**) |
+| [`header-pc-深浅模式.svg`](../references/assets/navigation/header-pc-深浅模式.svg) | 主题切换 | 20×20 | `rgba(0,0,0,.65)` (**`--o-color-info3`**) | `rgba(255,255,255,.85)` (**`--o-color-info1-dark`**) |
+| [`header-pc-头像.svg`](../references/assets/navigation/header-pc-头像.svg) | 用户/登录 | 20×20 | `rgba(0,0,0,.65)` (**`--o-color-info3`**) | `rgba(255,255,255,.85)` (**`--o-color-info1-dark`**) |
 
 > ✅ PC Logo SVG 已按主题备齐两套；Icon SVG 通过 CSS mask + background-color 控制颜色，无需准备两份文件。
 
@@ -662,6 +699,25 @@ ONavigation Footer Mb（SYMBOL）
 
 ## Part G：页脚图形资源（已入仓）
 
+> ⚠️ **重要警告（2026实战踩坑记录）：**
+>
+> 以下 8 个 SVG 为**"整节点粒度"资源**——它们是**不可分割的整体图片**，内部已包含完整的布局结构。
+>
+> ### 🚫 绝对禁止：
+> - ❌ 用 `<img>` 引用后再用 HTML/CSS 拆分其内部元素（如把 Logo 和邮箱分开）
+> - ❌ 把平台Logo组(232×49)拆成5个独立div再分别设置尺寸
+> - ❌ 自行实现这些SVG内部的布局逻辑
+>
+> ### ✅ 正确做法：
+> - ✅ 直接 `<img src="...footer-mb-底部logo.svg">` 整体引用
+> - ✅ 仅设置外层容器的 width/height 匹配规范尺寸
+>
+> ### ⛔ 违规后果：
+> 生成的代码将不符合设计稿，需返工重写。
+>
+> ---
+>
+
 本 skill 自带 8 个页脚 SVG 文件，位于 [`references/assets/navigation/`](../references/assets/navigation/)，覆盖 PC 和移动端页脚所有图形区域。与顶导 Logo（[Part F](#part-flogo-自定义仅顶导)）不同，页脚图形资源**不可替换**，仅作为跨文件库链接失联时的兜底资源。
 
 ### PC 页脚图形资源
@@ -716,12 +772,12 @@ ONavigation Footer Mb（SYMBOL）
 .nav-right  { display: flex; align-items: center; gap: 20px; }  /* ⚠️ gap=20 不是 16 */
 .icon-btn   { width: 24px; height: 24px; }
 
-/* OSearch small 变体：背景白色(--o-color-fill2)，描边 rgba(0,0,0,.25)(grey-14@0.25) */
+/* OSearch small 变体：背景白色(**`--o-color-fill2`**)，描边 `rgba(0,0,0,.25)`(grey-14@0.25) */
 .nav-search { width: 160px; height: 32px;
               background: rgb(255,255,255);            /* ⚠️ 不是 rgba(0,0,0,.04) */
               border: 1px solid rgba(0,0,0,.25);       /* ⚠️ 不是 rgba(0,0,0,.12) */
               border-radius: 4px; }
-.nav-search span { font-size: 14px; line-height: 22px; color: rgba(0,0,0,.4); }
+.nav-search span { font-size: 14px; line-height: 22px; color: rgba(0,0,0,.4); (**`--o-color-info4`**) }
 
 /* ODropdown text 变体：无背景无描边无Padding，颜色 --o-color-info1 = rgba(0,0,0,.85) */
 .nav-btn    { padding: 0; border: none; background: transparent;
@@ -810,27 +866,27 @@ ONavigation Footer Mb（SYMBOL）
 
 ```css
 .footer {
-  background: rgba(18,18,20,1);
+  background: rgba(18,18,20,1); (**`--o-color-footer-bg-pc`**)
   min-height: 460px;
   padding: 24px 216px 34px;   /* ⚠️ 顶部 24px，不是 40px */
 }
 /* 顶部说明区：居中列布局 */
 .footer-intro { display: flex; flex-direction: column; align-items: center; gap: 16px; margin-bottom: 32px; }
-.footer-intro-text { font-size: 20px; line-height: 28px; color: rgba(255,255,255,1); text-align: center; }
+.footer-intro-text { font-size: 20px; line-height: 28px; color: rgba(255,255,255,1); (**`--o-color-white`**) text-align: center; }
 
 /* 导航列：6 列等宽，⚠️ 标题 20px Regular，不是 16px/600 */
 .footer-nav   { display: flex; margin-bottom: 24px; }
 .footer-col   { flex: 1; }
-.footer-col-title { font-size: 20px; line-height: 28px; font-weight: 400; color: rgba(255,255,255,1); margin-bottom: 16px; }
-.footer-col a { font-size: 14px; line-height: 22px; color: rgba(255,255,255,.6); }
+.footer-col-title { font-size: 20px; line-height: 28px; font-weight: 400; color: rgba(255,255,255,1); (**`--o-color-white`**) margin-bottom: 16px; }
+.footer-col a { font-size: 14px; line-height: 22px; color: rgba(255,255,255,.6); (**`--o-color-info3`**) }
 
 /* 友情链接：在导航列之后、分隔线之前 */
 .footer-links { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 0; margin-bottom: 24px; }
-.footer-links-title { font-size: 12px; font-weight: 200; color: rgba(255,255,255,1); margin-right: 8px; }
-.footer-links a { font-size: 12px; color: rgba(255,255,255,.6); padding: 0 8px; }
+.footer-links-title { font-size: 12px; font-weight: 200; color: rgba(255,255,255,1); (**`--o-color-white`**) margin-right: 8px; }
+.footer-links a { font-size: 12px; color: rgba(255,255,255,.6); (**`--o-color-info3`**) padding: 0 8px; }
 
 /* 分隔线 */
-.footer-divider { height: 2px; background: rgba(229,229,229,1); opacity: .12; }
+.footer-divider { height: 2px; background: rgba(229,229,229,1); (**`--o-color-grey-1`**) opacity: .12; }
 
 /* 底部信息行：Logo（150×68）| 版权（居中）| 社交媒体（354×52） */
 .footer-bottom { display: flex; align-items: center; justify-content: space-between; height: 78px; }
@@ -961,6 +1017,105 @@ ONavigation Footer Mb（SYMBOL）
 | 32 | **省略菜单项交互状态** | 必须完整实现 Hover(#F0F5FF) / Active(#E6EDFF) / Selected态 | dropdown.md 第91行 |
 | 33 | **猜测control2-light的值** | 官方定义为 **#F0F5FF**（极浅蓝），不是灰色！查dropdown-demo.html | 2026实战案例 |
 | 34 | **OSearch缺少描边或状态机错误** | small尺寸必须有1px inside描边，Focus时变为brand-6蓝色 | search.md 状态矩阵 |
+| 35 | **移动端版权/链接用0.6透明度** | 移动端必须用**white全白** `(255,255,255,1)`，不是 `rgba(255,255,255,.6)` | 颜色规格表⚠️差异 |
+| 36 | **拆分整节点SVG**（底部Logo、平台Logo组） | 直接整体引用 `<img>`，禁止用HTML/CSS拆分内部元素 | Part G整节点概念 |
+| 37 | **QR码1/2左右颠倒** | `二维码1.svg`=公众号(左)，`二维码2.svg`=小助手(右) | Part C.3资源表 |
+| 38 | **CSS!important顺序错误**（媒体查询在前，基础样式在后） | 基础样式→媒体查询（后定义胜出） | H.1 CSS优先级规则 |
+
+---
+
+### H.1 CSS `!important` 使用规范（⛔ 强制）
+
+> **⚠️ 2026实战踩坑记录：PC/Mb Footer 响应式切换失效问题**
+
+#### 🎯 核心原则
+
+CSS `!important` 的优先级遵循 **"后定义胜出"** 原则：当两个同选择器、同特异性的规则都使用 `!important` 时，**后定义的规则会覆盖先定义的规则**。
+
+#### ❌ 禁止的写法
+
+```css
+/* ❌ 错误顺序：媒体查询在前，基础样式在后 */
+@media (max-width: 768px) {
+    .pc-footer {
+        display: none !important;  /* 先定义 → 被覆盖！*/
+    }
+}
+
+.pc-footer {
+    display: flex !important;  /* 后定义 → 胜出！导致移动端无法隐藏PC footer */
+}
+```
+
+**后果：** 在移动端视口下，`.pc-footer` 仍然显示，与 `.mobile-footer` 混在一起。
+
+#### ✅ 正确的写法
+
+```css
+/* ✅ 正确顺序：基础样式在前，媒体查询在后 */
+.pc-footer {
+    display: flex;  /* 基础样式：无!important */
+}
+
+@media (max-width: 768px) {
+    .pc-footer {
+        display: none !important;  /* 后定义 → 生效！移动端隐藏 */
+    }
+    
+    .mobile-footer {
+        display: block;  /* 移动端显示 */
+    }
+}
+
+@media (min-width: 769px) {
+    .mobile-footer {
+        display: none !important;  /* PC端隐藏移动端 */
+    }
+    
+    .pc-footer {
+        display: flex !important;  /* PC端显示 */
+    }
+}
+```
+
+#### 💡 最佳实践
+
+1. **基础样式不加 `!important`** — 仅在媒体查询中使用 `!important`
+2. **媒体查询放在基础样式之后** — 确保"后定义胜出"
+3. **使用类切换代替直接操作style** — JavaScript中用 `classList.add/remove()` 切换类名
+4. **避免内联 style 与 CSS `!important` 冲突** — 内联 style 无法对抗 CSS `!important`
+
+#### 🔧 实战案例：按钮切换视图模式
+
+```javascript
+// ✅ 推荐：使用类切换
+function simulateMobile() {
+    document.body.classList.add('mobile-view');
+    window.scrollTo(0, 0);
+}
+
+function resetView() {
+    document.body.classList.remove('mobile-view');
+}
+```
+
+```css
+/* 对应的CSS */
+body.mobile-view .pc-header,
+body.mobile-view .pc-footer {
+    display: none !important;  /* 用!important对抗原有的!important */
+}
+
+body.mobile-view .mobile-header,
+body.mobile-view .mobile-footer {
+    display: block;
+}
+
+body.mobile-view {
+    max-width: 360px;
+    margin: 0 auto;
+}
+```
 
 ---
 
@@ -1055,13 +1210,14 @@ primary4 (#B3CFFF): 极浅蓝色   - 用于Disabled禁用态
 | Token名称 | Light模式 | Dark模式 | 透明度/描述 | 使用场景 | 来源 |
 |---------|-----------|----------|------------|---------|------|
 | `--o-color-info1` | **#000000** | **#FFFFFF** | 100%不透明 | 主要文字、默认态文字、菜单项默认文字 | navigation.md Part D, dropdown.md |
-| `--o-color-info2` | #333333 | rgba(255,255,255,0.8) | 80%透明度 | Hover态次要文字、用户名区域Hover | navigation.md Part E |
-| `--o-color-info4` | #999999 | rgba(255,255,255,0.4) | 40%透明度 | 占位符文字、禁用文字、页脚链接 | search.md, navigation.md Part D |
+| `--o-color-info2` | #333333 | rgba(255,255,255,0.8) | **80%透明度** | Hover态次要文字、用户名区域Hover | navigation.md Part E |
+| `--o-color-info3` | #666666 | rgba(255,255,255,0.6) | **60%透明度** | 页脚次要文字、版权声明、导航链接、友情链接 | navigation.md Part C |
+| `--o-color-info4` | #999999 | rgba(255,255,255,0.4) | **40%透明度** | 占位符文字、禁用文字、搜索占位符 | search.md, navigation.md Part D |
 
 **使用原则**：
 - 导航菜单默认文字 → info1 (100%)
 - 占位符"搜索..." → info4 (40%)
-- 页脚链接文字 → rgba(255,255,255,0.60) (60%)
+- **页脚次要文字（60%透明度）→ info3** ✅ 已修正
 
 ### A.3 控制色系（Control Colors - 交互反馈专用）
 

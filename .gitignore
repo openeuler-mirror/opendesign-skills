@@ -2,6 +2,9 @@
 .agents/skills
 .claude/skills
 
+# macOS 系统文件
+.DS_Store
+
 node_modules
 
 # Skill 生成过程文件
