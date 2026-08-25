@@ -39,7 +39,7 @@ OpenDesign 生态的 Skill 是写给 AI 编码工具 / 设计师 / Pixso AI 消�
 ### 设计侧（Pixso spec Skill）
 
 **9 步 Pixso MCP 调用**：`get_all_components` → `get_variants` → `get_node_dsl` → `get_image` → `get_variable_sets` → `get_variables` → `get_local_styles` → WebFetch `openeuler-token.json` → WebFetch `grid-token.json`。
-输出到 `skills/opendesign-design/references/components/{name}.md`。
+输出到 `skills/opendesign-design/components/{name}.md`。
 
 详见 [`references/design-skill-gen.md`](references/design-skill-gen.md)。
 
