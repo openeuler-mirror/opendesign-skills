@@ -250,6 +250,8 @@
 □ 14. 【HTML栅格】验证公式：margin-left + width + margin-right = 画布宽度（PC: 216+1488+216=1920 / MB: 24+312+24=360）？
 □ 15. 【HTML颜色】`:root` 中的颜色值是否来自上游Token（openeuler-token.json），而非凭训练数据猜测？（尤其检查 `--o-color-fill1` 是否误写为纯白 `#FFFFFF`）
 □ 16. 【HTML颜色】`body` 的 `background-color` 是否使用 `var(--o-color-fill1)`？（禁止 `#FFFFFF` / `white`）
+□ 17. 【HTML导航】顶导 Logo 与导航文字是否垂直居中？（禁止 `align-items: flex-end` + 子项 `padding-bottom` + `align-self: center` 组合模拟贴底对齐——border-box 下高度失真导致错位；正确做法：导航区 `align-items: center` 整体居中，导航项 `height: 100%` + `border-bottom: 2px` 实现下划线贴底）
+□ 18. 【HTML图标】深色/品牌色背景上的图标是否已反色为白色？（assets SVG 原始 fill 为黑色，禁止修改 SVG 文件；须在 CSS 中 `filter: invert(1)` 反色，确保 solid 按钮、深色代码块头部等场景图标可见且与白色文字一致）
 ```
 
 任一项不通过 → **立即回滚到清单值**，禁止"差不多"。无法对应到清单时，停下询问用户，**不要自行造数**。
