@@ -160,6 +160,7 @@ const handleLoad = () => {
 
 | 版本 | 变更类型 | 变更内容 |
 |------|---------|---------|
+| 1.2.7 | 修复 | 彩色背景色由随机改为按 name 确定性生成（同一 name 恒定同色），并修复 SSR 水合不一致 |
 | 1.2.3 | 新增 | OAvatar 与 OAvatarGroup 组件首次发布，支持图片/文字/默认三种模式、clickable 交互、horizontal/symmetric 布局 |
 
 ---

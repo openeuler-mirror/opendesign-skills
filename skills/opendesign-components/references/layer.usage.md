@@ -22,7 +22,7 @@ import { OLayer } from '@opensig/opendesign';
 | mainClass | `string \| object \| array` | 内容容器自定义类名。 | — | 内容容器类名 | — |
 | mainTransition | `string` | — | `'o-zoom-fade2'` | 内容区域的过渡动画名。默认 "o-zoom-fade2"。 | — |
 | maskTransition | `string` | — | `'o-fade-in'` | 遮罩层的过渡动画名。默认 "o-fade-in"。 | — |
-| transitionOrign | `string` | `'mouse'` / `'css'` | `'mouse'` | 缩放动画的变换原点。"mouse" 从鼠标点击位置展开（桌面端体验更好）；"css" 使用 CSS 变量 --layer-origin 设置（默认 center）。默认 mouse。 | — |
+| transitionOrigin | `string` | `'mouse'` / `'css'` | `'mouse'` | 缩放动画的变换原点。"mouse" 从鼠标点击位置展开（桌面端体验更好）；"css" 使用 CSS 变量 --layer-origin 设置（默认 center）。默认 mouse。**v1.2.7 修正拼写**：旧名 `transitionOrign` 已废弃（保留兼容并输出警告），新代码统一使用 `transitionOrigin`。 | — |
 | mask | `boolean` | — | `true` | 是否渲染遮罩层。默认显示。 | — |
 | maskClose | `boolean` | — | `true` | 点击遮罩层是否关闭浮层。默认允许。 | — |
 | buttonClose | `boolean` | — | `false` | 是否显示关闭按钮。默认不显示。 | @since 0.0.72（默认值曾为 true，v0.0.73 改为 false） |
@@ -53,9 +53,11 @@ import { OLayer } from '@opensig/opendesign';
 
 ### 暴露方法
 
-| 方法名 | 参数 | 说明 |
-|--------|------|------|
-| toggle(show?) | `show?: boolean` | 切换浮层显示状态 |
+| 方法名 | 参数 | 说明 | 引入版本 |
+|--------|------|------|--------|
+| toggle(show?) | `show?: boolean` | 切换浮层显示状态 | — |
+| rootEl | — | 浮层根 DOM 元素引用（getter，指向 `.o-layer` 节点） | 1.2.7 |
+| mainEl | — | 内容容器 DOM 元素引用（getter） | 1.2.7 |
 
 ---
 
@@ -105,3 +107,11 @@ const visible = ref(false);
 | 带关闭按钮 | `button-close` | 右上角关闭 |
 | 局部浮层 | `:wrapper="null"` | 父容器内弹出 |
 | 阻止关闭 | `before-hide` | 拦截关闭 |
+
+---
+
+### 版本变更记录
+
+| 版本 | 变更类型 | 变更内容 |
+|------|---------|---------|
+| 1.2.7 | 更新 | 暴露 `rootEl`/`mainEl` DOM 元素引用；prop `transitionOrign` 拼写修正为 `transitionOrigin`（旧名保留兼容并输出废弃警告）；修复弹窗嵌套导致滚动穿透的问题；关闭按钮新增响应式样式适配 |

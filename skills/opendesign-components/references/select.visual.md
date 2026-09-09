@@ -21,9 +21,10 @@ children: [OOption × N, OOptionGroup(可选)]
 
 1. 矩形输入框 + 右侧下拉箭头 + 点击展开选项列表 → 匹配 OSelect
 2. 输入框内有多个圆角标签（tag）+ 右侧箭头 → 匹配 OSelect（multiple 多选模式）
-3. 标签后有 "+N..." 折叠提示 → 匹配 OSelect（maxTagCount 限制）
-4. 无边框纯文字 + 下拉箭头 → 匹配 OSelect（variant="text"）
-5. 选项列表中有分组标题 → 使用 OOptionGroup
+3. 标签后有 "+N..." 折叠提示 → 匹配 OSelect（maxTagCount 限制）；点击/悬停 "+N..." 会弹出已折叠标签的浮层
+4. 选项面板为底部弹窗、带标题栏（多选时底部有"取消/确认"按钮）→ 匹配 OSelect 移动端（≤840px）响应式模式
+5. 无边框纯文字 + 下拉箭头 → 匹配 OSelect（variant="text"）
+6. 选项列表中有分组标题 → 使用 OOptionGroup
 
 **设计 Token → Prop 值映射表**
 
@@ -62,6 +63,7 @@ children: [OOption × N, OOptionGroup(可选)]
 
 | 版本 | 变更内容 |
 |------|---------|
+| v1.2.7 | 能力增强（数据驱动/搜索过滤/虚拟滚动/创建选项/多选上限/自定义渲染/无障碍）。视觉上：多选标签间距方向调整；`renderLabel` 自定义选中值时输入框内浮层按测量对齐（内部变量） |
 | v1.2.6 | 背景色 CSS 变量从 control5-light/control4-light 改为 fill2；关闭按钮（clear icon）尺寸跟随 `--select-icon-size`；内部改用 defineSlots 替代 useSlots；响应式判定从 isPhonePad 改为 isPhonePadSize |
 | v0.0.69 | scrollbar 参数从 `scroller` 改名为 `scrollbar` |
 | v0.0.64 | 修复多选 v-model 绑定问题 |

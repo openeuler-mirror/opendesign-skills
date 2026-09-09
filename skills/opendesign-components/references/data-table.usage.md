@@ -683,6 +683,8 @@ const columns: DataTableColumnT[] = [
 
 | 版本 | 变更类型 | 变更内容 |
 |------|---------|---------|
+| 1.2.5-sp3 / 1.2.7 | 修复 | 空数据/loading 状态下 SSR hydration mismatch 修复（空态占位改为 td[colspan]）；筛选 optionsFn 改用 watchEffect 追踪响应式依赖（响应式数据变更后筛选项实时更新）；单选筛选去除"全部"选项；窄列宽下行图标 flex-shrink: 0 防挤压 |
+| 1.2.7 | 修复 | 树型表格缩进优化 |
 | v1.2.4 | 修复 | `TableRowT` 类型改为交叉类型 `& Record<string, unknown>`，不再强制索引签名 |
 | v1.2.2 | 新增 | 行选择(`selection`)、行展开(`expandMethod`)、列筛选(`filter`)、列排序(`sortKey`)、表头合并(`customColSpan`)、树形数据、溢出气泡(`showOverflowToolTip`/`showHeaderOverflowToolTip`)、竖向表头(`asHeader`)、表头描述(`description`)、表头风格(`headerStyle`)、隐藏表头(`showHeader`)、行禁用(`disabledProp`)、父子不关联(`checkStrictly`) |
 | v1.2.0 | 新增 | 新增 `stripe` prop，支持斑马纹显示 |

@@ -186,4 +186,5 @@ const actions = [
 
 | 版本 | 变更内容 |
 |------|---------|
+| v1.2.7 | 弹窗宽度由百分比改为栅格列计算（响应式宽度策略重构，详见样式定制文档）；内部透传 prop 改用修正拼写后的 `transition-origin` |
 | v1.2.6 | 优化圆角响应式策略：`--dlg-radius` 默认值从 control-l 改为 control-xs，由断点和主题共同决定（≤840px 断点下使用 control-s）；`--dlg-margin` 默认值从 0 改为 24px |

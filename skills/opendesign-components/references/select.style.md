@@ -26,6 +26,17 @@
 
 ---
 
+**1.2.7 新增 / 注意**：
+
+| 变量名 | 默认值 | 说明 |
+|--------|--------|------|
+| `--option-list-max-height-default` | `302px` | 虚拟滚动模式下选项列表的默认最大高度 |
+| `--select-tag-margin` | `2px 0 2px 4px` | 多选标签外边距（v1.2.7 方向调整） |
+| `--select-tag-popover-max-width` | `360px` | 折叠标签弹出层最大宽度 |
+| `--_overlay-left` / `--_overlay-right` | `0` | 内部变量：`renderLabel` 选中值浮层相对选择框的左右偏移，由 JS 测量主 input 后注入（SSR 回退 0），一般无需覆盖 |
+
+> ⚠️ `--select-radius` 会被 `round` prop 的 inline 样式覆盖——通过 `round` prop 设置圆角时，仅改 CSS 变量无效。
+
 ### 响应式行为表
 
 | 维度 | ≤840px | 841–1440px | >1440px |
@@ -185,3 +196,12 @@ layout:
 # 选项面板: ODialog 底部弹出替代 OPopup
 # 多选模式: checkbox 布局反转 (row-reverse)，选项间有底部分割线
 ```
+
+---
+
+## 版本变更记录
+
+| 版本 | 变更内容 |
+|------|---------|
+| v1.2.7 | 多选标签间距方向调整（`--select-tag-margin`）；新增内部变量 `--_overlay-left`/`--_overlay-right`（renderLabel 浮层定位，JS 测量注入，一般无需覆盖） |
+| v1.2.6 | 背景色 CSS 变量从 control5-light/control4-light 改为 fill2；关闭按钮尺寸跟随 `--select-icon-size` |

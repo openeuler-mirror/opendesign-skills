@@ -103,8 +103,8 @@ OScroller 继承 OScrollbar 的所有 props（除 target），额外支持：
 
 | 插槽名 | Slot Props | 触发条件 | 替换范围 | 回退内容 |
 |--------|-----------|---------|---------|---------|
-| thumb | — | 始终 | 滚动条滑块 | 默认滑块 |
-| track | — | 始终 | 滚动条轨道 | 默认轨道 |
+| thumb | `{ direction: 'x' \| 'y', dragging: boolean }` | 始终 | 滚动条滑块 | 默认滑块 |
+| track | `{ direction: 'x' \| 'y', dragging: boolean }` | 始终 | 滚动条轨道 | 默认轨道 |
 
 ---
 
@@ -113,8 +113,8 @@ OScroller 继承 OScrollbar 的所有 props（除 target），额外支持：
 | 插槽名 | Slot Props | 触发条件 | 替换范围 | 回退内容 |
 |--------|-----------|---------|---------|---------|
 | default | — | 始终 | 滚动容器内容 | 无 |
-| thumb | — | 始终 | 滚动条滑块 | 默认滑块 |
-| track | — | 始终 | 滚动条轨道 | 默认轨道 |
+| thumb | `{ direction: 'x' \| 'y', dragging: boolean }` | 始终 | 滚动条滑块 | 默认滑块 |
+| track | `{ direction: 'x' \| 'y', dragging: boolean }` | 始终 | 滚动条轨道 | 默认轨道 |
 
 ---
 
@@ -133,3 +133,11 @@ OScroller 继承 OScrollbar 的所有 props（除 target），额外支持：
 | scrollTo(options?) | `ScrollToOptions` | — | 滚动到指定位置 |
 | scrollBy(options) | `ScrollToOptions` | — | 按偏移量滚动（@since 1.2.4） |
 | getContainerEl() | — | `HTMLElement \| null` | 获取滚动容器 DOM 元素 |
+
+---
+
+### 版本变更记录
+
+| 版本 | 变更类型 | 变更内容 |
+|------|---------|---------|
+| 1.2.7 | 更新 | `thumb`/`track` 插槽透传作用域参数 `{ direction, dragging }`；修复 SSR 兼容性与资源泄漏；OVirtualList/OOption 内部由 `v-scrollbar` 指令改为渲染 OScrollbar 组件以提供响应性 |

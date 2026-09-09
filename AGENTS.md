@@ -68,7 +68,7 @@
     │           ├── src/                ← SPA 应用代码
     │           ├── vite.config.ts      ← SCSS 注入 + 别名
     │           └── package.json
-    ├── opendesign-components/     ← 46 个 Vue 3 UI 组件的 Skill（代码侧）
+    ├── opendesign-components/     ← 48 个 Vue 3 UI 组件的 Skill（代码侧）
     │   ├── SKILL.md               ← 组件 Skill 索引与使用指南（第二层）
     │   ├── CHANGELOG.md           ← 本 skill 变更记录（第二层）
     │   └── references/
@@ -316,7 +316,7 @@ A: Windows 创建符号链接需满足以下任一条件：① 启用开发者�
 
 ## 项目上下文
 
-- **OpenDesign 组件库**：`@opensig/opendesign`，46 个 Vue 3 UI 组件
+- **OpenDesign 组件库**：`@opensig/opendesign`，48 个 Vue 3 UI 组件
 - **OpenDesign 脚本工具**：`@opensig/open-scripts`，5 个 CLI 命令
 - **设计令牌**：`@opensig/opendesign-token`，6 套主题的 CSS 变量体系
 - **Pixso 设计协作**：21 个组件的 Pixso 设计规范、536 个 componentKey 变体、187 个图标

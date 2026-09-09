@@ -147,3 +147,11 @@ const targetRef = ref();
 | trigger | `'hover'` | 触发弹出的方式。"hover" 悬停、"click" 点击、"click-outclick" 点击显示/点击外部关闭、"hover-outclick" 悬停显示/点击外部关闭、"focus" 聚焦、"contextmenu" 右键、"none" 不自动触发。默认 hover（与 OPopup 的 click 不同）。 |
 | anchor | `true` | 是否显示指向目标的锚点箭头。默认开启（与 OPopup 的 false 不同）。 |
 | offset | `8` | 距触发元素的偏移距离（px）。默认 8（与 OPopup 的 0 不同）。 |
+
+---
+
+### 版本变更记录
+
+| 版本 | 变更类型 | 变更内容 |
+|------|---------|---------|
+| 1.2.7 | fix | 修复 z-index 层级导致遮挡的问题 |

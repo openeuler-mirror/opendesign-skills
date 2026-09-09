@@ -31,9 +31,7 @@
 | 播放图标大小 | 40px | 48px | 56px |
 | 标题字号 | tip1 | text1 | 标准 |
 | 描述区域内边距 | 4px 8px | 12px 16px | 标准 |
-| 预览图最大宽度 | 100vw | 100vw | 无限制 |
-| 预览遮罩 | 纯黑 | 纯黑 | 半透明 |
-| 预览关闭按钮 | 左侧 | 左侧 | 右侧 |
+| 预览层行为 | 预览层为 OImageViewer 全屏查看器（自动适屏、缩放/旋转/切图），响应式规则详见 [image-viewer.style.md](image-viewer.style.md) | 同左 | 同左 |
 
 ---
 
@@ -122,22 +120,17 @@ root: .o-figure
                       - .o-figure-title:
                           font-size: --o-font_size-h3
                           children: slot-title
-    # 预览弹层
-    - OLayer.o-figure-preview-layer:
+    # 预览弹层（v1.2.7 起为 OImageViewer 全屏查看器）
+    - OImageViewer:
         condition: preview || lazyPreview
         v-model:visible: previewVisible
-        mask-close: previewCloseTypes.includes('mask')
-        button-close: previewCloseTypes.includes('button')
+        wrapperClass: o-figure-preview-wrapper
+        containerClass: o-figure-preview-img
         children:
-          - .o-figure-preview-wrapper:
-              position: relative
-              children:
-                - slot-preview:
-                    props: { image: imgSrc }
-                    fallback:
-                      - .o-figure-preview-img > img:
-                          max-width: 100vw, max-height: 100vh
-                      - slot-preview-extra
+          - slot-preview:
+              props: { src }
+              fallback: OImageViewer 默认查看器 UI（自动适屏 + 缩放/旋转/切图）
+          - slot-preview-extra  # 叠加在预览图上的附加内容
 
 # background 模式
 root: .o-figure.o-figure-bg
@@ -160,11 +153,16 @@ breakpoints:
     figure-play-icon-size: 48px
     .o-figure-title: font-size --o-font_size-text1
     .o-figure-content: padding 12px 16px
-    .o-figure-preview-img img: max-width 100vw
-    .o-figure-preview-layer: --layer-mask --o-color-black
-    .o-figure-preview-close: left 16px, right auto
   "<=600px (phone)":
     figure-play-icon-size: 40px
     .o-figure-title: font-size --o-font_size-tip1
     .o-figure-content: padding 4px 8px
 ```
+
+---
+
+## 版本变更记录
+
+| 版本 | 变更内容 |
+|------|---------|
+| v1.2.7 | 预览层切换为 OImageViewer：预览图的响应式规则（max-width 100vw、遮罩纯黑、关闭按钮左移）随之移除，改由 OImageViewer 的自动适屏与查看器样式接管（详见 image-viewer.style.md） |

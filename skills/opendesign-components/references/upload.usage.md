@@ -53,7 +53,9 @@ interface UploadRequestT {
 | modelValue | `UploadFileT[]` | — | — | 文件列表（v-model 双向绑定）。数组中每项包含 id、name、file、status（pending/uploading/finished/failed）、percent 等信息。 | — |
 | defaultFileList | `UploadFileT[]` | — | — | 非受控模式下的默认文件列表。 | — |
 | accept | `string` | — | — | 可选文件的 MIME 类型限制，如 "image/jpeg;image/png"。 | — |
-| disabled | `boolean` | — | `false` | 禁用 | — |
+| disabled | `boolean` | — | 继承表单容器 | 禁用。未设置时继承表单容器（详见 [OForm 表单级统一管控](form.usage.md)）。 | — |
+| size | `SizeT` | `'small'` / `'medium'` / `'large'` | 继承表单容器 | 尺寸。未设置时继承表单容器（详见 [OForm 表单级统一管控](form.usage.md)）。 | 1.2.7 |
+| round | `RoundT` | `'pill'` / CSS 值 | 继承表单容器 | 圆角。未设置时继承表单容器（详见 [OForm 表单级统一管控](form.usage.md)）。 | 1.2.7 |
 | multiple | `boolean` | — | `false` | 是否支持多文件上传。 | — |
 | beforeSelect | `(value: UploadFileT[]) => Promise<boolean> \| boolean` | — | 选择文件前的拦截回调。返回 false 阻止选择。 | 选择前拦截 | — |
 | onAfterSelect | `(fileList: FileList) => Promise<UploadFileT[]>` | — | — | 选择后的处理回调。可自定义文件对象的构造。 | — |
@@ -195,3 +197,12 @@ const fileList = ref([]);
 | 手动上传 | `lazy-upload` + ref.upload() | 延迟上传 |
 | 多文件 | `multiple` | 批量选择 |
 | 进度条 | `show-progress` | 显示上传进度 |
+
+---
+
+### 版本变更记录
+
+| 版本 | 变更类型 | 变更内容 |
+|------|---------|---------|
+| 1.2.7 | 新增 | 新增 `size`/`round` 属性；`size`/`round`/`disabled` 接入表单继承系统（详见 [OForm 表单级统一管控](form.usage.md)） |
+| 1.2.5-sp3 / 1.2.7 | fix | 修复接口回显文件缩略图不显示的问题 |

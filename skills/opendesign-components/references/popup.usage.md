@@ -17,6 +17,10 @@ import { OPopup } from '@opensig/opendesign';
 ```typescript
 type PopupPositionT = 'top' | 'tl' | 'tr' | 'bottom' | 'bl' | 'br' | 'left' | 'lt' | 'lb' | 'right' | 'rt' | 'rb';
 type PopupTriggerT = 'none' | 'click' | 'click-outclick' | 'hover' | 'hover-outclick' | 'focus' | 'contextmenu';
+// 虚拟元素，用于 OTour 等无真实 DOM 的定位场景：仅需提供 getBoundingClientRect 方法
+interface VirtualElement {
+  getBoundingClientRect(): DOMRect;
+}
 ```
 
 ---
@@ -29,6 +33,7 @@ type PopupTriggerT = 'none' | 'click' | 'click-outclick' | 'hover' | 'hover-outc
 | position | `PopupPositionT` | 12 个方向 | `'top'` | 弹出位置。12 个方向：top/tl/tr/bottom/bl/br/left/lt/lb/right/rt/rb。默认 top。 | — |
 | trigger | `PopupTriggerT \| PopupTriggerT[]` | 7 种触发方式 | 触发弹出的方式，可传单个或数组。"click" 点击、"click-outclick" 点击显示/点击外部关闭、"hover" 悬停、"hover-outclick" 悬停显示/点击外部关闭、"focus" 聚焦、"contextmenu" 右键、"none" 不自动触发（手动控制）。默认 click。 | 触发方式 | — |
 | target | `string \| ComponentPublicInstance \| HTMLElement` | 触发元素，可传入组件实例、DOM 元素或选择器字符串。也可通过 target 插槽指定。 | `null` | 触发元素 | — |
+| targetRect | `VirtualElement` | — | `null` | 目标矩形，**优先级高于 target**。用于 OTour 等无真实 DOM 的定位场景：仅需提供 `getBoundingClientRect()` 返回 DOMRect。传入后跳过 scroll/resize/intersection 监听与 trigger 绑定。 | 1.2.7 |
 | disabled | `boolean` | — | `false` | 是否禁用弹出层。 | — |
 | wrapper | `string \| HTMLElement` | — | 弹出层挂载容器。默认 "body"。 | 挂载容器 | — |
 | offset | `number` | — | `0` | 距触发元素的偏移距离（px）。默认 0。 | — |
@@ -132,3 +137,11 @@ const visible = ref(false);
 | 右键菜单 | `trigger="contextmenu"` | 右键弹出 |
 | 手动控制 | `v-model:visible` + `trigger="none"` | 完全受控 |
 | 不自适应 | `:adaptive="false"` | 固定位置 |
+
+---
+
+### 版本变更记录
+
+| 版本 | 变更类型 | 变更内容 |
+|------|---------|---------|
+| 1.2.7 | 新增 | 新增 `targetRect` 属性（`VirtualElement`），支持无实际 DOM 时的定位计算（优先级高于 `target`），供 OTour 等场景使用 |

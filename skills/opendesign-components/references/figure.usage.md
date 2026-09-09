@@ -24,7 +24,7 @@ import { OFigure } from '@opensig/opendesign';
 | hoverable | `boolean` | — | `false` | 鼠标悬停时图片放大效果。设置 href、preview 或 videoPoster 时自动启用，无需单独设置。默认关闭。 | — |
 | href | `string` | — | — | 点击跳转链接。设置后组件渲染为 a 标签。与 preview 互斥。 | — |
 | colorful | `boolean` | — | `false` | 加载完成前显示随机彩色背景。默认关闭。 | — |
-| preview | `boolean` | — | `false` | 点击图片后全屏预览。与 href 互斥，不可同时使用。默认关闭。 | — |
+| preview | `boolean \| object` | `true` 或 Partial\<OImageViewer Props\> | `false` | 点击图片后全屏预览，预览层由 OImageViewer 提供（支持缩放/旋转/切图）。传 `true` 使用默认配置；传对象时作为 OImageViewer 属性透传（如 `{ showProgress: true, layerOptions: { maskClose: true } }`）。与 href 互斥，不可同时使用。默认关闭。 | 对象配置 @since 1.2.7 |
 | lazyPreview | `boolean` | — | `false` | 启用预览功能但不自动响应点击，需通过组件实例的 preview() 方法手动控制预览。默认关闭。 | — |
 | videoPoster | `boolean` | — | `false` | 视频海报模式。开启后自动添加居中播放图标和悬停放大效果。默认关闭。 | — |
 | previewClose | `string \| string[]` | `'none'` / `'button'` / `'mask'` / `'body'` | 预览关闭方式。"none" 禁用关闭、"button" 点击按钮关闭、"mask" 点击遮罩关闭、"body" 点击预览图关闭。支持数组组合。电脑端默认 mask+button，平板/手机端默认 mask+button+body。 | 预览关闭方式 | @since v0.0.70 |
@@ -51,8 +51,8 @@ import { OFigure } from '@opensig/opendesign';
 | title | — | content 插槽未使用时 | 图片底部标题（在 content 插槽内部）。传入 content 插槽后 title 插槽失效。 | 无 |
 | error | — | 图片加载失败时 | 加载失败时的替代内容。默认显示错误图标。 | 错误图标 |
 | play-icon | — | videoPoster 为 true 时 | 替换默认播放图标。仅视频海报模式有效。 | 默认播放图标 |
-| preview | `{ image: string }` | preview 或 lazyPreview 为 true 时 | 自定义预览内容（如视频播放器）。可获取当前图片地址。 | 预览图片 |
-| preview-extra | — | preview 或 lazyPreview 为 true 时 | 预览区域底部的附加内容（如控制按钮）。 | 无 |
+| preview | `{ src: string }` | preview 或 lazyPreview 为 true 时 | 整体替换预览层内容（如视频播放器），透传 OImageViewer 的 preview 插槽作用域。可获取当前图片地址（`src`；兼容旧 `image` 字段）。 | OImageViewer 默认查看器 UI |
+| preview-extra | — | preview 或 lazyPreview 为 true 时 | 预览层的附加覆盖内容（如播放控制按钮），透传至 OImageViewer 默认插槽（叠加在预览图上）。 | 无 |
 
 ---
 
@@ -94,13 +94,24 @@ OFigure
 ```
 
 **场景 3：视频海报（带自定义预览）**
-适用于：视频封面 + 点击播放
+适用于：视频封面 + 点击播放。`#preview` 整体替换预览层（如换成 video），`#preview-extra` 在预览图上叠加内容
 ```vue
 <OFigure src="/poster.jpg" video-poster preview>
   <template #preview>
     <video src="/video.mp4" autoplay muted controls style="width: 100%;" />
   </template>
 </OFigure>
+```
+
+**场景 3.1：预览层透传 OImageViewer 配置**
+适用于：需要进度指示、点遮罩关闭等查看器能力（v1.2.7 起 preview 支持对象配置）
+```vue
+<OFigure
+  src="/photo.jpg"
+  :preview="{ showProgress: true, layerOptions: { maskClose: true, wrapper: 'body' } }"
+  :ratio="16/9"
+  style="width: 300px;"
+/>
 ```
 
 **场景 4：懒加载背景图**
@@ -153,3 +164,15 @@ const figure = useTemplateRef('figure');
 
 - `preview` 和 `href` 不可同时使用（均接管点击事件）
 - `hoverable` 在 `href`/`preview`/`videoPoster` 存在时自动启用
+
+---
+
+### 版本变更记录
+
+| 版本 | 变更类型 | 变更内容 |
+|------|---------|---------|
+| 1.2.7 | 更新 | 预览层从 OLayer 切换至 OImageViewer：预览支持缩放/旋转/多图切换；`preview` 属性新增对象形式直接透传 OImageViewer 配置；`#preview` 插槽作用域新增 `src`（兼容 `image`）；`#preview-extra` 透传至 OImageViewer 默认插槽。OImageViewer 的 `#toolbar`/`#progress`/`#error` 不透传，深度定制预览层请直接使用 OImageViewer |
+| 1.2.7 | fix | 修复 preset-color 水合报错 |
+| 1.1.0 | fix | 修复暗色模式下文字溢出问题；修复移动端 previewClose body 值；修复百度浏览器预览问题 |
+| 1.0.2 | fix | 修复 `lazyPreiew` 拼写为 `lazyPreview`；修复 background 模式 DOM 位置 |
+| 0.0.70 | 新增 | 新增 `previewClose` prop 和 `lazy` 懒加载功能 |

@@ -36,7 +36,7 @@ pnpx skills experimental_install
 | Skill | 包名 | 覆盖范围 | 入口文件 | 变更记录 |
 |-------|------|---------|---------|---------|
 | [opendesign-application](#opendesign-application) | `@opensig/opendesign` + `@opensig/opendesign-token` | 工程化落地指南（主题集成 + 样式基础设施 + 脚手架 + Code Review） | [SKILL.md](skills/opendesign-application/SKILL.md) | [CHANGELOG.md](skills/opendesign-application/CHANGELOG.md) |
-| [opendesign-components](#opendesign-components) | `@opensig/opendesign` | 46 个 Vue 3 UI 组件 | [SKILL.md](skills/opendesign-components/SKILL.md) | [CHANGELOG.md](skills/opendesign-components/CHANGELOG.md) |
+| [opendesign-components](#opendesign-components) | `@opensig/opendesign` | 48 个 Vue 3 UI 组件 | [SKILL.md](skills/opendesign-components/SKILL.md) | [CHANGELOG.md](skills/opendesign-components/CHANGELOG.md) |
 | [opendesign-scripts](#opendesign-scripts) | `@opensig/open-scripts` | 5 个 CLI 构建命令 | [SKILL.md](skills/opendesign-scripts/SKILL.md) | [CHANGELOG.md](skills/opendesign-scripts/CHANGELOG.md) |
 | [opendesign-tokens](#opendesign-tokens) | `@opensig/opendesign-token` | 3 套主题的设计令牌体系 | [SKILL.md](skills/opendesign-tokens/SKILL.md) | [CHANGELOG.md](skills/opendesign-tokens/CHANGELOG.md) |
 | [opendesign-design](#opendesign-design) | Pixso MCP（无 npm 包） | 21 个组件设计规范 + 536 变体 + 187 图标 | [SKILL.md](skills/opendesign-design/SKILL.md) | [CHANGELOG.md](skills/opendesign-design/CHANGELOG.md) |
@@ -103,7 +103,7 @@ skills/opendesign-application/
 - 获取组件代码示例和最佳实践
 - **通过 Pixso MCP 读取设计稿，将图层信息映射到对应组件并生成代码**
 
-**覆盖 46 个组件**（按字母序）：
+**覆盖 48 个组件**（按字母序）：
 
 | 组件 | 说明 | 组件 | 说明 |
 |------|------|------|------|
@@ -125,10 +125,11 @@ skills/opendesign-application/
 | [Form](skills/opendesign-components/references/form.usage.md) | 表单（含 FormItem） | [Step](skills/opendesign-components/references/step.usage.md) | 步骤条 |
 | [Grid](skills/opendesign-components/references/grid.usage.md) | 栅格布局 | [Switch](skills/opendesign-components/references/switch.usage.md) | 开关 |
 | [Icon](skills/opendesign-components/references/icon.usage.md) | 图标 | [Tab](skills/opendesign-components/references/tab.usage.md) | 标签页 |
-| [Input](skills/opendesign-components/references/input.usage.md) | 输入框 | [Tag](skills/opendesign-components/references/tag.usage.md) | 标签 |
-| [InputNumber](skills/opendesign-components/references/input-number.usage.md) | 数字输入框 | [Textarea](skills/opendesign-components/references/textarea.usage.md) | 文本域 |
-| [IpInput](skills/opendesign-components/references/ip-input.usage.md) | IP 地址输入框 | [Toast](skills/opendesign-components/references/toast.usage.md) | 轻提示 |
-| [Layer](skills/opendesign-components/references/layer.usage.md) | 浮层基础组件 | [Toggle](skills/opendesign-components/references/toggle.usage.md) | 切换按钮 |
+| [ImageViewer](skills/opendesign-components/references/image-viewer.usage.md) | 图片预览 | [Tag](skills/opendesign-components/references/tag.usage.md) | 标签 |
+| [Input](skills/opendesign-components/references/input.usage.md) | 输入框 | [Textarea](skills/opendesign-components/references/textarea.usage.md) | 文本域 |
+| [InputNumber](skills/opendesign-components/references/input-number.usage.md) | 数字输入框 | [Toast](skills/opendesign-components/references/toast.usage.md) | 轻提示 |
+| [IpInput](skills/opendesign-components/references/ip-input.usage.md) | IP 地址输入框 | [Toggle](skills/opendesign-components/references/toggle.usage.md) | 切换按钮 |
+| [Layer](skills/opendesign-components/references/layer.usage.md) | 浮层基础组件 | [Tour](skills/opendesign-components/references/tour.usage.md) | 漫游引导 |
 | — | — | [Upload](skills/opendesign-components/references/upload.usage.md) | 上传 |
 | — | — | [VirtualList](skills/opendesign-components/references/virtual-list.usage.md) | 虚拟列表 |
 
@@ -139,9 +140,9 @@ skills/opendesign-application/
 skills/opendesign-components/
 ├── SKILL.md                          # 主 skill 文件（含安装指南和组件索引）
 └── references/
-    ├── {component}.visual.md         # 视觉识别（×46）
-    ├── {component}.usage.md         # 代码使用（×46）
-    └── {component}.style.md         # 样式定制（×46）
+    ├── {component}.visual.md         # 视觉识别（×48）
+    ├── {component}.usage.md         # 代码使用（×48）
+    └── {component}.style.md         # 样式定制（×48）
 ```
 
 ---
@@ -321,7 +322,7 @@ skills/opendesign-codegen/
    └──────────────────────────┘         │       │ 提供主题变量         │ gen:icon / build
                                         │       ▼                    ▼
                                         │   opendesign-components ◄──┘
-                                        │   (46 个 Vue 3 UI 组件)
+                                        │   (48 个 Vue 3 UI 组件)
                                         │       │
                                         │       │ 被业务项目使用
                                         │       ▼

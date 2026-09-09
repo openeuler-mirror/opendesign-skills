@@ -16,8 +16,9 @@
 | `--form-item-main-box-width-standard` | `min(var(--o-r-grid-6), 100%)` | 标准输入框宽度（响应式） |
 | `--form-item-main-box-width-wide` | `min(var(--o-r-grid-14), 100%)` | 较宽输入框宽度（响应式） |
 | `--form-item-main-box-inline-gap` | `var(--o-r-gap-4)` | 同域多控件输入框间距 |
-| `--form-label-width` | `20%`（水平模式） | 标签宽度（由 labelWidth prop 覆盖） |
-| `--form-label-max-width` | `240px`（水平模式） | 标签最大宽度 |
+| `--form-label-width` | `auto`（水平模式；`labelWidth` prop 覆盖） | 标签宽度。v1.2.7 起 `labelWidth` 默认 `'auto'` 自动测量最宽标签 |
+| `--form-label-min-width` | `96px`（水平模式） | 标签最小宽度（auto 模式下生效） |
+| `--form-label-max-width` | `var(--o-r-grid-4)`（水平布局下为 `var(--o-r-grid-3)`） | 标签最大宽度 |
 | `--form-label-justify` | — | 标签水平对齐（由 labelJustify prop 覆盖） |
 | `--form-item-align` | `flex-start`（水平模式） | 标签与控件的垂直对齐（由 labelAlign prop 覆盖） |
 | `--form-label-main-gap-v` | `8px`（垂直模式） | 垂直模式下标签与控件的间距 |
@@ -143,3 +144,11 @@ breakpoints:
   "<=600px (phone)":
     form-msg-gap: 4px 0 0 12px
 ```
+
+---
+
+## 版本变更记录
+
+| 版本 | 变更内容 |
+|------|---------|
+| v1.2.7 | `--form-label-width` 默认值由 `20%` 改为 `auto`（配合 labelWidth 默认 `'auto'` 自动测量）；新增 `--form-label-min-width: 96px`；`--form-label-max-width` 由 `240px` 改为栅格变量（水平布局下为 `var(--o-r-grid-3)`）；必填星号改为绝对定位（不再占位缩进），字号 8px |

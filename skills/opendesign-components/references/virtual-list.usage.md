@@ -182,3 +182,11 @@ const scrollDown = () => virtualListRef.value?.scrollToOffset(500);
 | 隐藏滚动条 | `:scrollbar="false"` | 无滚动条 |
 | 水平滚动 | `layout="horizontal"` + `:item-size` | 水平布局 |
 | 少量数据优化 | `:threshold="50"` | 低于阈值不启用虚拟化 |
+
+---
+
+### 版本变更记录
+
+| 版本 | 变更类型 | 变更内容 |
+|------|---------|---------|
+| 1.2.7 | 更新 | `scrollbar` 开启时改用 OScrollbar 组件渲染（替代 v-scrollbar 指令），滚动条获得响应性；渲染条件与 props 数据源统一由 `scrollbar` prop 控制 |

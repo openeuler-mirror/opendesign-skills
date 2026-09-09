@@ -206,6 +206,7 @@ const end = ref();
 
 | 版本 | 变更类型 | 变更内容 |
 |------|---------|---------|
+| 1.2.7 | 更新 | `clearable` 接入表单继承系统（详见 [OForm 表单级统一管控](form.usage.md)） |
 | 1.2.4 | 新增 | OTimePicker 与 OTimeRangePicker 组件首次发布，支持时分秒选择、步进、时间约束、键盘导航、范围选择 |
 
 ---
@@ -224,7 +225,7 @@ const end = ref();
 | color | `'normal'` / `'success'` / `'warning'` / `'danger'` | — | `'normal'` | 1.2.4 | 颜色。"normal" 默认、"success" 成功、"warning" 警告、"danger" 危险。OForm 内自动继承校验状态。 |
 | variant | `'outline'` / `'solid'` / `'text'` | — | `'outline'` | 1.2.4 | 输入框类型。"outline" 有边框轮廓、"solid" 实心填充、"text" 无边框。继承自 inputProps。 |
 | format | `string` | dayjs time format | `'HH:mm:ss'` | 1.2.4 | 时间格式。支持 dayjs format。"HH:mm:ss"（默认）或 "HH:mm"（仅时分）。format 中不含 ss 时秒列不显示。 |
-| clearable | `boolean` | — | — | 1.2.4 | 可清空。悬停时显示清除图标替换时间图标。 |
+| clearable | `boolean` | — | 继承表单容器 | 1.2.4 | 可清空。悬停时显示清除图标替换时间图标。未设置时继承表单容器（详见 [OForm 表单级统一管控](form.usage.md)）。 |
 | noResponsive | `boolean` | — | — | 1.2.4 | 是否禁用响应式。继承自 selectProps。 |
 | optionTitle | `string` | — | — | 1.2.4 | 浮层标题。继承自 selectProps。 |
 | trigger | `PopupTriggerT` | — | `'click'` | 1.2.4 | 浮层触发方式。"click"（默认）等 PopupTriggerT 值。 |
@@ -259,7 +260,7 @@ const end = ref();
 | color | `'normal'` / `'success'` / `'warning'` / `'danger'` | — | `'normal'` | 1.2.4 | 颜色。"normal" 默认、"success" 成功、"warning" 警告、"danger" 危险。OForm 内自动继承校验状态。 |
 | variant | `'outline'` / `'solid'` / `'text'` | — | `'outline'` | 1.2.4 | 输入框类型。"outline" 有边框轮廓、"solid" 实心填充、"text" 无边框。继承自 inputProps。 |
 | format | `string` | — | `'HH:mm:ss'` | 1.2.4 | 时间格式。支持 dayjs format。"HH:mm:ss"（默认）或 "HH:mm"（仅时分）。format 中不含 ss 时秒列不显示。 |
-| clearable | `boolean` | — | — | 1.2.4 | 可清空。悬停时显示清除图标替换时间图标。 |
+| clearable | `boolean` | — | 继承表单容器 | 1.2.4 | 可清空。悬停时显示清除图标替换时间图标。未设置时继承表单容器（详见 [OForm 表单级统一管控](form.usage.md)）。 |
 | noResponsive | `boolean` | — | — | 1.2.4 | 是否禁用响应式。继承自 selectProps。 |
 | optionTitle | `string` | — | — | 1.2.4 | 浮层标题。继承自 selectProps。 |
 | trigger | `PopupTriggerT` | — | `'click'` | 1.2.4 | 浮层触发方式。"click"（默认）等 PopupTriggerT 值。 |
