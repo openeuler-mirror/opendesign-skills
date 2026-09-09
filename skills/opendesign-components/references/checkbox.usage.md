@@ -165,7 +165,7 @@ const handleChangeAll = () => {
 | value | `string \| number` | — | 该多选框代表的值。当勾选时，该值会被加入 modelValue 数组；取消勾选时移除。必填。 | 多选框的值（必填） | — |
 | modelValue | `Array<string \| number>` | — | 选中值数组（v-model 双向绑定）。 | 选中值数组（v-model） | — |
 | defaultChecked | `boolean` | — | `false` | 非受控模式下，初始是否选中。默认不选中。 | — |
-| disabled | `boolean` | — | `false` | 禁用整个多选框组。默认关闭。 | — |
+| disabled | `boolean` | — | 继承表单容器 | 禁用整个多选框组。默认关闭。未设置时继承表单容器（详见 [OForm 表单级统一管控](form.usage.md)）。 | — |
 | indeterminate | `boolean` | — | `false` | 半选状态，显示一条横线而非勾号。通常用于"全选"控件：部分子项选中时显示半选。半选仅影响外观，不影响实际选中值。默认关闭。 | — |
 | inputId | `string` | — | 自动生成 | 内部 input 元素的 id | — |
 
@@ -177,7 +177,7 @@ const handleChangeAll = () => {
 |--------|------|--------|--------|------|--------|
 | modelValue | `Array<string \| number>` | — | 选中值数组（v-model 双向绑定）。 | 选中值数组（v-model） | — |
 | defaultValue | `Array<string \| number>` | — | 非受控模式下的默认选中值数组。默认空数组。 | 非受控时默认值 | — |
-| disabled | `boolean` | — | `false` | 禁用整个多选框组。默认关闭。 | — |
+| disabled | `boolean` | — | 继承表单容器 | 禁用整个多选框组。默认关闭。未设置时继承表单容器（详见 [OForm 表单级统一管控](form.usage.md)）。 | — |
 | direction | `DirectionT` | `'h'` / `'v'` | `'h'` | 多选框排列方向。"h" 水平排列、"v" 垂直排列。默认水平。 | — |
 | min | `number` | — | — | 最少必须勾选的数量。达到下限时，已选中项不可取消。 | — |
 | max | `number` | — | — | 最多可勾选的数量。达到上限时，未选中项不可勾选。 | — |
@@ -189,3 +189,11 @@ const handleChangeAll = () => {
 | 属性名 | 类型 | 说明 |
 |--------|------|------|
 | checked | `ComputedRef<boolean>` | 当前是否选中 |
+
+---
+
+### 版本变更记录
+
+| 版本 | 变更类型 | 变更内容 |
+|------|---------|---------|
+| 1.2.7 | 更新 | OCheckboxGroup `disabled` 接入表单继承系统（详见 [OForm 表单级统一管控](form.usage.md)） |

@@ -215,6 +215,7 @@ const sendCode = async () => { /* 发送逻辑 + 倒计时 */ };
 
 | 版本 | 变更类型 | 变更内容 |
 |------|---------|---------|
+| 1.2.5-sp2 / 1.2.7 | fix | 修复 `onlyNumericInput` 未开启时普通文本中 `..`、`--`、`-.x` 等序列被错误丢弃的问题（useInput 运算符优先级修正；1.2.5-sp3 包含 sp2 全部修复） |
 | 1.1.0 | feature | 新增 `showLength` 属性和 `length` 插槽 |
 | 1.1.0 | bug | `input` 事件触发顺序变为先于 `update:model-value`（后续在 1.2.3-sp2 修复） |
 | 1.2.3-sp2 | fix | `input` 事件现在在 `update:model-value` 之后触发（修正 v1.1.0 引入的错误顺序） |

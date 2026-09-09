@@ -168,6 +168,7 @@ const handleClick = () => {
 
 | 版本 | 变更类型 | 变更内容 |
 |------|---------|---------|
+| 1.2.7 | 修复 | RouterLink 解析时机调整：仅 `to` 存在时解析且环境无 vue-router 时输出警告，避免无路由应用出现 Vue resolve 警告 |
 | 1.2.4 | 新增 | `to` 属性支持 router-link 跳转；`replace` 属性控制路由历史替换 |
 | 1.2.3-sp1 | 修复 | 图标对齐问题修复 |
 | 1.1.0 | 样式 | hoverUnderline 默认值改为 true；normal 态文本颜色改用 o-color-link1；large 图标尺寸变更 |

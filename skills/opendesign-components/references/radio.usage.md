@@ -108,7 +108,7 @@ const value = ref('a');
 | value | `string \| number \| boolean` | 该单选框代表的值。必填。点击时此值被设为 modelValue。 | — | 单选框值（必填） | — |
 | modelValue | `string \| number \| boolean` | 选中的值（v-model 双向绑定）。 | — | 绑定值（v-model） | — |
 | defaultChecked | `boolean` | — | `false` | 非受控模式下是否默认选中。默认关闭。 | — |
-| disabled | `boolean` | — | `false` | 整组禁用。默认关闭。 | — |
+| disabled | `boolean` | — | 继承表单容器 | 整组禁用。默认关闭。未设置时继承表单容器（详见 [OForm 表单级统一管控](form.usage.md)）。 | — |
 | inputId | `string` | — | 自动生成 | input 元素 id | — |
 
 ---
@@ -119,7 +119,7 @@ const value = ref('a');
 |--------|------|--------|--------|------|--------|
 | modelValue | `string \| number \| boolean` | 选中的值（v-model 双向绑定）。 | — | 绑定值（v-model） | — |
 | defaultValue | `string \| number \| boolean` | 非受控模式下的默认值。 | `''` | 默认值 | — |
-| disabled | `boolean` | — | `false` | 整组禁用。默认关闭。 | — |
+| disabled | `boolean` | — | 继承表单容器 | 整组禁用。默认关闭。未设置时继承表单容器（详见 [OForm 表单级统一管控](form.usage.md)）。 | — |
 | direction | `DirectionT` | `'h'` / `'v'` | `'h'` | 排列方向。"h" 水平排列、"v" 垂直排列。默认水平。 | — |
 
 ---
@@ -147,3 +147,11 @@ const value = ref('a');
 | 属性名 | 类型 | 说明 |
 |--------|------|------|
 | checked | `ComputedRef<boolean>` | 当前是否选中 |
+
+---
+
+### 版本变更记录
+
+| 版本 | 变更类型 | 变更内容 |
+|------|---------|---------|
+| 1.2.7 | 更新 | ORadioGroup `disabled` 接入表单继承系统（详见 [OForm 表单级统一管控](form.usage.md)） |

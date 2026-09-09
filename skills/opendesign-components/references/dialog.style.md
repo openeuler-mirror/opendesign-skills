@@ -45,10 +45,12 @@
 | 圆角 | control-s（由主题决定） | control-s | 标准 | control-xs（由主题决定） |
 | 边距 | 16px | 16px | 16px | 24px |
 | 标题字号 | text2 | text2 | text2 | h4 |
-| exlarge 宽度 | 100% | 100%全屏 | 80% | 75% |
-| large 宽度 | 100% | 100%全屏 | 65% | 60% |
-| medium 宽度 | 100vw | 75% | 65% | 40% |
-| small 宽度 | 100vw | 75% | 32% | 25% |
+| exlarge 宽度 | 100% | 100%全屏 | var(--o-r-grid-10)（24栅格列） | var(--o-r-grid-16) |
+| large 宽度 | 100% | 100%全屏 | var(--o-r-grid-8) | var(--o-r-grid-14) |
+| medium 宽度 | var(--o-r-grid-4) | var(--o-r-grid-6) | var(--o-r-grid-6) | var(--o-r-grid-10) |
+| small 宽度 | var(--o-r-grid-4) | var(--o-r-grid-6) | var(--o-r-grid-4) | var(--o-r-grid-6) |
+
+> 宽度按 24 列栅格计算（`--o-r-grid-N`），随视口响应式缩放；v1.2.7 起不再使用百分比宽度。
 
 触控 vs 指针差异：
 
@@ -110,17 +112,17 @@ layout:
       icon: IconClose
   variants:
     auto: { max-height: "80%" }
-    exlarge: { width: "65%", max-height: 780px, min-height: 520px }
-    large: { width: "60%", max-height: 780px, min-height: 424px }
-    medium: { width: "40%", max-height: 480px, min-height: 328px }
-    small: { width: "25%", max-height: 272px, min-height: 224px }
+    exlarge: { width: "--o-r-grid-16", max-height: 780px, min-height: 520px }
+    large: { width: "--o-r-grid-14", max-height: 780px, min-height: 424px }
+    medium: { width: "--o-r-grid-10", max-height: 480px, min-height: 328px }
+    small: { width: "--o-r-grid-6", max-height: 272px, min-height: 224px }
 ```
 
 **笔记本 ≤1200px**
 ```yaml
 # padding: 24px, inner-gap: 16px, btn-gap: 12px
 # header font-size: h4
-# exlarge: width 75%, large: width 60%, medium: width 40%, small: width 25%
+# exlarge: var(--o-r-grid-18), large: var(--o-r-grid-14), medium: var(--o-r-grid-10), small: var(--o-r-grid-6)
 ```
 
 **平板 ≤840px**
@@ -128,7 +130,7 @@ layout:
 # padding: 16px, inner-gap: 12px, btn-gap: 8px
 # header font-size: text2
 # exlarge/large: width 100%, radius 0 (全屏)
-# medium: width 75%, small: width 75%
+# medium: var(--o-r-grid-6), small: var(--o-r-grid-4)
 # 固定定位, 按钮间竖线分隔
 ```
 
@@ -139,3 +141,11 @@ layout:
 # phoneHalfFull: width 100%, 顶部保留圆角
 # medium/small: width 100vw, margin 24px
 ```
+
+---
+
+## 版本变更记录
+
+| 版本 | 变更内容 |
+|------|---------|
+| v1.2.7 | 弹窗宽度由百分比改为 24 列栅格列计算（`--o-r-grid-N`），重构响应式宽度策略：widescreen exlarge var(--o-r-grid-16) / large var(--o-r-grid-14) / medium var(--o-r-grid-10) / small var(--o-r-grid-6)；laptop exlarge var(--o-r-grid-18)；pad_h exlarge var(--o-r-grid-10) / large var(--o-r-grid-8) / medium var(--o-r-grid-6) / small var(--o-r-grid-4)；pad_v medium var(--o-r-grid-6) / small var(--o-r-grid-6)；phone medium var(--o-r-grid-4) / small var(--o-r-grid-4) |

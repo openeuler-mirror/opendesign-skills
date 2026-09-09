@@ -255,6 +255,7 @@ const end = ref();
 
 | 版本 | 变更类型 | 变更内容 |
 |------|---------|---------|
+| 1.2.7 | 更新 | `clearable` 接入表单继承系统（详见 [OForm 表单级统一管控](form.usage.md)） |
 | 1.2.4 | 新增 | 8 个日期选择器子组件首次发布：ODatePicker/ODateTimePicker/OMonthPicker/OYearPicker + 4 个 RangePicker，依赖 dayjs 运行时 |
 
 ---
@@ -273,7 +274,7 @@ const end = ref();
 | variant | `'outline'` / `'solid'` / `'text'` | — | `'outline'` | 1.2.4 | 输入框类型。"outline" 有边框轮廓、"solid" 实心填充、"text" 无边框。继承自 inputProps。 |
 | format | `string` | dayjs format | 各组件不同 | 1.2.4 | 输入框显示格式。支持 dayjs format 允许的值。各组件有不同的默认值（见上表）。 |
 | valueFormat | `string` | dayjs format / `'x'` | `'x'` | 1.2.4 | 绑定值格式。支持 dayjs format 值，'x' 代表时间戳。默认 'x'（毫秒时间戳）。 |
-| clearable | `boolean` | — | — | 1.2.4 | 可清空。悬停时显示清除图标替换日历图标。 |
+| clearable | `boolean` | — | 继承表单容器 | 1.2.4 | 可清空。悬停时显示清除图标替换日历图标。未设置时继承表单容器（详见 [OForm 表单级统一管控](form.usage.md)）。 |
 | noResponsive | `boolean` | — | — | 1.2.4 | 是否禁用响应式。继承自 selectProps。 |
 | optionTitle | `string` | — | — | 1.2.4 | 浮层标题。继承自 selectProps。 |
 | trigger | `PopupTriggerT` | — | `'click'` | 1.2.4 | 浮层触发方式。"click"（默认）等 PopupTriggerT 值。 |

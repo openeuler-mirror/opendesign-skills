@@ -197,6 +197,7 @@ const onDelete = (val) => {
 
 | 版本 | 变更类型 | 变更内容 |
 |------|---------|---------|
+| 1.2.5-sp3 / 1.2.7 | fix | 去除移动端溢出时的阴影；scrollActiveIntoView 改用容器 scrollLeft 滚动，避免移动端页面垂直滚动 |
 | 1.2.0 | breaking | 内部 DOM 结构修改，支持溢出/数量限制功能 |
 | 1.2.0 | feature | 新增 variant button 模式、round、maxShow、moreLabel、line、buttonInverse、headerClass 属性 |
 | 1.2.2 | fix | 修复 `--tab-nav-justify` 不生效问题 |

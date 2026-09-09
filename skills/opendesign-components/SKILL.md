@@ -1,14 +1,14 @@
 ---
 name: opendesign-components
-description: OpenDesign 组件库使用指南。当需要使用 OpenDesign Vue 组件库快速搭建页面时使用此 skill。支持所有 OpenDesign 组件（46 个），包括按钮、表单、表格、对话框、卡片、图标、滑块、步骤条、轻提示等常用 UI 组件。使用场景：(1) 使用 OpenDesign 组件构建 Vue 页面，(2) 查找组件使用方法和属性说明，(3) 获取组件代码示例
-last_update: 2026-08-10
+description: OpenDesign 组件库使用指南。当需要使用 OpenDesign Vue 组件库快速搭建页面时使用此 skill。支持所有 OpenDesign 组件（48 个），包括按钮、表单、表格、对话框、卡片、图标、滑块、步骤条、轻提示等常用 UI 组件。使用场景：(1) 使用 OpenDesign 组件构建 Vue 页面，(2) 查找组件使用方法和属性说明，(3) 获取组件代码示例
+last_update: 2026-09-08
 ---
 
 # OpenDesign 组件库使用指南
 
-> 本 Skill 对应 @opensig/opendesign **v1.2.6**（2026-07 生成），最低依赖版本 ≥1.2.6。具体组件 API 在哪个版本引入/变更/废弃，查 [`ReleaseNote`](https://raw.atomgit.com/openeuler/opendesign-components/blobs/bb8e66ef9d79e2fd08fb841de9340ef00e5a841d/ReleaseNote.opendesign.md)。
+> 本 Skill 对应 @opensig/opendesign **v1.2.7**（2026-09 生成），最低依赖版本 ≥1.2.7（1.2.7 完整包含 1.2.5-sp3；sp3 即有的修复在各组件版本变更记录中以「1.2.5-sp3 / 1.2.7」标注，1.2.5-sp3 线用户亦可参照使用）。具体组件 API 在哪个版本引入/变更/废弃，查 [`ReleaseNote`](https://raw.atomgit.com/openeuler/opendesign-components/blobs/567b7d397b5b10402403c5df0fc1c95bf3b19dcb/packages/docs/ReleaseNote.opendesign.md)。
 
-OpenDesign 是一个面向 openEuler 生态的 Vue 3 组件库，提供 59 个可复用 UI 组件。组件库有六套独立主题，**每个社区项目在初始化时选定一套，运行时只切换 dark/light 模式**。
+OpenDesign 是一个面向 openEuler 生态的 Vue 3 组件库，提供 61 个可复用 UI 组件。组件库有六套独立主题，**每个社区项目在初始化时选定一套，运行时只切换 dark/light 模式**。
 
 ## 安装
 
@@ -430,6 +430,7 @@ export default defineNuxtConfig({
 - [OForm / OFormItem](#oform--oformitem) — 表单 · `references/form.{visual|usage|style}.md`
 - [ORow / OCol](#orow--ocol) — 栅格布局 · `references/grid.{visual|usage|style}.md`
 - [OIcon](#oicon) — 图标 · `references/icon.{visual|usage|style}.md`
+- [OImageViewer](#oimageviewer) — 图片预览 · `references/image-viewer.{visual|usage|style}.md`
 - [OInput](#oinput) — 输入框 · `references/input.{visual|usage|style}.md`
 - [OInputNumber](#oinputnumber) — 数字输入框 · `references/input-number.{visual|usage|style}.md`
 - [OIpInput](#oipinput) — IP 地址输入框 · `references/ip-input.{visual|usage|style}.md`
@@ -457,6 +458,7 @@ export default defineNuxtConfig({
 - [OTimePicker 系列](#otimepicker) — 时间选择器 · `references/time-picker.{visual|usage|style}.md`
 - [OToast](#otoast) — 轻提示 · `references/toast.{visual|usage|style}.md`
 - [OToggle](#otoggle) — 选择块 · `references/toggle.{visual|usage|style}.md`
+- [OTour](#otour) — 漫游引导 · `references/tour.{visual|usage|style}.md`
 - [OUpload](#oupload) — 上传 · `references/upload.{visual|usage|style}.md`
 - [OVirtualList](#ovirtuallist) — 虚拟列表 · `references/virtual-list.{visual|usage|style}.md`
 
@@ -1155,7 +1157,7 @@ const linkConfig = {
 
 **`hoverable`** — 悬停放大效果（设置 href/preview/videoPoster 时自动生效）
 
-**`preview`** — 点击预览（启用后接管点击事件）
+**`preview`** — 点击预览（启用后接管点击事件）。v1.2.7 起预览层由 OImageViewer 提供：传 `true` 用默认查看器（缩放/旋转/切图/自动适屏），传对象直接透传 OImageViewer 配置（如 `:preview="{ showProgress: true }"`）
 
 **`previewClose`** — 预览关闭方式：`'none'`/`'mask'`/`'button'`/`'body'`，支持数组组合
 
@@ -1174,10 +1176,18 @@ const linkConfig = {
 - `layout`：`h`（水平）、`v`（垂直）、`inline`（行内）
 - `labelAlign`：`top`/`center`/`bottom`
 - `labelJustify`：`left`/`center`/`right`
-- `labelWidth`：标签宽度（PC 水平布局推荐 `96px`）
+- `labelWidth`：标签宽度，支持 `'auto'` 自动测量最宽标签（v1.2.7 起默认；PC 水平布局也可固定 `96px`）
 - `hasRequired`：显示必填星号
+- `rules`：全局校验规则（`Record<field, RulesT[]>`，按字段名下发，与 FormItem 局部 rules 合并）
+- `requiredIcon`：仅星号模式（星号不触发内置 required 校验）
+- `disabled`/`size`/`round`/`clearable`：表单级统一管控，经 useFormField 下发全部表单控件（控件自身设置优先）
+- `scrollToError`：校验失败自动滚动到首个错误项
 
-**支持的表单项**：`OInput`、`OInputNumber`、`OTextarea`、`OSelect`、`OCheckboxGroup`、`ORadioGroup`、`OUpload`
+**事件**：`@validate-field({ field, isValid, message })` 逐字段校验结果（v1.2.7 推荐）；旧 `@validate` 已废弃（保持兼容并输出废弃警告）
+
+**暴露方法**：`validate` / `validateField` / `scrollToField` / `setInitialValues` / `resetFields` / `clearValidate`
+
+**支持的表单项**：`OInput`、`OInputNumber`、`OTextarea`、`OSelect`、`OCheckboxGroup`、`ORadioGroup`、`OUpload`（v1.2.7 起全部支持继承表单级 `disabled`/`size`/`round`/`clearable`）
 
 ### 多列表单栅格布局规则
 
@@ -1194,7 +1204,7 @@ const linkConfig = {
 ### 示例代码
 
 ```vue
-<!-- 桌面端 4 列表单（每项 grid-6，水平标签） -->
+<!-- 桌面端 4 列表单（每项 var(--o-r-grid-6)，水平标签） -->
 <OForm layout="h" label-width="96px" has-required>
   <div style="display:flex; flex-wrap:wrap; gap:32px var(--o-r-grid-column-gutter);">
     <OFormItem label="用户名" required style="width:var(--o-r-grid-6);">
@@ -1272,6 +1282,47 @@ import { OIcon, OIconAdd, OIconDelete } from '@opensig/opendesign';
 ```
 
 > 详细使用说明和完整图标清单，请查看 [references/icon.usage.md](references/icon.usage.md)
+
+---
+
+## OImageViewer
+
+图片预览组件：全屏遮罩内按自然尺寸居中展示图片，支持拖拽平移、滚轮/双指缩放、旋转、多图无限循环切换、缩放比例提示与工具栏。@since v1.2.7
+
+**属性**：
+- `previewList` — 预览图片地址数组；`currentIndex` (v-model) — 当前下标
+- `scale` (v-model) — 当前缩放比例（传入则不自动适屏；不传自动适屏：小图放大至 200%、大图缩至整屏可见）
+- `infinite` — 无限循环切换（默认 true）；`showProgress` — 进度指示器
+- `toolbar` — 工具栏按钮配置（`true` 全部 / `false` 隐藏 / 数组按序渲染）
+- `scalable` — 是否允许缩放（`false` 锁定适屏比例并隐藏缩放按钮）
+- `layerOptions` — 内部 OLayer 透传（遮罩/关闭按钮/teleport）
+- `zoomRate` / `minScale` / `maxScale` / `showZoomRatio` / `bodyClose` / `closeOnPressEscape` / `focusTrap` / `crossorigin`
+
+**事件**：`@close`、`@switch(index)`、`@rotate(deg)`、`@zoom-drag(value)`、`@error(evt)`
+
+**插槽**：`preview({ src })`（整体替换查看器 UI，如视频播放器）、`default`（预览层内覆盖内容）、`toolbar`、`progress`、`error`
+
+**暴露方法**：`setActiveItem(index)`、`prev()`、`next()`、`handleActions(action)`、`resetTransform()`
+
+**函数式调用**：`useImageViewer(options)` 返回 `{ visible, open, close, unmount }`，props 支持 MaybeRefOrGetter 响应式同步；作用域外调用需手动 `unmount()` 释放 DOM
+
+**搭配 OFigure**：`<OFigure :preview="{ showProgress: true }" />` 对象形式直接透传查看器配置
+
+### 示例代码
+
+```vue
+<script setup>
+import { ref } from 'vue';
+const visible = ref(false);
+const imgList = ['/img/1.png', '/img/2.png'];
+</script>
+<template>
+  <OButton color="primary" @click="visible = true">查看大图</OButton>
+  <OImageViewer v-model:visible="visible" :preview-list="imgList" show-progress />
+</template>
+```
+
+> 详细使用说明和完整属性列表，请查看 [references/image-viewer.usage.md](references/image-viewer.usage.md)
 
 ---
 
@@ -1683,6 +1734,16 @@ IP 地址输入框，自动分段处理 IPv4 地址。
 
 **属性**：`disabled`、`multiple`、`clearable`、`placeholder`、`loading`
 
+**数据驱动（v1.2.7）**：`:options` + `fieldNames` 直接传选项数组（扁平/分组），或用手写 OOption 插槽；大数据量加 `virtual` 虚拟滚动
+
+**搜索与创建（v1.2.7）**：`filterable` 搜索过滤（`filterOption`/`filterMethod` 自定义、远程搜索 + `@search`）；`allowCreate` 创建新选项（`tokenSeparators` 分词）；`fallbackOption` 异步回显兜底
+
+**多选增强（v1.2.7）**：`limit` 数量上限（超限 `@exceed-limit`，未选项自动禁用）；`change` 事件新增选中项第二参数；`renderTag`/`renderLabel` 自定义渲染；`maxTagCount` 支持 `'responsive'` 随容器宽度自适应折叠
+
+**行为约束**：`allowCreate` 依赖 `filterable`；`tokenSeparators` 需 `multiple` + `allowCreate`；`virtual` 仅支持 `:options` 数据驱动；移动端（≤840px）搜索/创建/分词能力不生效（`no-responsive` 恢复）；`label` 保持纯字符串供过滤与读屏
+
+**表单与 GEO**：`name`/`itemprop` 绑定内部隐藏原生 `<select>`，支持传统表单提交与结构化数据读取
+
 **`maxTagCount`**：多选时最多显示的标签数
 
 **`showFoldTags`**：折叠标签的展示方式（`true`/`false`/`'hover'`/`'click'`）
@@ -1697,7 +1758,11 @@ IP 地址输入框，自动分段处理 IPv4 地址。
 
 **插槽**：`default`（选项）、`empty`（空状态）、`arrow`（下拉箭头，slot props: `{ active }`）、`suffix`（后缀，slot props: `{ active }`）、`tag-fold`（折叠标签）、`action`（底部操作区）
 
-**事件**：`@change`、`@clear`、`@options-visible-change`
+**事件**：`@change(value, option)`（v1.2.7 起第二参数返回选中项数据）、`@clear`、`@options-visible-change`、`@search`、`@create`、`@exceed-limit`、`@remove-tag`
+
+**插槽**：`default`（选项）、`empty`（空状态）、`arrow`（下拉箭头，slot props: `{ active }`）、`suffix`（后缀，slot props: `{ active }`）、`prefix`（前缀）、`option-label`/`group-label`（自定义渲染）、`tag-fold`（折叠标签）、`action`（底部操作区）
+
+**暴露方法**：`focus()` / `blur()` / `scrollTo(value)`（v1.2.7）
 
 ### 示例代码
 
@@ -2001,6 +2066,38 @@ const handleClick = () => showToast('操作成功');
 ```
 
 > 详细使用说明和完整属性列表，请查看 [references/toggle.usage.md](references/toggle.usage.md)
+
+---
+
+## OTour
+
+分步漫游引导组件：全屏遮罩上为目标区域开圆角镂空"聚光灯"，旁边弹出引导卡片（图片/标题/详情 + 步骤指示器 + 上一步/下一步按钮）。@since v1.2.7
+
+**OTour 属性**：
+- `visible` (v-model:visible) / `current` (v-model:current) — 显隐与当前步骤（关闭后 current 自动重置 0）
+- `position` — 卡片相对目标的位置（12 方向，默认 bottom）
+- `mask` — 遮罩开关（`false` 为非模态模式）
+- `spotlightRadius` — 镂空圆角（`'pill'` 胶囊 / 任意 CSS 长度，默认 4px）
+- `showArrow` / `showClose` / `closeOnPressEscape`
+
+**OTourStep 属性**：`target`（选择器/DOM/函数，不传则视口居中）、`title`、`detail`、`img`（左图右文）、按钮属性 `prevButtonProps`/`nextButtonProps`，`position`/`mask`/`showArrow`/`showClose` 等可按步骤覆盖 Tour 全局值
+
+**事件**：`@change(current)`、`@close(current)`、`@finish`（最后一步自动关闭）
+
+**插槽**（OTourStep）：`title`、`detail`、`img`、`left`、`skip`、`indicators({ current, total })`、`footer`（整体替换按钮区）
+
+**注意**：视口 ≤840px 不渲染；按钮 `onClick` 在步骤切换完成后调用，不能用于阻止切换
+
+### 示例代码
+
+```vue
+<OTour v-model:visible="show">
+  <OTourStep target="#step1" title="区域一" detail="功能介绍。" />
+  <OTourStep target="#step2" title="区域二" detail="支持 position 等按步骤覆盖。" position="top" />
+</OTour>
+```
+
+> 详细使用说明和完整属性列表，请查看 [references/tour.usage.md](references/tour.usage.md)
 
 ---
 

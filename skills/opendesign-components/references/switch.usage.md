@@ -28,9 +28,9 @@ type SwitchSizeT = 'medium' | 'small';
 | defaultChecked | `boolean` | — | `false` | 非受控模式下是否默认开启。默认关闭。 | — |
 | checkedValue | `string \| number \| boolean` | 开启状态对应的值。默认 true。 | `true` | 开启状态值 | — |
 | uncheckedValue | `string \| number \| boolean` | 关闭状态对应的值。默认 false。 | `false` | 关闭状态值 | — |
-| size | `SwitchSizeT` | `'medium'` / `'small'` | `'medium'` | 开关尺寸。"medium" 中号、"small" 小号。默认 medium。 | — |
+| size | `SwitchSizeT` | `'medium'` / `'small'` | 继承表单容器 | 开关尺寸。"medium" 中号、"small" 小号。未设置时继承表单容器（详见 [OForm 表单级统一管控](form.usage.md)）。 | — |
 | round | `RoundT` | `'pill'` / CSS 值 | — | 圆角值。"pill" 半圆或 CSS 值。 | — |
-| disabled | `boolean` | — | `false` | 是否禁用。禁用后点击无效。默认关闭。 | — |
+| disabled | `boolean` | — | 继承表单容器 | 是否禁用。禁用后点击无效。默认关闭。 | — |
 | loading | `boolean` | — | `false` | 是否加载中。加载时滑块显示旋转图标，同时自动禁用点击。默认关闭。 | — |
 | beforeChange | `(val: boolean) => Promise<boolean> \| boolean` | — | 状态改变前的钩子函数。返回 true 或 Promise\<true\> 允许切换，返回 false 或 Promise\<false\> 阻止切换。适合异步确认场景。 | 切换前拦截 | — |
 
@@ -135,3 +135,11 @@ const beforeChange = (val) => {
 | 异步切换 | `:before-change` + `:loading` | 后端验证 |
 | 圆角 | `round="pill"` | 半圆按钮 |
 | 小号 | `size="small"` | 紧凑场景 |
+
+---
+
+### 版本变更记录
+
+| 版本 | 变更类型 | 变更内容 |
+|------|---------|---------|
+| 1.2.7 | 更新 | `size`/`disabled` 接入表单继承系统（详见 [OForm 表单级统一管控](form.usage.md)）；修复深色背景上文字颜色（`--switch-color` 改用 control5） |

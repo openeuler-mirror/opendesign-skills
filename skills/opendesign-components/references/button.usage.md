@@ -148,6 +148,7 @@ OButton
 
 | 版本 | 变更类型 | 变更内容 |
 |------|---------|---------|
+| 1.2.7 | 更新 | `disabled` 接入表单继承系统（详见 [OForm 表单级统一管控](form.usage.md)）；文本按钮默认样式修正 |
 | v1.2.4 | 样式 | 文字按钮 hover 颜色从 primary1 改为 primary2；纯图标按钮新增 hover 状态颜色和边框颜色；移除 brand 模式 disabled 边框 |
 | v1.2.3-sp1 | 修复 | 昇腾/鲲鹏主题运营色样式、solid 字体颜色、disabled 选项样式修正 |
 | v1.1.0 | 样式 | 文字按钮移除 hover 背景；图标按钮新增 hover 背景 |

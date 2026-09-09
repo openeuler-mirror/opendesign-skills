@@ -12,11 +12,11 @@
 | `--layer-mask` | `var(--o-color-mask1)` | 遮罩层颜色 |
 | `--layer-align` | `center` | 内容垂直对齐（align-items） |
 | `--layer-justify` | `center` | 内容水平对齐（justify-content） |
-| `--layer-origin` | `center` | 缩放动画变换原点（transitionOrign="css" 时生效） |
+| `--layer-origin` | `center` | 缩放动画变换原点（transitionOrigin="css" 时生效） |
 
 **使用示例**:
 ```vue
-<OLayer v-model:visible="visible" transition-orign="css" style="--layer-origin: top center" />
+<OLayer v-model:visible="visible" transition-origin="css" style="--layer-origin: top center" />
 ```
 
 ---
@@ -29,7 +29,7 @@
 | `--layer-z-index` | 层级（自动管理） | 自动 |
 | `--layer-align` | 内容对齐（align-items） | — |
 | `--layer-justify` | 内容对齐（justify-content） | — |
-| `--layer-origin` | 动画变换原点（transitionOrign="css" 时） | `center` |
+| `--layer-origin` | 动画变换原点（transitionOrigin="css" 时） | `center` |
 | `--layer-mask` | 遮罩层颜色 | — |
 
 ---

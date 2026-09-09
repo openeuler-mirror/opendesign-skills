@@ -22,13 +22,13 @@ import { OInputNumber } from '@opensig/opendesign';
 | min | `number` | 否 | — | — | 允许的最小值。到达最小值时减号按钮自动变为禁用态。 | — |
 | max | `number` | 否 | — | — | 允许的最大值。到达最大值时加号按钮自动变为禁用态。 | — |
 | controls | `InputNumberControlT` | 否 | `'both'` / `'right'` / `'left'` / `'none'` | `'both'` | 控制按钮的位置。 - "both"（默认）：减号按钮在左侧，加号按钮在右侧，按钮均上下排列（上箭头/下箭头图标）。 - "left"：加减按钮都在左侧，加号在上、减号在下。 - "right"：加减按钮都在右侧，加号在上、减号在下。 - "none"：不显示任何控制按钮。 | — |
-| clearable | `boolean` | 否 | — | `false` | 是否显示清空按钮。默认关闭。 | — |
+| clearable | `boolean` | 否 | — | 继承表单容器 | 是否显示清空按钮。默认关闭。未设置时继承表单容器（详见 [OForm 表单级统一管控](form.usage.md)）。 | — |
 | size | `SizeT` | 否 | `'small'` / `'medium'` / `'large'` | `'medium'` | 输入框尺寸。"small"、"medium"、"large"。默认 medium。不同尺寸对应不同的默认宽度：small 为 90px，medium 为 120px，large 为 160px。 | — |
 | round | `RoundT` | 否 | `'pill'` / CSS 值 | — | 圆角值。"pill" 半圆或 CSS 值（如 "16px"）。 | — |
 | color | `Color2T` | 否 | `'normal'` / `'success'` / `'warning'` / `'danger'` | `'normal'` | 输入框颜色状态。"normal" 默认、"success" 成功、"warning" 警告、"danger" 错误。在 OFormItem 内会自动跟随校验状态变色。默认 normal。 | — |
 | variant | `VariantT` | 否 | `'solid'` / `'outline'` / `'text'` | `'outline'` | 输入框样式。"solid" 实心、"outline" 线框、"text" 无边框。默认 outline。 | — |
 | placeholder | `string` | 否 | — | — | 占位文本 | — |
-| disabled | `boolean` | 否 | — | `false` | 禁用输入框及加减按钮。禁用时加减按钮不可点击。默认关闭。 | — |
+| disabled | `boolean` | 否 | — | 继承表单容器 | 禁用输入框及加减按钮。禁用时加减按钮不可点击。默认关闭。未设置时继承表单容器（详见 [OForm 表单级统一管控](form.usage.md)）。 | — |
 | readonly | `boolean` | 否 | — | `false` | 只读模式。默认关闭。 | — |
 | autoWidth | `boolean` | 否 | — | `false` | 宽度随输入内容自适应。开启后不再使用固定的尺寸宽度。默认关闭。 | — |
 | format | `(value: string) => string` | 否 | — | — | 格式化函数，控制显示格式。例如在数字前加货币符号 "$"。 | — |
@@ -203,3 +203,11 @@ const format = (val) => (Number.isNaN(Number(val)) ? '' : `$${val}`);
 | 格式化显示 | `:format` | 自定义显示格式 |
 | 不允许空值 | `:clear-value="0"` | 清空时回退为指定数值 |
 | 宽度自适应 | `auto-width` | 输入框宽度跟随内容 |
+
+---
+
+### 版本变更记录
+
+| 版本 | 变更类型 | 变更内容 |
+|------|---------|---------|
+| 1.2.7 | 更新 | `clearable` 接入表单继承系统（详见 [OForm 表单级统一管控](form.usage.md)） |
