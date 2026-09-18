@@ -683,6 +683,7 @@ const columns: DataTableColumnT[] = [
 
 | 版本 | 变更类型 | 变更内容 |
 |------|---------|---------|
+| 1.2.5-sp4 / 1.2.7-sp1 | 修复 | 列宽重分配机制调整：新增按表格尺寸的默认最小列宽，初始测量与拖拽均按最小/最大宽度钳制，末列自动吸收盈余宽度；修复祖先元素 transform 缩放导致表头高度测量值错误的问题 |
 | 1.2.5-sp3 / 1.2.7 | 修复 | 空数据/loading 状态下 SSR hydration mismatch 修复（空态占位改为 td[colspan]）；筛选 optionsFn 改用 watchEffect 追踪响应式依赖（响应式数据变更后筛选项实时更新）；单选筛选去除"全部"选项；窄列宽下行图标 flex-shrink: 0 防挤压 |
 | 1.2.7 | 修复 | 树型表格缩进优化 |
 | v1.2.4 | 修复 | `TableRowT` 类型改为交叉类型 `& Record<string, unknown>`，不再强制索引签名 |

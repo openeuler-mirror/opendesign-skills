@@ -1,12 +1,12 @@
 ---
 name: opendesign-components
 description: OpenDesign 组件库使用指南。当需要使用 OpenDesign Vue 组件库快速搭建页面时使用此 skill。支持所有 OpenDesign 组件（48 个），包括按钮、表单、表格、对话框、卡片、图标、滑块、步骤条、轻提示等常用 UI 组件。使用场景：(1) 使用 OpenDesign 组件构建 Vue 页面，(2) 查找组件使用方法和属性说明，(3) 获取组件代码示例
-last_update: 2026-09-08
+last_update: 2026-09-18
 ---
 
 # OpenDesign 组件库使用指南
 
-> 本 Skill 对应 @opensig/opendesign **v1.2.7**（2026-09 生成），最低依赖版本 ≥1.2.7（1.2.7 完整包含 1.2.5-sp3；sp3 即有的修复在各组件版本变更记录中以「1.2.5-sp3 / 1.2.7」标注，1.2.5-sp3 线用户亦可参照使用）。具体组件 API 在哪个版本引入/变更/废弃，查 [`ReleaseNote`](https://raw.atomgit.com/openeuler/opendesign-components/blobs/567b7d397b5b10402403c5df0fc1c95bf3b19dcb/packages/docs/ReleaseNote.opendesign.md)。
+> 本 Skill 对应 @opensig/opendesign **v1.2.7-sp1**（2026-09 生成），最低依赖版本 ≥1.2.7（1.2.7 完整包含 1.2.5-sp3；sp3 即有的修复在各组件版本变更记录中以「1.2.5-sp3 / 1.2.7」标注，1.2.5-sp3 线用户亦可参照使用）。注意：`targetRect` 数据定位等部分能力需 **1.2.7-sp1**，1.2.7 的 `VirtualElement` 闭包形态已废弃。具体组件 API 在哪个版本引入/变更/废弃，查 [`ReleaseNote`](https://raw.atomgit.com/openeuler/opendesign-components/blobs/ceb10ed8c242ae7990e177a5c058f6ccd4f4a4c4/packages/docs/ReleaseNote.opendesign.md)。
 
 OpenDesign 是一个面向 openEuler 生态的 Vue 3 组件库，提供 61 个可复用 UI 组件。组件库有六套独立主题，**每个社区项目在初始化时选定一套，运行时只切换 dark/light 模式**。
 
@@ -1600,6 +1600,7 @@ IP 地址输入框，自动分段处理 IPv4 地址。
 6. `adjustMinWidth`、`adjustWidth` — 宽度设置
 7. `wrapClass` — 挂载容器类名
 8. `bodyClass` — 内容体类名
+9. `targetRect` — 定位源矩形快照（1.2.7-sp1）：无真实触发元素时以数据定位，`trigger` 需设为 `none`，滚动/缩放跟随由调用方负责
 
 **插槽**：`default`（弹出内容）、`target`（触发目标）、`anchor`（锚点内容，`anchor` 属性为 true 时渲染）
 

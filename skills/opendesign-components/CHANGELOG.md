@@ -6,6 +6,23 @@
 
 ---
 
+## 2026-09-18
+
+组件库基线由 v1.2.7 升级至 **v1.2.7-sp1**（同时包含 1.2.5-sp4 全部修复），SKILL.md 版本标注与 ReleaseNote 链接同步更新。
+
+### ⚠️ 破坏性
+- **OPopup/OPopover `targetRect` 契约切换**：类型从 `VirtualElement`（`getBoundingClientRect` 闭包）改为 `TargetRect` 快照数据（`{ left, top, width, height }` 视口坐标系，结构兼容 `DOMRect`，可直接传 `el.getBoundingClientRect()` 返回值），旧闭包形态不再支持；滚动/缩放跟随职责移交调用方（整体替换对象触发重新定位），`target` 退化为纯交互元素。1.2.7 的 `VirtualElement` 形态已被上游弃用，按旧版 skill 生成的 `targetRect` 用法需复核迁移。
+
+### 更新
+- **OPopup**：`visible` 补充受控/非受控两种模式说明（非受控模式下隐藏也会正常触发 `@update:visible`/`@change`）；新增「数据定位」使用场景与 prop 组合速查。
+- **OTour**：新增滚动跟随行为——页面滚动时遮罩镂空与步骤弹层同步跟随目标（rAF 节流，跟随职责由 OTour 接管）；随 OPopup 迁移至 TargetRect 契约。
+- **OSelect**：禁用态背景色 `--select-bg-color-disabled` 从 fill2 改回 control4-light；补充选项文本溢出修复与移动端横向滚动说明。
+- **ODataTable**：版本记录补充 1.2.5-sp4 / 1.2.7-sp1 修复（列宽重分配机制调整：按表格尺寸默认最小列宽 + 首末列宽度鈐制 + 末列吸收盈余；祖先 transform 缩放表头高度测量修复）。
+
+### 修正
+- **OStep**：补充版本变更记录——SSR 渲染时 setup 顶层创建 ResizeObserver 抛 ReferenceError 已在 1.2.7-sp1 修复，可安全用于服务端渲染。
+- **OSelect**：style 版本记录补充禁用态背景色回改。
+
 ## 2026-09-08
 
 组件库基线由 v1.2.6 升级至 **v1.2.7**（同时覆盖 1.2.5-sp3 全部修复），SKILL.md 最低依赖版本提升为 ≥1.2.7，ReleaseNote 链接同步更新。

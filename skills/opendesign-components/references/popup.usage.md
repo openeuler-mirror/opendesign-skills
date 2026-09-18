@@ -17,9 +17,12 @@ import { OPopup } from '@opensig/opendesign';
 ```typescript
 type PopupPositionT = 'top' | 'tl' | 'tr' | 'bottom' | 'bl' | 'br' | 'left' | 'lt' | 'lb' | 'right' | 'rt' | 'rb';
 type PopupTriggerT = 'none' | 'click' | 'click-outclick' | 'hover' | 'hover-outclick' | 'focus' | 'contextmenu';
-// 虚拟元素，用于 OTour 等无真实 DOM 的定位场景：仅需提供 getBoundingClientRect 方法
-interface VirtualElement {
-  getBoundingClientRect(): DOMRect;
+// 目标矩形快照：视口坐标系，结构兼容 DOMRect，可直接传 el.getBoundingClientRect() 的返回值
+interface TargetRect {
+  left: number;   // 目标左边缘 X（视口坐标系）
+  top: number;    // 目标顶边 Y（视口坐标系）
+  width: number;  // 目标宽度
+  height: number; // 目标高度
 }
 ```
 
@@ -29,11 +32,11 @@ interface VirtualElement {
 
 | 参数名 | 类型 | 可选值 | 默认值 | 说明 | 引入版本 |
 |--------|------|--------|--------|------|--------|
-| visible | `boolean` | — | — | 弹出层是否可见（v-model 双向绑定）。 | — |
+| visible | `boolean` | — | — | 弹出层是否可见。支持受控（`v-model:visible`）与非受控（不传 `visible`，仅监听 `@update:visible`/`@change`）两种模式。 | — |
 | position | `PopupPositionT` | 12 个方向 | `'top'` | 弹出位置。12 个方向：top/tl/tr/bottom/bl/br/left/lt/lb/right/rt/rb。默认 top。 | — |
 | trigger | `PopupTriggerT \| PopupTriggerT[]` | 7 种触发方式 | 触发弹出的方式，可传单个或数组。"click" 点击、"click-outclick" 点击显示/点击外部关闭、"hover" 悬停、"hover-outclick" 悬停显示/点击外部关闭、"focus" 聚焦、"contextmenu" 右键、"none" 不自动触发（手动控制）。默认 click。 | 触发方式 | — |
 | target | `string \| ComponentPublicInstance \| HTMLElement` | 触发元素，可传入组件实例、DOM 元素或选择器字符串。也可通过 target 插槽指定。 | `null` | 触发元素 | — |
-| targetRect | `VirtualElement` | — | `null` | 目标矩形，**优先级高于 target**。用于 OTour 等无真实 DOM 的定位场景：仅需提供 `getBoundingClientRect()` 返回 DOMRect。传入后跳过 scroll/resize/intersection 监听与 trigger 绑定。 | 1.2.7 |
+| targetRect | `TargetRect` | — | `null` | 定位源矩形快照（视口坐标系，结构兼容 `DOMRect`），**优先级高于 target**。适用于没有真实触发元素、定位目标由外部数据描述的场景（如 OTour 高亮步骤）。传入后组件不持有交互元素：`trigger` 需设为 `none`，显隐通过 `v-model:visible` 受控；滚动/缩放跟随由调用方负责——整体替换对象即触发重新定位（响应式对象支持原地修改坐标，普通对象原地修改不触发重算）。 | 1.2.7-sp1 |
 | disabled | `boolean` | — | `false` | 是否禁用弹出层。 | — |
 | wrapper | `string \| HTMLElement` | — | 弹出层挂载容器。默认 "body"。 | 挂载容器 | — |
 | offset | `number` | — | `0` | 距触发元素的偏移距离（px）。默认 0。 | — |
@@ -126,6 +129,27 @@ const visible = ref(false);
 </template>
 ```
 
+**场景 5：数据定位（无真实触发元素）**
+适用于：定位目标由外部数据描述（如流程图节点、画布元素）
+```vue
+<script setup>
+import { ref } from 'vue';
+import type { TargetRect } from '@opensig/opendesign';
+const visible = ref(false);
+// 视口坐标系矩形快照：可直接取自某元素的 getBoundingClientRect()，或自行构造
+const targetRect = ref<TargetRect | null>(null);
+const openAt = (el: HTMLElement) => {
+  targetRect.value = el.getBoundingClientRect();
+  visible.value = true;
+};
+</script>
+<template>
+  <OPopup v-model:visible="visible" trigger="none" :target-rect="targetRect" position="bottom">
+    <div>弹层定位在 targetRect 描述的矩形附近</div>
+  </OPopup>
+</template>
+```
+
 ---
 
 ### 常见 prop 组合速查
@@ -137,6 +161,7 @@ const visible = ref(false);
 | 右键菜单 | `trigger="contextmenu"` | 右键弹出 |
 | 手动控制 | `v-model:visible` + `trigger="none"` | 完全受控 |
 | 不自适应 | `:adaptive="false"` | 固定位置 |
+| 数据定位 | `trigger="none"` + `:target-rect` + `v-model:visible` | 无真实触发元素；滚动跟随需调用方更新 targetRect |
 
 ---
 
@@ -144,4 +169,5 @@ const visible = ref(false);
 
 | 版本 | 变更类型 | 变更内容 |
 |------|---------|---------|
-| 1.2.7 | 新增 | 新增 `targetRect` 属性（`VirtualElement`），支持无实际 DOM 时的定位计算（优先级高于 `target`），供 OTour 等场景使用 |
+| 1.2.7-sp1 | 破坏性变更 | `targetRect` 定位模型重构：类型从 `VirtualElement`（`getBoundingClientRect` 闭包）切换为 `TargetRect` 快照数据（`{ left, top, width, height }` 视口坐标系，结构兼容 `DOMRect`），旧闭包形态不再支持；滚动/缩放跟随职责移交调用方（OTour 已接管），`target` 退化为纯交互元素。修复：非受控模式隐藏时丢失 `update:visible`/`change` 事件；空 `targetRect` 覆盖触发元素导致弹层停留在 (0,0)；挂载即传 `target` 时定位异常 |
+| 1.2.7 | 新增 | 新增 `targetRect` 属性，支持无实际 DOM 时的定位计算（1.2.7 的 `VirtualElement` 形态已废弃，请直接按 1.2.7-sp1 的 `TargetRect` 契约传参） |

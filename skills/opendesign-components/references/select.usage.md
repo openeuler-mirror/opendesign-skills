@@ -434,6 +434,7 @@ const renderIconTag = (option, onClose) =>
 
 | 版本 | 变更内容 |
 |------|---------|
+| 1.2.7-sp1 | 修复选项文本过长时溢出容器的问题；移动端（≤pad_v）选项与多选标签支持横向滚动；禁用态背景色从 fill2 改回 control4-light |
 | 1.2.7 | 数据驱动（`options`/`fieldNames`，扁平与分组）；搜索过滤（`filterable`/`filterOption`/`filterMethod`/`filterSort`/远程搜索/`inputValue` 受控/`retainInputValue`）；虚拟滚动（`virtual`/`virtualListProps`，仅 options 驱动）；创建选项（`allowCreate`/`createLabel`/`tokenSeparators`/`autoTagInMultiple` + `create` 事件，创建项持久化）；多选增强（`limit` + `exceed-limit`、`maxTagCount='responsive'` 容器自适应折叠（SSR 保守渲染）、`renderTag`、`change` 新增第二参数、`remove-tag` 事件）；自定义渲染（`renderLabel`/`#option-label`/`#group-label`）；无障碍（listbox role 与 aria 属性）与移动端交互适配（ODialog 草稿-确认、搜索/创建能力移动端失效）；表单兜底（`fallbackOption`）；表单提交与 GEO（`name`/`itemprop` 绑定内部原生 select）；暴露 `focus`/`blur`/`scrollTo`/`virtualListRef`；`disabled`/`clearable`/`size`/`round` 接入表单继承；OOption 子组件：支持 `renderLabel` 注入、limit 达上限未选项自动禁用、卸载时自动注销（已选 label 经缓存保留） |
 | 1.2.6 | 背景色 CSS 变量从 control5-light/control4-light 改为 fill2；关闭按钮（clear icon）尺寸跟随 `--select-icon-size`；内部改用 defineSlots 替代 useSlots；响应式判定从 isPhonePad 改为 isPhonePadSize |
 | 0.0.69 | scrollbar 参数从 `scroller` 改名为 `scrollbar` |
