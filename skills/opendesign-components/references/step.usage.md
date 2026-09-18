@@ -214,3 +214,11 @@ const activeIndex = ref(0);
 | title | `string` | 否 | — | — | 步骤标题 | — |
 | description | `string` | 否 | — | — | 步骤描述 | — |
 | icon | `boolean \| Component` | 否 | — | 控制圆形标识中的内容。传 true 时根据状态自动选择图标（已完成显示对勾、失败显示感叹号）；传一个组件时使用该组件作为图标；不传或传 false 时显示步骤序号数字。 | 步骤图标；true 为状态默认图标，传组件则渲染该组件，false/不传则显示序号 | — |
+
+---
+
+### 版本变更记录
+
+| 版本 | 变更类型 | 变更内容 |
+|------|---------|---------|
+| 1.2.7-sp1 | 修复 | 修复 SSR 渲染时 setup 顶层创建 ResizeObserver 抛 ReferenceError 的问题，可安全用于服务端渲染 |

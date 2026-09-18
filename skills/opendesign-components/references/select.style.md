@@ -20,7 +20,7 @@
 | `--select-bg-color` | `var(--o-color-fill2)` | 选择框背景色（v1.2.6 从 control5-light 改为 fill2） |
 | `--select-bg-color-hover` | `var(--o-color-fill2)` | hover 背景色（v1.2.6 从 control5-light 改为 fill2） |
 | `--select-bg-color-focus` | `var(--o-color-fill2)` | 聚焦背景色（v1.2.6 从 control5-light 改为 fill2） |
-| `--select-bg-color-disabled` | `var(--o-color-fill2)` | 禁用背景色（v1.2.6 从 control4-light 改为 fill2） |
+| `--select-bg-color-disabled` | `var(--o-color-control4-light)` | 禁用背景色（v1.2.6 改为 fill2，v1.2.7-sp1 改回 control4-light） |
 
 > **注意**：`width` 不由组件变量控制，直接在调用处设置 CSS `width` 即可。
 
@@ -203,5 +203,6 @@ layout:
 
 | 版本 | 变更内容 |
 |------|---------|
+| v1.2.7-sp1 | 禁用背景色 `--select-bg-color-disabled` 从 fill2 改回 control4-light |
 | v1.2.7 | 多选标签间距方向调整（`--select-tag-margin`）；新增内部变量 `--_overlay-left`/`--_overlay-right`（renderLabel 浮层定位，JS 测量注入，一般无需覆盖） |
 | v1.2.6 | 背景色 CSS 变量从 control5-light/control4-light 改为 fill2；关闭按钮尺寸跟随 `--select-icon-size` |
