@@ -6,6 +6,32 @@
 
 ---
 
+## 2026-08-10
+
+### 新增
+- 两套脚手架均集成 `@opendesign-plus/components` 和 `@opendesign-plus/composables`，Header 和 Footer 一比一还原 openEuler 官网设计。
+- Header：使用 `OHeader` / `OHeaderMobile` 组件（固定定位 + Mega Menu 下拉面板 + 响应式切换），`OHeaderTheme` 提供主题开关 UI，导航数据在 `data/nav.ts` 中配置。
+- Footer：使用 `OFooter` 组件（深色背景 + 快速导航列 + 友情链接 + Logo/邮箱 + 法律链接/版权），数据在 `data/footer.ts` 中配置。
+- 主题管理从 Pinia store 迁移至 `@opendesign-plus/composables` 的 `createTheme` 插件——SPA 在 `main.ts` 注册、Nuxt 通过 `plugins/theme.ts` 全栈插件注册（`createTheme` 内部已做 SSR 守卫，SSR 时仅提供 inject 符号，客户端接管 DOM）。Nuxt SSR 由 `app.vue` 的 `useHead` 设置默认 `data-o-theme="e.light"`。
+- SPA 模板新增 Vue Router 多页面路由：`src/router/index.ts`（`createWebHistory` + 懒加载），`App.vue` 改用 `<RouterView />`，`main.ts` 注册 router 插件。新增 `pages/AboutPage.vue`。
+- Nuxt 模板新增 `app/pages/about.vue`，利用已有文件路由机制自动生成 `/about` 路由。
+- 两套模板新增 `data/nav.ts`（OHeader 导航数据）和 `data/footer.ts`（OFooter 页脚数据）。
+- 两套模板将 Logo 资源由 SVG 替换为 PNG（`assets/logo.png` + `assets/logo-dark.png`），Header Logo 跟随主题切换。
+
+### 移除
+- 移除 `stores/theme.ts`（Pinia 主题 store）和 `components/ThemeToggle.vue`（OSwitch 主题开关），由 `createTheme` + `OHeaderTheme` 替代。
+
+### ⚠️ 破坏性
+- 主题管理 API 变更：`useThemeStore()` → `useTheme()`（来自 `@opendesign-plus/composables`）；store 暴露的 `theme` / `mode` / `isDark` / `setMode` 被移除，替换为 composable 暴露的 `theme`（ref）/ `isLight`（computed）/ `isDark`（computed）/ `setTheme(theme)` / `toggleTheme()`。已使用旧 API 的业务代码需迁移。
+- 新增依赖：`@opendesign-plus/components`、`@opendesign-plus/composables`、`js-cookie`、`vue-router`（两套模板均新增）。
+
+### 修正
+- Nuxt 主题插件从 `plugins/theme.client.ts`（仅客户端）改为 `plugins/theme.ts`（SSR + 客户端），修复 SSR 渲染时 `useTheme()` 的 inject 符号（`isLight`、`isDark`、`setTheme`、`toggleTheme`）未找到的警告。`createTheme` 内部已做 `typeof window !== 'undefined'` 守卫，SSR 时仅 `provide` 符号、不执行 DOM 操作。
+- 两套模板注册 `v-analytics` 埋点指令（no-op 实现）——Nuxt 在 `app/plugins/opendesign-plus.ts` 注册、SPA 在 `src/main.ts` 通过 `app.directive` 注册，修复 `OHeader` 内部 `resolveDirective("analytics")` 报「Failed to resolve directive: analytics」警告。实际项目可在该指令的 `mounted` 钩子中接入真实埋点逻辑。
+- Nuxt 模板的 `app/app.vue` 与 SPA 模板的 `src/App.vue` 均使用 `OPlusConfigProvider` 包裹根组件，并向其 `:theme` 传入 `useTheme()` 的当前主题，修复 `OHeader` 内部 `HeaderContent` 报「injection "Symbol(provide-config-provider)" not found」警告。
+
+---
+
 ## 2026-07-31
 
 ### 更新

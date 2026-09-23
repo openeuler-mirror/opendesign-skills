@@ -13,7 +13,7 @@ AI 直出代码时，按设计意图选用真实组件（从 `@opensig/opendesig
 | 卡片 / 内容容器 | `OCard` | 默认插槽；`#header`/`#footer` |
 | 状态标签 / 分类标签 | `OTag` | `color`(success/warning/danger…)、`variant`、`size`、`round` |
 | 单行输入 / 搜索框 | `OInput` | `v-model`、`clearable`、`size`、`#prefix`(放 OIcon) |
-| 下拉选择 | `OSelect` + `OOption` | `v-model`；选项 `<OOption :value :label>` |
+| 下拉选择 | `OSelect` | `v-model`；选项 `:options` 数组（扁平/分组）或 `<OOption :value :label>`；搜索 `filterable`、大数据 `virtual` |
 | 多行文本 | `OTextarea` | `v-model`、`rows`、`maxlength` |
 | 单选 / 复选 / 开关 | `ORadioGroup`+`ORadio` / `OCheckbox` / `OSwitch` | `v-model` |
 | 数据表格 | `OTable` | `:columns`(`{label,key}`)、`:data`；单元格 `#td_<key>="{ row }"`、表头 `#header` |
@@ -22,6 +22,8 @@ AI 直出代码时，按设计意图选用真实组件（从 `@opensig/opendesig
 | 弹窗 | `ODialog` | `v-model:visible`、`#header`/`#footer` |
 | 图标 | `OIcon` | `<OIcon><IconXxx /></OIcon>`，图标来自工程的 `~icons/...` 或 svg 导入 |
 | 分割线 | `ODivider` | `direction`、`align` |
+| 图片放大查看 | `OFigure` | `preview`（内置 OImageViewer 预览层，缩放/旋转/切图）；`:preview="{ showProgress: true }"` 透传查看器配置 |
+| 新手引导 / 功能漫游 | `OTour` + `OTourStep` | `v-model:visible`、步骤 `target`/`title`/`detail`、`mask`(非模态 false)、`spotlightRadius` |
 
 > 纯布局容器（栅格、楼层、文字区块）用语义化标签（`<section>/<header>/<div>`）+ scoped 样式即可，无需组件。
 

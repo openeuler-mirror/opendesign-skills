@@ -6,6 +6,14 @@
 
 ---
 
+## 2026-09-08
+
+### 新增
+- 组件速查表新增两行：图片放大查看 → `OFigure` `preview`（内置 OImageViewer 预览层，支持对象配置）；新手引导/功能漫游 → `OTour` + `OTourStep`。
+
+### 更新
+- 下拉选择一行更新为 `OSelect` 数据驱动写法（`:options` 数组、`filterable`、`virtual`）。
+
 ## 2026-07-31
 
 ### 更新

@@ -23,7 +23,15 @@ last_update: 2026-08-18
 |---|---|
 | 栅格规范 | `https://raw.atomgit.com/openeuler/opendesign-token/raw/master/packages/opendesign-token/tokens/grid-token.json` |
 | 响应式断点 | `https://raw.atomgit.com/openeuler/opendesign-token/raw/master/packages/opendesign-token/tokens/responsive-token.json` |
-| openEuler 主题 Token | `https://raw.atomgit.com/openeuler/opendesign-token/raw/master/packages/opendesign-token/tokens/openeuler-token.json` |
+| **主题 Token（按目标社区选择）** | 见下表，同一目录下按社区命名 |
+
+**⚠️ 各社区主题 Token 相互独立（openGauss 品牌色为紫色，openEuler 为蓝色），用错社区属最高优先级错误。禁止不识别目标社区就默认拉取 openeuler-token：**
+
+| 社区 | Token URL |
+|------|-----------|
+| openEuler | `https://raw.atomgit.com/openeuler/opendesign-token/raw/master/packages/opendesign-token/tokens/openeuler-token.json` |
+| openGauss | `https://raw.atomgit.com/openeuler/opendesign-token/raw/master/packages/opendesign-token/tokens/opengauss-token.json` |
+| 其他社区 | 同一目录下按社区名查找 `{community}-token.json`（先访问仓库确认存在）；仓库无该社区 Token 时停下询问用户，禁止以 openEuler Token 代替 |
 
 本 skill 内 bundled 的索引文件（设计稿生产专用，无上游真源）：
 
@@ -90,7 +98,7 @@ OpenEuler 拥有独立图标库 Pixso 文件 `kbqInwBrCTGnM0MsPJDgvA`，包含 *
 
 > ⚠️ **核心原则：逐楼层生成，不要一次性生成整页。** 一次性处理整页所有组件规范会导致上下文溢出、细节丢失。逐楼层生成时，AI 每次只需处理 1~2 个组件规范，还原度显著更高。
 
-### 第零步：读取硬约束文档 + 拉取上游Token（强制起手式）
+### 第零步：读取硬约束文档 + 识别目标社区拉取对应Token（强制起手式）
 
 ```
 读取 global/hard-constraints.md
@@ -100,11 +108,25 @@ OpenEuler 拥有独立图标库 Pixso 文件 `kbqInwBrCTGnM0MsPJDgvA`，包含 *
    — 明确组件栅格挂靠要求、卡片间距规则
    — 明确禁止组合黑名单（Banner 嵌套、多尺寸 Banner 并排、按钮位置等）
 
-WebFetch 拉取 openEuler 主题 Token（必须执行！）
-   → https://raw.atomgit.com/openeuler/opendesign-token/raw/master/packages/opendesign-token/tokens/openeuler-token.json
+【社区识别（必做，禁止跳过）】从需求/PRD/用户输入中识别目标社区
+   （openEuler / openGauss / openUBMC / 鲲鹏 / 昇腾…）
+   — ⚠️ 各社区主题 Token 相互独立（openGauss 品牌色为紫色、openEuler 为蓝色）
+   — ⚠️ 禁止不识别社区就默认拉取 openeuler-token！用错社区主题 Token 属最高优先级错误
+   — ⚠️ 无法确定目标社区时停下询问用户，禁止猜测
+
+WebFetch 拉取目标社区主题 Token（必须执行！URL 见 #数据资源 社区映射表）
    — 将 JSON 中的颜色/字号/间距变量翻译为 :root CSS 变量
    — ⚠️ 禁止凭训练数据"猜测"颜色值！尤其是 --o-color-fill1（页面背景=浅灰，不是纯白）
    — 拉取失败时：使用 references/designer-guide.md 中的 Token 语义速查表作为降级数据源
+
+【站点框架基准（路由A页面级增改场景必做）】需求是在已有站点上新增/修改页面、不动整站框架时：
+   — 抓取目标社区线上站点的真实主导航与页脚结构（导航常为 JS 渲染，
+     优先用 curl 拉原始 HTML 提取 nav / footer 节点，WebFetch 提取不到时换 curl）
+   — 导航楼层与页脚楼层必须按线上实际结构还原：导航项名称/顺序/链接、
+     页脚分组/链接/友情链接/底部信息均以线上为准，仅新增入口高亮；
+     组件规格仍遵循 floors/navigation.md，但内容结构禁止套用模板编造
+   — 新增导航入口在导航中的位置作为待确认项输出给用户
+   — 线上结构抓取不到时，停下向用户索要导航/页脚结构，禁止凭空编造导航项
 ```
 
 后续所有步骤的几何数值必须落在硬约束的白名单内，组件排布必须符合组合规则。无法对应到约束的需求 → 停下询问用户，禁止造数或静默放行。
@@ -234,6 +256,9 @@ WebFetch 拉取 openEuler 主题 Token（必须执行！）
 □ 楼层间距是否统一为间距 10（PC 72px / MB 32px）？
 □ 全页组件组合是否无黑名单违规？
 □ 整体视觉一致性检查
+□ 【社区Token】:root 颜色是否来自目标社区主题 Token（对照第零步社区识别结论，禁止 openEuler 默认值混入）？
+□ 【站点框架】路由A页面级增改场景：导航/页脚是否与社区线上实际结构一致（对照第零步抓取的站点框架基准）？
+□ 【渲染验证】模式 B：组装完成后必须在浏览器中打开完整页面逐楼层目检——重点排查固定 width/height 容器内的长文案是否折行溢出堆叠（步骤条标题、卡片标题、按钮、标签），禁止仅靠静态代码检查放行
 ```
 
 ---
@@ -248,6 +273,7 @@ WebFetch 拉取 openEuler 主题 Token（必须执行！）
 > - 如果规范文档中找不到所需参数 → 停下，询问用户，**禁止自行填充**
 > - 图标：直接内嵌 `<svg>` 路径，禁止色块占位符或 `<img src>` 引用
 > - SVG 颜色：`currentColor` 继承父元素色值，或对应 Token CSS 变量
+> - **位图素材（案例封面 / Banner 图等）禁止留占位色块**：用文生图 API 生成贴合内容语义的图片填充 `https://console.enterprise.trae.cn/api/ide/v1/text_to_image?prompt={prompt}&image_size={image_size}`（prompt 为 URL 编码的具体场景描述，按容器比例选 image_size，如 16:9 封面用 `landscape_16_9`；调性贴合目标社区主题色与开发者风格）；以 `<img>` + alt 填充，HTML 注释注明「文生图示意配图，上线前替换真实素材」；**生成后必须校验**：curl 检查重定向目标，落在 `default.jpeg` 属静默失败（prompt 触发内容审核），换 prompt 重试直至返回真实生成图；API 失败时才降级占位色块
 
 ## 楼层模板索引
 

@@ -1,7 +1,7 @@
 ---
 name: opendesign-codegen
 description: OpenDesign 代码直出指南。当设计师（尤其各社区体验/设计团队）让 AI 工具把需求/设计意图直接做成页面或组件时使用此 skill——AI 应**直接生成符合工程规范的 Vue 3 + OpenDesign 代码**（真实 O 组件 + --o- 设计 token + scoped SCSS + BEM + i18n），渲染出来即设计稿，无需"先出 HTML 再转代码"的中间步骤。提供四大约束（视觉 Token / 组件用法 / 布局响应式 / 工程落地）、合规 SFC 起手模板、组件选用速查、生成后自检清单。仅适用于 UI 库为 @opensig/opendesign 的目标仓——生成前先读目标仓根 AGENTS.md + rules/ 按其框架族/i18n/别名/SEO 约定适配。复用 opendesign-tokens 与 opendesign-components，不重复其内容。
-last_update: 2026-07-31
+last_update: 2026-09-08
 ---
 
 # OpenDesign 代码直出指南
@@ -116,7 +116,7 @@ last_update: 2026-07-31
    - 不确定处用通用写法 + 注释，绝不臆造仓内不存在的目录/机制。
 2. **按需读取最新同级 skill**（这些 skill 不定期更新，勿凭记忆写 token 值/组件 API）——用到的才读，用到的版本才读：
    - 用到颜色/间距/字号/圆角等**具体 token 值** → 读 [`../opendesign-tokens/SKILL.md`](../opendesign-tokens/SKILL.md) + 对应主题 `references/tokens-{theme}.md`。
-   - 用到**组件的 Props/Events/Slots** → 读 [`../opendesign-components/SKILL.md`](../opendesign-components/SKILL.md) + 对应 `references/{component}.md`。
+   - 用到**组件的 Props/Events/Slots** → 读 [`../opendesign-components/SKILL.md`](../opendesign-components/SKILL.md) + 对应 `references/{component}.{visual|usage|style}.md`（识别→visual，API→usage，样式→style）。
    - 需要图标/构建/样式等 **CLI 命令**（`gen:icon`/`build-style` 等）→ 读 [`../opendesign-scripts/SKILL.md`](../opendesign-scripts/SKILL.md)。
    - 需对照**设计稿规范**（栅格/断点/组件视觉规格）→ 读 [`../opendesign-design/SKILL.md`](../opendesign-design/SKILL.md)。
    - 本 skill 顶部链接与 `component-cheatsheet.md` 只是索引，**真值以同级 skill 文件为准**。

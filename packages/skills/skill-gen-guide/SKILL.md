@@ -22,7 +22,7 @@ OpenDesign 生态的 Skill 是写给 AI 编码工具 / 设计师 / Pixso AI 消�
 - 用户要做 Skill 自评、问"自评维度有哪些""进度文件怎么管"
 - 用户要批量扫描组件库生成 Skill
 - 用户提到 Playwright 快照、Pixso MCP 9 步调用、Token 映射、componentKey、变体维度、反向识别
-- 用户问 Skill 文件的格式规范（Part A / Part B、布局结构图、响应式行为表）
+- 用户问 Skill 文件的格式规范（组件三文件拆分 visual/usage/style、脚本 Part A/B、布局结构图、响应式行为表）
 - 用户要在 Skill 文件里标注版本、写源码修正清单、维护 `_skill-gen-status.md`
 
 ## 核心工作流速览
@@ -32,7 +32,7 @@ OpenDesign 生态的 Skill 是写给 AI 编码工具 / 设计师 / Pixso AI 消�
 **组件 Skill（7 步）**：确认源码版本 → 提取 Props → 提取 Events → 提取 Slots → 提取 Expose → 分析响应式差异 → 学习真实用法 → 视觉布局分析（Playwright 快照）。
 **脚本 Skill（3 步）**：提取命令元信息 → 提取配置字段 → 收集真实示例。
 **Token Skill（4 步）**：确认 token 包版本 → 提取 token 变量 → 识别破坏性变更 → 更新 Skill 文件。
-输出到 `skills/opendesign-{components,scripts,tokens}/references/{name}.md`。
+输出到 `skills/opendesign-components/references/{name}.{visual|usage|style}.md`（三文件拆分）、`skills/opendesign-scripts/references/{name}.md`、`skills/opendesign-tokens/references/{name}.md`。
 
 详见 [`references/code-skill-gen.md`](references/code-skill-gen.md)。
 

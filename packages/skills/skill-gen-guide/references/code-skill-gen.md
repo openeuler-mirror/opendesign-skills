@@ -25,7 +25,7 @@ Skill 生成的详细操作指南。适用场景：新建或更新组件/脚本/
 ```
 
 **关键点**：
-- Skill 文件写入 `skills/opendesign-components/references/{component}.md`
+- Skill 文件按用途拆分为三个文件写入 `skills/opendesign-components/references/`：`{component}.visual.md`、`{component}.usage.md`、`{component}.style.md`（命名约定见下方「Skill 文件格式规范」）
 - 每完成一个组件，**必须更新** `skills/opendesign-components/references/_skill-gen-status.md`（记录已完成和待处理列表）
 - 自评结论写入 `{component}.review.md`，**不要混入 Skill 文件本身**
 - 通过 Playwright 截图进行视觉布局分析（如快照不存在，负责生成）
@@ -236,37 +236,53 @@ open-scripts {cmd} [options]
 
 ## Skill 文件格式规范
 
-### 组件 Skill（以 Card.md 为例）
+### 组件 Skill 文件格式（以 Card 为例）
+
+每个组件按用途拆分为**三个文件**，命名规则：`{component}.{section}.md`
+
+> 拆分原则：同一条信息只出现一次，不跨文件重复。Props/Events/Slots 的自然语言描述合并进 usage 表格的"说明"列，不再独立成段。设计稿识别指南只保留 visual 文件中的唯一版本。
 
 **版本标注**
-- 所有 Skill（组件、脚本、Token）的 reference 文件和 SKILL.md 索引层，在文件头部导航链接之后、标题之前，用一行注明 Skill 对应的源码包版本、最低依赖版本、ReleaseNote 链接：
+- 三个文件的头部导航链接之后、标题之前，均需标注版本（格式见下方）：
   ```
   > 本 Skill 对应 @opensig/opendesign **v1.2.5**（2026-07 生成），最低依赖版本 ≥1.2.5。具体组件 API 在哪个版本引入/变更/废弃，查 [ReleaseNote](https://raw.atomgit.com/openeuler/opendesign-components/blobs/bb8e66ef9d79e2fd08fb841de9340ef00e5a841d/ReleaseNote.opendesign.md)。
   ```
-  ```
-  > 本 Skill 对应 @opensig/open-scripts **v1.0.6**（2026-07 生成），最低依赖版本 ≥1.0.6。具体命令 API 在哪个版本引入/变更，查 [ReleaseNote](https://raw.atomgit.com/openeuler/opendesign-components/blobs/536b758fec8f078807da932f33b9ad08c20aa25a/ReleaseNote.scripts.md)。
-  ```
-  ```
-  > 本 Skill 对应 @opensig/opendesign-token **v0.1.1**（2026-06 生成），最低依赖版本 ≥0.1.1。具体 token 在哪个版本引入/变更/删除，查 [ReleaseNote](https://raw.atomgit.com/openeuler/opendesign-token/blobs/9315d89bfe0c8538b75df2907f6ad8c2e9e235ba/ReleaseNote.md)。
-  ```
-  索引层（SKILL.md）用「本 Skill」，reference 文件用「本文档」
+- 索引层（SKILL.md）用「本 Skill」，reference 文件用「本文档」
 - **最低依赖版本**同时是 Skill 的**消费者版本门槛**：调用者（AI 工具/开发者）使用 Skill 中推荐的任何 API/token 时，应确保项目中安装的包版本 ≥ 此值。检查方式为读取用户项目 `package.json` 中对应包的 `version` 字段（或 `dependencies` / `devDependencies` 中的版本范围），与 Skill 头部标注的最低版本比对。若版本偏低：
   - Skill 中标注为 `@since vX.X.X` 的个别 API/token 在低版本中不存在，调用者应提醒用户升级包或换用低版本可用的替代方案；各包 ReleaseNote 链接已在 Skill 头部标注行中提供，直接查阅即可
   - Skill 中有「版本迁移说明」的破坏性变更，调用者应提醒用户按迁移说明调整已有代码
-- 若该组件曾有过 API 破坏性变更，在文件末尾增加「版本迁移说明」小节，列出各版本间需要手动调整的地方（重命名的 prop、移除的 slot、变更的事件签名等）；无破坏性变更则省略此节
+- 若该组件曾有过 API 破坏性变更，在 `usage.md` 末尾增加「版本迁移说明」小节，列出各版本间需要手动调整的地方（重命名的 prop、移除的 slot、变更的事件签名等）；无破坏性变更则省略此节
 
-**Part A：设计理解卡**
-- 目标读者：设计师或不熟悉代码的人
-- 用自然语言描述组件的视觉行为和交互
-- 必须包含：**布局结构**（ASCII 图）和**响应式行为**（如有差异）
-- 不出现代码、类型签名等开发术语
+**{component}.visual.md — 视觉识别**
+- 目标读者：从设计稿识别组件的场景（设计师 / Pixso MCP 工作流）
+- 组件一句话简介
+- 📱 响应式行为摘要（1-2 句，供识别时参考）
+- 🧩 布局结构摘要（简化 YAML，供识别时理解视觉结构）
+- 设计稿识别指南（唯一完整版，不再在 usage 中重复）：
+  - 视觉特征指纹（编号列表，如何从设计稿视觉特征辨认此组件）
+  - 设计 Token → Prop 值映射表（视觉属性 → prop 值的对照表）
+  - 易混淆组件区分表（与哪些组件容易混淆、关键区分依据）
+- 用自然语言描述，不出现代码、类型签名等开发术语
 
-**Part B：代码调用参考**
-- Props 表、Events 表、Slots 表
+**{component}.usage.md — 代码使用**
+- 目标读者：写代码的开发者 / AI 工具
+- 导入方式（import 语句）
+- 类型定义（如有复杂类型，如 DialogActionT）
+- Props 表（"说明"列包含每个值的自然语言描述，从 visual.md 合并而来）
+- Events 表（"触发时机"列包含详细行为说明）
+- Slots 表（"替换范围"列包含行为细节，如"替换后 icon 属性失效""loading 时被加载动画覆盖"）
 - Slot 层级关系图（嵌套/互斥关系）
-- 组件布局结构图（多断点版本）
-- 典型使用场景与代码模板
+- 暴露方法（如有）
+- 典型使用场景与代码模板（按场景编号，每个场景一段完整 Vue 片段）
+- 常见 prop 组合速查表
+- 版本变更记录
+
+**{component}.style.md — 样式定制**
+- 目标读者：需要自定义组件外观的开发者
+- 可覆盖的 CSS 变量表（变量名、默认值、说明）+ 使用示例
+- 组件布局结构图（多断点详细 YAML）
 - 响应式行为表（6 列，高亮 ★ 关键阈值）
+- 触控 vs 指针差异表（如有）
 
 ### 脚本 Skill（以 gen-icon.md 为例）
 
@@ -282,6 +298,28 @@ open-scripts {cmd} [options]
 - 与其他命令的执行顺序
 
 ### 导航链接（所有 reference 文件）
+
+**组件 Skill**（三文件互相引用）：
+
+```
+> ← [组件索引](../SKILL.md#组件索引) · [代码使用]({name}.usage.md) · [样式定制]({name}.style.md)
+
+# O{ComponentName} {中文名} — 视觉识别
+```
+
+```
+> ← [组件索引](../SKILL.md#组件索引) · [视觉识别]({name}.visual.md) · [样式定制]({name}.style.md)
+
+# O{ComponentName} {中文名} — 代码使用
+```
+
+```
+> ← [组件索引](../SKILL.md#组件索引) · [视觉识别]({name}.visual.md) · [代码使用]({name}.usage.md)
+
+# O{ComponentName} {中文名} — 样式定制
+```
+
+**脚本 / Token Skill**（单文件）：
 
 所有 reference 文件头部均包含返回链接：
 
@@ -326,13 +364,13 @@ Skill 中的**响应式行为表必须覆盖 4 个断点**（≤600px / 601–84
 | Skill 中的信息 | 匹配作用 |
 |---------------|---------|
 | **布局结构图** | AI 将设计稿的图层结构与布局结构图对比，判断是否匹配该组件 |
-| **设计理解卡 → 属性描述** | AI 根据设计稿的视觉表现（尺寸、颜色、变体）推断对应的 prop 值 |
+| **visual.md → 属性描述（已合并进 usage.md 表格"说明"列）** | AI 根据设计稿的视觉表现（尺寸、颜色、变体）推断对应的 prop 值 |
 | **布局结构图 → slot 标注** | AI 识别设计稿中超出标准属性的自定义区域，映射为 slot 用法 |
 | **响应式行为表** | AI 根据设计稿的画板尺寸，选择对应断点的布局和交互方式 |
 
-### 设计理解卡（Part A）的写作要求
+### visual.md 的写作要求
 
-为支持 Pixso MCP 协同，Part A 需遵循额外规范：
+为支持 Pixso MCP 协同，visual.md 需遵循额外规范：
 
 #### 1. 使用设计工具术语
 在描述组件时使用 Pixso/Figma 设计师熟悉的概念，帮助 AI 建立设计语言与代码的映射：
@@ -362,7 +400,7 @@ Skill 中的**响应式行为表必须覆盖 4 个断点**（≤600px / 601–84
 
 ### 设计 Token 关联
 
-如组件的样式中使用了设计 Token（CSS 变量），在设计理解卡中关联到 Pixso 侧的设计变量名称：
+如组件的样式中使用了设计 Token（CSS 变量），在 visual.md 中关联到 Pixso 侧的设计变量名称：
 
 > 组件主背景色使用 `--o-color-bg-card`（openEuler 主题对应 `#f5f5f5`，Ascend 主题对应 `#ffffff`），对应 Pixso 中的 `color/bg/card` 变量。
 

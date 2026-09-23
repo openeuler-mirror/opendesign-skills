@@ -36,7 +36,7 @@ pnpx skills experimental_install
 | Skill | 包名 | 覆盖范围 | 入口文件 | 变更记录 |
 |-------|------|---------|---------|---------|
 | [opendesign-application](#opendesign-application) | `@opensig/opendesign` + `@opensig/opendesign-token` | 工程化落地指南（主题集成 + 样式基础设施 + 脚手架 + Code Review） | [SKILL.md](skills/opendesign-application/SKILL.md) | [CHANGELOG.md](skills/opendesign-application/CHANGELOG.md) |
-| [opendesign-components](#opendesign-components) | `@opensig/opendesign` | 46 个 Vue 3 UI 组件 | [SKILL.md](skills/opendesign-components/SKILL.md) | [CHANGELOG.md](skills/opendesign-components/CHANGELOG.md) |
+| [opendesign-components](#opendesign-components) | `@opensig/opendesign` | 48 个 Vue 3 UI 组件 | [SKILL.md](skills/opendesign-components/SKILL.md) | [CHANGELOG.md](skills/opendesign-components/CHANGELOG.md) |
 | [opendesign-scripts](#opendesign-scripts) | `@opensig/open-scripts` | 5 个 CLI 构建命令 | [SKILL.md](skills/opendesign-scripts/SKILL.md) | [CHANGELOG.md](skills/opendesign-scripts/CHANGELOG.md) |
 | [opendesign-tokens](#opendesign-tokens) | `@opensig/opendesign-token` | 3 套主题的设计令牌体系 | [SKILL.md](skills/opendesign-tokens/SKILL.md) | [CHANGELOG.md](skills/opendesign-tokens/CHANGELOG.md) |
 | [opendesign-design](#opendesign-design) | Pixso MCP（无 npm 包） | 26 个组件设计规范 + 5 楼层模板 + 536 变体 + 187 图标 | [SKILL.md](skills/opendesign-design/SKILL.md) | [CHANGELOG.md](skills/opendesign-design/CHANGELOG.md) |
@@ -103,34 +103,35 @@ skills/opendesign-application/
 - 获取组件代码示例和最佳实践
 - **通过 Pixso MCP 读取设计稿，将图层信息映射到对应组件并生成代码**
 
-**覆盖 46 个组件**（按字母序）：
+**覆盖 48 个组件**（按字母序）：
 
 | 组件 | 说明 | 组件 | 说明 |
 |------|------|------|------|
-| [Anchor](skills/opendesign-components/references/anchor.md) | 锚点导航 | [Link](skills/opendesign-components/references/link.md) | 链接 |
-| [Badge](skills/opendesign-components/references/badge.md) | 徽标 | [Loading](skills/opendesign-components/references/loading.md) | 加载遮罩 |
-| [Breadcrumb](skills/opendesign-components/references/breadcrumb.md) | 面包屑 | [Menu](skills/opendesign-components/references/menu.md) | 导航菜单 |
-| [Button](skills/opendesign-components/references/button.md) | 按钮 | [Message](skills/opendesign-components/references/message.md) | 全局消息 |
-| [Card](skills/opendesign-components/references/card.md) | 卡片 | [Pagination](skills/opendesign-components/references/pagination.md) | 分页 |
-| [Carousel](skills/opendesign-components/references/carousel.md) | 轮播 | [Popover](skills/opendesign-components/references/popover.md) | 气泡卡片 |
-| [Cascader](skills/opendesign-components/references/cascader.md) | 级联选择 | [Popup](skills/opendesign-components/references/popup.md) | 弹出层 |
-| [Checkbox](skills/opendesign-components/references/checkbox.md) | 复选框（含 Group） | [Progress](skills/opendesign-components/references/progress.md) | 进度条 |
-| [Collapse](skills/opendesign-components/references/collapse.md) | 折叠面板 | [Radio](skills/opendesign-components/references/radio.md) | 单选框（含 Group） |
-| [ConfigProvider](skills/opendesign-components/references/config-provider.md) | 全局配置 | [Rate](skills/opendesign-components/references/rate.md) | 评分 |
-| [DataTable](skills/opendesign-components/references/data-table.md) | 数据表格 | [Result](skills/opendesign-components/references/result.md) | 结果页 |
-| [Dialog](skills/opendesign-components/references/dialog.md) | 对话框 | [Scrollbar](skills/opendesign-components/references/scrollbar.md) | 滚动条 |
-| [Divider](skills/opendesign-components/references/divider.md) | 分割线 | [Select](skills/opendesign-components/references/select.md) | 下拉选择（含 OptionGroup） |
-| [Dropdown](skills/opendesign-components/references/dropdown.md) | 下拉菜单 | [Skeleton](skills/opendesign-components/references/skeleton.md) | 骨架屏 |
-| [Figure](skills/opendesign-components/references/figure.md) | 图片 | [Slider](skills/opendesign-components/references/slider.md) | 滑块 |
-| [Form](skills/opendesign-components/references/form.md) | 表单（含 FormItem） | [Step](skills/opendesign-components/references/step.md) | 步骤条 |
-| [Grid](skills/opendesign-components/references/grid.md) | 栅格布局 | [Switch](skills/opendesign-components/references/switch.md) | 开关 |
-| [Icon](skills/opendesign-components/references/icon.md) | 图标 | [Tab](skills/opendesign-components/references/tab.md) | 标签页 |
-| [Input](skills/opendesign-components/references/input.md) | 输入框 | [Tag](skills/opendesign-components/references/tag.md) | 标签 |
-| [InputNumber](skills/opendesign-components/references/input-number.md) | 数字输入框 | [Textarea](skills/opendesign-components/references/textarea.md) | 文本域 |
-| [IpInput](skills/opendesign-components/references/ip-input.md) | IP 地址输入框 | [Toast](skills/opendesign-components/references/toast.md) | 轻提示 |
-| [Layer](skills/opendesign-components/references/layer.md) | 浮层基础组件 | [Toggle](skills/opendesign-components/references/toggle.md) | 切换按钮 |
-| — | — | [Upload](skills/opendesign-components/references/upload.md) | 上传 |
-| — | — | [VirtualList](skills/opendesign-components/references/virtual-list.md) | 虚拟列表 |
+| [Anchor](skills/opendesign-components/references/anchor.usage.md) | 锚点导航 | [Link](skills/opendesign-components/references/link.usage.md) | 链接 |
+| [Badge](skills/opendesign-components/references/badge.usage.md) | 徽标 | [Loading](skills/opendesign-components/references/loading.usage.md) | 加载遮罩 |
+| [Breadcrumb](skills/opendesign-components/references/breadcrumb.usage.md) | 面包屑 | [Menu](skills/opendesign-components/references/menu.usage.md) | 导航菜单 |
+| [Button](skills/opendesign-components/references/button.usage.md) | 按钮 | [Message](skills/opendesign-components/references/message.usage.md) | 全局消息 |
+| [Card](skills/opendesign-components/references/card.usage.md) | 卡片 | [Pagination](skills/opendesign-components/references/pagination.usage.md) | 分页 |
+| [Carousel](skills/opendesign-components/references/carousel.usage.md) | 轮播 | [Popover](skills/opendesign-components/references/popover.usage.md) | 气泡卡片 |
+| [Cascader](skills/opendesign-components/references/cascader.usage.md) | 级联选择 | [Popup](skills/opendesign-components/references/popup.usage.md) | 弹出层 |
+| [Checkbox](skills/opendesign-components/references/checkbox.usage.md) | 复选框（含 Group） | [Progress](skills/opendesign-components/references/progress.usage.md) | 进度条 |
+| [Collapse](skills/opendesign-components/references/collapse.usage.md) | 折叠面板 | [Radio](skills/opendesign-components/references/radio.usage.md) | 单选框（含 Group） |
+| [ConfigProvider](skills/opendesign-components/references/config-provider.usage.md) | 全局配置 | [Rate](skills/opendesign-components/references/rate.usage.md) | 评分 |
+| [DataTable](skills/opendesign-components/references/data-table.usage.md) | 数据表格 | [Result](skills/opendesign-components/references/result.usage.md) | 结果页 |
+| [Dialog](skills/opendesign-components/references/dialog.usage.md) | 对话框 | [Scrollbar](skills/opendesign-components/references/scrollbar.usage.md) | 滚动条 |
+| [Divider](skills/opendesign-components/references/divider.usage.md) | 分割线 | [Select](skills/opendesign-components/references/select.usage.md) | 下拉选择（含 OptionGroup） |
+| [Dropdown](skills/opendesign-components/references/dropdown.usage.md) | 下拉菜单 | [Skeleton](skills/opendesign-components/references/skeleton.usage.md) | 骨架屏 |
+| [Figure](skills/opendesign-components/references/figure.usage.md) | 图片 | [Slider](skills/opendesign-components/references/slider.usage.md) | 滑块 |
+| [Form](skills/opendesign-components/references/form.usage.md) | 表单（含 FormItem） | [Step](skills/opendesign-components/references/step.usage.md) | 步骤条 |
+| [Grid](skills/opendesign-components/references/grid.usage.md) | 栅格布局 | [Switch](skills/opendesign-components/references/switch.usage.md) | 开关 |
+| [Icon](skills/opendesign-components/references/icon.usage.md) | 图标 | [Tab](skills/opendesign-components/references/tab.usage.md) | 标签页 |
+| [ImageViewer](skills/opendesign-components/references/image-viewer.usage.md) | 图片预览 | [Tag](skills/opendesign-components/references/tag.usage.md) | 标签 |
+| [Input](skills/opendesign-components/references/input.usage.md) | 输入框 | [Textarea](skills/opendesign-components/references/textarea.usage.md) | 文本域 |
+| [InputNumber](skills/opendesign-components/references/input-number.usage.md) | 数字输入框 | [Toast](skills/opendesign-components/references/toast.usage.md) | 轻提示 |
+| [IpInput](skills/opendesign-components/references/ip-input.usage.md) | IP 地址输入框 | [Toggle](skills/opendesign-components/references/toggle.usage.md) | 切换按钮 |
+| [Layer](skills/opendesign-components/references/layer.usage.md) | 浮层基础组件 | [Tour](skills/opendesign-components/references/tour.usage.md) | 漫游引导 |
+| — | — | [Upload](skills/opendesign-components/references/upload.usage.md) | 上传 |
+| — | — | [VirtualList](skills/opendesign-components/references/virtual-list.usage.md) | 虚拟列表 |
 
 > 跳过：OTable（按规则不生成 skill）
 
@@ -139,7 +140,9 @@ skills/opendesign-application/
 skills/opendesign-components/
 ├── SKILL.md                          # 主 skill 文件（含安装指南和组件索引）
 └── references/
-    └── {component}.md                # 各组件的 skill 文件（×46）
+    ├── {component}.visual.md         # 视觉识别（×48）
+    ├── {component}.usage.md         # 代码使用（×48）
+    └── {component}.style.md         # 样式定制（×48）
 ```
 
 ---
@@ -335,7 +338,7 @@ skills/opendesign-codegen/
    └──────────────────────────┘         │       │ 提供主题变量         │ gen:icon / build
                                         │       ▼                    ▼
                                         │   opendesign-components ◄──┘
-                                        │   (46 个 Vue 3 UI 组件)
+                                        │   (48 个 Vue 3 UI 组件)
                                         │       │
                                         │       │ 被业务项目使用
                                         │       ▼

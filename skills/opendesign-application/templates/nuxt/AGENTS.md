@@ -20,8 +20,10 @@
 |------|------|-----------|
 | 框架 | Nuxt 4（含 Vue 3） | 纯 Vite SPA / React / Vue 2 |
 | 状态管理 | Pinia（@pinia/nuxt 模块） | Vuex / 手写 reactive |
+| 主题管理 | @opendesign-plus/composables createTheme（客户端插件） | 手写主题切换 |
 | CSS 预处理 | SCSS（sass-embedded） | Less / Stylus / 纯 CSS |
 | 设计系统 | @opensig/opendesign + @opensig/opendesign-token | 自造 UI / 其他组件库 |
+| 导航与页脚 | @opendesign-plus/components（OHeader / OFooter） | 手写导航 / 其他布局方案 |
 | 图标生成 | @opensig/open-scripts gen:icon | 手写 SVG 内联 / 其他图标方案 |
 | 工具库 | @vueuse/nuxt（自动导入 composables） | 手写替代 VueUse 已有功能 |
 
@@ -32,16 +34,20 @@
 | 文件 | 职责 | 严禁做的事 |
 |------|------|-----------|
 | `nuxt.config.ts` | 模块注册 + css 数组（样式引入顺序） + vite 配置 + `#icons` 别名 | 不在此写业务逻辑、不在此注册全局组件 |
-| `app/app.vue` | 应用入口编排（NuxtLayout + NuxtPage） | 不在此写骨架、不在此写楼层内容、不在此做数据请求 |
+| `app/app.vue` | 应用入口编排（OPlusConfigProvider + NuxtLayout + NuxtPage）+ SSR 主题默认值（useHead） | 不在此写骨架、不在此写楼层内容、不在此做数据请求 |
 | `app/layouts/default.vue` | 页面骨架（AppHeader + slot + AppFooter） | 不在此写楼层内容、不在此做数据请求 |
 | `app/pages/*.vue` | 页面楼层内容编排 | 不在此写骨架结构 |
+| `app/plugins/theme.ts` | createTheme 主题插件（SSR + 客户端） | 不在此写业务逻辑 |
+| `app/plugins/opendesign-plus.ts` | v-analytics 埋点指令注册（no-op） | 不在此写业务逻辑 |
+| `app/data/nav.ts` | OHeader 导航数据配置 | 不在此写业务逻辑 |
+| `app/data/footer.ts` | OFooter 页脚数据配置 | 不在此写业务逻辑 |
 | `icons/icon.config.ts` | gen:icon 配置（SVG 源目录 → Vue 图标组件输出） | 不在此写业务逻辑 |
 
 > Nuxt 没有 `main.ts`——所有配置在 `nuxt.config.ts`，应用入口在 `app/app.vue`。
 
 ### 1.3 样式引入顺序
 
-**红线，违反即视觉错乱。** 顺序：CSS Reset → Token CSS → 鸚鸿字体 → 组件库样式 → 项目全局样式。原理详见 opendesign-application skill → getting-started。Nuxt 中由 `nuxt.config.ts` 的 `css` 数组保证（**数组顺序即输出顺序**），不可调换、不可跳过。
+**红线，违反即视觉错乱。** 顺序：CSS Reset → Token CSS → 鸚鸿字体 → OpenDesign OpenEuler 主题样式 → @opendesign-plus 组件样式 → 项目全局样式。原理详见 opendesign-application skill → getting-started。Nuxt 中由 `nuxt.config.ts` 的 `css` 数组保证（**数组顺序即输出顺序**），不可调换、不可跳过。
 
 > CSS Reset（`reset.scss`）必须在 Token 之前——归零规则最早生效，后续 Token / 组件样式 / global.scss 覆盖可正常叠加。reset.scss 详解见 opendesign-application skill → styles-infrastructure。
 
@@ -174,24 +180,17 @@
 
 ### 4.2 AppHeader 导航栏组件
 
-`AppHeader` 是页面顶部导航栏组件，内含品牌 Logo 与主题切换按钮，使用 `o-r-grid-container` 做水平居中，消费设计令牌承担导航栏高度、间距与排版规范。
+`AppHeader` 使用 `@opendesign-plus/components` 的 `OHeader` / `OHeaderMobile` 实现与 openEuler 官网一致的导航体验。包含品牌 Logo、导航菜单（Mega Menu）、主题切换（`OHeaderTheme`）。导航数据在 `data/nav.ts` 中配置。
 
-**Slots**：
-
-| Slot | 说明 |
-|------|------|
-| `brand` | 品牌区域，不传时回退到默认 Logo + 标题组合 |
-| `actions` | 右侧操作区，不传时回退到默认 ThemeToggle |
+**关键特性**：
+- 桌面端使用 `OHeader`（固定定位 + Mega Menu 下拉面板）
+- 移动端使用 `OHeaderMobile`（抽屉式导航）
+- 主题切换使用 `OHeaderTheme`（自动响应 light/dark）
+- 导航项点击通过 `@handle-click` 事件处理路由跳转
 
 ### 4.3 AppFooter 页脚组件
 
-`AppFooter` 是页面底部页脚组件，内含版权信息，使用 `o-r-grid-container` 做水平居中，消费设计令牌承担页脚间距与排版规范。
-
-**Slots**：
-
-| Slot | 说明 |
-|------|------|
-| `default` | 页脚内容区，不传时回退到默认 Powered by 文本 |
+`AppFooter` 使用 `@opendesign-plus/components` 的 `OFooter` 实现与 openEuler 官网一致的深色页脚设计。包含快速导航链接、友情链接、Logo + 邮箱、法律链接与版权信息。数据在 `data/footer.ts` 中配置。
 
 ### 4.4 布局与页面分层
 
@@ -199,8 +198,8 @@ Nuxt 采用三层分离：`app.vue` → `layouts/default.vue` → `pages/*.vue`�
 
 | 层级 | 文件 | 职责 |
 |------|------|------|
-| 入口 | `app/app.vue` | NuxtLayout + NuxtRouteAnnouncer + NuxtPage |
-| 骨架 | `app/layouts/default.vue` | AppHeader + `<slot />`（楼层内容）+ AppFooter |
+| 入口 | `app/app.vue` | OPlusConfigProvider + NuxtLayout + NuxtRouteAnnouncer + NuxtPage |
+| 骨架 | `app/layouts/default.vue` | AppHeader（含导航链接）+ `<slot />`（楼层内容）+ AppFooter |
 | 页面 | `app/pages/*.vue` | 楼层编排（AppSection 包裹业务组件） |
 
 > **`app.vue` 不承载骨架或楼层内容**——骨架由 layout 承担，楼层内容由 page 承担。新增页面只需在 `pages/` 下新建 `.vue` 文件，骨架自动复用。
@@ -262,10 +261,15 @@ Nuxt 采用三层分离：`app.vue` → `layouts/default.vue` → `pages/*.vue`�
 ```
 
 ```vue
-<!-- layouts/default.vue：页面骨架 -->
+<!-- layouts/default.vue：页面骨架 + 导航链接 -->
 <template>
   <div>
-    <AppHeader />
+    <AppHeader>
+      <template #nav>
+        <NuxtLink to="/" class="nav-link">首页</NuxtLink>
+        <NuxtLink to="/about" class="nav-link">关于</NuxtLink>
+      </template>
+    </AppHeader>
     <main>
       <slot />
     </main>
@@ -551,13 +555,14 @@ Nuxt 专属补充：JS 层面（`useScreen()` + `v-if`）的条件渲染**必须
 
 ### 8.6 主题切换
 
-> 完整主题系统集成（Pinia store、社区切换、ThemeToggle）见 opendesign-application skill → theme-system。
+> 完整主题系统集成（createTheme 插件、OHeaderTheme 组件）见 opendesign-application skill → theme-system。
 
-业务代码统一走 `useThemeStore()` 的 `isDark`（writable computed）或 `setMode`，不直接操作 DOM。
+主题由 `plugins/theme.ts` 中的 `createTheme` 插件管理（`@opendesign-plus/composables`），SSR 时提供 inject 符号，客户端自动设置 `data-o-theme` 属性。SSR 时由 `app.vue` 的 `useHead` 设置默认值 `'e.light'`。组件中使用 `useTheme()` 获取主题状态和切换方法。`OHeaderTheme` 组件提供 UI 开关。
 
-改社区时需同步修改两处：
+改社区时需同步修改：
 1. `nuxt.config.ts` 的 token CSS 引入
-2. `stores/theme.ts` 的 `OPENDESIGN_COMMUNITY` 常量
+2. `plugins/theme.ts` 的 `attributeLightValue` / `attributeDarkValue` 参数
+3. `app.vue` 的 `useHead` 默认 `data-o-theme` 值
 
 ### 8.7 数据获取
 
@@ -593,8 +598,10 @@ Nuxt 提供内置数据获取 composables，**不自造**：
 | 文件 | 作用 |
 |------|------|
 | `nuxt.config.ts` | 模块注册 + 样式引入顺序 + SCSS 全局注入 + `#icons` 别名 |
-| `stores/theme.ts` | 主题 store（默认 light + DOM 同步） |
-| `components/ThemeToggle.vue` | 主题切换开关（OSwitch） |
+| `plugins/theme.ts` | createTheme 主题插件（SSR + 客户端） |
+| `plugins/opendesign-plus.ts` | v-analytics 埋点指令注册（no-op） |
+| `data/nav.ts` | OHeader 导航数据 |
+| `data/footer.ts` | OFooter 页脚数据 |
 | `components/AppSection.vue` | 楼层通用容器（标题/主体/底部 + 宽度/间距/排版规范） |
 | `assets/styles/mixin/*.scss` | 三套 mixin |
 | `assets/styles/reset.scss` | CSS Reset（归零 UA 默认样式，必须在 Token 之前） |
@@ -624,4 +631,4 @@ Nuxt 提供内置数据获取 composables，**不自造**：
 
 ---
 
-**最后更新**：2026-07-07
+**最后更新**：2026-08-10（集成 @opendesign-plus/components OHeader/OFooter + createTheme 主题管理）

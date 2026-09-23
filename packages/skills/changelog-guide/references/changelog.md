@@ -18,7 +18,7 @@ CHANGELOG 只记录 `skills/` 目录下**对外分发的 Skill**（第二层共�
 
 | 判断 | 例子 | 记入 CHANGELOG？ |
 |------|------|------|
-| 是 | `skills/opendesign-components/references/button.md` 新增了 prop 说明 | ✅ 记入 |
+| 是 | `skills/opendesign-components/references/button.usage.md` 新增了 prop 说明 | ✅ 记入 |
 | 是 | `skills/opendesign-tokens/references/tokens-light.md` 变量名改动 | ✅ 记入 |
 | 否 | `packages/skills/skill-gen-guide/` 优化了生成流程指导 | ❌ 不记入 |
 | 否 | `packages/skills/changelog-guide/` 调整了条目写法原则 | ❌ 不记入 |
