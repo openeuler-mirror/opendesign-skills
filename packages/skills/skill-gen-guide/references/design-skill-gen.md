@@ -16,7 +16,7 @@
 |---|---|---|
 | 信息来源 | `@opensig/opendesign` 源码 + Playwright 快照 | **Pixso MCP 工具** + atomgit token JSON |
 | 输出物 | Vue 代码调用参考（Props/Events/Slots） | Pixso 设计规范（变体 / Token 映射 / 视觉规格） |
-| 写入路径 | `skills/opendesign-{components,scripts}/references/{name}.md` | `skills/opendesign-design/references/components/{name}.md` |
+| 写入路径 | `skills/opendesign-{components,scripts}/references/{name}.md` | `skills/opendesign-design/components/{name}.md` |
 | 数据真源 | 本地源码 | **远端 atomgit + Pixso 实时画布** |
 
 ### 1. 生成组件设计 Skill
@@ -24,9 +24,9 @@
 当需要生成或更新某个组件的设计规范文件时：
 
 **关键点**：
-- Skill 文件写入 `skills/opendesign-design/references/components/{name}.md`
+- Skill 文件写入 `skills/opendesign-design/components/{name}.md`
 - 自评结论写入同目录的 `{name}.review.md`（被 `.gitignore` 排除）
-- 进度文件 `skills/opendesign-design/references/components/_skill-gen-status.md`（被 `.gitignore` 排除）
+- 进度文件 `skills/opendesign-design/components/_skill-gen-status.md`（被 `.gitignore` 排除）
 - **不读取任何源码文件**；所有信息通过 Pixso MCP + WebFetch 远端 JSON 获取
 
 #### Pixso MCP 工具调用顺序（9 步）
@@ -96,7 +96,7 @@
 
 ### 2. 生成设计模式 Skill
 
-当需要生成多组件组合规范时，写入 `skills/opendesign-design/references/design-patterns.md`。
+当需要生成多组件组合规范时，写入 `skills/opendesign-design/floors/{pattern}.md`。
 
 **从两个方向归纳**：
 
@@ -187,8 +187,8 @@
 > ⚠️ **不要 bundle 到本地**，不要假设本地存在 `tokens.json` / `grid.json`。每次生成 spec 都 WebFetch 一次最新版本，以保证与上游不漂移。
 
 设计稿生产专用、无上游真源的数据（仍以 bundle 形式存在 skill 内）：
-- [`skills/opendesign-design/references/component-keys.md`](skills/opendesign-design/references/component-keys.md) — 536 个 UI 组件变体 componentKey 索引
-- [`skills/opendesign-design/references/icon-keys.md`](skills/opendesign-design/references/icon-keys.md) — 187 个图标 componentKey 索引
+- [`skills/opendesign-design/references/pixso-mcp-adapter/component-keys.md`](skills/opendesign-design/references/pixso-mcp-adapter/component-keys.md) — 536 个 UI 组件变体 componentKey 索引
+- [`skills/opendesign-design/references/pixso-mcp-adapter/icon-keys.md`](skills/opendesign-design/references/pixso-mcp-adapter/icon-keys.md) — 187 个图标 componentKey 索引
 
 ---
 

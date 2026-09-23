@@ -10,8 +10,11 @@ opendesign-design/
 ├── CHANGELOG.md                      ← 更新日志
 ├── README.md                         ← 本文件
 ├── components/                       ← 26 个组件设计规范（每个组件一个 .md）
+├── floors/                           ← 5 个楼层模板（每个楼层一个 .md）
 ├── global/
 │   ├── hard-constraints.md           ← 变量映射硬约束 + 组件组合规则（唯一真源）
+│   ├── interaction-rules.md          ← 通用交互规范
+│   ├── layout-rules.md              ← 栅格 / 断点 / 间距速查
 │   ├── component-doc-spec.md         ← 组件文档编写规范（Token 匹性要求）
 │   └── qa-checklist/
 │       └── component-html-qa-checklist.md  ← HTML 实现质量保证清单
@@ -19,6 +22,7 @@ opendesign-design/
     ├── pixso-mcp-adapter/
     │   ├── component-keys.md         ← 536 个 UI 组件变体 componentKey 索引
     │   └── icon-keys.md              ← 187 个图标 componentKey 索引
+    ├── designer-guide.md             ← 设计师使用指南
     ├── examples/                     ← HTML 示例文件
     └── assets/                       ← SVG 图标资源（按组件名分子目录）
 ```
@@ -37,7 +41,7 @@ opendesign-design/
 |------|------|----------|------|
 | **必加载** | `global/` | 每次调用起手式 | 硬约束、栅格规范、交互规则 — 设计系统"宪法" |
 | **按需加载** | `components/` | 用户确认涉及组件后 | 仅读取本次需要的组件规范文档 |
-| **按需加载** | `floors/` | 涉及楼层级复合组件时 | 暂无内容，预留扩展 |
+| **按需加载** | `floors/` | 涉及楼层级复合组件时 | 5 个楼层模板（导航 / Banner / 卡片栅格 / 图文特色 / 页脚） |
 | **纯参考** | `references/` | 需要时查阅 | 索引、SVG 资源、HTML 示例 — 不参与 AI 调度决策 |
 
 ### 典型工作流

@@ -39,7 +39,7 @@ pnpx skills experimental_install
 | [opendesign-components](#opendesign-components) | `@opensig/opendesign` | 48 个 Vue 3 UI 组件 | [SKILL.md](skills/opendesign-components/SKILL.md) | [CHANGELOG.md](skills/opendesign-components/CHANGELOG.md) |
 | [opendesign-scripts](#opendesign-scripts) | `@opensig/open-scripts` | 5 个 CLI 构建命令 | [SKILL.md](skills/opendesign-scripts/SKILL.md) | [CHANGELOG.md](skills/opendesign-scripts/CHANGELOG.md) |
 | [opendesign-tokens](#opendesign-tokens) | `@opensig/opendesign-token` | 3 套主题的设计令牌体系 | [SKILL.md](skills/opendesign-tokens/SKILL.md) | [CHANGELOG.md](skills/opendesign-tokens/CHANGELOG.md) |
-| [opendesign-design](#opendesign-design) | Pixso MCP（无 npm 包） | 21 个组件设计规范 + 536 变体 + 187 图标 | [SKILL.md](skills/opendesign-design/SKILL.md) | [CHANGELOG.md](skills/opendesign-design/CHANGELOG.md) |
+| [opendesign-design](#opendesign-design) | Pixso MCP（无 npm 包） | 26 个组件设计规范 + 5 楼层模板 + 536 变体 + 187 图标 | [SKILL.md](skills/opendesign-design/SKILL.md) | [CHANGELOG.md](skills/opendesign-design/CHANGELOG.md) |
 | [opendesign-codegen](#opendesign-codegen) | `@opensig/opendesign` + `@opensig/opendesign-token` | 设计意图直出合规 Vue+OpenDesign 代码（约束 + SFC 模板 + 示例） | [SKILL.md](skills/opendesign-codegen/SKILL.md) | [CHANGELOG.md](skills/opendesign-codegen/CHANGELOG.md) |
 
 ---
@@ -241,7 +241,8 @@ skills/opendesign-tokens/
 - 含图标场景下采用两阶段生成（`code_to_design` + `create_instance`）
 
 **覆盖范围**：
-- **20 个组件设计规范**：OAnchor / OBreadcrumb / OButton / OCard / OCheckbox / ODivider / ODropdown / OInput / OLink / OLoading / OMessage / ONavigation / OPagination / ORadio / OScrollbar / OStep / OSwitch / OTab / OTag / OToggle
+- **26 个组件设计规范**：OAnchor / OBanner / OBreadcrumb / OButton / OCard / OCarousel / OCheckbox / ODataTable / ODialog / ODivider / ODropdown / OInput / OLink / OLoading / OMenu / OMessage / ONavigation / OPagination / ORadio / OScrollbar / OSearch / OSelect / OStep / OSwitch / OTab / OTag / OToggle
+- **5 个楼层模板**：导航 / Banner / 卡片栅格 / 图文特色 / 页脚
 - **536 个 UI 组件变体**的 `componentKey` 索引
 - **187 个图标**的 `componentKey` 索引（独立图标库 `kbqInwBrCTGnM0MsPJDgvA`）
 
@@ -263,11 +264,26 @@ skills/opendesign-tokens/
 ```
 skills/opendesign-design/
 ├── SKILL.md                          # 主 skill 文件（含工作流、图标处理规范、componentKey 速查）
-└── references/
-    ├── components/
-    │   └── {component}.md            # 21 个组件设计规范
-    ├── component-keys.md             # 536 个 UI 组件变体 componentKey 索引
-    └── icon-keys.md                  # 187 个图标 componentKey 索引
+├── CHANGELOG.md                      # 变更记录
+├── README.md                         # 使用说明与目录结构
+├── components/                       # 26 个组件设计规范
+│   └── {component}.md
+├── floors/                           # 5 个楼层模板
+│   └── {type}.md
+├── global/                           # 全局约束与规范（必加载）
+│   ├── hard-constraints.md           # 变量映射硬约束 + 组件组合规则
+│   ├── interaction-rules.md          # 通用交互规范
+│   ├── layout-rules.md              # 栅格 / 断点 / 间距速查
+│   ├── component-doc-spec.md         # 组件文档编写规范
+│   └── qa-checklist/
+│       └── component-html-qa-checklist.md
+└── references/                       # 索引、SVG 资源、HTML 示例（纯参考）
+    ├── pixso-mcp-adapter/
+    │   ├── component-keys.md         # 536 个 UI 组件变体 componentKey 索引
+    │   └── icon-keys.md              # 187 个图标 componentKey 索引
+    ├── designer-guide.md             # 设计师使用指南
+    ├── examples/                     # HTML 示例文件
+    └── assets/                       # SVG 图标资源（按组件名分子目录）
 ```
 
 > 不包含本地 `scripts/` 目录 — token / 栅格数据由 SKILL.md 在执行时通过远端 URL 获取。

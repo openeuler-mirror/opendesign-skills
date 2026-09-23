@@ -6,7 +6,7 @@ Skill 自评与进度管理的操作指南。每完成一个 Skill 后按此流�
 
 > 本指南覆盖两类 Skill 的自评：
 > - **代码 Skill**：组件（`skills/opendesign-components/references/{name}.{visual|usage|style}.md` 三文件）/ 脚本（`skills/opendesign-scripts/references/{name}.md`）
-> - **设计 Skill**：Pixso 组件设计规范（`skills/opendesign-design/references/components/{name}.md`）
+> - **设计 Skill**：Pixso 组件设计规范（`skills/opendesign-design/components/{name}.md`）
 >
 > 维度表中「适用类型」列指明该维度对哪类 Skill 生效。
 
@@ -76,7 +76,7 @@ Skill 自评与进度管理的操作指南。每完成一个 Skill 后按此流�
 进度文件的位置和命名：
 - 组件 Skill（代码侧）：`skills/opendesign-components/references/_skill-gen-status.md`
 - 脚本 Skill：`skills/opendesign-scripts/references/_skill-gen-status.md`
-- 组件设计 Skill：`skills/opendesign-design/references/components/_skill-gen-status.md`
+- 组件设计 Skill：`skills/opendesign-design/components/_skill-gen-status.md`
 
 进度文件格式：
 ```markdown

@@ -89,14 +89,28 @@
     │   └── references/
     │       ├── tokens.md
     │       └── tokens-{theme}.md
-    ├── opendesign-design/         ← Pixso 设计稿生产 Skill（设计侧，21 组件）
+    ├── opendesign-design/         ← Pixso 设计稿生产 Skill（设计侧，26 组件）
     │   ├── SKILL.md               ← 工作流 + 图标处理规范 + componentKey 速查（第二层）
     │   ├── CHANGELOG.md           ← 本 skill 变更记录（第二层）
-    │   └── references/
-    │       ├── components/        ← 21 个组件设计规范（第三层）
-    │       │   └── {name}.md
-    │       ├── component-keys.md  ← 536 个 UI 组件变体 componentKey 索引
-    │       └── icon-keys.md       ← 187 个图标 componentKey 索引
+    │   ├── README.md              ← 使用说明与目录结构（第二层）
+    │   ├── components/            ← 26 个组件设计规范（第三层）
+    │   │   └── {name}.md
+    │   ├── floors/                ← 5 个楼层模板（第三层）
+    │   │   └── {type}.md
+    │   ├── global/                ← 全局约束与规范（必加载）
+    │   │   ├── hard-constraints.md
+    │   │   ├── interaction-rules.md
+    │   │   ├── layout-rules.md
+    │   │   ├── component-doc-spec.md
+    │   │   └── qa-checklist/
+    │   │       └── component-html-qa-checklist.md
+    │   └── references/            ← 索引、SVG 资源、HTML 示例（纯参考）
+    │       ├── pixso-mcp-adapter/
+    │       │   ├── component-keys.md  ← 536 个 UI 组件变体 componentKey 索引
+    │       │   └── icon-keys.md       ← 187 个图标 componentKey 索引
+    │       ├── designer-guide.md
+    │       ├── examples/
+    │       └── assets/
     └── opendesign-codegen/        ← 代码直出 Skill（设计师侧，从设计意图直出合规 Vue+OpenDesign 代码）
         ├── SKILL.md               ← 四大约束 + 硬规则 + 工作流（第二层）
         ├── CHANGELOG.md           ← 本 skill 变更记录（第二层）
@@ -262,9 +276,9 @@ pnpm skills:update               # 拉取最新版并更新 lock 文件
 1. 指定组件名（如 "Button"）
 2. 读取 [`skill-gen-guide`](packages/skills/skill-gen-guide/SKILL.md) 的设计侧 reference，按其中的 Pixso MCP 调用顺序提取设计稿信息
 3. 通过 WebFetch 拉取最新的栅格 / token 上游 JSON（不要 bundle 到本地）
-4. 生成 Skill 文件到 `skills/opendesign-design/references/components/{name}.md`
+4. 生成 Skill 文件到 `skills/opendesign-design/components/{name}.md`
 5. 按 [`skill-gen-guide/references/skill-review.md`](packages/skills/skill-gen-guide/references/skill-review.md) 的设计侧维度自评，写入 `{name}.review.md`
-6. 更新 `skills/opendesign-design/references/components/_skill-gen-status.md`
+6. 更新 `skills/opendesign-design/components/_skill-gen-status.md`
 
 ### 场景 5：`.agents/` 或 `.claude/` 缺失 / 未同步
 
