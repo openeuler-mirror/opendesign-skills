@@ -825,7 +825,7 @@ getNodeDSL({ itemId: "内部子元素的guid" })
 
 ## OButton
 
-**主题色 `color`**：`normal`（默认）、`brand`
+**主题色 `color`**：`normal`（默认）、`primary`、`success`、`warning`、`danger`、`brand`
 
 **尺寸 `size`**：`small`、`medium`（默认）、`large`
 

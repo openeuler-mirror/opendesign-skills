@@ -30,6 +30,7 @@ AI 生成 Vue + OpenDesign 代码后**逐项核对**，全部通过方可交付�
 - [ ] 无内联 `style="..."`、无 `!important`、无 camelCase 类名
 - [ ] `v-for` 有语义 `:key`；未在 setup 顶层访问 `window`/`document`
 - [ ] 面向用户文案走 i18n，zh/en 同步
+- [ ] **i18n 键交叉核对**：模板用到的所有 `t('...')` 键在 zh/en dict 均有定义，无遗漏（可脚本化：提取 `t('...')` 全量键对比 dict）
 
 ---
 

@@ -14,6 +14,7 @@
 ### 修正
 - 清理对已弃用 `OTable` 的引用，表格统一为 `ODataTable`：`data-table.visual.md` 开篇补 `OTable` 弃用指引；易混淆区分表移除两行 `ODataTable ↔ OTable` 对照（不再以弃用组件作对照对象）；`card.visual.md` 移除 `OTable（单列模式）` 对照项；`virtual-list.visual.md` 将 `OTable（虚拟滚动）` 对照项改为 `ODataTable`。
 - 修正 `SKILL.md` 双向绑定示例与列表的 `v-model:selection-keys` 为 `v-model:selected-keys`（与 `usage.md` 事件 `update:selected-keys` 一致）。
+- 修正 `SKILL.md` OButton 概览段 `color` 取值补全为 `normal`/`primary`/`success`/`warning`/`danger`/`brand`（原仅列 `normal`/`brand`，与 `button.usage.md` 权威取值对齐）。
 
 ## 2026-09-18
 

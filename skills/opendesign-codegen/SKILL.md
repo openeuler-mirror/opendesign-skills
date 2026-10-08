@@ -132,6 +132,7 @@ last_update: 2026-10-08
 - [references/starter-page.vue](references/starter-page.vue) — 合规 SFC 起手模板
 - [references/component-cheatsheet.md](references/component-cheatsheet.md) — 设计意图 → OpenDesign 组件速查
 - [references/engineering-rules.md](references/engineering-rules.md) — 工程落地约束
+- [references/standalone-rendering.md](references/standalone-rendering.md) — 无 bundler 的 standalone HTML 渲染 OpenDesign（UMD + CDN）
 - [references/checklist.md](references/checklist.md) — 生成后自检清单
 - [references/examples/feature-section.vue](references/examples/feature-section.vue) — 示例：楼层 + 卡片栅格
 - [references/examples/list-filter-page.vue](references/examples/list-filter-page.vue) — 示例：带筛选的列表页

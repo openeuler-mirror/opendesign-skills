@@ -60,4 +60,19 @@ AI 直接生成的 Vue + OpenDesign 代码应满足的工程子集，与具体�
 
 ---
 
+## 7. 组件库版本核对（目标仓版本低于 skill 基线时）
+
+本 skill 与 opendesign-components 的基线版本（见各自 SKILL.md 头部）可能领先于目标仓实际锁定的 `@opensig/opendesign` 版本。目标仓版本较低时，**以运行时事实为准**核对组件导出与 props，不要照搬文档基线：
+
+1. 查目标仓 `package.json` 的 `@opensig/opendesign` 版本，与 skill 基线对比；低于基线时进入核对。
+2. 核对组件是否导出、props 可选值是否一致：查已装包的类型声明（`node_modules/@opensig/opendesign/es/index.d.ts` 或对应组件 `types`），或对 UMD 产物 grep 导出名：
+   ```bash
+   grep -o 'e\.[A-Z][A-Za-z]*=' node_modules/@opensig/opendesign/dist/opendesign.min.js | sort -u
+   ```
+3. 文档基线与实际不符时，以实际版本行为为准生成代码，并在 PR 中注明差异。
+
+> 不在本 skill 维护跨版本差异表——版本核对是针对目标仓当前版本的一次性核对，非长期参照。
+
+---
+
 > 取值看 [opendesign-tokens](../../opendesign-tokens/SKILL.md)，组件 API 看 [opendesign-components](../../opendesign-components/SKILL.md)；本文件管"怎么写才工程合规"。
