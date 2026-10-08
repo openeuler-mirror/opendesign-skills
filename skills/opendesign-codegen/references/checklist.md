@@ -15,7 +15,7 @@ AI 生成 Vue + OpenDesign 代码后**逐项核对**，全部通过方可交付�
 - [ ] **所有 `var(--o-*)` 已用 Token CLI 验证存在性**：`node skills/opendesign-tokens/scripts/bin.mjs scan <file> --theme <主题> --strict`，零 invalid（完整命令与选项见 [opendesign-tokens SKILL.md §Token CLI](../../opendesign-tokens/SKILL.md)）
 
 ## ② 组件用法
-- [ ] 凡 OpenDesign 有的控件均用真实组件（`OButton`/`OTable`/`OSelect`…），无原生 `<button>`/`<select>`/`<table>` 或手写 div 替代
+- [ ] 凡 OpenDesign 有的控件均用真实组件（`OButton`/`ODataTable`/`OSelect`…），无原生 `<button>`/`<select>`/`<table>` 或手写 div 替代
 - [ ] 组件从 `@opensig/opendesign` 导入
 - [ ] 未用 `:deep()` 穿透改组件内部结构
 

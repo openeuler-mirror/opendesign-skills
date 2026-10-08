@@ -45,4 +45,3 @@ regions: [cover(封面图), main(icon + main-wrap(header, content, footer))]
 | 对比组件 | 相似点 | 区分方法 |
 |---------|-------|---------|
 | ORow / OCol | 都是圆角矩形容器 | Card 有封面图/图标 + 标题 + 正文的固定语义分区和插槽；ORow/OCol 是通用栅格容器无固定内部结构 |
-| OTable（单列模式） | 都可展示多条内容 | Card 是独立的卡片容器，有封面图和圆角阴影；OTable 单列模式的行是行级元素，无封面图和独立卡片样式 |

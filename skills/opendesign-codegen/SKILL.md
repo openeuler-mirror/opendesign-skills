@@ -1,7 +1,7 @@
 ---
 name: opendesign-codegen
 description: OpenDesign 代码直出指南。当设计师（尤其各社区体验/设计团队）让 AI 工具把需求/设计意图直接做成页面或组件时使用此 skill——AI 应**直接生成符合工程规范的 Vue 3 + OpenDesign 代码**（真实 O 组件 + --o- 设计 token + scoped SCSS + BEM + i18n），渲染出来即设计稿，无需"先出 HTML 再转代码"的中间步骤。提供四大约束（视觉 Token / 组件用法 / 布局响应式 / 工程落地）、合规 SFC 起手模板、组件选用速查、生成后自检清单。仅适用于 UI 库为 @opensig/opendesign 的目标仓——生成前先读目标仓根 AGENTS.md + rules/ 按其框架族/i18n/别名/SEO 约定适配。复用 opendesign-tokens 与 opendesign-components，不重复其内容。
-last_update: 2026-09-08
+last_update: 2026-10-08
 ---
 
 # OpenDesign 代码直出指南
@@ -34,7 +34,7 @@ last_update: 2026-09-08
 
 违反任意一条即视为不合规，必须重写：
 
-1. **组件优先**：凡 OpenDesign 有对应控件（按钮 / 卡片 / 表单 / 表格 / 标签 / 分页等），必须用真实组件 `<OButton>` / `<OCard>` / `<OTable>` …，**禁止用原生 `<button>`/`<select>`/手写 div 替代**。
+1. **组件优先**：凡 OpenDesign 有对应控件（按钮 / 卡片 / 表单 / 表格 / 标签 / 分页等），必须用真实组件 `<OButton>` / `<OCard>` / `<ODataTable>` …，**禁止用原生 `<button>`/`<select>`/手写 div 替代**。
 2. **只用 Token 变量**：颜色 / 间距 / 字号 / 行高 / 圆角 / 阴影一律 `var(--o-*)` 或 `var(--o-r-*)`，**禁止硬编码** hex / rgb / px 字号 / px 间距。**颜色必须用语义 token（`--o-color-*`），严禁直接用色板变量**（blue1/gray1 这类，如 `--o-kleinblue-*`/`--o-grey-*`/`--o-brand-*`）。
 3. **`<script setup lang="ts">`** + TypeScript：props 用 `defineProps<T>()` 泛型，不用字符串数组式。
 4. **无内联 `style="..."`**（动态值等极特殊情况除外并注释）；**无 `!important`**。
@@ -86,7 +86,7 @@ last_update: 2026-09-08
 
 | 设计意图 | 组件 | 设计意图 | 组件 |
 |----------|------|----------|------|
-| 按钮 | `OButton` | 表格 | `OTable` |
+| 按钮 | `OButton` | 表格 | `ODataTable` |
 | 链接 | `OLink` | 分页 | `OPagination` |
 | 卡片 | `OCard` | 标签页 | `OTab`+`OTabPane` |
 | 标签 | `OTag` | 对话框 | `ODialog` |

@@ -6,6 +6,14 @@
 
 ---
 
+## 2026-10-08
+
+### 更新
+- 表格示例改为 schema 风格：`component-cheatsheet.md` 选用表与表格示例、`examples/list-filter-page.vue` 从 `#td_<key>` 插槽改为 `columns` + `column.formatter`（返回函数式组件）做单元格渲染，操作列用 OLink；`starter-page.vue` 注释同步。
+
+### 修正
+- 清理对已弃用 `OTable` 的引用，表格组件统一为 `ODataTable`：`SKILL.md` 硬规则示例与组件选用表、`checklist.md` 组件清单均由 `OTable` 改为 `ODataTable`。
+
 ## 2026-09-08
 
 ### 新增

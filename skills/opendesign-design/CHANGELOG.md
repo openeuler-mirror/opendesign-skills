@@ -6,6 +6,11 @@
 
 ---
 
+## 2026-10-08
+
+### 修正
+- `components/dialog.md` 组合搭配中 `OTable 操作` 改为 `ODataTable 操作`（OTable 已弃用，表格统一用 ODataTable）。
+
 ## 2026-08-18
 
 ### 新增

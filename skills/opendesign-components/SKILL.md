@@ -1,7 +1,7 @@
 ---
 name: opendesign-components
 description: OpenDesign 组件库使用指南。当需要使用 OpenDesign Vue 组件库快速搭建页面时使用此 skill。支持所有 OpenDesign 组件（48 个），包括按钮、表单、表格、对话框、卡片、图标、滑块、步骤条、轻提示等常用 UI 组件。使用场景：(1) 使用 OpenDesign 组件构建 Vue 页面，(2) 查找组件使用方法和属性说明，(3) 获取组件代码示例
-last_update: 2026-09-18
+last_update: 2026-10-08
 ---
 
 # OpenDesign 组件库使用指南
@@ -1051,11 +1051,11 @@ const linkConfig = {
 
 **双向绑定（v-model）**：
 - `v-model:conditions` — 筛选条件
-- `v-model:selection-keys` — 已选行 key 列表
+- `v-model:selected-keys` — 已选行 key 列表
 
 **插槽**：
 - `#th_{key}` — 自定义列头
-- `#td_{key}` — 自定义单元格，`props: { column, row, cellValue, index }`
+- `#td_{key}` — 自定义单元格（⚠️ **不推荐**，优先用 `column.formatter`；仅当模板 `v-model` 语法必须时才用），`props: { column, row, cellValue, index }`
 - `#header` — 自定义整个表头
 - `#loading` / `#empty` — 加载/空状态
 
@@ -1070,14 +1070,12 @@ const linkConfig = {
 <ODataTable
   :data="tableData"
   :columns="columns"
-  v-model:selection-keys="selectedKeys"
+  v-model:selected-keys="selectedKeys"
   :loading="loading"
->
-  <template #td_name="{ row }">
-    <router-link :to="`/detail/${row.id}`">{{ row.name }}</router-link>
-  </template>
-</ODataTable>
+/>
 ```
+
+> 单元格自定义渲染（如把名称做成路由链接）用 `column.formatter`，见 [references/data-table.usage.md](references/data-table.usage.md) 场景 12/13。
 
 > 详细使用说明和完整属性列表，请查看 [references/data-table.usage.md](references/data-table.usage.md)
 
@@ -2201,14 +2199,23 @@ const handleClick = () => showToast('操作成功');
 ### 数据展示
 
 ```vue
-<ODataTable :columns="columns" :data="tableData" border="row">
-  <template #td_status="{ row }">
-    <OTag :color="row.status === 'active' ? 'success' : 'normal'">
-      {{ row.status }}
-    </OTag>
-  </template>
-</ODataTable>
-<OPagination v-model:current-page="page" :total="total" />
+<script setup lang="tsx">
+import { ODataTable, OTag } from '@opensig/opendesign';
+import type { DataTableColumnT } from '@opensig/opendesign';
+
+const columns: DataTableColumnT[] = [
+  // ...其他列
+  {
+    label: '状态', key: 'status',
+    formatter: ({ row }) => () => <OTag color={row.status === 'active' ? 'success' : 'normal'}>{row.status}</OTag>,
+  },
+];
+</script>
+
+<template>
+  <ODataTable :columns="columns" :data="tableData" border="row" />
+  <OPagination v-model:current-page="page" :total="total" />
+</template>
 ```
 
 ### 交互反馈

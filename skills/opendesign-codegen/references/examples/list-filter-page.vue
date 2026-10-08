@@ -1,12 +1,13 @@
 <!--
   示例 · 带筛选的列表页（合规直出代码）
-  演示：OInput/OSelect/OOption 筛选 + OTable(columns{label,key}+#td_ 插槽) + OPagination + 前端筛选分页。
+  演示：OInput/OSelect/OOption 筛选 + ODataTable(columns schema + column.formatter) + OPagination + 前端筛选分页。
   落地时按目标工程接入真实 i18n 与数据 API。
 -->
 <script setup lang="ts">
-import { reactive, ref, computed } from 'vue';
+import { h, reactive, ref, computed } from 'vue';
 
-import { OInput, OSelect, OOption, OButton, OTag, OLink, OTable, OPagination } from '@opensig/opendesign';
+import { OInput, OSelect, OOption, OButton, OTag, OLink, ODataTable, OPagination } from '@opensig/opendesign';
+import type { DataTableColumnT } from '@opensig/opendesign';
 
 // i18n —— 落地时替换为目标工程方案
 const t = (key: string) => key;
@@ -29,12 +30,22 @@ const RAW_ROWS: RowT[] = [
   { id: 'bishengjdk', name: 'BiSheng JDK', domain: 'compiler', status: 'active', maintainers: 7 },
 ];
 
-const columns = computed(() => [
+const columns = computed<DataTableColumnT[]>(() => [
   { label: t('demo.colName'), key: 'name' },
-  { label: t('demo.colDomain'), key: 'domain' },
-  { label: t('demo.colStatus'), key: 'status' },
+  {
+    label: t('demo.colDomain'), key: 'domain',
+    // schema 风格：formatter 返回函数式组件做单元格渲染（不用 #td_ 插槽）
+    formatter: ({ row }) => () => h('span', null, domainLabel(row.domain)),
+  },
+  {
+    label: t('demo.colStatus'), key: 'status',
+    formatter: ({ row }) => () => h(OTag, { color: row.status === 'active' ? 'success' : 'warning' }, () => statusLabel(row.status)),
+  },
   { label: t('demo.colMaintainers'), key: 'maintainers' },
-  { label: t('demo.colAction'), key: 'action' },
+  {
+    label: t('demo.colAction'), key: 'action',
+    formatter: ({ row }) => () => h(OLink, { color: 'primary', href: 'javascript:void(0)' }, () => t('demo.detail')),
+  },
 ]);
 
 const domainOptions = computed(() => [
@@ -124,15 +135,7 @@ const onPageChange = (val: { page: number; pageSize: number }) => {
       </div>
     </form>
 
-    <OTable :columns="columns" :data="pagedRows">
-      <template #td_domain="{ row }">{{ domainLabel(row.domain) }}</template>
-      <template #td_status="{ row }">
-        <OTag :color="row.status === 'active' ? 'success' : 'warning'">{{ statusLabel(row.status) }}</OTag>
-      </template>
-      <template #td_action="{ row }">
-        <OLink color="primary" href="javascript:void(0)" :data-id="row.id">{{ t('demo.detail') }}</OLink>
-      </template>
-    </OTable>
+    <ODataTable :columns="columns" :data="pagedRows" />
 
     <p v-if="!total" class="list-page__empty">{{ t('demo.empty') }}</p>
 
