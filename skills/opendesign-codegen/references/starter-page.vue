@@ -6,7 +6,7 @@
   产出的就是符合工程规范、可进生产的 Vue 3 + OpenDesign 代码。
 
   ✅ 必须保持：
-     - 用真实 @opensig/opendesign 组件（OButton/OCard/OTable…），不用原生替代
+     - 用真实 @opensig/opendesign 组件（OButton/OCard/ODataTable…），不用原生替代
      - 样式只用 var(--o-*) / var(--o-r-*) token，零硬编码颜色/字号/间距
      - <script setup lang="ts">，props 用泛型 defineProps<T>()
      - BEM 类名，<style scoped>，嵌套 ≤ 3 层

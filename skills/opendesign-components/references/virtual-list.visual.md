@@ -39,7 +39,7 @@ regions: [wrapper(滚动容器) > body(虚拟高度占位) > render-list(可视�
 |--------|-----------|-------------|
 | OVirtualList | 普通 v-for 列表 | 数据量大（百条以上）时用 OVirtualList 优化性能，少量数据用普通列表 |
 | OVirtualList | OScrollbar | OVirtualList 包含虚拟滚动逻辑 + 内置滚动条，OScrollbar 仅提供自定义滚动条样式 |
-| OVirtualList | OTable（虚拟滚动） | OTable 是表格组件有列定义和表头，OVirtualList 是通用列表无表格结构 |
+| OVirtualList | ODataTable | ODataTable 是表格组件有列定义和表头，OVirtualList 是通用列表无表格结构 |
 
 ---
 

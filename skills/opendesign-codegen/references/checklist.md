@@ -15,7 +15,7 @@ AI 生成 Vue + OpenDesign 代码后**逐项核对**，全部通过方可交付�
 - [ ] **所有 `var(--o-*)` 已用 Token CLI 验证存在性**：`node skills/opendesign-tokens/scripts/bin.mjs scan <file> --theme <主题> --strict`，零 invalid（完整命令与选项见 [opendesign-tokens SKILL.md §Token CLI](../../opendesign-tokens/SKILL.md)）
 
 ## ② 组件用法
-- [ ] 凡 OpenDesign 有的控件均用真实组件（`OButton`/`OTable`/`OSelect`…），无原生 `<button>`/`<select>`/`<table>` 或手写 div 替代
+- [ ] 凡 OpenDesign 有的控件均用真实组件（`OButton`/`ODataTable`/`OSelect`…），无原生 `<button>`/`<select>`/`<table>` 或手写 div 替代
 - [ ] 组件从 `@opensig/opendesign` 导入
 - [ ] 未用 `:deep()` 穿透改组件内部结构
 
@@ -30,6 +30,7 @@ AI 生成 Vue + OpenDesign 代码后**逐项核对**，全部通过方可交付�
 - [ ] 无内联 `style="..."`、无 `!important`、无 camelCase 类名
 - [ ] `v-for` 有语义 `:key`；未在 setup 顶层访问 `window`/`document`
 - [ ] 面向用户文案走 i18n，zh/en 同步
+- [ ] **i18n 键交叉核对**：模板用到的所有 `t('...')` 键在 zh/en dict 均有定义，无遗漏（可脚本化：提取 `t('...')` 全量键对比 dict）
 
 ---
 

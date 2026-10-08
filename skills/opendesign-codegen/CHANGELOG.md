@@ -6,6 +6,19 @@
 
 ---
 
+## 2026-10-08
+
+### 新增
+- `references/standalone-rendering.md` 新增「standalone HTML 渲染 OpenDesign（无 bundler 场景）」：依赖加载顺序（vue → vueuse → dayjs → process 垫片 → opendesign）、`process.env` 垫片、CDN 资源清单（含 `@vueuse/core` iife 在包根、theme token CSS 内部 `@import` 链等真实路径形态）、peer 依赖锁版与 UMD 导出核对方法。
+- `engineering-rules.md` 新增 §7「组件库版本核对」：目标仓 `@opensig/opendesign` 版本低于 skill 基线时，以运行时事实为准核对导出/props（查已装包类型声明或 grep UMD 导出名），不维护跨版本差异表。
+
+### 更新
+- 表格示例改为 schema 风格：`component-cheatsheet.md` 选用表与表格示例、`examples/list-filter-page.vue` 从 `#td_<key>` 插槽改为 `columns` + `column.formatter`（返回函数式组件）做单元格渲染，操作列用 OLink；`starter-page.vue` 注释同步。
+- `checklist.md` ④ 工程落地新增「i18n 键交叉核对」条目：模板用到的所有 `t('...')` 键须在 zh/en dict 均有定义。
+
+### 修正
+- 清理对已弃用 `OTable` 的引用，表格组件统一为 `ODataTable`：`SKILL.md` 硬规则示例与组件选用表、`checklist.md` 组件清单均由 `OTable` 改为 `ODataTable`。
+
 ## 2026-09-08
 
 ### 新增

@@ -4,6 +4,8 @@
 
 ODataTable 是数据驱动的表格组件，通过列配置和行数据自动渲染表格内容。支持列固定、行选择、行展开、树形数据、单元格合并、列宽拖拽调整、嵌套表头、溢出气泡等功能。
 
+> ⚠️ **`OTable` 已弃用**：表格组件统一使用 `ODataTable`。历史代码中的 `OTable` 请迁移为 `ODataTable`（数据驱动：`columns` + `data`，单元格自定义渲染用 `column.formatter`，不用 `#td_` 插槽）。
+
 **筛选与排序是可选的增强功能**，需显式在列配置中声明 `filter` / `sortKey` 属性并处理 `@condition-update` 事件，才能启用。基础表格无需配置筛选排序，直接传入列和数据即可使用。
 
 🧩 **布局结构**：ODataTable 为纵向布局容器，根元素 `.o-data-table` 内部包含可选的表头分割线、左侧阴影指示器、OScroller 滚动容器（含 table 元素：colgroup + thead + tbody）、加载/空状态遮罩层、右侧阴影指示器和溢出气泡。table 内部 thead 固定在顶部（sticky），tbody 内通过 TableRow 递归渲染数据行和展开行。
@@ -77,8 +79,6 @@ regions:
 
 | 组件 A | 组件 B | 区分标准 |
 |--------|--------|---------|
-| ODataTable | OTable | DataTable 通过 `columns` + `data` 数据驱动自动渲染；OTable 需手写 `<tr><td>` 模板 |
-| ODataTable | OTable（单列模式） | DataTable 是多列表格（含表头）；单列 OTable 是单列无表头的列表 |
 | ODataTable (树形) | ODataTable (普通) | 树形模式下表格行有层级缩进嵌套，适用于父子级数据；普通模式为平铺列表 |
 | ODataTable (headerStyle=fill) | ODataTable (headerStyle=split-line) | fill 模式表头有填充背景色；split-line 模式表头与表体同色，仅有底部分割线 |
 | ODataTable (selection) | ODataTable (expand) | selection 在行首显示复选框用于多选；expand 在行首显示箭头用于展开详情 |
