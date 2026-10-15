@@ -1,10 +1,12 @@
-# 直出代码自检清单（前置 + 四维度门禁）
+# 直出代码自检清单（前置 + 五维度门禁）
 
 AI 生成 Vue + OpenDesign 代码后**逐项核对**，全部通过方可交付。任一 ❌ 必须修正后重检。
 
-## ⓪ 适用前提与目标仓适配（前置门禁）
-- [ ] 已确认目标仓 UI 库为 `@opensig/opendesign`（读其根 `AGENTS.md` §1 技术栈表）；非 opendesign 仓（shadcn-vue / Element Plus 等）不适用本 skill
-- [ ] 已读目标仓根 `AGENTS.md` + 相关 `rules/*.md`，并据此适配：框架族（VitePress/Nuxt 的 import 与 SSR 写法）、路径别名、i18n、SEO/GEO（组件内未重复注入 TDK）、样式 rules、命名
+## ⓪ 适用前提与目标仓适配（前置门禁 · 双入口）
+- [ ] **入口判定（二选一，见 [SKILL.md 适用前提](../SKILL.md)）**：
+  - 工程内代码：已确认目标仓 UI 库为 `@opensig/opendesign`（读其根 `AGENTS.md` §1 技术栈表）；非 opendesign 仓（shadcn-vue / Element Plus 等）不适用本 skill
+  - 单文件 DEMO：已确认本次使用 OpenDesign 设计系统（需求方确认，不从措辞推断）；未使用 OpenDesign 的自由视觉单文件生成不适用本 skill
+- [ ] 工程内代码入口：已读目标仓根 `AGENTS.md` + 相关 `rules/*.md`，并据此适配：框架族（VitePress/Nuxt 的 import 与 SSR 写法）、路径别名、i18n、SEO/GEO（组件内未重复注入 TDK）、样式 rules、命名
 
 ## ① 视觉 Token
 - [ ] 颜色全部 `var(--o-color-*)` 语义 token，无 `#xxxxxx`/`rgb()` 硬编码
@@ -31,6 +33,13 @@ AI 生成 Vue + OpenDesign 代码后**逐项核对**，全部通过方可交付�
 - [ ] `v-for` 有语义 `:key`；未在 setup 顶层访问 `window`/`document`
 - [ ] 面向用户文案走 i18n，zh/en 同步
 - [ ] **i18n 键交叉核对**：模板用到的所有 `t('...')` 键在 zh/en dict 均有定义，无遗漏（可脚本化：提取 `t('...')` 全量键对比 dict）
+
+## ⑤ 设计基本盘
+- [ ] 字号阶梯 ≤ 4 级（页面标题 / 小节标题 / 正文 / 辅助说明封顶），同级元素同规格
+- [ ] 层级清晰：跨档用字号 / 字重 / 颜色 / 留白至少一项拉开明确反差，无「看起来差不多」的模糊层级；标题层级与楼层结构对应
+- [ ] 占位文案为贴合业务的真实中文语义，无 lorem ipsum /「示例文本」式空洞占位
+- [ ] 语义地标完整：`<header>` / `<nav>` / `<main>` / `<footer>` 划分页面区块，核心内容置于 `<main>`
+- [ ] 空态与异常路径有交代：列表空 / 加载失败 / 无结果等非理想路径有占位说明或引导，非只画理想路径
 
 ---
 
