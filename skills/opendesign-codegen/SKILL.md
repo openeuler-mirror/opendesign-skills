@@ -14,7 +14,7 @@ last_update: 2026-10-08
 > 本 skill **不重复** Token 表与组件 API，按需链接：
 > - 全量 Token（六主题 / 响应式 / 24 栅格 / 色值反查）→ [`../opendesign-tokens/SKILL.md`](../opendesign-tokens/SKILL.md)
 > - 46 个组件的 Props/Events/Slots → [`../opendesign-components/SKILL.md`](../opendesign-components/SKILL.md)
-> - 想产 Pixso 设计稿而非代码 → [`../opendesign-design/SKILL.md`](../opendesign-design/SKILL.md)
+> - 想产 HTML 设计原型而非生产代码 → [`../opendesign-design/SKILL.md`](../opendesign-design/SKILL.md)
 
 ---
 
