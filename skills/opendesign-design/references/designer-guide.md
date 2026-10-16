@@ -13,14 +13,11 @@
 ```
 你的产出物是什么？
 │
-├─ "我要在 Pixso 里做可编辑的设计稿"
+├─ "我要一个能在浏览器打开的 HTML 页面原型"
 │   → 使用 opendesign-design skill（你正在这里）
-│   → 需要 Pixso 桌面端 + MCP 连接
+│   → 生成的 HTML 遵循 CodeGen 工程规范（--o-* 语义 Token、BEM、响应式 Token）
 │
-├─ "我要一个能在浏览器打开的网页原型"
-│   → 使用 opendesign-design skill，选模式 B（HTML 网站）
-│
-└─ "我要直接出生产级代码"
+└─ "我要直接出生产级 Vue 代码"
     → 使用 opendesign-codegen skill
     → 需要目标仓库已使用 @opensig/opendesign
 ```

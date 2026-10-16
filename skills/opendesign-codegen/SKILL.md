@@ -15,7 +15,7 @@ last_update: 2026-10-15
 > - 从需求推导页面楼层结构 → [references/page-structure.md](references/page-structure.md)
 > - 全量 Token（六主题 / 响应式 / 24 栅格 / 色值反查）→ [`../opendesign-tokens/SKILL.md`](../opendesign-tokens/SKILL.md)
 > - 46 个组件的 Props/Events/Slots → [`../opendesign-components/SKILL.md`](../opendesign-components/SKILL.md)
-> - 想产 Pixso 设计稿而非代码 → [`../opendesign-design/SKILL.md`](../opendesign-design/SKILL.md)
+> - 想产 HTML 设计原型而非生产代码 → [`../opendesign-design/SKILL.md`](../opendesign-design/SKILL.md)
 
 ---
 
