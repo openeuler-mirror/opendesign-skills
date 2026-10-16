@@ -9,6 +9,8 @@ last_update: 2026-10-08
 > 🎨 **设计师第一次使用？** → 先读 [references/designer-guide.md](references/designer-guide.md)，里面有角色决策树、规范速览卡和推荐交互方式。核心建议：**逐楼层生成，不要一次性生成整页**——逐楼层还原度远高于整页一次性生成。
 
 > 💡 本文件为 AI 执行入口，仅包含生成 HTML 页面所需的指令与约束。完整使用说明、目录结构、协议信息请查看 [README.md](README.md)；请勿全量加载所有子文件，按工作流按需读取即可。
+>
+> 产出物是**手写 HTML** 的设计原型（遵循 OpenDesign 设计规范、可转译 Vue SFC），不渲染真实组件库；若要的是渲染**真实 OpenDesign 组件**（UMD + CDN）的可运行单文件或工程内代码，走 [`../opendesign-codegen/SKILL.md`](../opendesign-codegen/SKILL.md)。
 
 > 🔴 **生成任何页面前，必读以下硬约束文档**：
 > 1. [global/hard-constraints.md](global/hard-constraints.md) — **变量映射硬约束 + 组件组合规则**（合并版）：PC / MB 双断点下，字号 / 行高 / 间距 / 栅格 / 图标尺寸的合法取值白名单，以及按钮对齐 / 排列 / 间距、组件栅格挂靠、卡片间距、禁止组合黑名单及自动校验清单。所有几何数值必须严格选自该白名单，禁止四舍五入、推断或造数。

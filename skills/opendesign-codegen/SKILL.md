@@ -1,32 +1,41 @@
 ---
 name: opendesign-codegen
-description: OpenDesign 代码直出指南。当设计师（尤其各社区体验/设计团队）让 AI 工具把需求/设计意图直接做成页面或组件时使用此 skill——AI 应**直接生成符合工程规范的 Vue 3 + OpenDesign 代码**（真实 O 组件 + --o- 设计 token + scoped SCSS + BEM + i18n），渲染出来即设计稿，无需"先出 HTML 再转代码"的中间步骤。提供四大约束（视觉 Token / 组件用法 / 布局响应式 / 工程落地）、合规 SFC 起手模板、组件选用速查、生成后自检清单。仅适用于 UI 库为 @opensig/opendesign 的目标仓——生成前先读目标仓根 AGENTS.md + rules/ 按其框架族/i18n/别名/SEO 约定适配。复用 opendesign-tokens 与 opendesign-components，不重复其内容。
-last_update: 2026-10-08
+description: OpenDesign 代码直出指南。当设计师（尤其各社区体验/设计团队）让 AI 工具把需求/设计意图直接做成页面、组件或单文件 DEMO 时使用此 skill——AI 应**直接生成符合工程规范的 Vue 3 + OpenDesign 代码**（真实 O 组件 + --o- 设计 token + scoped SCSS + BEM + i18n），渲染出来即设计稿，无需"先出 HTML 再转代码"的中间步骤。提供页面结构推导（双入口分流：承接上游楼层规划/组件清单，或四步自推）、四大约束（视觉 Token / 组件用法 / 布局响应式 / 工程落地）、合规 SFC 起手模板、单文件 DEMO 的 UMD+CDN standalone HTML 渲染、组件选用速查、生成后自检清单（工程四维度 + 设计基本盘）。两个入口都以使用 OpenDesign 为前提：工程内代码要求目标仓 UI 库为 @opensig/opendesign（生成前先读目标仓根 AGENTS.md + rules/ 按其框架族/i18n/别名/SEO 约定适配）；单文件 DEMO 要求已确认使用 OpenDesign 设计系统——未使用 OpenDesign 的自由视觉单文件生成不适用本 skill。复用 opendesign-tokens 与 opendesign-components，不重复其内容。
+last_update: 2026-10-15
 ---
 
 # OpenDesign 代码直出指南
 
-设计师用 AI 工具干活时，**AI 直接产出的就是符合工程规范的 Vue 3 + OpenDesign 代码**——渲染出来即设计稿，可直接进生产工程。
+设计师用 AI 工具干活时，**AI 直接产出的就是符合工程规范的 Vue 3 + OpenDesign 代码**——渲染出来即设计稿，可直接进生产工程。无工程环境或需要独立演示文件时，同样直出渲染**真实 OpenDesign 组件**的单文件 DEMO HTML（见 [standalone-rendering.md](references/standalone-rendering.md)），不是脱离组件库的手写 HTML。
 
-> ❌ 不要"先生成 HTML 再转成代码"。
-> ✅ 一步到位：直接输出真实 `@opensig/opendesign` 组件 + `--o-` token 的 Vue SFC。
+> ❌ 不要"先生成 HTML 再转成代码"的中间步骤。
+> ✅ 一步到位：直接输出真实 `@opensig/opendesign` 组件 + `--o-` token 的 Vue SFC；需要独立演示文件时，直出的单文件 DEMO 本身就是交付物，不是待转换的中间稿。
 
 > 本 skill **不重复** Token 表与组件 API，按需链接：
+> - 从需求推导页面楼层结构 → [references/page-structure.md](references/page-structure.md)
 > - 全量 Token（六主题 / 响应式 / 24 栅格 / 色值反查）→ [`../opendesign-tokens/SKILL.md`](../opendesign-tokens/SKILL.md)
 > - 46 个组件的 Props/Events/Slots → [`../opendesign-components/SKILL.md`](../opendesign-components/SKILL.md)
 > - 想产 HTML 设计原型而非生产代码 → [`../opendesign-design/SKILL.md`](../opendesign-design/SKILL.md)
 
 ---
 
-## 适用前提：先确认目标仓用 OpenDesign
+## 适用前提：两个入口，都以「用 OpenDesign」为前提
 
-本 skill 产出的代码要落进各开源社区官网（portal）仓。**并非所有 portal 都用 OpenDesign**——确认前不要动手：
+本 skill 有两个使用入口，判据不同，进任一入口前先确认：
+
+**入口一：工程内代码**（代码要落进某个仓库工程）——判据是**目标仓 UI 库是否为 `@opensig/opendesign`**：
 
 1. **读目标仓根 `AGENTS.md`**（遵循 [agents.md](https://agents.md) 标准，是所有 AI 工具进仓的唯一入口）的 §1 技术栈表，看 `UI 组件库` 行。
-2. **是 `@opensig/opendesign`** → 继续用本 skill。
+2. **是 `@opensig/opendesign`** → 继续用本 skill（工程内的无逻辑静态页 / 设计层代码同样参照本 skill 的工程规则与组件速查）。
 3. **不是**（如 hifloat 用 shadcn-vue + Tailwind、有的用 Element Plus）→ **停**，改用该仓 UI 库的写法，本 skill 不适用。
 
+**入口二：单文件 DEMO**（无目标工程，产出一个直接浏览器打开即渲染真实 OD 组件的单文件 HTML）——判据是**已确认本次使用 OpenDesign 设计系统**：
 
+1. 是否使用 OpenDesign 设计系统由需求方确认，AI 可附建议，但**不从需求措辞推断**。
+2. **确认使用** → 进本 skill，渲染方式走 [references/standalone-rendering.md](references/standalone-rendering.md)（UMD + CDN 单文件 HTML）。
+3. **不使用**（自由视觉原型）→ **不进本 skill**——本 skill 的组件、token 与工程规则对非 OpenDesign 场景全部错位，此类生成由会话按通用 HTML 原型规范直接产出。
+
+与 [`../opendesign-design/SKILL.md`](../opendesign-design/SKILL.md) 的 HTML 设计原型是两条路：那边**手写 HTML**、不依赖组件库渲染（面向设计表达，可转译 Vue SFC）；本入口的单文件 DEMO 用 UMD + CDN 渲染**真实 OpenDesign 组件**，是可运行交付物。
 
 ---
 
@@ -103,36 +112,36 @@ last_update: 2026-10-08
 
 保证代码可直接进生产工程，详见 [references/engineering-rules.md](references/engineering-rules.md)，核心即上方「硬规则红线」。
 
-> ⚠️ **社区差异**：路径别名（如 `~@/`）、i18n 写法、排版 mixin（`@include h3`）、Vue API 是否自动导入（VitePress 显式 import vs Nuxt 自动导入）、SSR/SSG 安全写法等**因目标仓而异**。本 skill 给的是 OpenDesign 通用合规骨架；落地前先按「工作流·步骤 1」读目标仓根 `AGENTS.md` + `rules/` 适配。各 portal 仓如何暴露这些约定，见 portal-workflow 的 `portal-agents-doc` skill。
+> ⚠️ **社区差异**：路径别名（如 `~@/`）、i18n 写法、排版 mixin（`@include h3`）、Vue API 是否自动导入（VitePress 显式 import vs Nuxt 自动导入）、SSR/SSG 安全写法等**因目标仓而异**。本 skill 给的是 OpenDesign 通用合规骨架；落地前先按「工作流·步骤 1」读目标仓根 `AGENTS.md` + `rules/` 适配——这些仓内约定以目标仓自己的文档为唯一事实来源，本 skill 不另行汇总。
 
 ---
 
 ## 工作流
 
-1. **进仓核实目标工程**（强制，先于写代码）：
-   - 读目标仓根 `AGENTS.md`（AI 工具唯一入口）→ 按其规范索引 Read 相关 `rules/*.md`。
-   - 确认 UI 库是 `@opensig/opendesign`（见上「适用前提」），否则停。
-   - 摸清并据此适配：**框架族**（VitePress：Vue API 显式 import；Nuxt：自动导入、`import.meta.client`/`<ClientOnly>`、`useSeoMeta`）、**路径别名**（`~@/`/`@/` 等）、**i18n**（locales 位置与 `t()` 写法，zh/en 同步）、**SEO/GEO 机制**（TDK 由 portal-workflow geo-fix 链路负责，**组件里不要重复注入**）、**样式 rules**（token 用法、`:deep` 策略、SCSS 嵌套上限、是否有 `respond-to` mixin）、**命名约定**。
-   - 不确定处用通用写法 + 注释，绝不臆造仓内不存在的目录/机制。
-2. **按需读取最新同级 skill**（这些 skill 不定期更新，勿凭记忆写 token 值/组件 API）——用到的才读，用到的版本才读：
+1. **确认入口**（见上「适用前提」）：
+   - **工程内代码**：进仓核实目标工程（强制，先于写代码）——读目标仓根 `AGENTS.md`（AI 工具唯一入口）→ 按其规范索引 Read 相关 `rules/*.md`；确认 UI 库是 `@opensig/opendesign`，否则停。继续摸清并据此适配：**框架族**（VitePress：Vue API 显式 import；Nuxt：自动导入、`import.meta.client`/`<ClientOnly>`、`useSeoMeta`）、**路径别名**（`~@/`/`@/` 等）、**i18n**（locales 位置与 `t()` 写法，zh/en 同步）、**SEO/GEO 机制**（TDK / meta 的注入方式以目标仓 `rules/` 声明为准，**组件里不要重复注入**）、**样式 rules**（token 用法、`:deep` 策略、SCSS 嵌套上限、是否有 `respond-to` mixin）、**命名约定**。不确定处用通用写法 + 注释，绝不臆造仓内不存在的目录/机制。
+   - **单文件 DEMO**：确认本次使用 OpenDesign 设计系统（需求方确认，不从措辞推断）；渲染依赖与写法见 [references/standalone-rendering.md](references/standalone-rendering.md)，无仓内约定需要适配。
+2. **定页面结构**：读 [references/page-structure.md](references/page-structure.md)——上游已给楼层规划 / 组件清单时**校验承接**（不重推，只就缺口补齐）；未给时按四步自推（提取设计输入 → 判定页面类型 → 楼层规划 → 楼层内组件选型）。
+3. **按需读取最新同级 skill**（这些 skill 不定期更新，勿凭记忆写 token 值/组件 API）——用到的才读，用到的版本才读：
    - 用到颜色/间距/字号/圆角等**具体 token 值** → 读 [`../opendesign-tokens/SKILL.md`](../opendesign-tokens/SKILL.md) + 对应主题 `references/tokens-{theme}.md`。
    - 用到**组件的 Props/Events/Slots** → 读 [`../opendesign-components/SKILL.md`](../opendesign-components/SKILL.md) + 对应 `references/{component}.{visual|usage|style}.md`（识别→visual，API→usage，样式→style）。
    - 需要图标/构建/样式等 **CLI 命令**（`gen:icon`/`build-style` 等）→ 读 [`../opendesign-scripts/SKILL.md`](../opendesign-scripts/SKILL.md)。
    - 需对照**设计稿规范**（栅格/断点/组件视觉规格）→ 读 [`../opendesign-design/SKILL.md`](../opendesign-design/SKILL.md)。
    - 本 skill 顶部链接与 `component-cheatsheet.md` 只是索引，**真值以同级 skill 文件为准**。
-3. **起手**：复制 `references/starter-page.vue`。
-4. **直接写代码**：用真实 `@opensig/opendesign` 组件搭结构，样式全用 `var(--o-*)`/`var(--o-r-*)`，文案走 i18n，列表用 `v-for`+语义 `:key`。
-5. **自检**：逐项核对 [references/checklist.md](references/checklist.md)，修正所有违规；对生成的文件跑 Token CLI 扫描确认无捏造或拼错的 token（`node skills/opendesign-tokens/scripts/bin.mjs scan <file> --theme <主题> --strict`）。
-6. 交付即生产代码 —— 渲染出来就是设计稿，无中间转换。
+4. **起手**：工程内代码复制 `references/starter-page.vue`；单文件 DEMO 按 [references/standalone-rendering.md](references/standalone-rendering.md) 的依赖清单与加载顺序搭骨架。
+5. **直接写代码**：用真实 `@opensig/opendesign` 组件搭结构，样式全用 `var(--o-*)`/`var(--o-r-*)`，文案走 i18n，列表用 `v-for`+语义 `:key`。
+6. **自检**：逐项核对 [references/checklist.md](references/checklist.md)，修正所有违规；对生成的文件跑 Token CLI 扫描确认无捏造或拼错的 token（`node skills/opendesign-tokens/scripts/bin.mjs scan <file> --theme <主题> --strict`）。
+7. 交付即生产代码 —— 渲染出来就是设计稿，无中间转换。
 
 ---
 
 ## 参考文件
 
+- [references/page-structure.md](references/page-structure.md) — 页面结构推导：楼层规划与中观层组件选型（双入口分流）
 - [references/starter-page.vue](references/starter-page.vue) — 合规 SFC 起手模板
-- [references/component-cheatsheet.md](references/component-cheatsheet.md) — 设计意图 → OpenDesign 组件速查
+- [references/component-cheatsheet.md](references/component-cheatsheet.md) — 设计意图 → OpenDesign 组件速查（控件级）
 - [references/engineering-rules.md](references/engineering-rules.md) — 工程落地约束
-- [references/standalone-rendering.md](references/standalone-rendering.md) — 无 bundler 的 standalone HTML 渲染 OpenDesign（UMD + CDN）
-- [references/checklist.md](references/checklist.md) — 生成后自检清单
+- [references/standalone-rendering.md](references/standalone-rendering.md) — 单文件 DEMO 主路径：UMD + CDN 单文件 HTML 渲染真实 OpenDesign 组件
+- [references/checklist.md](references/checklist.md) — 生成后自检清单（工程四维度 + 设计基本盘）
 - [references/examples/feature-section.vue](references/examples/feature-section.vue) — 示例：楼层 + 卡片栅格
 - [references/examples/list-filter-page.vue](references/examples/list-filter-page.vue) — 示例：带筛选的列表页

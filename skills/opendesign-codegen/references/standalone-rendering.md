@@ -1,10 +1,18 @@
 > ← [代码直出指南](../SKILL.md) · [工程落地约束](engineering-rules.md)
 
-# standalone HTML 渲染 OpenDesign（无 bundler 场景）
+# 单文件 DEMO：standalone HTML 渲染 OpenDesign（UMD + CDN）
 
-本 skill 主流程是直接产出 Vue SFC 落进带 bundler 的目标工程。但当场景需要**无 bundler 的单文件 HTML**（原型 / Demo / 设计评审等，直接浏览器打开即渲染真实 `@opensig/opendesign` 组件）时，用 UMD + CDN 方式渲染。此场景不走 Vite/Nuxt，下述坑由 bundler 隐式解决的问题需手动处理。
+本 skill 有两条产出路径，各有主场景：**工程内代码**走 Vue SFC + bundler（[starter-page.vue](starter-page.vue)）；**单文件 DEMO**——无目标工程、需要一个直接浏览器打开即渲染**真实 `@opensig/opendesign` 组件**的单文件 HTML（演示 / 设计评审 / 静态交付）——走本文件的 UMD + CDN 方式，这是单文件 DEMO 的主路径。
 
-> ⚠️ 这是 SFC 主流程之外的辅助场景，不要用它替代工程内代码；生产代码仍走 [starter-page.vue](starter-page.vue) + bundler。
+**前提**：已确认本次使用 OpenDesign 设计系统（见 [SKILL.md 适用前提](../SKILL.md) 入口二）；未使用 OpenDesign 的自由视觉单文件生成不属于本 skill。
+
+| | 工程内代码 | 单文件 DEMO（本文件） |
+|---|---|---|
+| 产物 | Vue SFC 落进目标仓 | 单文件 HTML，独立打开即用 |
+| 组件来源 | `@opensig/opendesign` 包 + bundler | UMD + CDN |
+| 适用 | 代码要进生产工程 | 无工程环境 / 需要独立演示文件 |
+
+此场景不走 Vite/Nuxt，下述坑（由 bundler 隐式解决的问题）需手动处理。
 
 ---
 
