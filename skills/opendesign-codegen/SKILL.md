@@ -35,7 +35,7 @@ last_update: 2026-10-15
 2. **确认使用** → 进本 skill，渲染方式走 [references/standalone-rendering.md](references/standalone-rendering.md)（UMD + CDN 单文件 HTML）。
 3. **不使用**（自由视觉原型）→ **不进本 skill**——本 skill 的组件、token 与工程规则对非 OpenDesign 场景全部错位，此类生成由会话按通用 HTML 原型规范直接产出。
 
-
+与 [`../opendesign-design/SKILL.md`](../opendesign-design/SKILL.md) 的 HTML 设计原型是两条路：那边**手写 HTML**、不依赖组件库渲染（面向设计表达，可转译 Vue SFC）；本入口的单文件 DEMO 用 UMD + CDN 渲染**真实 OpenDesign 组件**，是可运行交付物。
 
 ---
 
