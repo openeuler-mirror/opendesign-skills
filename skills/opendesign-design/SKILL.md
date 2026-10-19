@@ -1,7 +1,7 @@
 ---
 name: opendesign-design
-description: OpenDesign HTML 页面生产指南。当需要生成符合 OpenDesign 设计规范的 HTML 页面（按钮、输入框、卡片、导航等 UI 组件）、应用设计规范（栅格/颜色/字号/间距/圆角）、搭建页面框架时使用此 skill。包含 PC/MB 双断点的变量映射硬约束（字号/行高/间距/栅格/图标尺寸的合法取值白名单），覆盖 26 个组件设计规范。生成的 HTML 遵循 opendesign-codegen 工程规范（--o-* 语义 Token、OpenDesign 组件命名、BEM、响应式 Token），可直接作为设计原型或进一步转译为 Vue SFC 生产代码。
-last_update: 2026-10-15
+description: OpenDesign HTML 页面生产指南。当需要生成符合 OpenDesign 设计规范的 HTML 页面（按钮、输入框、卡片、导航等 UI 组件）、应用设计规范（栅格/颜色/字号/间距/圆角）、搭建页面框架时使用此 skill。包含 PC/MB 双断点的变量映射硬约束（字号/行高/间距/栅格/图标尺寸的合法取值白名单），覆盖 27 个组件设计规范。生成的 HTML 遵循 opendesign-codegen 工程规范（--o-* 语义 Token、OpenDesign 组件命名、BEM、响应式 Token），可直接作为设计原型或进一步转译为 Vue SFC 生产代码。
+last_update: 2026-10-16
 ---
 
 # Design Skill · HTML 页面生成指南
@@ -21,7 +21,7 @@ last_update: 2026-10-15
 
 ## 数据资源
 
-栅格、响应式断点、设计变量等数据来自 atomgit 上游仓库。**使用时通过 WebFetch 实时拉取最新版本**，不要 bundle 到本地；**WebFetch 拉取失败时，降级用本地 [`../opendesign-tokens/references/`](../opendesign-tokens/references/tokens.md) 的六主题 Token 文件（离线可用，注意可能落后于上游最新值）**：
+栅格、响应式断点、设计变量等数据来自 atomgit 上游仓库。**使用时通过 WebFetch 实时拉取最新版本**，不要 bundle 到本地；**WebFetch 拉取失败时，降级用本地 `../opendesign-tokens/references/` 下的六主题 Token 文件（`tokens-{社区}.md`，离线可用，注意可能落后于上游最新值）**：
 
 | 用途 | URL |
 |---|---|
@@ -109,7 +109,7 @@ last_update: 2026-10-15
 WebFetch 拉取目标社区主题 Token（必须执行！URL 见 #数据资源 社区映射表）
    — 将 JSON 中的颜色/字号/间距变量翻译为 :root CSS 变量
    — ⚠️ 禁止凭训练数据"猜测"颜色值！尤其是 --o-color-fill1（页面背景=浅灰，不是纯白）
-   — 拉取失败时：降级用本地 [`../opendesign-tokens/references/tokens-{社区}.md`](../opendesign-tokens/references/tokens-openeuler.md)（六主题全量 Token + Dark 值反查，离线可用；栅格 / 响应式见同目录 tokens.md）；designer-guide.md 速查表仅作 openEuler Light 辅助
+   — 拉取失败时：降级用本地 `../opendesign-tokens/references/tokens-{社区}.md`（六主题全量 Token + Dark 值反查，离线可用；栅格 / 响应式见同目录 [tokens.md](../opendesign-tokens/references/tokens.md)）；designer-guide.md 速查表仅作 openEuler Light 辅助
    — 目标社区无本地 Token 文件时：停下询问用户，禁止借用其他社区 Token
 
 【站点框架基准（路由A页面级增改场景必做）】需求是在已有站点上新增/修改页面、不动整站框架时：
@@ -335,7 +335,7 @@ WebFetch 拉取目标社区主题 Token（必须执行！URL 见 #数据资源 �
 
 | 楼层 | 模板文件 | 典型用途 |
 |------|---------|---------|
-| 导航 | [floors/navigation.md](floors/navigation.md) | 页面顶部导航栏（PC/Mb） |
+| 导航 | [floors/navigation.md](floors/navigation.md) | 页面顶部导航栏（PC/MB） |
 | 导航下拉面板 · 平铺式 | [floors/navigation-dropdown.md](floors/navigation-dropdown.md) | 顶导菜单项展开的平铺式下拉面板（垂直列表，与导航楼层搭配） |
 | 导航下拉面板 · 分类平铺式 | [floors/navigation-dropdown-categorized.md](floors/navigation-dropdown-categorized.md) | 顶导菜单项展开的分类平铺式下拉面板（多列 + 列头 + 条目说明 + 快捷链接栏，与导航楼层搭配） |
 | Banner | [floors/banner.md](floors/banner.md) | 首页/栏目页顶部横幅（XL/L/M） |
@@ -361,7 +361,7 @@ WebFetch 拉取目标社区主题 Token（必须执行！URL 见 #数据资源 �
 
 - 当你准备使用某一个组件来生成页面时，你应该读取 opendesign-components 的 skill，来看他对应的组件开发 skill 中说明的传参是否足以支持你的想法
 - **组件文档中所有色值、字号、间距必须匹配上游 Token 的变量名**，禁止使用硬编码值
-- 编写组件文档时，参见 [global/component-doc-spec.md](global/component-doc-spec.md) 中的 Token 匹性要求和格式规范
+- 编写组件文档时，参见 [global/component-doc-spec.md](global/component-doc-spec.md) 中的 Token 匹配性要求和格式规范
 
 ## 异常与降级策略
 

@@ -89,18 +89,18 @@
     │   └── references/
     │       ├── tokens.md
     │       └── tokens-{theme}.md
-    ├── opendesign-design/         ← Pixso 设计稿生产 Skill（设计侧，26 组件）
-    │   ├── SKILL.md               ← 工作流 + 图标处理规范 + componentKey 速查（第二层）
+    ├── opendesign-design/         ← HTML 设计原型生产 Skill（设计侧，27 组件 + 7 楼层模板）
+    │   ├── SKILL.md               ← HTML 页面生成工作流 + 变量映射硬约束 + 图标处理规范（第二层）
     │   ├── CHANGELOG.md           ← 本 skill 变更记录（第二层）
     │   ├── README.md              ← 使用说明与目录结构（第二层）
-    │   ├── components/            ← 26 个组件设计规范（第三层）
+    │   ├── components/            ← 27 个组件设计规范（第三层）
     │   │   └── {name}.md
-    │   ├── floors/                ← 5 个楼层模板（第三层）
+    │   ├── floors/                ← 7 个楼层模板（第三层）
     │   │   └── {type}.md
     │   ├── global/                ← 全局约束与规范（必加载）
-    │   │   ├── hard-constraints.md
-    │   │   ├── interaction-rules.md
-    │   │   ├── layout-rules.md
+    │   │   ├── hard-constraints.md    ← 变量映射硬约束 + 组件组合规则（唯一真源）
+    │   │   ├── interaction-rules.md   ← 通用交互规范（速查副本，真源 hard-constraints）
+    │   │   ├── layout-rules.md        ← 栅格 / 断点 / 间距速查（速查副本，真源 hard-constraints）
     │   │   ├── component-doc-spec.md
     │   │   └── qa-checklist/
     │   │       └── component-html-qa-checklist.md
@@ -201,7 +201,7 @@ pnpm skills:update               # 拉取最新版并更新 lock 文件
 | 生成/更新组件设计规范 Skill（设计侧） | [`skill-gen-guide/references/design-skill-gen.md`](packages/skills/skill-gen-guide/references/design-skill-gen.md) |
 | 完成 Skill 后的自评与进度更新（代码 + 设计） | [`skill-gen-guide/references/skill-review.md`](packages/skills/skill-gen-guide/references/skill-review.md) |
 | 断点定义、Slot 约定、CSS 变量规则 | [`skill-gen-guide/references/code-skill-gen.md`](packages/skills/skill-gen-guide/references/code-skill-gen.md) |
-| Pixso MCP 调用顺序、图标处理规范、两阶段生成 | [`skills/opendesign-design/SKILL.md`](skills/opendesign-design/SKILL.md) |
+| HTML 楼层生成工作流、变量映射硬约束、图标处理规范 | [`skills/opendesign-design/SKILL.md`](skills/opendesign-design/SKILL.md) |
 | 变更记录维护（CHANGELOG + `last_update`） | [`changelog-guide/references/changelog.md`](packages/skills/changelog-guide/references/changelog.md) |
 | Agent 目录同步、外部 skill 安装 | 本文件「[Agent 目录同步](#agent-目录同步)」章节 |
 | 修改脚手架模板（AGENTS.md / 代码 / 配置 / 组件） | [`template-guide/references/template-sync.md`](packages/skills/template-guide/references/template-sync.md) + [`template-agents.md`](packages/skills/template-guide/references/template-agents.md) + [`template-code.md`](packages/skills/template-guide/references/template-code.md) |

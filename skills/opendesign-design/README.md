@@ -9,13 +9,13 @@ opendesign-design/
 ├── SKILL.md                          ← 总调度入口（元数据 + 路由表）
 ├── CHANGELOG.md                      ← 更新日志
 ├── README.md                         ← 本文件
-├── components/                       ← 26 个组件设计规范（每个组件一个 .md）
+├── components/                       ← 27 个组件设计规范（每个组件一个 .md）
 ├── floors/                           ← 7 个楼层模板（每个楼层一个 .md）
 ├── global/
 │   ├── hard-constraints.md           ← 变量映射硬约束 + 组件组合规则（唯一真源）
 │   ├── interaction-rules.md          ← 通用交互规范（速查副本，真源 hard-constraints）
 │   ├── layout-rules.md               ← 栅格 / 断点 / 间距速查（速查副本，真源 hard-constraints）
-│   ├── component-doc-spec.md         ← 组件文档编写规范（Token 匹性要求）
+│   ├── component-doc-spec.md         ← 组件文档编写规范（Token 匹配性要求）
 │   └── qa-checklist/
 │       └── component-html-qa-checklist.md  ← HTML 实现质量保证清单
 └── references/

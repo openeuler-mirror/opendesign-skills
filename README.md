@@ -39,7 +39,7 @@ pnpx skills experimental_install
 | [opendesign-components](#opendesign-components) | `@opensig/opendesign` | 48 个 Vue 3 UI 组件 | [SKILL.md](skills/opendesign-components/SKILL.md) | [CHANGELOG.md](skills/opendesign-components/CHANGELOG.md) |
 | [opendesign-scripts](#opendesign-scripts) | `@opensig/open-scripts` | 5 个 CLI 构建命令 | [SKILL.md](skills/opendesign-scripts/SKILL.md) | [CHANGELOG.md](skills/opendesign-scripts/CHANGELOG.md) |
 | [opendesign-tokens](#opendesign-tokens) | `@opensig/opendesign-token` | 3 套主题的设计令牌体系 | [SKILL.md](skills/opendesign-tokens/SKILL.md) | [CHANGELOG.md](skills/opendesign-tokens/CHANGELOG.md) |
-| [opendesign-design](#opendesign-design) | Pixso MCP（无 npm 包） | 26 个组件设计规范 + 5 楼层模板 + 536 变体 + 187 图标 | [SKILL.md](skills/opendesign-design/SKILL.md) | [CHANGELOG.md](skills/opendesign-design/CHANGELOG.md) |
+| [opendesign-design](#opendesign-design) | Pixso MCP（无 npm 包） | 27 个组件设计规范 + 7 楼层模板 + 536 变体 + 187 图标 | [SKILL.md](skills/opendesign-design/SKILL.md) | [CHANGELOG.md](skills/opendesign-design/CHANGELOG.md) |
 | [opendesign-codegen](#opendesign-codegen) | `@opensig/opendesign` + `@opensig/opendesign-token` | 设计意图直出合规 Vue+OpenDesign 代码（约束 + SFC 模板 + 示例） | [SKILL.md](skills/opendesign-codegen/SKILL.md) | [CHANGELOG.md](skills/opendesign-codegen/CHANGELOG.md) |
 
 ---
@@ -241,8 +241,8 @@ skills/opendesign-tokens/
 - 含图标场景下采用两阶段生成（`code_to_design` + `create_instance`）
 
 **覆盖范围**：
-- **26 个组件设计规范**：OAnchor / OBanner / OBreadcrumb / OButton / OCard / OCarousel / OCheckbox / ODataTable / ODialog / ODivider / ODropdown / OInput / OLink / OLoading / OMenu / OMessage / ONavigation / OPagination / ORadio / OScrollbar / OSearch / OSelect / OStep / OSwitch / OTab / OTag / OToggle
-- **5 个楼层模板**：导航 / Banner / 卡片栅格 / 图文特色 / 页脚
+- **27 个组件设计规范**：OAnchor / OBanner / OBreadcrumb / OButton / OCard / OCarousel / OCheckbox / ODataTable / ODialog / ODivider / ODropdown / OInput / OLink / OLoading / OMenu / OMessage / ONavigation / OPagination / ORadio / OScrollbar / OSearch / OSelect / OStep / OSwitch / OTab / OTag / OToggle
+- **7 个楼层模板**：导航 / 导航下拉面板 · 平铺式 / 导航下拉面板 · 分类平铺式 / Banner / 卡片栅格 / 图文特色 / 页脚
 - **536 个 UI 组件变体**的 `componentKey` 索引
 - **187 个图标**的 `componentKey` 索引（独立图标库 `kbqInwBrCTGnM0MsPJDgvA`）
 
@@ -257,23 +257,23 @@ skills/opendesign-tokens/
 | openEuler 主题 Token | `https://raw.atomgit.com/openeuler/opendesign-token/raw/master/packages/opendesign-token/tokens/openeuler-token.json` |
 
 **与其他 skill 的关系**：
-- 与 `opendesign-components` 互补：本 skill 在 Pixso 中产出设计稿，components skill 把设计稿转为 Vue 代码
-- 与 `opendesign-tokens` 共享 Token 真源（同一 atomgit 上游），但本 skill 侧重在 Pixso 画布上落地 Token
+- 与 `opendesign-components` 互补：本 skill 产出符合设计规范的 HTML 页面原型，components skill 提供生产级 Vue 组件 API
+- 与 `opendesign-tokens` 共享 Token 真源（同一 atomgit 上游）；WebFetch 拉取失败时降级用 `opendesign-tokens/references/` 的本地六主题 Token 文件
 
 **目录结构**：
 ```
 skills/opendesign-design/
-├── SKILL.md                          # 主 skill 文件（含工作流、图标处理规范、componentKey 速查）
+├── SKILL.md                          # 主 skill 文件（含 HTML 页面生成工作流、变量映射硬约束、图标处理规范）
 ├── CHANGELOG.md                      # 变更记录
 ├── README.md                         # 使用说明与目录结构
-├── components/                       # 26 个组件设计规范
+├── components/                       # 27 个组件设计规范
 │   └── {component}.md
-├── floors/                           # 5 个楼层模板
+├── floors/                           # 7 个楼层模板
 │   └── {type}.md
 ├── global/                           # 全局约束与规范（必加载）
-│   ├── hard-constraints.md           # 变量映射硬约束 + 组件组合规则
-│   ├── interaction-rules.md          # 通用交互规范
-│   ├── layout-rules.md              # 栅格 / 断点 / 间距速查
+│   ├── hard-constraints.md           # 变量映射硬约束 + 组件组合规则（唯一真源）
+│   ├── interaction-rules.md          # 通用交互规范（速查副本）
+│   ├── layout-rules.md              # 栅格 / 断点 / 间距速查（速查副本）
 │   ├── component-doc-spec.md         # 组件文档编写规范
 │   └── qa-checklist/
 │       └── component-html-qa-checklist.md
