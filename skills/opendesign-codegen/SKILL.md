@@ -1,4 +1,25 @@
----
+-3. **起手**：复制 `references/starter-page.vue`。
++3. **起手**：复制 `references/starter-page.vue`。输入为 opendesign-design 产出的 HTML 原型时，按下方「HTML 原型 → SFC 转译」逐楼层转，不要整页一次性转。### HTML 原型 → SFC 转译（输入为 opendesign-design 产物时）
+
+| 原型元素 | SFC 对应 |
+|---|---|
+| 楼层容器（`margin: 216px` + `width: 1488px`） | 目标仓楼层组件（如脚手架 `AppSection`）或 24 栅格 `--o-r-grid-N` |
+| `o-*` CSS 类模拟组件（`.o-button`） | 真实 `<OButton>` 等组件 props/slots |
+| 内联 `<style>` + token | `<style lang="scss" scoped>` + BEM，token 原样保留 |
+| 写死文案 | `t()` + zh/en dict |
+
+原型中的硬编码几何值须映射回 `--o-r-*` 响应式 token，色彩一律语义 token，逐楼层走完自检再转下一个。-…可直接作为设计原型或进一步转译为 Vue SFC 生产代码。
++…可直接作为设计原型；转译为 Vue SFC 生产代码时按 opendesign-codegen 的「HTML 原型 → SFC 转译」流程进行。-3. **起手**：复制 `references/starter-page.vue`。
++3. **起手**：复制 `references/starter-page.vue`。输入为 opendesign-design 产出的 HTML 原型时，按下方「HTML 原型 → SFC 转译」逐楼层转，不要整页一次性转。### HTML 原型 → SFC 转译（输入为 opendesign-design 产物时）
+
+| 原型元素 | SFC 对应 |
+|---|---|
+| 楼层容器（`margin: 216px` + `width: 1488px`） | 目标仓楼层组件（如脚手架 `AppSection`）或 24 栅格 `--o-r-grid-N` |
+| `o-*` CSS 类模拟组件（`.o-button`） | 真实 `<OButton>` 等组件 props/slots |
+| 内联 `<style>` + token | `<style lang="scss" scoped>` + BEM，token 原样保留 |
+| 写死文案 | `t()` + zh/en dict |
+
+原型中的硬编码几何值须映射回 `--o-r-*` 响应式 token，色彩一律语义 token，逐楼层走完自检再转下一个。---
 name: opendesign-codegen
 description: OpenDesign 代码直出指南。当设计师（尤其各社区体验/设计团队）让 AI 工具把需求/设计意图直接做成页面、组件或单文件 DEMO 时使用此 skill——AI 应**直接生成符合工程规范的 Vue 3 + OpenDesign 代码**（真实 O 组件 + --o- 设计 token + scoped SCSS + BEM + i18n），渲染出来即设计稿，无需"先出 HTML 再转代码"的中间步骤。提供页面结构推导（双入口分流：承接上游楼层规划/组件清单，或四步自推）、四大约束（视觉 Token / 组件用法 / 布局响应式 / 工程落地）、合规 SFC 起手模板、单文件 DEMO 的 UMD+CDN standalone HTML 渲染、组件选用速查、生成后自检清单（工程四维度 + 设计基本盘）。两个入口都以使用 OpenDesign 为前提：工程内代码要求目标仓 UI 库为 @opensig/opendesign（生成前先读目标仓根 AGENTS.md + rules/ 按其框架族/i18n/别名/SEO 约定适配）；单文件 DEMO 要求已确认使用 OpenDesign 设计系统——未使用 OpenDesign 的自由视觉单文件生成不适用本 skill。复用 opendesign-tokens 与 opendesign-components，不重复其内容。
 last_update: 2026-10-15
