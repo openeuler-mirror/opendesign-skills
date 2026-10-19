@@ -6,12 +6,18 @@
 >
 > 🔗 **搭配关系**：本模板**不单独构成页面楼层**，必须与 [floors/navigation.md](navigation.md)（顶导 Header）配合生成——顶导由 navigation 楼层产出，下拉面板由本模板产出，二者挂在同一个菜单项节点上。组件规格以 [components/navigation.md](../components/navigation.md) 为准，本模板只补充「顶导菜单项 → 分类平铺面板」这一层规范。
 >
-> ⚠️ **两种下拉面板样式分工**（同一菜单结构，不同菜单项可挂不同样式，禁止混用 class）：
+> 🔴 **两种下拉面板样式是二选一，不是混搭**（2026-10-19 用户纠错后新增）：
 >
 > | 样式 | 模板文件 | 特征 |
 > |------|---------|------|
 > | **平铺式** | [floors/navigation-dropdown.md](navigation-dropdown.md) | 垂直列表、选项独占一行、无分类标题 |
 > | **分类平铺式** | **本文件** | 多列平铺：分类列头 + 列内条目（标题 + 说明）+ 快捷链接栏 |
+>
+> 🔴 **同一套导航（同一顶导）只允许一种样式**——要么全部平铺式，要么全部分类平铺式。**禁止在同一顶导内按菜单项分别挂不同样式**（如「开发」挂分类平铺式、「下载」挂平铺式）：两种样式的宽度 / 边距 / 定位 / 圆角 / 条目交互规则完全不同（平铺式 = 居中触发器 auto 宽 + 4px 间距 + hover 色块；分类平铺式 = 通栏 216px + 零间距抽屉 + hover 只改文字色），混用会让同一页面出现两套几何逻辑与两种 hover 反馈，视觉与交互割裂。
+>
+> **样式由用户在生成前二选一确定**（SKILL.md 导航楼层门禁第 2 步），AI 禁止自行挑选、禁止按菜单项逐个挑选。选定后，本顶导下**所有**下拉面板统一使用该样式；不需要下拉面板的菜单项（如「首页」「WIKI」）保持纯链接即可。
+>
+> ⚠️ **判断哪种样式适合，要看内容而非逐个菜单项分配**：有条目说明文案 + 两个以上分类 → 分类平铺式；纯菜单名列表、无描述、无分组 → 平铺式。同一导航的信息结构通常只适配其中一种，**不存在「这个菜单适合 A、那个菜单适合 B」的混搭结论**。
 >
 > 🔴 **顶导与触发器（菜单项）的全部样式唯一定义源是 [floors/navigation.md](navigation.md)**（`.o-nav__*` 命名，含容器 / Logo / 菜单 / 触发器五态 / 右侧操作区，可整段取用）：本模板**不定义、不重定义、不改写任何顶导与触发器样式**——顶导样式与下拉面板类型无关，两种面板样式下完全一致。禁止自创 `border-radius`（会把选中指示线两端裁成圆弧）、字重变化、背景色块，相关禁令与踩坑见 navigation.md 踩坑 #9/#17/#18/#19。
 >
@@ -180,7 +186,9 @@ ONavigation 顶导（见 floors/navigation.md，高 72px）
 >
 > ⚠️ **动画位移不算间距**：隐藏态 `translateY(-8px)` 只是入场位移，展开终态是 `translateY(0)`，**不要**因为看到 -8px 就把 `top` 改成 `calc(100% + 8px)`——那会在展开态留下 8px 真实间隙。
 
-> ⚠️ **混用两种样式时互斥自动生效**：单开互斥的 `:has()` 选择器指向基类 `.o-nav__dropdown`，平铺式与分类平铺式面板共享该基类，因此同一菜单内两种样式混挂时，互斥规则**同时覆盖两者**，无需另写规则。前提是分类平铺式面板必须**同时挂基类 + 修饰类**（`class="o-nav__dropdown o-nav__dropdown--categorized"`），只挂修饰类会导致定位/显隐/互斥全部失效。
+> ✅ **基类与修饰类必须同时挂载**：分类平铺式面板必须写 `class="o-nav__dropdown o-nav__dropdown--categorized"`（基类 + 修饰类），只挂修饰类会导致定位 / 显隐 / 互斥全部失效；只挂基类则退化成平铺式几何（4px 间距 + 居中触发器）。单开互斥的 `:has()` 选择器指向基类 `.o-nav__dropdown`，因此正常情况下（全套统一用一种样式）互斥自动覆盖本页所有面板，无需另写规则。
+>
+> 🔴 **（技术说明，不是许可）**：混挂两种样式时互斥规则确实会同时覆盖两者（共享基类所致），但这只是「不会同时弹出两个面板」的兜底，**绝不构成允许混用的理由**——混用的几何与交互割裂问题见本文件开头「二选一」节与 navigation-dropdown.md「样式二选一（硬规则）」。
 
 ---
 
@@ -496,7 +504,7 @@ ONavigation 顶导（见 floors/navigation.md，高 72px）
 | 1 | **下拉标题最多显示 2 行**，超出显示 `...` | `.o-nav__cat-item-title` 用 `-webkit-line-clamp: 2` + `display: -webkit-box` + `overflow: hidden` |
 | 2 | **下拉选项最多显示 6 行**，超出 6 行出现 `...` | `.o-nav__cat-item-desc` 用 `-webkit-line-clamp: 6`（同上三件套） |
 | 3 | **悬浮 tooltip 显示完整内容**，tips 复用设计系统既有组件 | 截断元素外包一层带 `title` / OPopover 的容器；**design skill 的 components/ 暂无 popover 文档**，引用 opendesign-components skill 的 `references/popover.*.md`（待确认 #6）；其他「显示不全」场景一律参照此交互 |
-| 4 | **导航项过多时，最后一项显示切换箭头**；**左侧折叠态最小宽度 32px** | 见 §7.3：左列末项挂 `.o-nav__cat-toggle`（切换箭头），面板 `.is-collapsed` 收至 32px。⚠️ 该箭头**仅 ≤840px 的 MB 双列布局生效**：基础样式必须默认 `display: none`，仅在 `@media (max-width: 840px) and (min-width: 601px)` 里恢复 `display: block`——漏写隐藏规则时，PC 档箭头会裸露在「项目」列末尾（2026-10-16 验收复现） |
+| 4 | **导航项过多时，最后一项显示切换箭头**；**左侧折叠态最小宽度 32px** | 见 §7.3：左列末项挂 `.o-nav__cat-toggle`（切换箭头），面板 `.is-collapsed` 收至 32px。⚠️ 该箭头**仅 ≤840px 的 MB 双列布局生效**：基础样式必须默认 `display: none`，仅在 `@media (max-width: 840px) and (min-width: 601px)` 里恢复 `display: block`——漏写隐藏规则时，PC 档箭头会裸露在「项目」列末尾（2026-10-19 验收复现） |
 
 > ⚠️ **line-clamp 必须四件套齐全**（`display: -webkit-box` + `-webkit-box-orient: vertical` + `-webkit-line-clamp: N` + `overflow: hidden`），缺 `overflow: hidden` 时省略号不出现、文字直接溢出。
 >
@@ -879,7 +887,7 @@ body { font-family: 'HarmonyOS Sans', 'HarmonyHeiTi'; }
 
 /* 左列最后一项的切换箭头（导航项过多时）：图标取自 assets 上/下箭头 */
 /* ⚠️ 仅 ≤840px 的 MB 双列布局使用：PC 档必须默认 display: none 隐藏，
-   否则箭头会裸露在「项目」列末尾（2026-10-16 验收时复现并修正） */
+   否则箭头会裸露在「项目」列末尾（2026-10-19 验收时复现并修正） */
 .o-nav__cat-toggle {
     display: none;                        /* ⭐ PC 默认隐藏，仅在 ≤840px 媒体查询里恢复 */
     align-self: flex-start;
