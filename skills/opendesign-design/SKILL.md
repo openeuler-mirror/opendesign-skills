@@ -1,7 +1,7 @@
 ---
 name: opendesign-design
 description: OpenDesign HTML 页面生产指南。当需要生成符合 OpenDesign 设计规范的 HTML 页面（按钮、输入框、卡片、导航等 UI 组件）、应用设计规范（栅格/颜色/字号/间距/圆角）、搭建页面框架时使用此 skill。包含 PC/MB 双断点的变量映射硬约束（字号/行高/间距/栅格/图标尺寸的合法取值白名单），覆盖 27 个组件设计规范。生成的 HTML 遵循 opendesign-codegen 工程规范（--o-* 语义 Token、OpenDesign 组件命名、BEM、响应式 Token），可直接作为设计原型或进一步转译为 Vue SFC 生产代码。
-last_update: 2026-10-19
+last_update: 2026-10-20
 ---
 
 # Design Skill · HTML 页面生成指南
@@ -345,6 +345,7 @@ WebFetch 拉取目标社区主题 Token（必须执行！URL 见 #数据资源 �
 | 导航下拉面板 · 分类平铺式 | [floors/navigation-dropdown-categorized.md](floors/navigation-dropdown-categorized.md) | 顶导菜单项展开的分类平铺式下拉面板（多列 + 列头 + 条目说明 + 快捷链接栏，与导航楼层搭配） |
 | Banner | [floors/banner.md](floors/banner.md) | 首页/栏目页顶部横幅（XL/L/M） |
 | 卡片栅格 | [floors/card-grid.md](floors/card-grid.md) | 功能展示、产品列表、特性介绍 |
+| 通用楼层卡片模块 | [floors/floor-card.md](floors/floor-card.md) | 页面通用标准楼层：楼层标题+描述+二级标题+Tab+卡片+查看更多，五档断点固定规格（间距为固定值约束） |
 | 图文特色 | [floors/feature-section.md](floors/feature-section.md) | 左图右文/左文右图特色介绍 |
 | 页脚 | [floors/footer.md](floors/footer.md) | 站点地图、版权信息、社交入口 |
 

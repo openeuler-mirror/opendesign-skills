@@ -10,7 +10,7 @@ opendesign-design/
 ├── CHANGELOG.md                      ← 更新日志
 ├── README.md                         ← 本文件
 ├── components/                       ← 27 个组件设计规范（每个组件一个 .md）
-├── floors/                           ← 7 个楼层模板（每个楼层一个 .md）
+├── floors/                           ← 8 个楼层模板（每个楼层一个 .md）
 ├── global/
 │   ├── hard-constraints.md           ← 变量映射硬约束 + 组件组合规则（唯一真源）
 │   ├── interaction-rules.md          ← 通用交互规范（速查副本，真源 hard-constraints）
@@ -38,7 +38,7 @@ opendesign-design/
 |------|------|----------|------|
 | **必加载** | `global/` | 每次调用起手式 | hard-constraints.md 为设计系统"宪法"（唯一真源）；interaction-rules / layout-rules 为其速查副本 |
 | **按需加载** | `components/` | 用户确认涉及组件后 | 仅读取本次需要的组件规范文档 |
-| **按需加载** | `floors/` | 涉及楼层级复合组件时 | 7 个楼层模板（导航 / 导航下拉面板·平铺式 / 导航下拉面板·分类平铺式 / Banner / 卡片栅格 / 图文特色 / 页脚） |
+| **按需加载** | `floors/` | 涉及楼层级复合组件时 | 8 个楼层模板（导航 / 导航下拉面板·平铺式 / 导航下拉面板·分类平铺式 / Banner / 卡片栅格 / 通用楼层卡片模块 / 图文特色 / 页脚） |
 | **纯参考** | `references/` | 需要时查阅 | SVG 资源、HTML 示例 — 不参与 AI 调度决策 |
 
 ### 典型工作流
