@@ -360,7 +360,8 @@ OTab button Group（HORIZONTAL，自适应宽，固定高）
 - **Hover（悬浮）**：鼠标悬停时，文字颜色提升至 primary2（较浅的品牌色），**字重保持不变**；选中项保持 primary1 不变
 - **Press（按下）**：鼠标按下瞬间，颜色加深至 primary3（深品牌色）；text 变体此时显示同色下划线；button 变体增加 fill2 背景色；**字重保持不变**
 - **Actived（选中）**：当前激活标签的稳定态，使用最强的视觉强调（primary1 + 指示线/背景）；同一时刻仅一个标签处于此状态
-- **Disabled（禁用）**：不可交互状态，退化为 info4 弱化色，字重恢复 Regular，移除所有指示器和特殊背景。**⚠️ 禁用是终态：hover / press 对禁用项一律不得生效**（含不变色、不出现指示器）——详见下方 🔴 段
+- **Disabled（禁用）**：不可交互状态，退化为 info4 弱化色，字重恢复 Regular，移除所有指示器的可见性和特殊背景。**⚠️ 禁用是终态：hover / press 对禁用项一律不得生效**（含不变色、不出现指示器）——详见下方 🔴 段
+  - **「移除指示器」指视觉不可见，不是移出布局**：small 档为竖向 56×56（`::after` 为 16px 短线 + `margin-top: 4px`，在文档流内占位），禁用项若写 `display: none` 会连占位一起删掉，导致该页签在 `justify-content: center` 下只剩文字、垂直居中，**文字比同排其他页签低一截**（实测错位约 10px）。正确写法：`.otab__item:disabled::after { visibility: hidden; }`——保留 16px + 4px 占位，文字与其他页签顶对齐/同位；对 large / medium（指示器绝对定位、不占文档流）无副作用。⛔ 禁用 `.otab__item:disabled::after { display: none; }`。
 
 > 🔴 **为什么 hover / press 禁止改字重（2026-10-20 用户裁决，已升级为 [hard-constraints.md](../global/hard-constraints.md) §2.1 全局字重铁律）**：
 > 原 Part C 曾规定「Hover 非选中 → SemiBold」，该条已作废。理由三条：
@@ -382,6 +383,7 @@ OTab button Group（HORIZONTAL，自适应宽，固定高）
 > .otab__item.is-active:active:not(:disabled) { color: var(--o-color-primary3); }
 > .otab__item:active:not(:disabled)::after { background: var(--o-color-primary3); }
 > .otab__item:disabled { font-weight: 400; color: var(--o-color-info4); cursor: not-allowed; }
+> .otab__item:disabled::after { visibility: hidden; }  /* 视觉移除但保留占位：small 档竖排时禁用项文字与其他页签对齐；⛔ 禁写 display: none（会删掉 16px+4px 占位，文字低一截） */
 > ```
 > 另一条路是把禁用规则写成 `.item:disabled:hover, .item:disabled:active`（0,3,0）硬压，但**首选前者**——语义更直白（"禁用项没有交互态"），且不必为每种交互态补一条禁用规则。参考实现见 `references/examples/dropdown-demo.html`（`:hover:not(.disabled)`）。
 

@@ -32,6 +32,77 @@
 
 > 受影响的高频 Token：`--o-color-control1/4`、`--o-color-info1~4`（及 inverse）、`--o-shadow-*`。生成后**必须在浏览器实际打开确认**这些半透明元素可见——仅静态读代码无法发现声明被丢弃。
 
+### 0.1 🔴 Light → Dark 切换铁律（全局，无例外，2026-10-22 用户裁定）
+
+> **任何在 Light 模式下引用语义 Token 的地方，切到 Dark 模式时必须改用同一 Token 的 Dark 值。不存在"只切文字色、不切其他颜色"的部分切换。**
+
+**规则本体**：
+- Dark 不是"换个背景色"，而是**整套 Token 的成对翻转**——同一个 `--o-color-*` 变量名在 Light / Dark 下各有取值，CSS 必须让变量值随主题切换，业务规则只写 `var(--o-color-*)`、永远不写死色值
+- **切换范围 = 全部**：交互态（hover / active / selected / disabled）、组件自身色（背景 / 文字 / 边框 / 图标 / 阴影）、浅色背景 Token（`*-light`）一个都不能漏
+- ❌ 禁止只覆盖 `info1` / `info3` / `fill2` 这类"最明显的文字与背景"，漏掉 `primary*` / `*-light` / 阴影
+- ❌ 禁止在 Dark 作用域里给某个元素单独写 Light 色值"修补"
+
+**典型翻车（OCard 验收页实测，2026-10-22）**：`.o-dark` 只覆盖了 `fill2/fill3/info1/info3/shadow-2`，`primary` 系列未切换，导致 dark 区卡片 hover 标题仍是 **Light 的 `#002FA7` 深蓝**压在深色卡上（对比度极低、几乎不可见），Footer 按钮 hover 仍是 Light 的 `#5177CA`，图标槽底色 `primary1-light` 与 OTag 底色 `primary1` 也全是 Light 值。根因是**把 Dark 当成"反色文字"处理，而不是"整套 Token 翻转"**。
+
+**实现范式**（变量级切换，业务规则零改动）：
+
+```css
+:root { --o-color-primary1: rgb(0, 47, 167); --o-color-primary2: rgb(81, 119, 202); /* ...Light 值 */ }
+.o-dark {
+    --o-color-primary1: rgb(73, 122, 248);   /* Dark 值，非 Light 值 */
+    --o-color-primary2: rgb(42, 72, 158);
+    --o-color-primary3: rgb(29, 51, 120);
+    --o-color-primary1-light: rgb(18, 34, 87);
+    /* ...同段内继续覆盖 fill / info / shadow 等全部被引用到的 Token */
+}
+```
+
+**openEuler 常用 Token Dark 值**（⚠️ **仅限 openEuler 社区**；真源：`opendesign-tokens/references/tokens-openeuler.md`，生成前仍须按 SKILL.md §数据资源 拉取上游确认）：
+
+| Token | Light | Dark |
+|---|---|---|
+| `--o-color-primary1` | `rgb(0, 47, 167)` | `rgb(73, 122, 248)` |
+| `--o-color-primary2` | `rgb(81, 119, 202)` | `rgb(42, 72, 158)` |
+| `--o-color-primary3` | `rgb(0, 39, 147)` | `rgb(29, 51, 120)` |
+| `--o-color-primary1-light` | `rgb(206, 219, 245)` | `rgb(18, 34, 87)` |
+
+> 🚨 **社区限定（最高优先级，禁止跨社区套用）**：上表**只对 openEuler 成立**。SKILL.md 规定六社区 Token 相互独立（openGauss 品牌色为紫色、openEuler 为蓝色、kunpeng / ascend / mindspore / openubmc 各有取值），**禁止不识别目标社区就默认用 openEuler 值**。目标社区不是 openEuler 时，必须拉取该社区 `tokens-{社区}.md`（或上游 `{community}-token.json`）的 Dark 列，逐 Token 重填——**色相不同，照抄 openEuler 的 Dark 值等于用错社区，属最高优先级错误**。查无该社区 Token 时停下询问用户，禁止以 openEuler 代替。
+
+**自检方法**：切换主题后在浏览器逐项核对——① hover / active / selected 三态颜色是否变化；② 组件背景 / 边框 / 图标色是否变化；③ `*-light` 浅底是否变化。任何一项"切了主题却没变"即违反本条。
+
+**⚠️ 上游 Token 未定义的变量，如何取 Dark 值**：
+
+上游 `tokens-{社区}.md` 并非定义全部语义 Token——以 openEuler 为例，只定义了 `fill*` / `primary*` / `link*` / `control*` / `grey*`，**`info1~4` 系列完全没定义**（由组件规范自行约定）。这类"规范自定义 Token"取 Dark 值时：
+
+1. **先查上游有无该 Token**——有则必须用上游 Dark 列，禁止自拟
+2. 上游没有时，按**「同灰度、反色相」**推导：取 Light 值的灰度比例，Dark 用白色按**同一 alpha** 表达
+   - `info2`：Light `#333`（黑 80%）→ Dark `rgba(255,255,255,.8)`
+   - `info3`：Light `#666`（黑 60%）→ Dark `rgba(255,255,255,.6)`
+   - `info4`：Light `#999`（黑 40%）→ Dark `rgba(255,255,255,.4)`
+3. **推导值必须在规范里写明出处**（注明"上游未定义，按同灰度反色推导"），避免下一轮又被当成漏切或误改为 Light 值
+4. `--o-color-white`（纯白）与 `*-inverse` 系列**不需要翻转**——前者两模式同为白；后者是「叠在深色封面上」的封面相对色，与主题无关（OCard 的 `info1-inverse` / `info3-inverse` 即此类）
+
+---
+
+### 0.2 🔴 规范内部一致性铁律（全局，无例外，2026-10-22 新增）
+
+> **同一个子节点在规范中被多处定义时，各处必须一致；不一致即规范缺陷，实现侧无论照哪边执行都会错一半。**
+
+**规则本体**：
+- 组件规范通常有**多个位置**描述同一个子节点：变体结构示意、组件层级结构树、布局规格表、颜色 Token 映射、交互状态表、代码基准。这些位置**必须互相一致**
+- ❌ 禁止同一节点在不同变体 / 不同章节里给出**不同**的 Token 或数值（除非规范用**显式文字**说明"此处为例外"，且说明差异是什么）
+- ❌ 禁止把"某个楼层页面里恰好长这样"的样式写进组件规范当默认值——楼层产物是**业务内容**，不是组件规格（另见 [component-doc-spec.md 结构节点来源规则](./component-doc-spec.md)）
+
+**典型翻车（OCard 图标槽，2026-10-22 Chrome 实测）**：同一份 card.md 中，`full-cover` 的结构示意（L198）与组件层级结构树（L1390）写图标槽底色为 `fill2`，而 `icon` 卡的布局规格（L369）与 Dark 翻转硬约束（L457）写 `primary1-light`。实现侧照 full-cover 的结构树执行 → Light 下白色色块压白卡不可辨、**Dark 下 `fill2` 与卡片底色同为 `rgb(36,36,39)`，图标槽整块消失**，图标裸漂在卡上；同页 icon 卡的图标槽却是可见色块。用户反馈即"第三个卡片颜色根本不对"。根因是**规范自身矛盾**，不是实现写错。
+
+**生成 / 修改前的强制动作**：
+1. 从规格表或结构树定位目标节点的**名字**（如「图标槽」「Tag」「Footer」）
+2. 在规范内**全文搜索该名字**，列出**全部**出现位置
+3. 逐处比对 Token / 数值 / 尺寸 / 交互定义是否一致
+4. 发现不一致 → **先修规范再生成**，禁止自行猜测取哪一边；无法判断时停下询问用户
+
+**与规则 4（组件调用）的关系**：规则 4 管"卡片里的子组件必须调组件、禁止自绘样式"；本条管"同一个子节点在规范各章节之间必须自洽"。两者独立，都要过。
+
 ---
 
 ## 1. 断点定义

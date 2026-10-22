@@ -6,7 +6,524 @@
 
 ---
 
-## 2026-10-20
+## 2026-10-22
+
+### 第二十二轮：Dark 规则三项补强 + 全库 Dark 漏切普查（发现 fill 值与上游不一致）
+
+> 接续第二十轮「Light → Dark 全量 Token 翻转」铁律，补三处规则缺口，并对全库 20 个含 Token 定义的 HTML 做漏切普查。
+
+#### 一、规则补强（3 项）
+
+**1. [hard-constraints.md §0.1](file:///Users/lixuan/opendesign-skills/skills/opendesign-design/global/hard-constraints.md) 补「社区限定」声明**
+
+Dark 值表此前只写了「真源 tokens-openeuler.md」，未说明**仅对 openEuler 成立**。SKILL.md 规定六社区 Token 相互独立（openGauss 紫色 / openEuler 蓝色），实现侧若目标社区是 openGauss 却照抄 openEuler Dark 值，等于**用错社区——最高优先级错误**。现已加显式限定：非 openEuler 必须拉该社区 Token 的 Dark 列逐项重填，查无则停下询问，禁止以 openEuler 代替。
+
+**2. §0.1 补「上游未定义的变量如何取 Dark 值」**
+
+上游 `tokens-openeuler.md` 只定义 `fill*` / `primary*` / `link*` / `control*` / `grey*`，**`info1~4` 系列完全没定义**（由组件规范自定）。此前无推导口径，实现侧只能猜。现确立：
+- 先查上游有无 → 有则必须用上游 Dark 列，禁止自拟
+- 上游没有 → 按**「同灰度、反色相」**推导（Light `#333`=黑80% → Dark `rgba(255,255,255,.8)`，以此类推 info2/info3/info4）
+- 推导值**必须在规范写明出处**，避免下轮又被当成漏切或误改回 Light 值
+- `--o-color-white` 与 `*-inverse` 系列**不需翻转**（前者两模式同为白；后者是封面相对色，与主题无关）
+
+**3. 新增 [§0.2「规范内部一致性铁律」](file:///Users/lixuan/opendesign-skills/skills/opendesign-design/global/hard-constraints.md)**
+
+直接源于第二十一轮根因（同一子节点在规范多处定义不一致）。规则本体 + 4 步强制动作（定位节点名 → 全文搜索全部出现位置 → 逐处比对 → 不一致先修规范再生成），并厘清与规则 4 的分工（规则 4 管「子组件必须调组件」，本条管「同一节点在规范各章节间必须自洽」）。
+
+#### 二、全库 Dark 漏切普查（20 个含 Token 定义的 HTML）
+
+| 文件 | dark 作用域 | 覆盖数 | 引用数 | 漏切 | 形态 |
+|---|---|---|---|---|---|
+| `select-demo.html` | ● 有 | 12 | 12 | **0** | ✅ 标准 `.o-dark` 范式，零漏切 |
+| `search-demo.html` | ● 有 | 11 | 11 | **0** | ✅ 标准 `.o-dark` 范式，零漏切 |
+| `opendesign-card-check.html` | ● 有 | 9→**12** | 17 | 6→**0**（见下） | ✅ 本轮修复 |
+| 其余 17 个 | ○ 无 | 0 | — | — | Light-only 演示，未实现 Dark（非漏切，属范围决策） |
+
+**`opendesign-card-check.html` 漏切 6 项的逐项裁定**：
+
+| Token | 是否真漏切 | 裁定依据 |
+|---|---|---|
+| `info2` | ✅ **真漏切，已修** | 分区标题色，dark 区原残留 Light `#333` 深灰压深底。已补 `rgba(255,255,255,.8)` |
+| `info4` | ✅ **真漏切，已修** | 封面占位图标（`.ocard__cover-inner`）色，dark 区原残留 Light `#999`。已补 `rgba(255,255,255,.4)` |
+| `fill1` | ❌ 误报 | 仅用于页外演示画布，`.o-dark` 自身 `background: rgb(20,20,22)` 已独立指定，dark 作用域内无元素引用 |
+| `white` | ❌ 不需翻转 | 纯白两模式同为白 |
+| `info1-inverse` / `info3-inverse` | ❌ 不需翻转 | 封面相对色（叠在深色封面上的白字），与主题无关 |
+
+**实测（Chrome，light 区 vs dark 区同名元素对照）**：封面占位图标 `rgb(153,153,153)` → `rgba(255,255,255,.4)` ✅；分区标题 small `rgb(153,153,153)` → `rgba(255,255,255,.6)` ✅；分区标题 `rgb(51,51,51)` → `rgb(255,255,255)` ✅。三项均正确翻转，无回归。
+
+#### 三、⚠️ 待你裁决：dark 区 fill 值与上游 Token 不一致
+
+普查中发现 **`.o-dark` 的 `fill2` / `fill3` 与上游真源不符**，且该不一致已被 card.md 固化：
+
+| Token | 上游真源 Dark（`tokens-openeuler.md` L106-114） | 当前 demo + card.md L451 |
+|---|---|---|
+| `--o-color-fill1` | `rgb(18, 18, 20)` | 未覆盖（画布另写 `rgb(20,20,22)`，接近但不等于） |
+| `--o-color-fill2` | `rgb(0, 0, 0)` | **`rgb(36, 36, 39)`** ❌ |
+| `--o-color-fill3` | `rgb(26, 26, 28)` | **`rgb(58, 58, 62)`** ❌（注释标为「演示占位」） |
+
+SKILL.md 与 QA 清单均要求「颜色值必须来自上游 Token，禁止凭训练数据猜测」。当前 `rgb(36,36,39)` 既非上游值也未标注为演示值，属**无出处色值**。
+
+**未擅自修改的原因**：改成上游 `rgb(0,0,0)` 会让整个 dark 区卡片变纯黑、视觉变化很大，且 card.md L451 的既有记载也要同步改——这属于规格口径变更，需你确认后再动。
+
+**另一处命名冲突（`navigation-demo.html`，未改）**：该文件用 `--o-color-primary1-light` / `--o-color-primary1-dark` 表达「primary1 在亮/暗主题下的值」，与标准 Token 命名（`primary1-light` = 主色浅底 `rgb(206,219,245)`）**语义完全冲突**——同名变量在两个文件里含义不同，跨文件复制 CSS 会静默出错（深蓝代替浅底）。该文件用的是旧的主题后缀范式，非 §0.1 的 `.o-dark` 范式。建议后续统一，但涉及导航楼层大量规则，本轮不动。
+
+#### 修改清单
+
+1. **`global/hard-constraints.md`**：§0.1 补社区限定声明 + 上游未定义 Token 的 Dark 推导口径（4 条）+ 不需翻转的白名单；新增 §0.2 规范内部一致性铁律
+2. **`references/examples/opendesign-card-check.html`**：`.o-dark` 补 `info2` / `info4` 两项 Dark 值（附推导出处注释）
+3. **`CHANGELOG.md`**：本轮记录（含普查方法、逐项裁定、待裁决项）
+
+---
+
+### 第二十一轮：修复 full-cover 图标槽误用 `fill2` 底色（与 icon 卡不一致、Dark 下整块消失）
+
+> 用户反馈：「第三个卡片颜色根本不对，到底用的什么颜色变量」
+
+#### 结论：用的是 `--o-color-fill2`
+
+**出事规则**（验收页 `.ocard--full .ocard__icon`）：
+
+```css
+background: var(--o-color-fill2);   /* ← 就是它 */
+color: var(--o-color-primary1);
+```
+
+**为什么"根本不对"**：
+
+| 模式 | `fill2` 取值 | 卡片自身底色 | 结果 |
+|---|---|---|---|
+| Light | `rgb(255,255,255)` 纯白 | 卡片背景也是 `fill2` 纯白 | 白色方块压白卡，**色块不可辨** |
+| Dark | `rgb(36,36,39)` | 卡片背景也是 `fill2` `rgb(36,36,39)` | **图标槽整块消失**，图标裸漂在卡上 |
+
+而第二张 **icon 卡**的图标槽用的是 `--o-color-primary1-light`（Light `rgba(0,47,167,.08)` 浅蓝 tint / Dark `rgb(18,34,87)` 深蓝 tint），是**可见的色块**——同一页两种卡片图标槽底色不一致，第三张卡因此明显"颜色不对"。
+
+#### 根因：card.md 规范自身矛盾
+
+| 位置 | 写法 |
+|---|---|
+| card.md L198（full-cover 结构示意） | 图标槽 **`fill2` 底** + primary1 图标 |
+| card.md L1390（full-cover 组件层级结构树） | `fill: color-fill2` |
+| card.md L369（icon 卡布局规格） | 图标槽底色 **`primary1-light`** + 图标色 primary1 |
+| card.md L457（Dark 翻转硬约束，第二十轮新增） | 图标槽底色 `primary1-light` |
+
+**同一份规范里 full-cover 写 `fill2`、icon 卡写 `primary1-light`**，实现侧按 full-cover 的结构树（L1390）执行，于是复现了不一致。根因是 full-cover 的图标槽定义没有与 icon 卡对齐——两者本应同构（图标槽 = `primary1-light` 底 + `primary1` 图标，仅圆角档位不同）。
+
+#### 修改清单
+
+1. **`references/examples/opendesign-card-check.html`**：`.ocard--full .ocard__icon` 底色 `var(--o-color-fill2)` → `var(--o-color-primary1-light)`（与基础规则 `.ocard__icon` 及 icon 卡完全一致，Dark 下自动翻转为 `rgb(18,34,87)`）
+2. **`components/card.md`**：L198 结构示意 `fill2 底` → `primary1-light 底`；L1390 组件层级结构树 `fill: color-fill2` → `fill: color-primary1-light`——两处与 L369 / L457 对齐，消除规范内部矛盾
+
+#### 实测结果（Chrome，全页 7 个图标槽）
+
+| 卡片 | 模式 | 底色 | 图标色 | 与卡片底色是否可辨 |
+|---|---|---|---|---|
+| icon 卡 ×2 + horizontal | Light | `rgba(0,47,167,.08)` | `rgb(0,47,167)` | ✅ |
+| full-cover ×2 | Light | `rgba(0,47,167,.08)` | `rgb(0,47,167)` | ✅ |
+| icon 卡 | Dark | `rgb(18,34,87)` | `rgb(73,122,248)` | ✅ ≠ 卡底 `rgb(36,36,39)` |
+| full-cover | Dark | `rgb(18,34,87)` | `rgb(73,122,248)` | ✅ ≠ 卡底 `rgb(36,36,39)` |
+
+---
+
+### 第二十轮：确立「Light → Dark 全量 Token 翻转」全局铁律，修复 dark 区 hover 态误用 Light 色
+
+> 用户要求：「我发现dark模式下的hover态，严重错误，不应该使用light模式的primary1，应该对应选择dark模式primary1。这个是所有light切换dark的规则！！！一定是这样的！！！」
+
+#### 修正内容
+
+| 项 | 改前（错误） | 改后 |
+|---|---|---|
+| dark 区 hover 标题色 | Light 的 `#002FA7` 深蓝压在深色卡上，对比度极低、几乎不可见 | **`rgb(73,122,248)`**（primary1 Dark 值） |
+| dark 区 Footer 按钮 hover / active | Light 的 `#5177CA` / `#002793` | **`rgb(42,72,158)`** / **`rgb(29,51,120)`**（primary2 / primary3 Dark 值） |
+| dark 区图标槽底色 `primary1-light` | Light 的 8% 黑蓝浅底 | **`rgb(18,34,87)`**（Dark 值） |
+| dark 区图标色 / OTag fill 底色 `primary1` | Light 的 `rgb(0,47,167)` | **`rgb(73,122,248)`**（Dark 值） |
+| 规则层面 | 全局无任何 Dark 切换规则；card.md「颜色 Token 映射」只列了背景与阴影两项，易被理解为"Dark 只切背景和文字" | 新增**全局铁律 hard-constraints.md §0.1**「Light → Dark 切换铁律」+ card.md 同步引用 |
+
+#### 根因
+
+**把 Dark 当成"反色文字"处理，而不是"整套 Token 的成对翻转"。** 验收页 `.o-dark` 作用域只覆盖了 `fill2 / fill3 / info1 / info3 / shadow-2` 五个"最明显的文字与背景"变量，`primary` 系列一个都没切；而 hover 规则（`.ocard--cover:hover .ocard__title → primary1`、`.o-button--text:hover → primary2`）、图标槽底色（`primary1-light`）、图标色与 OTag 底色（`primary1`）全部写的是 `var(--o-color-primary*)`——**变量名没错，错在 Dark 作用域没有给这些变量提供 Dark 值**，于是全部回落到 `:root` 的 Light 值。根上的根是 skill 里**从来没有一条规则说明 Dark 切换的范围与口径**，实现侧只能自行猜测（且猜成了"只切文字色"）。
+
+#### 修改清单
+
+1. **`global/hard-constraints.md`** 新增 **§0.1「Light → Dark 切换铁律」（全局，无例外）**：
+   - 规则本体：Dark 是整套 Token 成对翻转；切换范围 = 交互态 + 组件自身色 + `*-light` 浅底 + 阴影，一个都不能漏
+   - 明确两条禁令：禁止只切 `info1` / `info3` / `fill2` 漏掉 `primary*` / `*-light`；禁止在 Dark 作用域给某元素单独写 Light 色值"修补"
+   - 实现范式（变量级切换，业务规则零改动）+ openEuler 常用 Token Dark 值表（真源 `opendesign-tokens/references/tokens-openeuler.md` L59-66）
+   - 自检方法：切主题后核对 hover/active/selected 三态、组件背景/边框/图标、`*-light` 浅底是否都变化
+2. **`references/examples/opendesign-card-check.html`**：`.o-dark` 补全 `primary1 / primary2 / primary3 / primary1-light` 四项 Dark 值（附铁律引用注释与旧版错误说明）；⑤ Dark 区标题说明改为「整套 Token 成对翻转」并列出全部翻转值；dark 区 full-cover 加回 OTag（同时演示 Tag 底色也走 Dark primary1）；裁定清单新增**裁定 H**
+3. **`components/card.md`**：「颜色 Token 映射」补 Dark 翻转硬约束说明（列出卡片全部需翻转的 Token 与 openEuler Dark 值，并注明原 RGB 列仅为旧版快照、以 hard-constraints §0.1 与上游真源为准）
+4. **`global/qa-checklist/component-html-qa-checklist.md`**：§3.1 层级关系新增「Dark 模式必须整套 Token 成对翻转」检查项（含三项自检方法与 openEuler Dark 值真源）；§10.2 易错点表新增第 19 条
+
+#### 影响面
+
+- ⚠️ 破坏性（全局）：凡按旧口径生成的带 Dark 模式的产物，**所有** Dark 作用域都需复查是否漏切 `primary*` / `*-light` / 阴影——不只是 hover，active / selected / disabled、图标色、Tag 底色、图标槽浅底全部在内
+- Playwright 实测（Chrome，同页 light 区 vs dark 区对照）：
+
+| 实测项 | Light 区 | dark 区 | 判定 |
+|---|---|---|---|
+| hover 标题 | 黑 → `rgb(0,47,167)` | 白 → **`rgb(73,122,248)`** | ✅ 各自用本模式 primary1 |
+| hover 按钮 | 黑 → `rgb(81,119,202)` | 白 → **`rgb(42,72,158)`** | ✅ 各自用本模式 primary2 |
+| OTag fill 底 | `rgb(0,47,167)` | **`rgb(73,122,248)`** | ✅ |
+| 图标槽底色 | `rgba(0,47,167,0.08)` | **`rgb(18,34,87)`** | ✅ |
+| 图标色 | `rgb(0,47,167)` | **`rgb(73,122,248)`** | ✅ |
+| 卡背景 / 标题 | `rgb(255,255,255)` / 黑 | `rgb(36,36,39)` / 白 | ✅ 无回归 |
+
+---
+
+### 第十九轮：full-cover 图标与 Tag 明确为非必选 + Tag 改为严格调用 OTag（tag.md）
+
+> 用户要求：「icon是非必选，标题后面的tag也是。tag应该严格遵循tag.md规范来。」
+
+#### 修正内容
+
+| 项 | 改前 | 改后 |
+|---|---|---|
+| full-cover 图标槽 | 未标注可选性（结构树中与标题并列，读起来像必选） | **非必选**（无图标时标题直接作为 Head 行首元素） |
+| full-cover 标题后 Tag | 未标注可选性 | **非必选**（需要状态标记时才加） |
+| Tag 样式来源 | **卡片自创** `.ocard__badge`：高 20px · 圆角 **100px** · padding **0 8px** · primary1 底 + 白字 | **调用 OTag 组件**（`fill` × `small`）：高 20px · 水平内边距 **6px** · 圆角 **4px**（radius_control-m）· tip2 12px / 18px · Color 按语义选。旧自创样式的圆角与内边距均不符合 tag.md，违反 card.md 自己的规则 4（禁止自创 Badge/Tag 样式） |
+| Tag 位置口径 | 规则 4 只写「右上角 absolute」（cover 口径），full-cover 未说明 | 规则 4 补 **full-cover 例外**：整卡即图片、无独立封面区，Tag 位于**内容层 Head 行内、标题之后**，跟随内容流 |
+
+#### 根因
+
+**两条线：**
+
+1. **规范未标注节点可选性 → 实现侧当成必选输出**。card.md 的 full-cover 结构树把图标槽与 Tag 和标题并列书写，没有「可选」标记；而「响应式行为」又只写了四项断点规则，没有任何地方说明这两个节点可省略。用户本轮明确「icon 是非必选、标题后面的 tag 也是」——只有标题与正文是内容层必选节点。
+2. **Tag 用了自创样式，违反自家规则 4**。`.ocard__badge`（圆角 100px、padding 0 8px）是卡片自己画的徽标，而 card.md 规则 4 明令「禁止自创 Badge/Tag 的 CSS 样式、必须调用 OTag 组件」。按 tag.md 核对，OTag small 的正确规格是**圆角 4px（radius_control-m）+ 水平内边距 6px + 垂直内边距 2px**，自创值两项都不对。根因是**旧版从 opendesign-home.html 楼层抄结构时又把楼层的业务样式带回了组件**（与第十七轮「界面示意区」同一类错误：把楼层产物当组件规范），且规则 4 写明了却未在 full-cover 章节落实。
+
+#### 修改清单
+
+1. **`components/card.md`**
+   - **文字规格表**：「徽标（NEW/HOT）」行改为「标题后 Tag —— 调用 OTag 组件，不在此定义样式」，并给推荐变体（fill × small 的关键规格）
+   - **结构示意 / 组件层级结构**：图标槽与 Tag 均标注「（可选）」，标题与正文标注「（必选）」；Tag 节点注明「调用 tag.md，禁止自创徽标样式」
+   - **代码基准**：删除自创徽标样式归属，加注释「标题后的 Tag 是 OTag 组件实例，样式归 tag.md」
+   - **新增硬约束**「full-cover 内容层节点可选性」：只有标题与正文必选；图标槽非必选、Tag 非必选；Tag 必须严格遵循 tag.md，禁止自创；位置 = Head 行内标题之后（不适用 cover 的「右上角 absolute」口径）
+   - **规则 4**：补「full-cover 例外」——Tag 位置与可选性口径，并强调任何位置下 Tag 本体都必须是 OTag 实例
+   - **结构要点**：节点可选性与 Tag 组件化表述同步
+2. **`references/examples/opendesign-card-check.html`**
+   - **新增 OTag 组件样式块**（按 tag.md 规格逐项注释：高 20px / 内边距 6px·2px / 圆角 4px / tip2），与 OButton 块同范式（组件样式独立成块，卡片只引用）
+   - **删除自创的 `.ocard__badge`** 样式与全部 4 处使用，改为 `<span class="otag otag--fill otag--small">`
+   - **三张演示卡分别演示三种节点组合**：全要素（图标 + 标题 + Tag）/ 无图标 / 无 Tag；Dark 区 full-cover 也改为无 Tag
+   - 表 4b「full-cover 徽标」行拆为「内容层节点（可选性）」+「标题后 Tag（OTag 引用）」两行；裁定清单新增**裁定 G**；④ 分区说明同步
+3. **`global/qa-checklist/component-html-qa-checklist.md`**：§3.1 布局还原新增「可选节点未标注即为规范缺项」检查项（规格表须逐节点标注必选 / 非必选，未标注时实现侧会当成必选全部输出）；§10.2 易错点表新增第 17 条「卡片内 Tag 用自创样式而非 OTag」
+
+#### 影响面
+
+- ⚠️ 破坏性：按旧版生成的 full-cover 卡片，标题后 Tag 为自创样式（圆角 100px / padding 0 8px，应为 OTag 的圆角 4px / 内边距 6px·2px）；若把图标与 Tag 当必选节点输出，需按「只有标题与正文必选」删减
+- Playwright 实测（Chrome，五档同页）：三张演示卡节点组合分别为（图标+Tag）/（无图标+Tag）/（无 Tag），**可选性成立**；OTag 规格五档一致命中 tag.md——高 20px、内边距 6px/6px（水平）、圆角 4px、字号 12px、fill primary 背景 rgb(0,47,167) + 白字、标题→Tag 间距 12px；卡片比例 1.778 不回归
+
+---
+
+### 第十八轮：full-cover 整卡纳入封面固定比例规则（16:9 / 3:1，宽按栅格、高由宽反推）
+
+> 用户要求：「full-cover卡片内部是整个图片填充，因此按照图片比例规范，整个卡片应该是要保持16:9或者3:1的比例，宽度按照栅格来，以宽度推算出高度」
+
+#### 修正内容
+
+| 项 | 改前 | 改后 |
+|---|---|---|
+| full-cover 卡片高度 | **由内容自适应**（文字撑高），无比例约束 | **高度 = 宽度 ÷ 比例**（`aspect-ratio` 反推），禁止内容撑高、禁止写死高度 |
+| full-cover 卡片比例 | 未规定 | **`16:9`（默认）/ `3:1`（超宽形态）**，遵守规则 5 的固定比例集，禁止竖向比例 |
+| full-cover 宽度来源 | 未与栅格显式挂钩 | **宽度按栅格定**（单列 / 跨双列 / 跨整行） |
+| ≤600px 两列平铺档 | full-cover 只占一列（150px 宽） | **跨满整行**（312px 宽）——单列 150px 按 16:9 只能推出 84px 高，容不下内容层 144px |
+| 内容层约束 | 无 | 内容层（padding 28/24/24 + 标题 ≤2 行 + 描述 ≤3 行）必须在比例高度内放得下，禁止溢出 |
+
+#### 根因
+
+**full-cover 的「图片区域」边界没有和规则 5 对齐**：规则 5（封面图片固定比例）原文只写「cover 类型卡片的**封面图片区域**」，full-cover 的封面就是**整张卡片**，规则却未覆盖到它。于是 full-cover 的高度走了组件默认口径「由内容自适应」——而它本质上是一张图片，图片随文字长短变形 / 漂移违背比例规范；同行多卡底边参差也源于此。根因是**规则的适用范围表述漏了一类「图片区域 = 整卡」的形态**，不是实现侧写错。
+
+#### 修改清单
+
+1. **`components/card.md`**
+   - **响应式行为**：「高度由内容自适应」补 full-cover 例外说明
+   - **full-cover 规格 → 布局规格表**：新增 3 行——卡片比例（16:9 默认 / 3:1 超宽）、卡片宽度（由栅格决定）、卡片高度（= 宽度 ÷ 比例）
+   - **新增硬约束**「full-cover 整卡必须保持 16:9 / 3:1 横向比例」：含比例白名单、宽高推导方式、禁止项（内容撑高 / 写死高度 / 竖向比例）、内容层放得下的验算（最窄档 312px → 16:9 高 175.5px ≥ 内容层 144px；3:1 仅 104px 放不下须回退）、与 cover 的分工（比例作用于封面区域 vs 整张卡）
+   - **规则 5**：补「适用范围」——cover 的比例作用于封面图片区域，full-cover 的比例作用于整张卡片；技术实现补 full-cover 的 `aspect-ratio` 示例；重要说明补 full-cover 条目
+   - **结构示意 / 组件层级结构 / 代码基准 / 结构要点**：full-cover 卡片节点补 `aspect-ratio: 16 / 9（或 3 / 1）`，代码基准加注「规范硬约束（2026-10-22 新增，该页原未设置）」
+2. **`references/examples/opendesign-card-check.html`**：`.ocard--full` 加 `aspect-ratio: 16 / 9`（附比例验算注释）；≤600px 档 full-cover 跨满整行（`grid-column: 1 / -1`）；表 4b 新增「卡片比例」「宽度 / 高度」两行；④ 分区说明与裁定清单新增**裁定 F**
+3. **`global/qa-checklist/component-html-qa-checklist.md`**：§3.1 尺寸精度新增「图片 / 整卡比例必须来自固定比例集，禁止内容撑高」检查项；§10.2 易错点表新增第 16 条「固定比例的容器被内容撑高」
+
+#### 影响面
+
+- ⚠️ 破坏性：按旧版生成的 full-cover 卡片高度由内容决定（应改为宽 ÷ 比例）；若旧实现给了固定 `height` 或让文字撑高，均需按新规则重写；窄档（两列平铺）下 full-cover 须跨满整行，否则 16:9 高度容不下内容层
+- 修复后 full-cover 卡片尺寸完全由「栅格宽度 × 比例」决定，与文案长短解耦，同行卡片底边一致
+
+---
+
+### 第十七轮：full-cover 定义修正——整卡图片填充 + 文字层，移除「界面示意区」节点
+
+> 用户裁定：「不需要，full-cover的定义就是卡片内部是整个图片填充的而已」
+
+#### 修正内容
+
+| 项 | 改前 | 改后 |
+|---|---|---|
+| full-cover 内容层节点 | 图标 / 标题 / 徽标 / 正文 / **内容区（可选，如界面示意，fill2 底 + shadow-1）** | 图标 / 标题 / 徽标 / 正文**四类节点，无内容区节点** |
+| 代码基准 | 含 `.oc-card--full-cover__visual{...}` 规则 | 删除该规则 |
+| 验收页 | 4 处 `<div class="ocard__visual">界面示意区</div>` 占位块 + 对应 CSS + 表 4b「full-cover 内容区（界面示意）」行 | 全部移除，full-cover 卡 = 封面背景 + 文字层 |
+
+#### 根因
+
+**把业务楼层的自定义内容误当组件规范节点**：旧版 card.md 从 opendesign-home.html「最新上线」楼层抄结构时，把该楼层业务里加的「界面预览块」（`.oc-card--full-cover__visual`，fill2 底 + 内档圆角 + shadow-1）一并写进了 full-cover 的规范结构树，标注为「可选，如界面示意」。实际上 full-cover 的组件语义只是「封面图铺满整卡作为背景 + 文字层叠于封面上层」，「界面预览块」是那个楼层的业务内容，不是组件固有节点。规范多写一个可选节点，实现侧就会把它当合法结构反复生成（本轮验收页 4 个实例全部带上该占位块即为此因）。
+
+**核心教训**：从线上页面提炼组件规范时，必须区分「组件固有结构」与「该页面的业务内容」——楼层里的自定义区块不能顺手带入组件规范；凡标注「可选」的节点尤其需要确认它属于组件语义还是业务扩展。
+
+#### 修改清单
+
+1. **`components/card.md`**
+   - **结构示意**：删除「内容区（可选，如界面示意）」节点；新增裁定说明——full-cover 语义 = 整幅图片填充 + 文字层叠于封面上层，明确 `.oc-card--full-cover__visual` 是 opendesign-home.html 楼层的业务内容而非规范节点
+   - **代码基准**：删除 `.oc-card--full-cover__visual` CSS 规则
+   - **组件层级结构**：删除「内容区 FRAME」节点；结构要点补「内容层只有图标 / 标题 / 徽标 / 正文四类节点」
+   - **硬约束**：「full-cover 圆角分层」表述由「图标槽、界面示意区、内容区」修正为「图标槽等」
+2. **`references/examples/opendesign-card-check.html`**：删除 4 处 `.ocard__visual` 占位块及其 CSS、表 4b 中「full-cover 内容区（界面示意）」行；full-cover 演示卡收敛为「封面背景 + 图标/标题/徽标/正文」
+
+#### 影响面
+
+- ⚠️ 破坏性：按旧版生成的 full-cover 卡片若带「界面示意区」占位块（fill2 底 + shadow-1 + 固定高度的内层预览区），该节点不合规，应移除；卡片高度改由文字内容自适应
+- 修复后 full-cover 实例结构 = `.ocard__bg`（封面铺满）+ `.ocard__inner`（Head 行 + 正文），与 card.md 结构树一致
+
+---
+
+### 第十六轮：OCard icon 补齐两种排列方式（vertical / horizontal），结构与 cover 完全镜像
+
+> 用户要求：「icon卡片应该要有两种排列方式的，1.icon与标题横向排列；2.icon与标题上下排列。逻辑和cover卡片种类逻辑一样的有vertical、horizontal」
+
+#### 修正内容
+
+| 项 | 改前 | 改后 |
+|---|---|---|
+| icon 的排列方式 | **规范未定义**，实现侧自由发挥（曾把 vertical 做成「图标与标题横排」） | **两种排列，与 cover 共用同一套 layout 语义、结构镜像**：`vertical` 图标在标题**上方**（上下排列）/ `horizontal` 图标在标题**左侧**（横向排列） |
+| icon + vertical DOM | `.ocard__header` 为横向 flex 行（图标与标题同层横排） | `.ocard__header` 为 **column**：`.ocard__icon` 在上、`.ocard__title` 在下，`gap: 12px`；`.ocard__body`（描述）为下一个兄弟节点 |
+| icon + horizontal DOM | 无明确结构 | 整卡 `flex-direction: row`：`.ocard__icon` **移出 Header** 作为卡片第一个子元素，`.ocard__body`（标题+描述）为第二子元素，`flex: 1; min-width: 0`，横向 `gap: 12px` |
+| 「标题行盒→描述 8px」在 vertical 下的成立性 | 横排结构下 header 高 = `max(图标槽 32, 标题行盒 30)`，header 底比标题行盒底低 2~6px，实测 **10 / 14 / 8** 而非 8 | column 结构下 header 底**恒等于**标题行盒底，五档实测全部精确 8px，且标题折行时依然成立 |
+
+#### 根因
+
+**规范未定义排列方式的 DOM 结构 → 实现侧按个人理解造结构，与同类组件逻辑相反**。card.md 此前只规定了 icon 的尺寸 / 颜色 / 间距分档，**没有「icon 有哪些排列方式、每种排列的 DOM 长什么样」这一节**；组件层级结构树里 icon 与 cover 混用同一个 Header 描述，也未区分 layout。于是：
+
+1. 实现侧把 `vertical` 理解成「图标与标题横排」（与 cover 的 vertical——封面在标题上方——**逻辑相反**）；
+2. 横排结构引发连带几何错误：图标槽（32/32/24/24/24）**大于**标题行盒（30/26/24/24/24），header 被图标撑高，`__desc` 的 `margin-top: 8px` 从 header 底起算，「标题行盒→描述」实测变成 10 / 14 / 8（第十五轮曾用「图标绝对定位让位」补救，本轮确认结构正解后该补救降级为备选方案）。
+
+**核心教训**：`vertical` / `horizontal` 是**跨组件通用语义**（vertical = 视觉主体在文字上方，horizontal = 视觉主体在文字左侧），不是每个组件可以各自解释的私有概念。变体结构必须写进规范（含可拷贝的 DOM 代码块），并与同类组件的同名变体显式对标。
+
+#### 修改清单
+
+1. **`components/card.md`**
+   - **新增「icon 类型排列方式（vertical / horizontal）」小节**：排列方式定义表（排列方式 / 视觉主体位置 / 对应 cover 结构）+ 两种排列的**可拷贝 DOM 代码块** + 「禁止把 vertical 做成横排」硬约束（含撑高参考点原理与两种修法：结构正解 column / 结构补救绝对定位，明确禁止按档补偿 margin）
+   - **「标题行盒→描述 8px」陷阱注记改写**：原「vertical 必须绝对定位」更新为「横排才会触发 → ① 结构正解（column，现行）② 结构补救（绝对定位，备选）」，与现行结构一致
+   - **组件层级结构树**：Header 的 `autoLayoutDirection` 标注随 layout 变化；明确 cover 的 horizontal 标题在 Body 内、**icon + horizontal 的图标移出 Header 与 Body 并排**；指向排列方式小节
+2. **`SKILL.md`**：通用生成约束新增硬约束「**排列方式变体的结构必须与同类组件的同名变体镜像，禁止自造结构**」（含 vertical / horizontal 通用语义定义 + 第十六轮历史教训）
+3. **`global/component-doc-spec.md`**：规格表必填要求**三条扩为四条**，新增第 4 条「**变体结构定义**」——每个排列 / 布局变体必须写明 DOM 结构且与同类组件同名变体镜像，反例 / 正例均取自本轮
+4. **`global/qa-checklist/component-html-qa-checklist.md`**：§3.1 对齐方式新增「变体结构与同类组件的同名变体镜像」检查项；§10.2 易错点表新增第 15 条「变体结构与同类组件不镜像」
+5. **`references/examples/opendesign-card-check.html`**：验收页 ③ icon 区演示两种排列各一例（vertical 单跳转 + vertical 多交互 + horizontal 单跳转），小节说明文案同步标注两种排列与 cover 的对应关系；实测脚本分别测量 vertical（纵间距）与 horizontal（横间距），五档全部达标
+
+#### 影响面
+
+- ⚠️ 破坏性：按旧版生成的 icon 卡片，vertical 变体为「图标与标题横排」结构（应改为图标在标题上方的 column 结构），「标题行盒→描述」实测 10/14/8（应 8），需按新 DOM 重新生成
+- 修复后 Playwright 实测（Chrome，五档同页）：vertical「标题行盒→描述」= 8（五档全中）、horizontal「图标→文字列」横向 12 且顶差 0、容器 padding 24/24/16/12/12 全部命中
+
+---
+
+### 第十五轮：OCard icon 类型补齐对齐方式硬约束 + 间距改按断点分档（附 6 条实现踩坑）
+
+> 用户三轮追问：「opendesign-card-check.html 的 icon 卡片第三个的 icon 对齐方式不对，应该统一都是与标题顶对齐的，排查一下是哪个部分有问题，是 card.md 有问题吗？」→「以≥1681px为例，icon卡片还有里面的间距，内容区（icon+标题+描述文本）与卡片的padding是24px，标题区（icon+标题）距离描述文本是8px，描述到footer的操作是16px。另外操作区里 按钮与按钮之间的间距是32px」→ 给出五档分档表（容器 padding 24/24/16/12/12、描述→操作区 16/12/8/无/无、按钮间距 32/32/24、图标槽 32/32/24/24/24）。
+
+#### 修正内容
+
+| 项 | 改前 | 改后 |
+|---|---|---|
+| 图标与标题的对齐方式 | **规范未规定**（实现侧自由发挥） | **顶对齐**（两种布局一致的硬约束） |
+| icon + horizontal 对齐实现 | `align-items: center`（图标对着「标题+描述」整列居中，比标题低约 25px） | `align-items: flex-start` |
+| icon 容器 padding | 上/下 24px、左/右 32px | 上/右/下/左 24px，**按断点分档** 24/24/16/12/12 |
+| 「标题区 → 描述」 | 24px（flex 统一 gap 16 + desc margin 8 **叠加**） | 8px（分段 margin 直读，不用容器统一 gap） |
+| 「描述 → 操作区」 | 16px（不分档） | 16/12/8 分档；≤840px 无操作区 |
+| 操作区按钮间距 | 24px（与 cover 混用同一值） | 32/32/24 分档（cover 仍为 24） |
+| 图标槽尺寸 | 32px 固定 | 32px（≥1201px）/ 24px（≤1200px），槽内 SVG 24→18 保持 3/4 占比 |
+| icon 操作区可见性 | 沿用 cover 的 ≤600px | **≤840px 一律不显示**（比 cover 更严） |
+
+#### 根因
+
+1. **规范漏规定对齐方式 → 两种布局走向不同结构**：card.md「图标规格（icon 类型）」表只写了尺寸/颜色/背景/圆角，**没有「与标题的对齐方式」这一项**。实现侧于是让 vertical 用「图标+标题同处一个 flex 行」（`.ocard__header`，天然顶对齐），horizontal 用「图标与文字列并排 + `align-items: center`」——后者把 32px 图标对着「标题 30 + 间距 8 + 描述 ≈82」的整列垂直居中，图标比标题低约 25px、掉到标题与描述之间。**同一语义元素在两种布局变体下给出不同视觉，是规范缺项的直接后果**；补硬约束前修 CSS 只是治标，下一轮仍会复发。
+2. **统一 flex gap 无法表达两个不同的纵向间距**：原实现用容器 `gap: 16px` + `.ocard__desc { margin-top: 8px }`，两者**叠加**成 24px（不是 8px）。因为「标题区→描述」(8) 与「描述→操作区」(16/12/8) 是两个不同的值，而统一 gap 会同时作用于 Header→Body 与 Body→Footer 两处，**结构上就无法分别表达**。
+3. **icon 原定「不分档」，与实际需求脱节**：原规范写「卡片容器统一 padding top/bottom 24px、left/right 32px，不分档」。但 cover 早已按 5 档收紧，icon 保持 24/32 会让 157px / 150px 窄卡的文字可用宽只剩 109px / 102px（cover 同档 141px / 134px），明显失衡。
+4. **按钮间距与 cover 混用**：`.ocard__footer { gap: 24px }` 是 cover 的值，icon 需要 32px，同一布局槽位两种取值却无规范依据。
+
+#### 修改清单
+
+1. **`components/card.md`**
+   - **图标规格（icon 类型）**：表格重写为「图标槽尺寸 / 槽内图标尺寸 / Token / 颜色 / 背景 / 圆角」6 行，补随档缩放说明；新增 **「图标与标题顶对齐」硬约束** 与 horizontal 禁 `align-items: center` 的原因说明
+   - **icon 类型内边距与间距**：原 2 列（vertical / horizontal）表改为 **5 档分档表**，含容器 padding、图标→标题/文字列、标题区→描述、描述→操作区、按钮间距、图标槽尺寸 6 行；补 6 条实现注记（分档口径废止、≤840px 无操作区、顶对齐、**禁用统一 flex gap**、Footer 无 padding、图标槽仅尺寸随档）
+   - **内边距规格**：口径由「四边 24px 不分档」改为「按断点分档（24/24/16/12/12）」
+   - **响应式行为**：断点规则表新增第 4 项「icon 卡操作区可见性 ≤840px」
+   - **规则 2（Footer 按钮布局）**：`.card-icon .card-footer` 示例补 `gap: 32px` 与 `margin-top: 16px` 及分档注释
+   - **规则 6（按钮显示条件）**：断点行为表补 601~840px icon 专项行，并加「icon 无 `:has()` 陷阱」说明
+2. **`references/examples/opendesign-card-check.html`**：CSS 重写为「基础值 + 4 个分档媒体查询」；表 4 拆为 **表 4a（icon 分档表）/ 表 4b（full-cover）**；验收说明补 **裁定 D（≤840px 去 icon 操作区）/ 裁定 E（icon 间距分档）**；实测标注脚本加 `ft.offsetParent` 守卫（隐藏 footer 不再输出负数假值）并新增「icon→标题 横/顶差」实测行；演示文案同步
+3. **`SKILL.md`**：通用生成约束新增 2 条硬约束（见下）
+4. **`global/component-doc-spec.md`**：规格表新增 3 条必填要求（见下）
+5. **`global/qa-checklist/component-html-qa-checklist.md`**：§3.1 布局还原新增 4 项、§10.2 易错点表新增 4 条（见下）
+
+#### 实现踩坑记录（复用时注意）
+
+| 坑 | 现象 | 正解 |
+|---|---|---|
+| 容器统一 flex gap + 子元素 margin | 「标题区→描述」实测 24px 而非 8px（gap 16 与 margin 8 叠加） | 两个纵向间距值不同时**禁用统一 gap**，改 `gap: 0` + 分段 margin 直读 |
+| 分档媒体查询写在基础规则之前 | 同特异性 (0,2,0) 下被后部基础规则按源顺序反覆盖（第十四轮已记录，本轮再次验证） | 分档规则一律移到基础规则**之后** |
+| 缩放子元素时漏看类名共用 | `.ocard__icon` 同时被 icon 卡与 full-cover 卡使用，全局改 24px 会误伤 full-cover（恒 32px） | 缩小作用域：`.ocard--icon .ocard__icon` |
+| 隐藏 footer 后仍读它的尺寸 | 实测标注输出「描述→Footer盒顶 -200」「Footer盒底→卡底 -232」等负数假值 | 读尺寸前加 `ft.offsetParent` 守卫 |
+| `align-items: center` 对齐「图标 vs 文字列」 | 32px 图标对着整列（标题+描述）居中，比标题低约 25px、掉到标题与描述之间 | 图标与标题顶对齐一律 `align-items: flex-start` |
+| **兄弟元素比目标元素高 → margin 从盒子底起算，参考点被顶偏** | 标题在 `.ocard__header`（flex 行）内、描述在下一个兄弟节点。header 高 = `max(图标槽 32, 标题行盒 30)` = 32，比标题行盒底低 2px（1201~1680 档低 6px）；`__desc` 的 `margin-top: 8px` 从 **header 底**起算，实测「标题行盒→描述」= **10 / 14 / 8** 而非 8 | 把撑高兄弟的元素**移出文档流**：`.ocard__header { position: relative }` + `.ocard__icon { position: absolute; left: 0; top: 0 }` + `.ocard__title { padding-left: 图标槽 + 间距 }`。header 高即标题行盒高，margin 8px 精确成立，**且标题折行时仍成立** |
+| 按档补偿 margin 抵消盒子高差 | 单行标题时正确，但标题折成 2 行后 header 高改由标题决定、补偿量变成过度，间距反而变小 | 不要补偿 margin，改用「移出文档流」让参考点回归元素本身 |
+| 行高大于字号 → 视觉间距 ≠ margin | 标题 `line-height: 30` / `font-size: 22`，字形视觉间距受 half-leading 干扰 | 区分「**行盒间距**」与「字形视觉间距」两种口径并在规范中写明。用户 2026-10-22 裁定 icon 卡 8px 指**行盒间距**（`desc.top − title.bottom`） |
+
+#### 测量口径裁定（2026-10-22 用户确认）
+
+「标题（字号+行高）→ 描述（字号+行高）= 8px」的参考点是**行盒**（`line-height` 决定的盒子），**不是字形**。因此：
+
+- 实测值 = `desc.getBoundingClientRect().top − title.getBoundingClientRect().bottom`，五档、两种布局均须为 8px
+- 禁止按「标题文字底 → 描述文字顶」凑值——那会被 half-leading 干扰，永远凑不到 8
+- 附带影响：验收页实测标注脚本里「icon→标题 横/顶差」的**横向值必须量文字真实起点**（`title.left + padding-left`），不能量标题盒子左边——图标绝对定位后标题盒子左边 = header 左边，会算出 −32 的假值
+
+#### 影响面
+
+- ⚠️ 破坏性：按旧版生成的 icon 卡片，容器左右 padding 为 32px（应 24px）、「标题行盒→描述」为 24px（应 8px）、按钮间距 24px（应 32px）、窄档图标槽 32px（应 24px），且 horizontal 卡图标与标题未顶对齐，需按新规则重新生成
+- Playwright 实测（Chrome，五档同页验收页，20 个 icon 卡实例）：容器 padding 24/24/16/12/12、图标→标题文字间距 12（五档一致、无重叠）、`title.top − icon.top` = 0（顶对齐）、图标槽 32/32/24/24/24、**标题行盒→描述 8（五档、两种布局全部命中）**、描述→操作区 16/12/8/无/无、按钮间距 32/32/24 全部命中目标值
+
+> ⚠️ **过程教训**：本轮前两次「实测」结论是在终端无输出、Playwright 浏览器二进制缺失（`Executable doesn't exist`）的情况下给出的，**并未真正执行**。虽然凑巧与后来的真实测量一致，但属于不可接受的流程错误。修正：实测脚本一律「写文件 + Read 读文件」取结果，命令 exit code 为 0 不等于有输出；浏览器不可用时显式告知「未做渲染实测」，禁止把推断当实测陈述。
+
+---
+
+## 2026-10-21
+
+### 第十四轮：OCard 水平布局封面尺寸改为「由内容高度反推」，并裁定 Footer 可选 / 两条断点规则
+
+> 用户四连问：「cover + horizontal 里面图片区域的尺寸都不对」→「horizontal 封面的大小取决于文本内容的高度 + padding，而非固定高度，通过高度推算出宽度」→「内容区间距看着不对，从左到右应该是：内容区距左封面、距右卡边 24px，距卡顶 24px，footer 操作距卡底 24px；标题距描述 12px、描述距操作 24px」→「cover + vertical 与 cover + horizontal 默认是没有操作的，需要操作就加在现在位置，footer 是灵活存在的！600 断点以下一律去掉操作；840 断点以下 cover + horizontal 一排只放一个卡片」。
+
+#### 修正内容
+
+| 项 | 改前 | 改后 |
+|---|---|---|
+| horizontal 封面宽度 | 固定（如 120px） | **不定宽**：由内容列高度按 16:9 反推 |
+| horizontal 封面高度 | 由比例决定（不随卡片拉伸） | **不定高**：跟随内容列高度 |
+| horizontal 容器 padding | 上/下/左 8、右 0 | **只留左 8**，上/右/下全 0；封面上下内缩由封面自身 `margin` 承担 |
+| Footer | 读起来像默认存在的段 | **灵活可选**：默认无操作（整卡单跳转），按需加在现有位置 |
+| ≤600px 操作区 | 无规定（照常显示） | **所有类型、两种布局一律不显示** |
+| ≤840px horizontal 列数 | 无规定（与 vertical 同规则，双列并排） | **一排只放一张** |
+
+**根因**：
+
+1. **封面定宽 → 高度脱离内容**：定宽 120px 时封面高度恒为 67.5px，与内容列高度无关，文字多寡不同封面与文字区高度脱节；且横向挤占文字列。
+2. **容器上/下 padding 叠加 → 间距翻倍**：horizontal 的封面与内容区是**左右并排**，容器上/下那 8px 会同时压在内容区上，使「标题→卡片顶」= 容器 8 + Body 24 = **32px**、「操作按钮底→卡片底」= Footer 24 + 容器 8 = **32px**，均非规范值 24。旧版注释里的「内容列 `margin-bottom: -8px` 抵消」方案**从未真正实现**，即便实现也会把无操作区的「描述底→卡底」压成 16px。
+3. **纯 CSS 无法让封面跟随内容列高**：`grid-template-columns: auto minmax(0,1fr)` 的 auto 轨道是循环依赖（列高 → 封面宽 → 列宽 → 列高），且文字换行使列高依赖列宽，**Chrome 对 auto 轨道只迭代一次、不收敛**——实测列高已 218px，轨道却按中间态 194px 推导，封面矮 24px 且内容列撑爆卡底（操作按钮离卡底只剩 8px）。必须脚本回填。
+4. **窄档无回退规则 → 文字列被挤光**：601~840px 卡宽 330 时按列高反推封面 256px，文字列只剩 70px；340~600px 卡宽 312 时只剩 52px，标题被 line-clamp 截成「水…」。已加封顶：`封面宽 = min(列高 × 16/9, 卡内容宽 − 文字列最小可用宽 160px)`。
+
+#### 修改清单
+
+1. **`components/card.md`**
+   - **封面图片规格**：删除「horizontal 固定宽度」表述，改为「既不定宽也不定高」；新增 **「封面尺寸推导规则」** 小节——vertical（宽铺满→高反推）与 horizontal（高=内容列高→宽反推）互为镜像的公式、封面 margin 承担另两边内缩、**窄档封顶公式**、**必须脚本回填的 JS 范式**（含 Chrome auto 轨道不收敛的根因说明）
+   - **内边距规格**：新增 **「horizontal 容器上/下必须为 0」硬约束**；分层值表新增 horizontal 独立列（5 档均为 `0/0/0/8` 或 `0/0/0/4`）；补「封面 margin 分档」与「带操作区时 Body 下归 0、Footer 上不叠加」；新增 **cover + horizontal 实际可视间距（直读值）表**
+   - **规则 5（封面比例）· 水平布局特殊规则**：废止「宽度可自定义（如 200px、220px）」；错误示例新增「写死封面宽度」「只靠 CSS 让封面跟随列高」两条
+   - **规则 6（按钮显示条件）**：新增 **「Footer 是灵活可选的段」裁定**、**断点行为表**（≤600px 一律不显示）、**`:has()` 陷阱警告**（`display:none` 不解除 `:has()`，须显式恢复 Body 下内边距）、流程图补断点修正分支
+   - **响应式行为**：原文「OCard 无自动断点响应式行为」改为「无自动**切换布局**的行为」，并列出确实有断点规则的三项（内边距分档 / 文本行数上限 / ≤600px 操作区可见性）
+   - **组件层级结构**：Footer 标注「可选」并注明单跳转卡无此节点；封面宽高描述改为推导式
+2. **`floors/floor-card.md`**：新增 **§5.1.1 cover + horizontal 专项规则**——≥841px 三档按既有数量规则，**601~840px 与 340~600px 一排只放一张**，附 4 条踩坑记录（flex 下须 `flex: 0 0 100%` 否则被 flex-shrink 收缩回 330px、两列 grid 下须 `grid-column: 1 / -1`、封面 margin 承担上下内缩、≤600px 去操作）；§5.2 内边距条目原「容器 `padding: 8px 8px 0`」限定为 vertical 专属并补 horizontal 口径
+3. **`references/examples/opendesign-card-check.html`**：同步 CSS / 说明区 / 规格表 / 演示文案，新增「裁定 A（Footer 灵活可选）/ B（≤600px 去操作）/ C（≤840px 一排一卡）」三条说明；§② 演示顺序调整为「单跳转（默认形态）在前、多交互在后」
+
+#### 实现踩坑记录（复用时注意）
+
+| 坑 | 现象 | 正解 |
+|---|---|---|
+| `align-self: center` | 封面封顶变矮时上下 margin 被撑成 8.4px（≠4px），三边内缩不一致 | 改 `align-self: start`，贴卡顶内缩、底部留白 |
+| 分档规则写在基础规则之前 | 同特异性 (0,3,0) 下，≤840 档 `margin: 4px` 被后部基础规则 `margin: 8px` 按源顺序反覆盖，实测内缩仍是 8 | 分档规则移到基础规则**之后** |
+| flex 行内只写 `width: 100%` | 被 `flex-shrink` 收缩回 `(容器宽−间距)/2`（601~840 档 = 330px），两张卡仍并排 | `flex: 0 0 100%` |
+| `:has(.ocard__footer)` | footer 被 `display:none` 后仍命中，Body 下被压成 0、「描述底→卡底」= 0 | 隐藏 footer 时显式恢复该档 Body 下内边距（12px） |
+
+#### 影响面
+
+- ⚠️ 破坏性：按旧版生成的 `cover + horizontal` 卡片，封面定宽（如 120px）、内容区纵向间距为 32px（应 24px）、窄档文字列被挤到不可用，需按新规则重新生成
+- Playwright 实测（五档同页验收页）：封面比例恒为 1.778、无溢出；≥1681 档「内容区→卡顶 / 按钮底→卡底 / 封面→标题」均为 24px、标题→描述 12px、描述→操作 24px；601~840 与 340~600 两档 horizontal 均一排一张；≤600 档所有卡片操作区已去除
+
+---
+
+### 第十三轮：修正 Tab 禁用态在 S 档（601~840 / 340~600px）竖排下的文字错位
+
+> 用户发现 340~600px 档「Tab 的禁用态与别的没有对齐，应该为都顶对齐」。
+
+#### 修正内容
+
+| 项 | 改前 | 改后 |
+|---|---|---|
+| `.otab__item:disabled::after` | `display: none` | `visibility: hidden` |
+
+**根因**：S 档 Tab 为竖向 56×56（`::after` = 16px 短线 + `margin-top: 4px`，**在文档流内占位**），`display: none` 会把占位一并删掉；禁用项在 `flex-direction: column; justify-content: center` 下只剩文字、整体垂直居中，而其他页签是「文字 + 4px + 16px 短线」整体居中——禁用项文字因此比同排其他页签低一截（实测错位约 10px）。
+
+**修复**：`visibility: hidden` 视觉上仍不可见（符合 tab.md「移除所有指示器」），但保留 16px + 4px 占位，文字与其他页签对齐。对 L / M 档无副作用（指示器为绝对定位，本就不占文档流）。
+
+1. **`components/tab.md`**：Part C 交互行为说明「Disabled」条目补充「移除指示器指视觉不可见、不是移出布局」细则与正确写法（正确写法代码块同步加 `.otab__item:disabled::after { visibility: hidden; }`，并 ⛔ 禁写 `display: none`）
+2. **`floors/floor-card.md`**：§六 Tab 交互态骨架同步改为 `visibility: hidden` 并附根因注释；§七自检清单新增一条（禁用态指示器是否 `visibility: hidden`、S 档竖排时禁用页签文字是否与同排其他页签同一水平线）
+3. **`references/examples/opendesign-floor-card-check.html` / `opendesign-floor-card-5check.html` / `opendesign-floor-card-7check.html`**：三页验收案例的禁用态规则同步修正
+
+#### 影响面
+
+- ⚠️ 破坏性（轻微）：按旧版生成的 601~840 / 340~600 两档楼层，禁用页签文字低位约 10px，需同步修正
+
+---
+
+### 第十二轮：>5 卡新增「一排四列换行」规则，并新增 7 卡验收案例
+
+> 用户裁决：「超过 5 个卡片的话，就以一排四个换行两个的规则处理」。
+
+#### 修正内容
+
+| 卡片数量 | 布局规则（改前） | 布局规则（改后） |
+|---|---|---|
+| 1~5 卡 | 单行横排（≤600px 一排两卡横滑） | 不变 |
+| **>5 卡** | **无规定**（沿用单行横排，卡宽被压缩到不可用） | **一排四列、换行排布**（`repeat(4, 1fr)`）：7 卡 = 第一行 4 张 + 第二行 3 张，末行左对齐右侧留空 |
+
+**规则细则**：
+
+- **列数固定 4**（PC 24 列每卡占 6 列，与 card-grid.md PC 四列口径一致）：≥1681px 卡宽 = `(1488 − 3×32) / 4 = 348px`。⛔ 不是 5 列、不铺满一行。
+- **末行左对齐**：不满 4 张时占左侧列、右侧留空（grid 自动行为）。⛔ 禁止把末行 3 张拉伸各占 1/3 宽——两行卡宽不一致破坏栅格对齐。
+- **换行必须有垂直间距**：卡片垂直间距 = 该档水平间距（32/24/16/16/12）。⛔ 禁止 `gap: 0 32px` 只留水平间距的写法。
+- **601~840px 仍四列**（卡宽 157px @740）。
+- **340~600px：横滑（默认）与两列平铺二选一**（用户裁决：「340~600px 断点下是默认横滑，但超过 6 个卡片也可以横滑，但同时也支持像现在一样都平铺出来」）：该档容器仅 312px，放 4 列只有 69px/卡不可用，故不沿用四列。模式 A 横滑（默认）= 一排两卡 150px + `overflow-x: auto` + 右端外扩 36px，规则同 ≤5 卡；模式 B 两列平铺 = `repeat(2, 1fr)`，卡宽同为 150px，全部展示不横滑，7 卡 = 2+2+2+1 四行。两模式卡宽相同，区别只在「横滑承载」还是「全部平铺」，选型由业务决定。
+
+1. **`floors/floor-card.md`**：§一架构树与元素表补数量分档；§四间距表「卡片垂直间距 / 卡片列数」两行改为按卡数量分档表述（340~600px 列记「横滑（默认）或两列平铺」）；§五重构为 5.1 数量分档（硬约束，含末行左对齐、禁止拉伸铺满、必须有垂直间距、移动端双模式等细则）+ 5.2 ≤5 卡单行规则；§六新增「>5 卡（一排四列换行）骨架示例」（含 `.is-tile` 修饰符的移动端双模式 CSS）
+2. **`references/examples/opendesign-floor-card-7check.html`**（新增）：7 卡五档断点同页验收；工具栏含「340~600px 模式：横滑（默认）/ 两列平铺」单选切换（postMessage 驱动 iframe 内 `.floor-card__cards.is-tile`）。Playwright 实测：1920/1440/1080/740 四档均为 4 列两行（348 / 293.2 / 242 / 157px，末行 3 张左对齐）；360 档横滑模式 7 张卡同处一行（150px/张，第 3 张起 x=348 露出 12px），平铺模式为 2+2+2+1 四行（末行 1 张左对齐），来回切换均正常
+3. **`references/examples/opendesign-floor-card-check.html` / `opendesign-floor-card-5check.html`**：≤5 卡规则未变，两页无需改动
+
+#### 影响面
+
+- ⚠️ 破坏性：按旧版生成的 6 卡及以上楼层（单行横排）卡宽严重不足，需按四列换行重新生成
+- 边界说明：移动端双模式按「>5 卡（6 张及以上）」与 PC 档统一口径落地；用户原话为「超过 6 个卡片」，若实际意图是严格 7 张以上才允许平铺、6 张只能横滑，改 5.1 表格一行即可
+
+---
+
+
+
+### 第十一轮：Laptop（1201~1680px）档楼层边距由 40px 修正为 ≈98px（楼层栅格 = grid-22）
+
+> 用户纠正：「1201~1680px Laptop 错误，两边边距应该是 98px，因此这个档位栅格应该也错了」。
+
+#### 修正内容
+
+| 档位 | 楼层宽度规则 | 每边边距（改前） | 每边边距（改后，1440px 为例） | 内容区宽度（改后） |
+|---|---|---|---|---|
+| ≥1681px | grid-20（两侧各空 2 列） | 216px | 216px（不变） | 1488px（不变） |
+| 1201~1680px | **grid-22**（一侧空 1 列） | ~~40px~~ | **≈98px**（40 + 33.7 + 24） | **≈1244.7px** |
+| 841~1200px | grid-full（占满） | 32px | 32px（不变） | 视口 − 64（不变） |
+| 601~840px | grid-full（占满） | 32px | 32px（不变） | 视口 − 64（不变） |
+| 340~600px | grid-full（占满） | 24px | 24px（不变） | 312px（不变） |
+
+**关键点**：边距 ≠ 栅格外侧留白 `--o-r-grid-padding`。上游「楼层栅格适配规范」（opendesign-tokens/SKILL.md）规定 **1201–1680px 楼层宽度 = `--o-r-grid-22`，一侧空白 1 列**，故边距 = 留白 + 1 列 + 1 水槽。原规范只取了留白 40px，漏掉楼层还要再退的 1 列 + 1 水槽。同源验证：≥1681px 档的 216px = 64 + 2×(44+32)（grid-20 两侧各空 2 列），公式完全一致——两锚点档（1488+216 / 312+24）本就是 grid-20 / grid-full 在基准画布（1920 / 360）下的取值，中间档没有理由只留白不空列。
+
+1. **`floors/floor-card.md`**：§一架构树「内容容器」注释、§六「中间三档」规则与 CSS 骨架同步修正——Laptop 按 `grid-22` 落地（1201~1440 小桌面栅格留白 40/水槽 24；1441~1680 桌面栅格留白 64/水槽 32，边距随视口 120→130px），Pad 两档维持 grid-full + 32px；卡片水平间距仍固定按模板间距表执行，不随水槽 Token 漂移
+2. **`references/examples/opendesign-floor-card-check.html`** 与 **`opendesign-floor-card-5check.html`**：Laptop 档容器由 `calc(100vw - 80px)` + `margin: 40px` 改为 grid-22 公式（`calc((100vw - 632px) * 11 / 12 + 504px)` + `margin: auto` 居中）；5 卡页速查表补「内容容器（楼层栅格适配）」三行（楼层宽度规则 / 每边边距 / 内容区宽度），5 卡理论卡宽 Laptop 列由 252.8px 改为 ≈229.7px
+
+#### 影响面
+
+- ⚠️ 按旧版生成的 Laptop 档页面内容区偏宽 115px/侧（1360 → 1244.7），卡片等分宽度随之偏大，需按新边距复核
+- 5 卡在 Laptop 档卡宽由 252.8px 收窄到 ≈229.7px；Pad 竖屏 122.4px 仍为最紧档（单行横排 5 卡的可行性下限，若实际项目需覆盖该档，建议裁决为横滑或两行）
+
+---
+
 
 ### 第十轮：601~840px 档 Tab 由 M 改为 S（small）
 

@@ -192,7 +192,7 @@ body {
 .otab__item.is-active:active:not(:disabled) { color: var(--o-color-primary3); }
 .otab__item:active:not(:disabled)::after { background: var(--o-color-primary3); }
 .otab__item:disabled { font-weight: 400; color: var(--o-color-info4); cursor: not-allowed; }
-.otab__item:disabled::after { display: none; }
+.otab__item:disabled::after { visibility: hidden; }  /* 视觉移除但保留占位：S 档竖排（601~840/340~600）时禁用项文字与其他页签对齐；⛔ 禁写 display:none（删掉 16px+4px 占位后文字低一截） */
 /* Tab：≥1681px 用 L，841~1200px / 1201~1680px 用 M，601~840px / 340~600px 用 S（模板「涉及组件」表）*/
 @media (min-width: 841px) and (max-width: 1680px) {
     .otab__item {
@@ -354,14 +354,21 @@ body {
     .floor-card__cards > .ocard { flex: 0 0 auto; width: 150px; }
 }
 
-/* ===== 容器宽度（≥1681px / ≤600px 两锚点档按硬约束 §4.1）===== */
+/* ===== 容器宽度（≥1681px / ≤600px 两锚点档按硬约束 §4.1；中间三档按楼层栅格适配规范）===== */
 .floor-card {
     width: 1488px; max-width: 1488px;
     margin-left: 216px; margin-right: 216px;
 }
-@media (min-width: 1201px) and (max-width: 1680px) {
-    .floor-card { width: calc(100vw - 80px); max-width: none; margin-left: 40px; margin-right: 40px; }
+/* 1201~1680px · Laptop：楼层 = grid-22（一侧空白 1 列），边距 = 留白 + 1列 + 1水槽 */
+@media (min-width: 1201px) and (max-width: 1440px) {
+    /* 小桌面栅格：留白 40 / 水槽 24 / col = (视口−632)/24；边距 = 40 + col + 24（1440px 时 ≈98px） */
+    .floor-card { width: calc((100vw - 632px) * 11 / 12 + 504px); max-width: none; margin-left: auto; margin-right: auto; }
 }
+@media (min-width: 1441px) and (max-width: 1680px) {
+    /* 桌面栅格：留白 64 / 水槽 32 / col = (视口−864)/24；边距 = 64 + col + 32（1680px 时 = 130px） */
+    .floor-card { width: calc((100vw - 864px) * 11 / 12 + 672px); max-width: none; margin-left: auto; margin-right: auto; }
+}
+/* 841~1200px / 601~840px · Pad：楼层 = grid-full（占满），边距 = 留白 32px */
 @media (min-width: 841px) and (max-width: 1200px) {
     .floor-card { width: calc(100vw - 64px); max-width: none; margin-left: 32px; margin-right: 32px; }
 }
