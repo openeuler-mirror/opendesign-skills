@@ -32,6 +32,77 @@
 
 > 受影响的高频 Token：`--o-color-control1/4`、`--o-color-info1~4`（及 inverse）、`--o-shadow-*`。生成后**必须在浏览器实际打开确认**这些半透明元素可见——仅静态读代码无法发现声明被丢弃。
 
+### 0.1 🔴 Light → Dark 切换铁律（全局，无例外，2026-10-23 用户裁定）
+
+> **任何在 Light 模式下引用语义 Token 的地方，切到 Dark 模式时必须改用同一 Token 的 Dark 值。不存在"只切文字色、不切其他颜色"的部分切换。**
+
+**规则本体**：
+- Dark 不是"换个背景色"，而是**整套 Token 的成对翻转**——同一个 `--o-color-*` 变量名在 Light / Dark 下各有取值，CSS 必须让变量值随主题切换，业务规则只写 `var(--o-color-*)`、永远不写死色值
+- **切换范围 = 全部**：交互态（hover / active / selected / disabled）、组件自身色（背景 / 文字 / 边框 / 图标 / 阴影）、浅色背景 Token（`*-light`）一个都不能漏
+- ❌ 禁止只覆盖 `info1` / `info3` / `fill2` 这类"最明显的文字与背景"，漏掉 `primary*` / `*-light` / 阴影
+- ❌ 禁止在 Dark 作用域里给某个元素单独写 Light 色值"修补"
+
+**典型翻车（OCard 验收页实测，2026-10-23）**：`.o-dark` 只覆盖了 `fill2/fill3/info1/info3/shadow-2`，`primary` 系列未切换，导致 dark 区卡片 hover 标题仍是 **Light 的 `#002FA7` 深蓝**压在深色卡上（对比度极低、几乎不可见），Footer 按钮 hover 仍是 Light 的 `#5177CA`，图标槽底色 `primary1-light` 与 OTag 底色 `primary1` 也全是 Light 值。根因是**把 Dark 当成"反色文字"处理，而不是"整套 Token 翻转"**。
+
+**实现范式**（变量级切换，业务规则零改动）：
+
+```css
+:root { --o-color-primary1: rgb(0, 47, 167); --o-color-primary2: rgb(81, 119, 202); /* ...Light 值 */ }
+.o-dark {
+    --o-color-primary1: rgb(73, 122, 248);   /* Dark 值，非 Light 值 */
+    --o-color-primary2: rgb(42, 72, 158);
+    --o-color-primary3: rgb(29, 51, 120);
+    --o-color-primary1-light: rgb(18, 34, 87);
+    /* ...同段内继续覆盖 fill / info / shadow 等全部被引用到的 Token */
+}
+```
+
+**openEuler 常用 Token Dark 值**（⚠️ **仅限 openEuler 社区**；真源：`opendesign-tokens/references/tokens-openeuler.md`，生成前仍须按 SKILL.md §数据资源 拉取上游确认）：
+
+| Token | Light | Dark |
+|---|---|---|
+| `--o-color-primary1` | `rgb(0, 47, 167)` | `rgb(73, 122, 248)` |
+| `--o-color-primary2` | `rgb(81, 119, 202)` | `rgb(42, 72, 158)` |
+| `--o-color-primary3` | `rgb(0, 39, 147)` | `rgb(29, 51, 120)` |
+| `--o-color-primary1-light` | `rgb(206, 219, 245)` | `rgb(18, 34, 87)` |
+
+> 🚨 **社区限定（最高优先级，禁止跨社区套用）**：上表**只对 openEuler 成立**。SKILL.md 规定六社区 Token 相互独立（openGauss 品牌色为紫色、openEuler 为蓝色、kunpeng / ascend / mindspore / openubmc 各有取值），**禁止不识别目标社区就默认用 openEuler 值**。目标社区不是 openEuler 时，必须拉取该社区 `tokens-{社区}.md`（或上游 `{community}-token.json`）的 Dark 列，逐 Token 重填——**色相不同，照抄 openEuler 的 Dark 值等于用错社区，属最高优先级错误**。查无该社区 Token 时停下询问用户，禁止以 openEuler 代替。
+
+**自检方法**：切换主题后在浏览器逐项核对——① hover / active / selected 三态颜色是否变化；② 组件背景 / 边框 / 图标色是否变化；③ `*-light` 浅底是否变化。任何一项"切了主题却没变"即违反本条。
+
+**⚠️ 上游 Token 未定义的变量，如何取 Dark 值**：
+
+上游 `tokens-{社区}.md` 并非定义全部语义 Token——以 openEuler 为例，只定义了 `fill*` / `primary*` / `link*` / `control*` / `grey*`，**`info1~4` 系列完全没定义**（由组件规范自行约定）。这类"规范自定义 Token"取 Dark 值时：
+
+1. **先查上游有无该 Token**——有则必须用上游 Dark 列，禁止自拟
+2. 上游没有时，按**「同灰度、反色相」**推导：取 Light 值的灰度比例，Dark 用白色按**同一 alpha** 表达
+   - `info2`：Light `#333`（黑 80%）→ Dark `rgba(255,255,255,.8)`
+   - `info3`：Light `#666`（黑 60%）→ Dark `rgba(255,255,255,.6)`
+   - `info4`：Light `#999`（黑 40%）→ Dark `rgba(255,255,255,.4)`
+3. **推导值必须在规范里写明出处**（注明"上游未定义，按同灰度反色推导"），避免下一轮又被当成漏切或误改为 Light 值
+4. `--o-color-white`（纯白）与 `*-inverse` 系列**不需要翻转**——前者两模式同为白；后者是「叠在深色封面上」的封面相对色，与主题无关（OCard 的 `info1-inverse` / `info3-inverse` 即此类）
+
+---
+
+### 0.2 🔴 规范内部一致性铁律（全局，无例外，2026-10-23 新增）
+
+> **同一个子节点在规范中被多处定义时，各处必须一致；不一致即规范缺陷，实现侧无论照哪边执行都会错一半。**
+
+**规则本体**：
+- 组件规范通常有**多个位置**描述同一个子节点：变体结构示意、组件层级结构树、布局规格表、颜色 Token 映射、交互状态表、代码基准。这些位置**必须互相一致**
+- ❌ 禁止同一节点在不同变体 / 不同章节里给出**不同**的 Token 或数值（除非规范用**显式文字**说明"此处为例外"，且说明差异是什么）
+- ❌ 禁止把"某个楼层页面里恰好长这样"的样式写进组件规范当默认值——楼层产物是**业务内容**，不是组件规格（另见 [component-doc-spec.md 结构节点来源规则](./component-doc-spec.md)）
+
+**典型翻车（OCard 图标槽，2026-10-23 Chrome 实测）**：同一份 card.md 中，`full-cover` 的结构示意（L198）与组件层级结构树（L1390）写图标槽底色为 `fill2`，而 `icon` 卡的布局规格（L369）与 Dark 翻转硬约束（L457）写 `primary1-light`。实现侧照 full-cover 的结构树执行 → Light 下白色色块压白卡不可辨、**Dark 下 `fill2` 与卡片底色同为 `rgb(36,36,39)`，图标槽整块消失**，图标裸漂在卡上；同页 icon 卡的图标槽却是可见色块。用户反馈即"第三个卡片颜色根本不对"。根因是**规范自身矛盾**，不是实现写错。
+
+**生成 / 修改前的强制动作**：
+1. 从规格表或结构树定位目标节点的**名字**（如「图标槽」「Tag」「Footer」）
+2. 在规范内**全文搜索该名字**，列出**全部**出现位置
+3. 逐处比对 Token / 数值 / 尺寸 / 交互定义是否一致
+4. 发现不一致 → **先修规范再生成**，禁止自行猜测取哪一边；无法判断时停下询问用户
+
+**与规则 4（组件调用）的关系**：规则 4 管"卡片里的子组件必须调组件、禁止自绘样式"；本条管"同一个子节点在规范各章节之间必须自洽"。两者独立，都要过。
+
 ---
 
 ## 1. 断点定义
@@ -45,6 +116,14 @@
 
 - 单个设备类别内（如 MB 360→600px），**字号、间距均不做变化**，只做横向布局拉伸（以 MB 端为主进行设计）
 - 跨设备类别（PC ↔ MB）切换时，按下方各表执行 1:1 映射
+
+> ⚠️ **例外（通用楼层卡片模块专属）**：[floors/floor-card.md](../floors/floor-card.md)（页面通用楼层卡片模块）按**五档断点**取值——≥1681px / 1201~1680px / 841~1200px / 601~840px / 340~600px（PC 类别内部分三档）。该楼层的字号 / 间距以模板固定表为唯一真源，不受本表 PC/MB 两列约束。
+
+> 🔴 **「小屏」口径（组件尺寸选型专用，全局生效）**：凡组件规范或楼层模板出现「移动端 / 小屏建议用 small」类表述，边界一律是 **≤840px**（即 **601~840px + 340~600px 两档**），**不是** ≤600px。理由：Pad 竖屏（如 iPad mini 768px）横向空间与 Phone 同量级，触控目标与信息密度必须同步降档。⚠️ 本表的 MB 列（360~600px）只是**变量映射列**的口径（§2~§7 决定取哪一列 Token），与**组件尺寸选型**是两件事，禁止互相套用——601~840px 在字号映射上可以取 PC 列的值，但 Tab / Button 的 size 仍须降为 S。
+>
+> 已按本口径落地的分档：OTab size = **L / M / M / S / S**（[tab.md](../components/tab.md)、[floor-card.md](../floors/floor-card.md)）、OButton text size = **L / M / M / S / S**。
+>
+> ⛔ **历史翻车（第十轮修正，禁止复现）**：601~840px 档 Tab 曾因把「移动端」读成 ≤600px 而误用 M（44px 横排）。**改这类分档必须成对改两处媒体查询**——只把 S 档查询由 `max-width: 600px` 放宽到 `max-width: 840px`、而不把 M 档查询由 `max-width: 1680px` 收紧为 `min-width: 841px`，M 规则源码顺序在后会直接盖掉 S。
 
 ---
 
@@ -76,6 +155,76 @@
 - ❌ 禁止使用 13 / 15 / 17 / 19 / 21 / 23 / 26 / 28 / 30 / 36 等中间字号
 - ❌ 禁止跨设备混用：MB 设计稿出现 32px/44 行高 = 错
 
+### 2.1 🔴 字重铁律（全局，无例外）
+
+**字重只承担「是否选中 / 是否当前项」一个语义。hover、press、focus、展开等一切瞬态一律不得改变字重。**
+
+| 状态 | 是否允许改字重 | 说明 |
+|------|--------------|------|
+| Default | —（基准字重） | 由元素自身角色决定 |
+| **选中 / 当前项 / Actived** | ✅ **允许** | 这是字重唯一的变化场景 |
+| **Hover** | ❌ **禁止** | 只改颜色（+ 下划线/背景等非字重视觉） |
+| **Press / Active** | ❌ **禁止** | 同上 |
+| Focus / 展开态 | ❌ **禁止** | 同上 |
+| Disabled | 允许回落为 Regular | 弱化态，不算"交互变化" |
+
+**为什么（已多次复现，必须记住）**：
+
+1. **语义混淆**：字重一旦在 hover 时也加粗，「选中」的视觉标识就被稀释——用户无法从字重判断当前停在哪一项。
+2. **实测会引起文字与布局跳动**：多数可交互元素宽度由文字撑开（`width: auto`）、指示器为全宽，字重切换会改变文字 advance width。无头 Chrome 实测 18px 下 `"Docs v1.2"` 400→600 宽 **+1.91px**、`"Blog"` **+1.03px**——下划线/背景随之变宽、后续同级元素被推挤位移。**纯中文为等宽全角字形，差值 0px**，所以该 bug 只在英文/数字标签上暴露，中文 demo 完全看不出来，极易漏检。
+3. **已在多个组件重复踩过**：`floors/navigation.md` 踩坑 #17（顶导触发器）、`components/tab.md` Part C（Tab）、`floors/navigation-dropdown-categorized.md` 踩坑 #30（分类条目）都各自独立立过同一条禁令。**根源是组件规范与楼层规范互相矛盾、且只修了一侧**——本次提升为全局铁律，以后任何组件的交互状态矩阵都不得出现「Hover 改字重」。
+
+**正确写法**：hover / press 规则里**一条 `font-weight` 都不写**，只写 `color`（及必要的下划线/背景/阴影）。
+
+```css
+/* ✅ 正确：hover 只改颜色 */
+.item:hover:not(.is-active) { color: var(--o-color-primary2); }
+.item.is-active { font-weight: 600; color: var(--o-color-primary1); }   /* 字重只随选中变 */
+
+/* ❌ 错误：hover 也加粗 */
+.item:hover { font-weight: 600; color: var(--o-color-primary2); }
+```
+
+**附带陷阱（Press 被 Hover 盖掉）**：按下时鼠标必然同时处于 hover，若 Press 规则特异性低于 Hover 规则，Press 的变色会被 Hover 盖掉——表现为「按下毫无变化」。Press 规则特异性必须 ≥ Hover 规则（如 `.item:active:not(.is-active), .item.is-active:active { … }`）。
+
+**同类陷阱（禁用态被交互态盖掉）**：`:not()` 会继承参数的特异性，`.item:hover:not(.is-active)`（0,3,0）会盖掉 `.item:disabled`（0,2,0）——hover / press 必须补 `:not(:disabled)`，详见 §2.2。
+
+### 2.2 🔴 禁用态铁律（全局，无例外）
+
+**禁用（disabled）是终态。hover、press、focus、展开等一切交互态对禁用元素一律不得生效——不变色、不出现指示器/背景/下划线、不改变字重。**
+
+| 状态 | 禁用元素上的表现 |
+|------|----------------|
+| Default（禁用） | 弱化色（如 `info4`）+ `cursor: not-allowed`，字重回落 Regular |
+| **Hover** | ❌ **必须与禁用默认态完全一致** |
+| **Press / Active** | ❌ **必须与禁用默认态完全一致** |
+| Focus / 展开态 | ❌ **必须与禁用默认态完全一致** |
+| 点击行为 | ❌ 不得切换选中态、不得触发任何回调 |
+
+**为什么（2026-10-20 用户裁决，与 §2.1 同属"交互态 CSS 陷阱"家族）**：
+
+1. **语义相反**：禁用 = 「这个选项现在不能用」。若鼠标划过就变色、按下就高亮，用户会认为它能点，点了却发现没反应——**比没有禁用态更糟**。
+2. **根因是 `:not()` 抬高了特异性**：`:not()` 会继承其参数的特异性，每加一个 `:not(.xxx)` 就升一级。典型翻车——hover 规则 `.item:hover:not(.is-active)` = **(0,3,0)**，而禁用规则 `.item:disabled` 仅 **(0,2,0)**，禁用色被直接盖掉。无头 Chrome 实测：禁用页签 hover → `primary2`、press → `primary3` 且指示器背景变色。
+3. **已复现**：`components/tab.md` Part C 列了 Disabled 状态却从未规定 hover/press 要排除禁用项；`floors/floor-card.md` 的 Tab 骨架照抄后同样漏掉。正确写法其实早已存在于 `references/examples/dropdown-demo.html`（`:hover:not(.disabled)`），但**没有一条规范要求必须这么写**。
+
+**正确写法（首选：让交互态从选择器层面就不匹配禁用元素）**：
+
+```css
+/* ✅ 正确：hover / press 带 :not(:disabled)，禁用项根本不进入交互态 */
+.item:hover:not(.is-active):not(:disabled) { color: var(--o-color-primary2); }
+.item:active:not(.is-active):not(:disabled),
+.item.is-active:active:not(:disabled)   { color: var(--o-color-primary3); }
+.item:disabled { color: var(--o-color-info4); cursor: not-allowed; }
+
+/* ❌ 错误：hover (0,3,0) 盖掉 disabled (0,2,0)，禁用项划过就变色 */
+.item:hover:not(.is-active) { color: var(--o-color-primary2); }
+.item:disabled { color: var(--o-color-info4); }
+```
+
+**次选写法（禁用规则硬压，特异性 ≥ 交互态）**：`.item:disabled, .item:disabled:hover, .item:disabled:active { … }`。不如首选直白，且每加一种交互态就要补一条禁用规则。
+
+**JS 侧同步**：禁用项不得响应点击（`if (el.disabled) return;`），且禁用项不应获得焦点（`tabindex="-1"` 或原生 `disabled`）。
+
 ---
 
 ## 3. 间距
@@ -101,6 +250,7 @@
 - ✅ 楼层标题到内容的间距**固定**使用**间距 7**（PC 40px / MB 12px）
 - ✅ 楼层之间的距离统一使用**间距 10**（PC 72px / MB 32px）
 - ✅ **例外（Banner 楼层专属）**：Banner 各等级的「标题距导航」为楼层专属值（如 XL = 136px / 88px 等），**不受上方间距白名单约束**，取值以 [floors/banner.md](../floors/banner.md) 为准
+- ✅ **例外（通用楼层卡片模块专属）**：该楼层使用**五档断点固定间距表**（≥1681px / 1201~1680px / 841~1200px / 601~840px / 340~600px，含 56px 等 PC/MB 两列未覆盖的档位值），**为固定值约束，优先级高于上方白名单与 `--o-r-gap-*` 默认映射**，取值以 [floors/floor-card.md](../floors/floor-card.md) 间距表为唯一真源
 - ❌ 禁止 6 / 10 / 14 / 18 / 20 / 28 / 36 / 56 等未列出数值
 - ❌ MB 端禁止出现 40 / 48 / 64 / 72px 等 PC 专属数值
 
@@ -273,6 +423,11 @@
 □ 26. 【布局延展性】列表 / 网格中的描述文本是否预留两行高度（`min-height = 2 × 行高`），避免后续文案延展成两行时挤压其他条目？
 □ 27. 【层级与阴影·反直觉】凡是"阴影看不见 / 元素被盖住"类问题，禁止只靠调 `z-index` 就下结论——两条实测结论：① **父级 `z-index` 提得再高也盖不住自己的后代**（`box-shadow` 随父元素自身绘制，先于一切后代；z-index 只在同一父级的定位兄弟之间比较，父子之间无意义）；② **`height: 0` 的元素不渲染 `box-shadow`**。正确修法：阴影补偿层必须 `top: 0` + `height: 100%` 与父等高（写 0 或 1px 都无效）。**改完必须重新截图验证，不许凭信心下结论**
 □ 28. 【修复闭环】用户反馈"还是不对"时，是否先用无头浏览器截图 + 像素采样复现，再动手改？——禁止把用户反馈当新需求重新猜一遍；每一次"猜着改"都会把返工轮次翻倍
+□ 29. 【通用楼层卡片模块】生成 `floors/floor-card.md` 楼层时，字号与间距是否逐档等于该模板的五档固定表（含「楼层标题 → 楼层描述」移动两档 16px 的有意覆盖）？Tab 尺寸是否为 L / M / M / **S** / **S**（601~840px 与 340~600px 均为竖向 56×56）？340~600px 卡片是否**一排两卡**（卡宽 150px = (312−12)/2，第 3 张起横滑）、横滑容器右侧是否按卡片水平间距规则外扩（`width: calc(100% + 36px)` + `padding-right: 12px`，第 3 张露出一个间距 12px、滚到最右末卡右缘 12px）？——禁止取 `--o-r-gap-*` 近似值、禁止把 16px"修正"为 8px、禁止把卡宽写成 216px 等任意值、禁止横滑容器只写 `overflow-x: auto` 而不管右端
+□ 30. 【字重铁律·全局】所有交互元素（Tab / 导航项 / 菜单项 / 按钮 / 卡片 / 列表条目）的 hover、press、focus、展开态是否**一律未改字重**——字重只随「是否选中」变化？⛔ 禁止给 `:hover` / `:active` 写 `font-weight`（实测拉丁标签 400→600 文字宽 +1.9px，下划线/背景变宽、后续元素被推挤；纯中文等宽差值 0px 所以只在英文标签上暴露、极易漏检）。同时确认 Press 规则特异性 ≥ Hover 规则（否则按下变色被 hover 盖掉，表现为「按下毫无变化」）——详见 §2.1
+□ 31. 【卡片文本行数】卡片标题/描述是否按断点分档截断——**≥841px** 标题 2 行、描述 3 行；**≤840px** 标题 1 行、描述 2 行，超出末尾 `...`？line-clamp 四件套（`display: -webkit-box` + `-webkit-box-orient: vertical` + `-webkit-line-clamp: N` + `overflow: hidden`）是否齐全——漏 `overflow: hidden` 则省略号不出现、文字直接溢出（详见 `components/card.md` 硬约束规则 8）？
+□ 32. 【卡片内间距】cover 卡片内边距是否按 card.md 五档分档表取值（容器 8/8/0/8，**601~840px 与 340~600px 为 4/4/0/4**；Body 上/右/下/左 = 24/24/24/24 → 16/16/16/16 → 12/8/12/8 → 12/8/12/8 → 12/8/12/8；标题→描述 12 → 8）？⚠️ 是否误把 **Body padding 左右**当成「文字距卡片边缘」——水平方向会叠加：**「标题→卡片左」= 容器左 + Body 左**（如 ≥1681px 8+24=32）。校验一律用 card.md「实际可视间距（直读值）」表（封面→卡边缘 8/8/8/**4**/**4**、封面→标题 24/16/12/12/12、文字→卡左/右 32/24/16/12/12、文字底→卡底 24/16/12/12/12），禁止把容器 padding 与 section padding 叠加心算
+□ 33. 【禁用态隔离·全局】凡是出现禁用态的元素，其 hover / press / focus / 展开规则是否**一律带 `:not(:disabled)`（或 `.is-disabled` 对应类）限定**——hover 划过禁用项时颜色、字重、指示器、背景必须与禁用默认态**逐项相同**？⛔ 典型翻车：`.item:hover:not(.is-active)` 特异性 (0,3,0) > `.item:disabled` (0,2,0)，禁用色被 hover 盖掉，鼠标一划过就变色（实测 Tab 禁用项 hover → primary2、press → primary3 且指示器变色）。同时确认 JS 侧禁用项不响应点击、不切换选中态——详见 §2.2
 任一项不通过 → **立即回滚到清单值**，禁止"差不多"。无法对应到清单时，停下询问用户，**不要自行造数**。
 ```
 
