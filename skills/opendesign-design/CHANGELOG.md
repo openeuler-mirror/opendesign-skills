@@ -6,7 +6,7 @@
 
 ---
 
-## 2026-10-22
+## 2026-10-23
 
 ### 第二十二轮：Dark 规则三项补强 + 全库 Dark 漏切普查（发现 fill 值与上游不一致）
 
@@ -237,7 +237,7 @@ color: var(--o-color-primary1);
    - **full-cover 规格 → 布局规格表**：新增 3 行——卡片比例（16:9 默认 / 3:1 超宽）、卡片宽度（由栅格决定）、卡片高度（= 宽度 ÷ 比例）
    - **新增硬约束**「full-cover 整卡必须保持 16:9 / 3:1 横向比例」：含比例白名单、宽高推导方式、禁止项（内容撑高 / 写死高度 / 竖向比例）、内容层放得下的验算（最窄档 312px → 16:9 高 175.5px ≥ 内容层 144px；3:1 仅 104px 放不下须回退）、与 cover 的分工（比例作用于封面区域 vs 整张卡）
    - **规则 5**：补「适用范围」——cover 的比例作用于封面图片区域，full-cover 的比例作用于整张卡片；技术实现补 full-cover 的 `aspect-ratio` 示例；重要说明补 full-cover 条目
-   - **结构示意 / 组件层级结构 / 代码基准 / 结构要点**：full-cover 卡片节点补 `aspect-ratio: 16 / 9（或 3 / 1）`，代码基准加注「规范硬约束（2026-10-22 新增，该页原未设置）」
+   - **结构示意 / 组件层级结构 / 代码基准 / 结构要点**：full-cover 卡片节点补 `aspect-ratio: 16 / 9（或 3 / 1）`，代码基准加注「规范硬约束（2026-10-23 新增，该页原未设置）」
 2. **`references/examples/opendesign-card-check.html`**：`.ocard--full` 加 `aspect-ratio: 16 / 9`（附比例验算注释）；≤600px 档 full-cover 跨满整行（`grid-column: 1 / -1`）；表 4b 新增「卡片比例」「宽度 / 高度」两行；④ 分区说明与裁定清单新增**裁定 F**
 3. **`global/qa-checklist/component-html-qa-checklist.md`**：§3.1 尺寸精度新增「图片 / 整卡比例必须来自固定比例集，禁止内容撑高」检查项；§10.2 易错点表新增第 16 条「固定比例的容器被内容撑高」
 
@@ -371,9 +371,9 @@ color: var(--o-color-primary1);
 | `align-items: center` 对齐「图标 vs 文字列」 | 32px 图标对着整列（标题+描述）居中，比标题低约 25px、掉到标题与描述之间 | 图标与标题顶对齐一律 `align-items: flex-start` |
 | **兄弟元素比目标元素高 → margin 从盒子底起算，参考点被顶偏** | 标题在 `.ocard__header`（flex 行）内、描述在下一个兄弟节点。header 高 = `max(图标槽 32, 标题行盒 30)` = 32，比标题行盒底低 2px（1201~1680 档低 6px）；`__desc` 的 `margin-top: 8px` 从 **header 底**起算，实测「标题行盒→描述」= **10 / 14 / 8** 而非 8 | 把撑高兄弟的元素**移出文档流**：`.ocard__header { position: relative }` + `.ocard__icon { position: absolute; left: 0; top: 0 }` + `.ocard__title { padding-left: 图标槽 + 间距 }`。header 高即标题行盒高，margin 8px 精确成立，**且标题折行时仍成立** |
 | 按档补偿 margin 抵消盒子高差 | 单行标题时正确，但标题折成 2 行后 header 高改由标题决定、补偿量变成过度，间距反而变小 | 不要补偿 margin，改用「移出文档流」让参考点回归元素本身 |
-| 行高大于字号 → 视觉间距 ≠ margin | 标题 `line-height: 30` / `font-size: 22`，字形视觉间距受 half-leading 干扰 | 区分「**行盒间距**」与「字形视觉间距」两种口径并在规范中写明。用户 2026-10-22 裁定 icon 卡 8px 指**行盒间距**（`desc.top − title.bottom`） |
+| 行高大于字号 → 视觉间距 ≠ margin | 标题 `line-height: 30` / `font-size: 22`，字形视觉间距受 half-leading 干扰 | 区分「**行盒间距**」与「字形视觉间距」两种口径并在规范中写明。用户 2026-10-23 裁定 icon 卡 8px 指**行盒间距**（`desc.top − title.bottom`） |
 
-#### 测量口径裁定（2026-10-22 用户确认）
+#### 测量口径裁定（2026-10-23 用户确认）
 
 「标题（字号+行高）→ 描述（字号+行高）= 8px」的参考点是**行盒**（`line-height` 决定的盒子），**不是字形**。因此：
 

@@ -71,11 +71,11 @@ details.legend .notes li { margin-left: 18px; }
         <li>✅ <b>裁定 A（操作区是灵活可选的，2026-10-21）</b>：cover + vertical 与 cover + horizontal <b>默认无操作区</b>（整卡单跳转）；需要多交互时再把 Footer 加在现有位置（内容区下方 / 右侧列尾部）。Footer 不是必选段，规范应把它标为「可选」而非默认存在。</li>
         <li>✅ <b>裁定 B（≤600px 一律去掉操作区，2026-10-21）</b>：<b>所有类型</b>（cover / icon / full-cover）、<b>两种布局</b>（vertical / horizontal）在 340~600px 档一律不显示 Footer，卡片退化为纯展示。注意 <code>:has(.ocard__footer)</code> 在 footer 被 <code>display:none</code> 时<b>仍然命中</b>，必须显式把 Body 下内边距恢复为该档原值（12px），否则「描述底→卡底」会被压成 0。</li>
         <li>✅ <b>裁定 C（≤840px：cover + horizontal 一排只放一张，2026-10-21）</b>：601~840px 档四列卡宽仅 157px，双列宽 330px 时封面已要 241.8px、文字列被压到极限，故水平卡在该档独占一行。实现要点：flex 行里必须写 <code>flex: 0 0 100%</code>，只写 <code>width: 100%</code> 会被 flex-shrink 收缩回 (676−16)/2 = 330px，两张卡仍并排（已实测踩坑）。floor-card.md 目前只有「≤5 / >5 卡」的列数规则，缺 horizontal 专项规则，需回写。</li>
-        <li>✅ <b>裁定 D（≤840px 一律去掉 icon 卡操作区，2026-10-22）</b>：<b>icon 类型</b>在 601~840px 与 340~600px 两档均不显示 Footer（比 cover 的 ≤600px 更严）。同时 icon 从本日起<b>改为按断点分档</b>（原「容器 24/32、间距不分档」口径废止），分档值见表 4a。</li>
-        <li>✅ <b>裁定 E（icon 卡间距分档，2026-10-22）</b>：icon 容器 padding 24/24/16/12/12、描述→操作区 16/12/8/无/无、按钮间距 32/32/24、图标槽 32/32/24/24/24；「图标→标题」与「标题区→描述」五档一致（12 / 8）。实现要点：<b>不要用容器统一 flex gap</b>——「标题区→描述」8 与「描述→操作区」16/12/8 两个值不同，统一 gap 会同时作用于 Header→Body 与 Body→Footer 两处、无法分别表达，须分段用 margin 直读。</li>
-        <li>✅ <b>裁定 F（full-cover 整卡保持图片比例，2026-10-22）</b>：full-cover 的定义是「卡片内部整个图片填充」，因此<b>整张卡片</b>遵守封面固定比例规则（规则 5）——<b>16:9（默认）或 3:1（超宽形态）</b>；<b>宽度按栅格定</b>（可跨 1~N 列），<b>高度 = 宽度 ÷ 比例</b>（<code>aspect-ratio</code> 反推），禁止内容撑高、禁止写死高度。连带修正：① 内容层（padding 28/24/24 + 标题 ≤2 行 + 描述 ≤3 行）必须在该比例高度内放得下——最窄档跨整行 312px → 16:9 高 175.5px ≥ 内容层 144px（28+32+12+48+24）；② ≤600px 两列平铺档 full-cover 必须<b>跨满整行</b>，单列 150px 只能推出 84px 高、容不下内容层；③ 旧版「full-cover 内容区（界面示意）」节点已移除（第十七轮），高度不再由内容决定。</li>
-        <li>✅ <b>裁定 G（full-cover 图标与 Tag 非必选 + Tag 遵循 tag.md，2026-10-22）</b>：full-cover 内容层四类节点中<b>只有标题与正文必选</b>——图标槽非必选、标题后的 Tag 非必选。Tag 本体<b>必须调用 OTag 组件</b>（<code>.otag</code>，规格 / 变体 / 颜色全部遵循 <code>tag.md</code>：本页用 <code>fill × small</code> = 高 20px · 水平内边距 6px · 圆角 4px · tip2 12px），<b>禁止卡片自创徽标样式</b>——旧版 <code>.ocard__badge</code>（高 20px · 圆角 100px · padding 0 8px）的圆角与内边距均不符合 tag.md，已删除；位置为 Head 行内、标题之后（full-cover 整卡即图片，不适用规则 4 中 cover 类型的「右上角 absolute」口径）。三张演示卡分别演示：全要素（图标 + 标题 + Tag）/ 无图标 / 无 Tag。</li>
-        <li>✅ <b>裁定 H（Light → Dark 全量 Token 翻转，2026-10-22）</b>：Dark 模式<b>不是"只反色文字"</b>，而是<b>整套 Token 的成对翻转</b>——凡 <code>:root</code> 定义过且本页被引用到的 Token，在 <code>.o-dark</code> 作用域内必须逐项覆盖为 <b>Dark 值</b>：交互态（卡片 hover 标题 <code>primary1</code>、Footer 按钮 hover <code>primary2</code> / active <code>primary3</code>）、组件自身色（图标槽底色 <code>primary1-light</code>、图标色 <code>primary1</code>、OTag fill 底色 <code>primary1</code>）、阴影全部在内。旧版只覆盖了 <code>fill2/fill3/info1/info3/shadow-2</code>，<code>primary</code> 系列未切换，导致 dark 区 hover 标题用 <b>Light 的 #002FA7 深蓝</b>压在深色卡上（对比度极低、几乎不可见）——本轮已按上游 Token 真源补齐：primary1 → rgb(73,122,248)、primary2 → rgb(42,72,158)、primary3 → rgb(29,51,120)、primary1-light → rgb(18,34,87)。此规则为<b>全局铁律</b>（hard-constraints.md §0.1），适用于所有组件。</li>
+        <li>✅ <b>裁定 D（≤840px 一律去掉 icon 卡操作区，2026-10-23）</b>：<b>icon 类型</b>在 601~840px 与 340~600px 两档均不显示 Footer（比 cover 的 ≤600px 更严）。同时 icon 从本日起<b>改为按断点分档</b>（原「容器 24/32、间距不分档」口径废止），分档值见表 4a。</li>
+        <li>✅ <b>裁定 E（icon 卡间距分档，2026-10-23）</b>：icon 容器 padding 24/24/16/12/12、描述→操作区 16/12/8/无/无、按钮间距 32/32/24、图标槽 32/32/24/24/24；「图标→标题」与「标题区→描述」五档一致（12 / 8）。实现要点：<b>不要用容器统一 flex gap</b>——「标题区→描述」8 与「描述→操作区」16/12/8 两个值不同，统一 gap 会同时作用于 Header→Body 与 Body→Footer 两处、无法分别表达，须分段用 margin 直读。</li>
+        <li>✅ <b>裁定 F（full-cover 整卡保持图片比例，2026-10-23）</b>：full-cover 的定义是「卡片内部整个图片填充」，因此<b>整张卡片</b>遵守封面固定比例规则（规则 5）——<b>16:9（默认）或 3:1（超宽形态）</b>；<b>宽度按栅格定</b>（可跨 1~N 列），<b>高度 = 宽度 ÷ 比例</b>（<code>aspect-ratio</code> 反推），禁止内容撑高、禁止写死高度。连带修正：① 内容层（padding 28/24/24 + 标题 ≤2 行 + 描述 ≤3 行）必须在该比例高度内放得下——最窄档跨整行 312px → 16:9 高 175.5px ≥ 内容层 144px（28+32+12+48+24）；② ≤600px 两列平铺档 full-cover 必须<b>跨满整行</b>，单列 150px 只能推出 84px 高、容不下内容层；③ 旧版「full-cover 内容区（界面示意）」节点已移除（第十七轮），高度不再由内容决定。</li>
+        <li>✅ <b>裁定 G（full-cover 图标与 Tag 非必选 + Tag 遵循 tag.md，2026-10-23）</b>：full-cover 内容层四类节点中<b>只有标题与正文必选</b>——图标槽非必选、标题后的 Tag 非必选。Tag 本体<b>必须调用 OTag 组件</b>（<code>.otag</code>，规格 / 变体 / 颜色全部遵循 <code>tag.md</code>：本页用 <code>fill × small</code> = 高 20px · 水平内边距 6px · 圆角 4px · tip2 12px），<b>禁止卡片自创徽标样式</b>——旧版 <code>.ocard__badge</code>（高 20px · 圆角 100px · padding 0 8px）的圆角与内边距均不符合 tag.md，已删除；位置为 Head 行内、标题之后（full-cover 整卡即图片，不适用规则 4 中 cover 类型的「右上角 absolute」口径）。三张演示卡分别演示：全要素（图标 + 标题 + Tag）/ 无图标 / 无 Tag。</li>
+        <li>✅ <b>裁定 H（Light → Dark 全量 Token 翻转，2026-10-23）</b>：Dark 模式<b>不是"只反色文字"</b>，而是<b>整套 Token 的成对翻转</b>——凡 <code>:root</code> 定义过且本页被引用到的 Token，在 <code>.o-dark</code> 作用域内必须逐项覆盖为 <b>Dark 值</b>：交互态（卡片 hover 标题 <code>primary1</code>、Footer 按钮 hover <code>primary2</code> / active <code>primary3</code>）、组件自身色（图标槽底色 <code>primary1-light</code>、图标色 <code>primary1</code>、OTag fill 底色 <code>primary1</code>）、阴影全部在内。旧版只覆盖了 <code>fill2/fill3/info1/info3/shadow-2</code>，<code>primary</code> 系列未切换，导致 dark 区 hover 标题用 <b>Light 的 #002FA7 深蓝</b>压在深色卡上（对比度极低、几乎不可见）——本轮已按上游 Token 真源补齐：primary1 → rgb(73,122,248)、primary2 → rgb(42,72,158)、primary3 → rgb(29,51,120)、primary1-light → rgb(18,34,87)。此规则为<b>全局铁律</b>（hard-constraints.md §0.1），适用于所有组件。</li>
         <li>card.md <b>未规定、本页取演示值</b>的项（回写规范时需确认）：full-cover Head 行内部间距与标题→正文间距（12px）、水平图标卡结构（图标 + 文字列）、<code>--o-color-primary1-light</code> 取值（8% 品牌色浅底）、Dark 模式 fill3 / 画布底色、深色封面占位色、shadow-1（取上游 token 值）。</li>
         <li>社区 Token 口径：openEuler（radius xs/s/m/l 均为 4px，故 full-cover 外档 = 内档 = 4px；openEuler 线上页面另指定 16/8，见 card.md「圆角基准说明」）。</li>
         <li><b>Footer 操作按钮引用 OButton 组件</b>：操作区按钮不是卡片自定义样式，而是引用 [components/button.md](../components/button.md) 的「size=medium · Variant=text」组合（card.md Footer 硬约束指定）。卡片只拥有 <code>.ocard__footer</code> 这个<b>布局槽位</b>（flex · 左对齐 · 内边距分档；按钮间距 cover 24 / icon 32→24，均随断点收紧）；按钮本体用组件命名空间 <code>.o-button .o-button--text</code>（SKILL.md L229：组件语义用 <code>o-</code> 前缀），样式独立成块，符合 floor-card.md L19「卡片不写子组件内部样式，仅引用组件规范选尺寸变体」。规格：高 32px · 水平内边距 0（text 变体专属）· 无最小宽度 · 圆角 16px · 字号 font_size-tip1 14px / 行高 line_height-tip1 22px · 无背景无边框 · Enabled 文字色 grey-14。交互：默认 info1 → hover primary2 → active primary3 → 选中 primary1；Disabled 为 grey-14 @ 40%。</li>
@@ -148,7 +148,7 @@ details.legend .notes li { margin-left: 18px; }
         <li><sup>§</sup> <b>≤840px：cover + horizontal 一排只放一张卡</b>（2026-10-21 裁定）。该档四列卡宽仅 157px，双列宽 330px 时封面已占 241.8px、文字列被压到极限，故水平卡独占一行。flex 布局下须写 <code>flex: 0 0 100%</code>，仅写 <code>width: 100%</code> 会被 flex-shrink 收缩回 (676−16)/2 = 330px，两张仍并排。</li>
     </ul>
 
-    <h4>表 4a · icon 类型间距（按断点分档 · 2026-10-22 起 icon 也分档，原「容器 24/32、间距不分档」口径废止）</h4>
+    <h4>表 4a · icon 类型间距（按断点分档 · 2026-10-23 起 icon 也分档，原「容器 24/32、间距不分档」口径废止）</h4>
     <table>
         <tr><th>规格项</th><th>≥1681px</th><th>1201~1680px</th><th>841~1200px</th><th>601~840px</th><th>340~600px</th></tr>
         <tr><td>容器 padding 上/右/下/左</td><td>24</td><td>24</td><td>16</td><td>12</td><td>12</td></tr>
@@ -404,7 +404,7 @@ a.ocard { display: flex; flex-direction: column; text-decoration: none; color: i
 /* ══════════════════════════════════════════════════════════════════════════
    ▎OTag 组件（引用 components/tag.md）
    ▎card.md 规则 4 硬约束：卡片内 Tag 必须调用 OTag，禁止自创徽标/Badge 样式
-   ▎full-cover 标题后的 Tag 用 fill × small（2026-10-22 用户裁定：Tag 非必选，
+   ▎full-cover 标题后的 Tag 用 fill × small（2026-10-23 用户裁定：Tag 非必选，
    ▎  位置 = 内容层 Head 行内、标题之后，跟随内容流）
    ▎规格逐项对应 tag.md「布局规格」表：
      高 20px（small，L131）· 水平内边距 6px / 垂直内边距 2px（L134-135）
@@ -519,7 +519,7 @@ a.ocard { display: flex; flex-direction: column; text-decoration: none; color: i
    header 为 column，其底 = 标题行盒底，故 __desc 的 margin-top:8px 即精确 8px（标题折行仍成立）。
    ⚠️ 禁止把 vertical 做成「图标与标题横排」：那既与 cover 的 vertical 逻辑相反，也会让
    header 高 = max(图标槽 32, 标题行盒 30) = 32，把 desc margin 的参考点顶低 2px
-   （1201~1680 档 32 vs 26，顶低 6px），实测「标题行盒→描述」变成 10/14/8（2026-10-22 踩坑）。
+   （1201~1680 档 32 vs 26，顶低 6px），实测「标题行盒→描述」变成 10/14/8（2026-10-23 踩坑）。
    此时也不要靠按档补偿 margin——标题折成 2 行后 header 高改由标题决定，补偿反而过度 */
 .ocard--icon .ocard__header { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }  /* 图标→标题 12px（五档一致）*/
 .ocard__icon {
@@ -533,7 +533,7 @@ a.ocard { display: flex; flex-direction: column; text-decoration: none; color: i
 /* horizontal（横向排列）：图标在标题**左侧**、与文字列横向排列，间距 12px，与 cover 的 horizontal
    同逻辑（封面在文字左侧）。图标与标题顶对齐（align-items: flex-start）。
    禁用 align-items:center——center 会把 32px 图标对着「标题+描述」整列（标题 30 + 间距 8 + 描述 ≈44）
-   垂直居中，图标比标题低约 25px、掉到标题与描述之间（2026-10-22 实测修复）。
+   垂直居中，图标比标题低约 25px、掉到标题与描述之间（2026-10-23 实测修复）。
    gap:12 覆盖基础规则 gap:0，源顺序在本块之后故生效 */
 .ocard.ocard--icon--h { flex-direction: row; align-items: flex-start; gap: 12px; }
 .ocard--icon--h .ocard__body { flex: 1; min-width: 0; }
@@ -564,7 +564,7 @@ a.ocard { display: flex; flex-direction: column; text-decoration: none; color: i
 }
 
 /* ── full-cover：封面即卡片背景，铺满整卡、无内层圆角；内容层整块叠于封面上层 ──
-   🚨 卡片自身必须保持横向比例（2026-10-22 用户裁定）：整卡即图片，故遵守「封面图片固定比例」
+   🚨 卡片自身必须保持横向比例（2026-10-23 用户裁定）：整卡即图片，故遵守「封面图片固定比例」
    规则（card.md 规则 5）——16:9 默认 / 3:1 超宽形态；宽度按栅格定（演示为跨双列），
    高度 = 宽度 ÷ 比例（aspect-ratio 反推），禁止内容撑高、禁止写死高度。
    内容层（padding 28/24/24 + 标题≤2行 + 描述≤3行）必须放得下：演示最窄档 312px 卡宽
@@ -590,7 +590,7 @@ a.ocard { display: flex; flex-direction: column; text-decoration: none; color: i
 .ocard--full--ondark .ocard__desc { color: var(--o-color-info3-inverse); }
 
 /* ── Dark 模式（Dark=on）──
-   🚨 hard-constraints.md §0.1「Light → Dark 切换铁律」（2026-10-22 用户裁定）：
+   🚨 hard-constraints.md §0.1「Light → Dark 切换铁律」（2026-10-23 用户裁定）：
      Dark 是整套 Token 的成对翻转，不是"只反色文字"。凡 :root 里定义过、且在本页
      被引用到的 Token，此处必须逐项覆盖为 Dark 值——交互态（hover/active/selected）、
      组件自身色（背景/文字/边框/图标/阴影）、*-light 浅底一个都不能漏。
