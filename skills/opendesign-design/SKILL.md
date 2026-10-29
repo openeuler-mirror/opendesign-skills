@@ -1,7 +1,7 @@
 ---
 name: opendesign-design
 description: OpenDesign HTML 页面生产指南。当需要生成符合 OpenDesign 设计规范的 HTML 页面（按钮、输入框、卡片、导航等 UI 组件）、应用设计规范（栅格/颜色/字号/间距/圆角）、搭建页面框架时使用此 skill。包含 PC/MB 双断点的变量映射硬约束（字号/行高/间距/栅格/图标尺寸的合法取值白名单），覆盖 27 个组件设计规范。生成的 HTML 遵循 opendesign-codegen 工程规范（--o-* 语义 Token、OpenDesign 组件命名、BEM、响应式 Token），可直接作为设计原型或进一步转译为 Vue SFC 生产代码。
-last_update: 2026-10-23
+last_update: 2026-10-29
 ---
 
 # Design Skill · HTML 页面生成指南
@@ -63,6 +63,8 @@ last_update: 2026-10-23
 | [OLoading](components/loading.md) | 加载 | | |
 | [OMenu](components/menu.md) | 菜单 | | |
 | [OSearch](components/search.md) | 搜索框 | | |
+
+> 📌 **卡内数据统计栏（stats-bar）**：卡片内出现浏览量 / 点赞 / 评论 / 收藏 / 评分等统计数据行时，一律按 [OCard 规则 7](components/card.md) 的 `.stats-bar` 规格落地（`tip1` 14px / `--o-color-info3` / 图标间距 8px / 统计项间距 16px / 无评分居左 · 含评分时评分居左、其余居右），该规格已列入 [hard-constraints.md §1.3](global/hard-constraints.md) 组合规则——禁止为统计数据自创类名、字号或对齐方式。
 
 ## 图标处理规范（核心约束）
 
@@ -139,7 +141,7 @@ WebFetch 拉取目标社区主题 Token（必须执行！URL 见 #数据资源 �
   1. 导航楼层（ONavigation）
   2. Banner 楼层（OBanner，XL/L/M/无）
   3. 功能介绍楼层（OCard × N 栅格）
-  4. 数据统计楼层（自定义数字 + 描述）
+  4. 数据统计楼层（OCard icon 统计卡片栅格，规格见 components/card.md「组合搭配 · 统计卡片」）
   5. 页脚楼层（ONavigation Footer）
 
 请确认每个楼层的类型和内容，确认后我将逐楼层读取规范并生成。
@@ -252,6 +254,7 @@ WebFetch 拉取目标社区主题 Token（必须执行！URL 见 #数据资源 �
 □ 【CodeGen对齐】字号/行高是否使用 `var(--o-r-font_size-*)` + `var(--o-r-line_height-*)`？
 □ 【CodeGen对齐】是否无内联 `style="..."` 和非必要 `!important`？
 □ 【CodeGen对齐】类名是否使用 BEM 命名规范？
+□ 【卡内统计】卡片内出现浏览 / 点赞 / 评论 / 收藏 / 评分等数据行时，是否按 card.md 规则 7 使用 `.stats-bar`（tip1 14px / 22px / 400 · `info3` · 图标间距 8px · 统计项间距 16px · 无评分居左 / 含评分评分居左+其余居右）？（禁止自创统计栏类名、字号或对齐）
 □ 【视觉合理性】数值虽全部合规，视觉是否仍然异常（内容重心偏移 / 对比度不足 / 留白失衡 / 信息色与背景色颠倒）？——数值自洽不等于符合设计意图，禁止只验算式不验视觉；发现疑点必须在交付说明中显式提出，禁止静默放行
 
 渲染验证（按环境能力分级，禁止静默跳过）：
@@ -311,6 +314,7 @@ WebFetch 拉取目标社区主题 Token（必须执行！URL 见 #数据资源 �
 > - 🚨 **间距必须取自分档表，禁止只读单一值**：凡规范表按断点分档的内边距 / 间距 / 元素尺寸，必须**逐档取值并逐档写媒体查询**，禁止把某一档的值当作「组件通用值」全档复用。反向同样成立——规范若写「不分档」，实现就不许自行分档；发现「不分档」与实际窄档体验冲突时，先向用户提出并按回复回写规范
 > - 🚨 **排列方式变体的结构必须与同类组件的同名变体镜像，禁止自造结构**：`vertical` / `horizontal` 是**跨组件通用的语义**——vertical = 视觉主体（封面 / 图标 / 头像）在文字**上方**，horizontal = 视觉主体在文字**左侧**。给任何组件生成变体前，先查规范中该变体的 DOM 结构定义（Header 方向、图标在 Header 内还是移出与 Body 并排）；同类组件已有一个变体的实现时，**结构必须与之对齐**，禁止按个人理解另造一种。历史教训：OCard icon 卡未定义排列方式结构，实现侧把 vertical 做成「图标与标题横排」，与 cover 的 vertical（封面在上）逻辑相反，还因图标槽比标题行盒高撑大 header，导致「标题行盒→描述」实测 10/14/8 而非 8（第十六轮）
 > - 🚨 **统一 flex gap 会与子元素 margin 叠加，两个纵向间距值不同时禁用 gap**：容器 `gap` 作用于**每一对相邻子元素**，与子元素自身 `margin-top/bottom` 是**相加**关系。当「A→B」与「B→C」需要不同值时（如 OCard icon 的 8px 与 16px），统一 gap 结构上无法分别表达，必须改 `gap: 0` + 分段 margin 直读；若确实要用 gap，须确认相邻子元素没有额外 margin，否则实测值 = gap + margin 而非 gap
+> - 🚨 **卡内数据统计栏必须走 OCard stats-bar 规格，禁止自创**：卡片内出现浏览量 / 点赞 / 评论 / 收藏 / 评分等统计数据行时，一律按 [components/card.md](components/card.md) 规则 7 落地——类名 `.stats-bar`、字号 `font_size-tip1`（14px）/ 行高 22px / 字重 400、颜色 `--o-color-info3`、统计项内图标与文字间距 8px、统计项之间 16px、无背景无边框、无评分全部居左 / 含评分评分居左+其余居右（该规格已列入 [hard-constraints.md §1.3](global/hard-constraints.md) 与其 §3 校验项 □11）；禁止自创类名、改字号改色或另行布局
 > - **问题必须回写 skill，禁止只改产物**：用户每抛出一个问题，修复时除改当前产物外，**必须同步定位到对应 skill 文件并回写**（组件规范补缺项 / 硬约束补条款 / QA 清单补检查项 / CHANGELOG 记根因与踩坑）。只改产物不回写规范 = 下一轮必复发；本轮问题若在 CHANGELOG 中找不到对应记录，视为未完成
 > - **规范未覆盖时的分级处理**（禁止静默取值）：
 >   - 规范文档缺少某项参数（如 PC 端未写明 Banner 的垂直对齐方式）→ **先显式向用户指出该缺失**，并给出你打算采用的设计常识做法

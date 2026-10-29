@@ -208,7 +208,7 @@ AI 会声称读了所有文件，但一次性处理太多规范，细节必然�
        1. 导航楼层（ONavigation Header）
        2. Banner 楼层（XL 等级）
        3. 功能介绍楼层（3 列封面卡片栅格）
-       4. 数据统计楼层（4 列图标卡片栅格）
+       4. 数据统计楼层（4 列 OCard icon 统计卡片栅格，规格见 components/card.md「组合搭配 · 统计卡片」；卡内数据行用规则 7 的 stats-bar）
        5. 页脚楼层（ONavigation Footer）
 
 👤 设计师：确认，先做导航楼层
