@@ -182,7 +182,7 @@ OCard（HORIZONTAL，自适应宽高）
 
 | 层级 | 字号 | 行高 | 字重 | 颜色 |
 |------|------|------|------|------|
-| 卡片标题 | `font_size-h3`（22px） | `line_height-h3`（30px） | bold | `--o-color-info1` |
+| 卡片标题 | `font_size-h3`（22px） | `line_height-h3`（30px） | Semibold（600） | `--o-color-info1` |
 | 卡片正文 | `font_size-text1`（16px） | `line_height-text1`（24px） | regular | `--o-color-info3` |
 | 标题后 Tag | **调用 [OTag 组件](./tag.md)，不在此定义样式**（推荐 `fill` × `small`：高 20px / 内边距 6px·2px / 圆角 4px / 字号 tip2） | | | 按 Tag 的 Color 语义取 |
 
@@ -1321,7 +1321,7 @@ Hover 时：
 
 | 使用场景 | 字号 Token | 行高 Token | 字重 Token | 字号值 | 行高值 |
 |---------|-----------|-----------|-----------|-------|-------|
-| Header 标题 | `font_size-h3` | `line_height-h3` | `font_weight-bold` | 22px | 30px |
+| Header 标题 | `font_size-h3` | `line_height-h3` | `font_weight-semibold` | 22px | 30px |
 | Body 正文 | `font_size-text1` | `line_height-text1` | `font_weight-regular` | 16px | 24px |
 | Footer 按钮 | `font_size-text1` | `line_height-text1` | `font_weight-regular` | 16px | 24px |
 
@@ -1509,7 +1509,7 @@ OCard（full-cover，FRAME）
 | Footer 内边距 | autoLayoutPadding | 待确认 |
 | 区域间距 | autoLayoutItemSpacing | 待确认 |
 | 标题字号 | fontSize | `font_size-h3`（22px） |
-| 标题字重 | fontWeight | `font_weight-bold` |
+| 标题字重 | fontWeight | `font_weight-semibold` |
 | 正文字号 | fontSize | `font_size-text1`（16px） |
 
 ---

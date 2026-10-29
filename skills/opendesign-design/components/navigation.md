@@ -69,7 +69,7 @@ ONavigation Header PC（SYMBOL）
 │  display: flex | justify: space-between | align: center
 │  padding: 0px 216px
 │  background: `rgba(255,255,255,1)` (**`--o-color-white`**)(Light) / `rgba(36,36,39,1)` (**`--o-color-fill2-dark`**)(Dark)
-│  boxShadow: 0px 3px 9px 0px `rgba(0,18,85,0.078)`
+│  boxShadow: `var(--o-shadow-1)`（`0 3px 8px rgb(var(--o-grey-13) / 0.08)`；旧稿值 `0px 3px 9px 0px rgba(0,18,85,0.078)` 为 openEuler 残留，2026-10-29 修正）
 │  backdropFilter: blur(4.53px)
 │  [Dark 专属] borderBottom: 1px solid `rgba(255,255,255,0.149)`
 │
@@ -328,7 +328,7 @@ ONavigation Footer Mb（SYMBOL）
 | 搜索框（Dark）padding | 5px 16px，gap 8px，borderRadius 4px |
 | 源码下拉 GROUP 尺寸 | 48px × 24px |
 | 操作图标尺寸 | 24px × 24px |
-| boxShadow | 0px 3px 9px 0px `rgba(0,18,85,0.078)` |
+| boxShadow | `var(--o-shadow-1)` = `0 3px 8px rgb(var(--o-grey-13) / 0.08)`（Token 真源；旧稿 openEuler 残留值已修正） |
 | backdropFilter | blur(4.53px) |
 | Dark 底部描边 | 1px bottom，`rgba(255,255,255,0.149)` |
 
@@ -429,9 +429,9 @@ ONavigation Footer Mb（SYMBOL）
 |---------|------|------|------|------|
 | 顶部说明文字 | 20px | 28px | Regular | **`white`** (**`--o-color-white`**) |
 | 导航列标题 | 20px | 28px | Regular | **`white`** (**`--o-color-white`**) |
-| 导航链接文字 | 14px | 22px | Regular | **`white@0.6`** (**`--o-color-info3`**) |
-| 友情链接标题 | 12px | 24px | UltraLight | **`white`** (**`--o-color-white`**) |
-| 友情链接文字 | 12px | 18px | Regular | **`white@0.6`** (**`--o-color-info3`**) |
+| 导航链接文字 | 14px | 22px | Regular | `rgb(255,255,255,0.6)`（固定深色区特例——**非 info3**：info3 随主题翻转，页脚深色区禁用） |
+| 友情链接标题 | 12px | 18px | UltraLight | **`white`** (**`--o-color-white`**) |
+| 友情链接文字 | 12px | 18px | Regular | `rgb(255,255,255,0.6)`（固定深色区特例——**非 info3**） |
 | 底部链接（品牌/政策）| 14px | 22px | Regular | **`white`** (**`--o-color-white`**) |
 | 版权/许可证声明 | 14px | 22px | Regular | **`white@0.6`** (**`--o-color-info3`**) |
 | 联系邮箱 | 14px | 22px | Regular | **`white`** (**`--o-color-white`**) |

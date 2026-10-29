@@ -7,6 +7,22 @@
 
 ---
 
+## 2026-10-29
+
+### 新增
+
+- **`references/tokens-opengauss.md` 新增「文字色 Token（Info）」节**：openGauss 上游 v0.1.1 未定义 info1~4 语义 Token，
+  Light 值取 `references/tokens.md`「文字色 Token」通用定义（mixedgray-14 基，本主题灰色板 grey-14 同值）、Dark 值按
+  hard-constraints §0.1「同灰度、反色相」规则推导（显式标注「推导值」，待上游补齐后以上游为准）——此前页面生成每次
+  都需临时交叉推导（2026-10-29 全流程验证三个楼层均撞上此缺口），现固化为文档。附复核提醒：info 系与 control2/3-light
+  的 Dark 推导值，启用 Dark 模式前需维护者确认。
+
+### 修正
+
+- **Shadow Token 非法语法修正**：`references/tokens.md`「Shadow Tokens」节的 `rgba(var(--o-grey-13), 0.08)` 为
+  「空格通道 + 逗号 alpha」混写（hard-constraints §0 判定的非法语法，浏览器整条声明静默丢弃）——三处（shadow-1/2/3）
+  统一改为合法斜杠语法 `rgb(var(--o-grey-13) / 0.08)`；`tokens-opengauss.md` 主题特征总结中的同款写法同步修正。
+
 ## 2026-07-31
 
 ### 新增

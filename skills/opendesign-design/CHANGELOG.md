@@ -8,6 +8,56 @@
 
 ## 2026-10-29
 
+### 第二十五轮：全流程验证暴露的存量规范问题批量修复（18 项）
+
+> 来源：2026-10-29 全流程验证（openGauss PC 新首页：4 个楼层子代理 + 组装验证）暴露的存量问题 backlog，去重后按「修法有明确裁决依据」筛选 18 项直接修复（spec-backlog-round-25 分支）；另有 4 项需设计裁决（见文末遗留）。本轮不涉工作流与交互层（第二十四轮范畴），全部为规范文本层的矛盾修正、缺口补齐与口径澄清。
+
+#### 一、A 类：文档矛盾与错误引用（12 处）
+
+| # | 文件 | 修复 |
+|---|------|------|
+| 1 | `floors/navigation.md` | 「两种样式可混挂」→「二选一、禁止混挂」——2026-10-19 纠错时 SKILL.md 与两份下拉模板已改、本文件漏改的存量矛盾 |
+| 2 | `floors/navigation.md` 骨架 | 删 `.o-nav__link` 显式 `height: 48px`（与自身踩坑 #20 矛盾，border-box 下 48 与 24+24+2=50 有 2px 歧义）——改行高 + padding 自然撑高并注释 |
+| 3 | `floors/navigation.md` 速查表 + CSS 骨架 | 顶导阴影 `0 3px 9px 0 rgba(0,18,85,0.078)`（openEuler 稿残留）→ Token 真源 `0 3px 8px rgb(var(--o-grey-13) / 0.08)` |
+| 4 | `components/navigation.md` + `floors/footer.md` | 同款 shadow 旧值同步修正；顺手修正页脚链接「white@0.6 (info3)」误标（info3 随主题翻转，页脚固定深色区禁用——改为特例写法说明） |
+| 5 | `components/navigation.md` + `floors/footer.md` | 友情链接标题行高 12px/24px → 12px/18px（违反硬约束 §2 成对锁定；验证轮 footer 楼层裁定） |
+| 6 | `components/button.md` | 「solid 在右（主操作）」→「从左到右 solid → outline」（与 hard-constraints §1.1 相反）；「表单底部间距 8–12px」→ 固定 24px（同款冲突） |
+| 7 | `components/card.md` | 卡片标题字重 bold(700) → Semibold(600)（Part C 交互表与 Part D 映射表 600/700 并存，违反 §0.2 一致性铁律；按 4 处证据 vs 2 处统一为 600） |
+| 8 | `components/search.md` Part Z-2 / R-2 / B.3 | 「必须 `<img>` 引用图标」→「Read 后逐属性内联 `<svg>`」（与 SKILL.md「禁止 `<img src>`」直接冲突） |
+| 9 | `SKILL.md` 异常降级表 | 降级指引两处不一致（表内 designer-guide 速查表 vs 第零步正文 opendesign-tokens 六主题文件）→ 统一为第零步口径，速查表降为 openEuler Light 辅助 |
+| 10 | `SKILL.md` 第五步组件命名 | 示例 `.o-card` 与 card.md 权威 DOM `.ocard` 不符 → 改为「组件类名以各组件规范权威 DOM 为唯一真源」 |
+| 11 | `global/hard-constraints.md` §2 | 「三级标题（列表卡片 < 3 列）」→「≤ 3 列」（3 列场景两档均未覆盖的空档） |
+| 12 | `../opendesign-tokens/references/tokens.md` + tokens-opengauss.md | `rgba(var(--o-grey-13), 0.08)` 逗号混写（§0 判定非法语法，浏览器整条静默丢弃）→ 斜杠语法 `rgb(var(--o-grey-13) / 0.08)`（详见 opendesign-tokens CHANGELOG 同日条目） |
+
+#### 二、B 类：结构性缺口补齐（2 项）
+
+| # | 文件 | 补齐 |
+|---|------|------|
+| 13 | `floors/card-grid.md` | 补 SKILL.md 第四步强制的四节（生成前必读 / 已确认清单 / 冲突声明 / 踩坑记录），内容从验证轮沉淀；icon 卡旧口径（padding 24px 32px / gap 16px，card.md 2026-10-23 已废止）改为指向分档表；圆角写死 4px 改按目标社区 `--o-radius_control-m`（cover / icon 两处 + 自检项） |
+| 14 | `floors/footer.md` | 同款四节补齐（含 ⏳ 页脚高度 460px 不自洽的待确认登记）；友链行高修正入已确认清单 |
+
+#### 三、C/D 类：Token 补齐与口径澄清（4 项）
+
+| # | 文件 | 内容 |
+|---|------|------|
+| 15 | `../opendesign-tokens/references/tokens-opengauss.md` | 新增「文字色 Token（Info）」节：info1~4 Light 取通用定义、Dark 按 §0.1 推导（标注推导值与待复核）——验证轮三个楼层均靠临时推导落地，现固化为文档 |
+| 16 | `SKILL.md` 通用生成约束 | 新增「跨社区内容适配」条款：内容示例与品牌资产随目标社区替换、无素材区域省略 + 说明、openEuler 参考值以目标社区 Token 覆盖（验证轮 openGauss 全链路实践沉淀） |
+| 17 | `SKILL.md` 第五步响应式行 | 澄清：楼层模板已给出分档值的以模板为准、禁止改用 `--o-r-*` 替换（楼层模板 CSS 骨架视为已确认断点特例；如 Banner 正文 MB 档 12/18，直接套 `--o-r-font_size-h4` 会错成 16/24） |
+| 18 | `global/hard-constraints.md` | 字体铁律澄清（铁律管首选字体，`--o-font_family` 回退链按上游原样）；§3 新增「组件级几何参数」例外（明示强制值如页脚底 padding 34px 不受白名单约束、引用须注明出处） |
+
+#### 四、遗留裁决项（4 项，待维护者拍板）
+
+1. 841~1680px 中间档楼层容器方案（验证轮采用 max-width 1488 + 栅格留白 Token 推断方案，目前规范空白）
+2. 页脚高度 460px / 458px 的处理（openEuler 内容集导出值、结构值累加不自洽 ≈510px——改内容自然高度或给各内容档高度参考表；已登记 footer.md 已确认清单 ⏳ 项）
+3. openGauss Dark 值补齐（info 系与 control2/3-light 的 Dark 值为本仓推导，启用 Dark 模式前需复核）
+4. UltraLight(200) 无上游字重 Token（最细一档为 250）与 18px 图标不在 §5 白名单——补 Token 或改值
+
+#### 五、影响评估
+
+全部为规范文本修正与补齐，**无破坏性**（工作流、确认载体、Token 值本身均未变）；按旧版规范生成的产物中受影响项（按钮排列方向、卡片圆角、友链标题行高、shadow 值、`<img>` 图标引用）对照新规范时按需复核。
+
+---
+
 ### 第二十四轮：页面需求单与楼层工单——「输入对齐」从用户手填门槛改为 AI 确认载体
 
 > 根因：skill 原生工作流（第一步 AI 规划楼层 → 用户确认）本身低门槛，但实际流传的「任务需求单 / 楼层工单」YAML 模版把楼层分类学（type / variant / 组件选型）与流程配置（strict_check / output.format / image_policy）转嫁给了用户手填——熟练作者填得对、效果稳定；其他使用者填错枚举 / 缩进 / 选型则触发连环停问或规划偏移，还原度参差。本轮**不改任何生成规格**，只重排「谁提供什么信息」：结构化单据保留，改为 AI 生成草稿、用户确认修改。

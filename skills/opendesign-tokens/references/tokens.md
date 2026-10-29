@@ -561,9 +561,9 @@
 
 | Token 名称 | 值（默认/openEuler light 模式） | 说明 |
 |-----------|-----|------|
-| `--o-shadow-1` | `0 3px 8px rgba(var(--o-grey-13), 0.08)` | 一级阴影（浮层） |
-| `--o-shadow-2` | `0 2px 24px rgba(var(--o-grey-13), 0.15)` | 二级阴影（弹出层） |
-| `--o-shadow-3` | `0 8px 40px rgba(var(--o-grey-13), 0.1)` | 三级阴影（模态层） |
+| `--o-shadow-1` | `0 3px 8px rgb(var(--o-grey-13) / 0.08)` | 一级阴影（浮层） |
+| `--o-shadow-2` | `0 2px 24px rgb(var(--o-grey-13) / 0.15)` | 二级阴影（弹出层） |
+| `--o-shadow-3` | `0 8px 40px rgb(var(--o-grey-13) / 0.1)` | 三级阴影（模态层） |
 
 > 阴影的基础色在各主题/模式下有差异：light 模式使用 `grey-13`，dark 模式使用 `grey-1`（黑色）。
 

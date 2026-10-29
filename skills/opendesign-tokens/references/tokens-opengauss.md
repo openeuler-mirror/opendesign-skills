@@ -120,6 +120,21 @@ openGauss 灰色为中性灰（与 openEuler/Kunpeng/openUBMC 相同）。
 
 ---
 
+## 文字色 Token（Info）— 上游未定义，按通用定义与推导补齐（2026-10-29 验证轮）
+
+> openGauss 上游 v0.1.1 未定义 info1~4 语义 Token。Light 值取 [tokens.md](tokens.md)「文字色 Token」通用定义（mixedgray-14 基，本主题灰色板 grey-14 同值）；Dark 值按 hard-constraints §0.1「同灰度、反色相」规则推导（**推导值**），待上游补齐后以上游为准。2026-10-29 全流程验证（openGauss PC 首页四个楼层 + 组装）已按此口径落地。
+
+| Token | 说明 | light 值 | dark 值（推导） |
+|-------|------|---------|--------|
+| `--o-color-info1` | 一级文字/标题 | `rgb(0, 0, 0)` | `rgb(255, 255, 255)` |
+| `--o-color-info2` | 正文 | `rgba(0, 0, 0, 0.8)` | `rgba(255, 255, 255, 0.8)` |
+| `--o-color-info3` | 辅助文字 | `rgba(0, 0, 0, 0.6)` | `rgba(255, 255, 255, 0.6)` |
+| `--o-color-info4` | 置灰/禁用 | `rgba(0, 0, 0, 0.4)` | `rgba(255, 255, 255, 0.4)` |
+
+> ⚠️ info 系 Dark 值与 control2/3-light 的 Dark 值为本仓推导（上游 control 表仅 Light 列），**启用 Dark 模式前需维护者复核**（2026-10-29 验证轮遗留裁决项）。
+
+---
+
 ## 圆角 Token（Radius）— 递进风格
 
 | Token | 值 |
@@ -144,7 +159,7 @@ openGauss 灰色为中性灰（与 openEuler/Kunpeng/openUBMC 相同）。
 - **圆角**：递进圆角体系（4/8/12/16/24px），风格圆润
 - **渐变**：无实质渐变（main2 start = end = brand-5）
 - **灰色**：中性灰（同 openEuler/Kunpeng/openUBMC）
-- **阴影**：shadow-1 基于 grey-13（`0 3px 8px rgba(var(--o-grey-13), 0.08)`）
+- **阴影**：shadow-1 基于 grey-13（`0 3px 8px rgb(var(--o-grey-13) / 0.08)` 斜杠语法——rgba(var(),a) 逗号混写为非法语法，2026-10-29 修正）
 
 ---
 
