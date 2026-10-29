@@ -6,7 +6,7 @@ last_update: 2026-10-29
 
 # Design Skill · HTML 页面生成指南
 
-> 🎨 **设计师第一次使用？** → 先读 [references/designer-guide.md](references/designer-guide.md)，里面有角色决策树、规范速览卡和推荐交互方式。核心建议：**逐楼层生成，不要一次性生成整页**——逐楼层还原度远高于整页一次性生成。
+> 🎨 **设计师第一次使用？** → 先读 [references/designer-guide.md](references/designer-guide.md)，里面有角色决策树、输入清单、规范速览卡和推荐交互方式。核心建议：**逐楼层生成，不要一次性生成整页**——逐楼层还原度远高于整页一次性生成。
 
 > 💡 本文件为 AI 执行入口，仅包含生成 HTML 页面所需的指令与约束。完整使用说明、目录结构、协议信息请查看 [README.md](README.md)；请勿全量加载所有子文件，按工作流按需读取即可。
 >
@@ -128,24 +128,57 @@ WebFetch 拉取目标社区主题 Token（必须执行！URL 见 #数据资源 �
 
 ### 第一步：规划页面楼层结构
 
+**输入齐全性检查（规划前必做）**：对照以下清单检查用户输入，意图级信息（1~4 项）缺失时**先索要再规划**，禁止凭空假设：
+
+```
+1. 目标社区（第零步已识别）
+2. 目标设备（PC / MB）
+3. 场景：new-page 全新落地页，还是 site-extension 已有站点增改（后者须有 site_url）
+4. 页面语言（zh / en / zh-en；未说明默认 zh，在需求单中显式呈现供确认）
+5. 楼层构成意图与内容素材（越具体越好；不全时不阻塞规划，在第三步楼层工单中逐层索要）
+```
+
+**快捷通道**：用户首轮已直接提供填好的页面需求单 → 按 [references/page-brief-template.md](references/page-brief-template.md) §三校验（【必填】缺失停下询问、枚举非法给出合法值请用户修正），校验通过则跳过本步规划确认，直接进入逐楼层循环。
+
 根据用户需求，将页面拆解为楼层序列。所有落地页遵循固定结构（见 [hard-constraints.md §8](global/hard-constraints.md)）：
 
 ```
 导航楼层（必选）→ [Banner 楼层]（可选）→ 楼层 1 → 楼层 2 → … → 页脚楼层（必选）
 ```
 
-向用户输出楼层规划，**等待确认后才能继续**：
+向用户输出**页面需求单草稿**（格式见 [references/page-brief-template.md](references/page-brief-template.md) §一），**等待确认后才能继续**：
 
 ```
-我理解本次页面由以下楼层组成，请确认或调整：
-  1. 导航楼层（ONavigation）
-  2. Banner 楼层（OBanner，XL/L/M/无）
-  3. 功能介绍楼层（OCard × N 栅格）
-  4. 数据统计楼层（OCard icon 统计卡片栅格，规格见 components/card.md「组合搭配 · 统计卡片」）
-  5. 页脚楼层（ONavigation Footer）
+# ========== 页面需求单 ==========
+meta:
+  community: openEuler
+  device: PC
+  scenario: new-page
+  language: zh
+floors:
+  - id: nav
+    type: navigation
+    summary: 主导航，logo + 一级菜单 + 搜索
+  - id: banner
+    type: banner
+    variant: XL
+    summary: 首页主视觉，slogan + 双按钮
+  - id: features
+    type: card-grid
+    columns: 3
+    summary: 功能介绍——3 列封面卡片
+  - id: stats
+    type: card-grid
+    columns: 4
+    summary: 数据统计楼层——OCard icon 统计卡片栅格（规格见 components/card.md「组合搭配 · 统计卡片」）
+  - id: footer
+    type: footer
+    summary: 站点地图 + 版权 + 友链
 
-请确认每个楼层的类型和内容，确认后我将逐楼层读取规范并生成。
+请确认或调整楼层规划，确认后我将逐楼层读取规范并生成。
 ```
+
+> ⚠️ 需求单是**确认载体**：楼层 `type` / `variant` / `id` 由你规划填写，用户只做确认与修改——**禁止要求用户先学会楼层分类学再填单**。用户以自然语言表达调整意见（如「第二层改成图文左右布局」）时，先更新需求单再继续。
 
 楼层模板速查见 [#楼层模板索引](#楼层模板索引)。用户确认后，进入逐楼层循环。
 
@@ -178,21 +211,30 @@ WebFetch 拉取目标社区主题 Token（必须执行！URL 见 #数据资源 �
 >
 > ⛔ 禁止把裸顶导（无下拉面板）当作导航楼层的最终交付；⛔ 禁止顶导与面板分多轮生成；⛔ 禁止未经用户确认自选面板样式；⛔ 禁止同一顶导混用两种下拉面板样式。
 
-#### 第三步：确认本楼层涉及的组件
+#### 第三步：生成本楼层工单草稿（组件选型 + 内容素材 + 验收点）
 
-仅列出**当前楼层**用到的组件，不是整页所有组件：
+仅处理**当前楼层**（不是整页所有组件），输出**楼层工单草稿**（格式见 [references/page-brief-template.md](references/page-brief-template.md) §二），包含三部分：
 
 ```
-当前楼层：[楼层名称]
-涉及组件：
+# ========== 楼层工单：[楼层名称] ==========
+components:                  # AI 选型，用户可增删
   - OCard（封面卡片，vertical）
   - OButton（solid + outline）
   - OTag（分类标签）
+content:                     # 逐条列出本层文案 / 配图意图；【用户素材】缺失项向用户索要
+  - 卡片 1 标题：…
+  - 卡片 1 描述：…
+acceptance:                  # 可选：本层验收点，叠加在第六步自检之上
+  - …
 
-确认后我将读取对应规范。
+确认 / 补充后我将读取对应规范并生成本楼层。
 ```
 
-用户确认后，逐一读取每个组件的 `components/{name}.md`，**全部读取完毕才能进入下一步**。
+> ⚠️ **内容素材是用户素材：缺失时停下向用户索要，禁止编造**——导航菜单项、页脚链接、卡片标题 / 描述、Banner 文案均同（第零步「站点框架基准」抓取到的线上结构除外）。本条是「禁止凭空编造导航项」在全部楼层内容上的泛化。
+>
+> ⚠️ 页面需求单 `meta.confirm = auto` 时：楼层工单仍须生成（内容结构化载体），但仅内容素材缺失或验收点存疑时停下，其余直接进入第四步。
+
+用户确认 / 补充后，逐一读取每个组件的 `components/{name}.md`，**全部读取完毕才能进入下一步**。
 
 #### 第四步：读取本楼层组件规范与资源
 
