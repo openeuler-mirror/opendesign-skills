@@ -117,6 +117,7 @@ const options = [
 
 | 版本 | 变更类型 | 变更内容 |
 |------|---------|---------|
+| 1.2.7-sp3 | 修复 | 修复 `round="pill"` 时多选形态圆角被钳制为巨大全胶囊弧形的问题：pill 圆角改为同尺寸单行胶囊圆角常数（不随标签撑高变化，随断点镜像，#206） |
 | v1.2.4 | 新增 | 新增 OCascaderV2（PC端重构版），含 OCascaderV2Panel 和 OCascaderV2Label，旧版 OCascader 仍可用 |
 | v1.0.2 | 新增 | 新增 `expandTrigger` prop，支持 hover 触发子菜单展开；修复触发和数据回显 bug；修复 CSS 变量拼写错误 |
 
@@ -129,7 +130,7 @@ const options = [
 | modelValue | `CascaderValueT` | — | `''` | 选中值（v-model 双向绑定）。默认模式下为叶子节点的 value 值（字符串或数字）；路径模式下为从根到叶子的路径数组。 |
 | options | `CascaderOptionT[]` | — | — | 选项数据，树形结构数组。每项包含 value（值）、label（显示文本）、children（子项数组，可选）。 |
 | pathMode | `boolean` | — | `false` | 是否使用路径模式。开启后 modelValue 为完整路径数组（如 `['1', '1-1', '1-1-1']`），否则仅为叶子节点的 value 值。默认关闭。 |
-| round | `RoundT` | `'pill'` / CSS 值 | — | 圆角值。"pill" 半圆或 CSS 值。 |
+| round | `RoundT` | `'pill'` / CSS 值 | — | 圆角值。“pill” 取同尺寸单行胶囊圆角常数（v1.2.7-sp3 起，多选时圆角不随标签撑高变化），或 CSS 值。 |
 | variant | `VariantT` | `'solid'` / `'outline'` / `'text'` | `'outline'` | 选择器按钮样式。"solid" 实心、"outline" 线框、"text" 纯文字。默认 outline。 |
 | size | `SizeT` | `'small'` / `'medium'` / `'large'` | `'large'` | 选择器尺寸。"small"、"medium"、"large"。默认 large。 |
 | placeholder | `string` | — | — | 占位文本 |

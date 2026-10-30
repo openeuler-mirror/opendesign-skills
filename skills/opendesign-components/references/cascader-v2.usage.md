@@ -180,6 +180,7 @@ import { OCascaderV2Panel } from '@opensig/opendesign';
 
 | 版本 | 变更类型 | 变更内容 |
 |------|---------|---------|
+| 1.2.7-sp3 | 修复 | 修复 `round="pill"` 时多选形态圆角被钳制为巨大全胶囊弧形的问题：pill 圆角改为同尺寸单行胶囊圆角常数（不随标签撑高变化，随断点镜像）；medium 档高度降档断点由 pad_v~laptop 有界区间改为 ≤1680px，与 input/select 家族对齐，且 ≤840px large 恢复默认档高度（#206） |
 | 1.2.4 | 新增 | OCascaderV2 / OCascaderV2Panel / OCascaderV2Label 组件首次发布，支持单选/多选/可搜索/懒加载/选择前拦截/路径值/任意层级选中 |
 
 ---
@@ -191,7 +192,7 @@ import { OCascaderV2Panel } from '@opensig/opendesign';
 | modelValue | `CascaderV2ValueT` | — | — | 1.2.4 | 选中值。形态由 emitPath + multiple 组合决定： - 单选 + emitPath=false → 叶子 value（string\|number） - 单选 + emitPath=true → 从根到叶子的路径数组 - 多选 + emitPath=false → 叶子 value 数组 - 多选 + emitPath=true → 路径数组 的数组 |
 | options | `Array<CascaderV2OptionT>` | — | — | 1.2.4 | 级联选项树数据，每项 `{ value: string\|number, label?: string, children?: Array<CascaderV2OptionT>, disabled?: boolean, leaf?: boolean }`。value 必填，children 存在时可展开下一级。 |
 | size | `'large' | 'medium'` | — | `'large'` | 选择框尺寸。"large" 大号（默认）、"medium" 中号。不支持 small。 | 选择框尺寸 |
-| round | `RoundT` | `'pill'` / CSS值 | — | 1.2.4 | 圆角值。"pill" 全圆角胶囊形，或自定义 CSS 值。 |
+| round | `RoundT` | `'pill'` / CSS值 | — | 1.2.4 | 圆角值。“pill” 取同尺寸单行胶囊圆角常数（v1.2.7-sp3 起不再钳制为半高巨大弧形，多选时圆角不随标签撑高变化），或自定义 CSS 值。 |
 | color | `'normal' | 'success' | 'warning' | 'danger'` | 选择框颜色。"normal" 默认、"success" 成功、"warning" 警告、"danger" 危险。OForm 内自动继承校验状态。默认 normal。 | `'normal'` | 1.2.4 | 颜色（OForm 内自动继承） |
 | variant | `'outline' | 'solid' | 'text'` | — | 选择框类型。"outline" 有边框轮廓（默认）、"solid" 实心填充、"text" 无边框。 | 1.2.4 | 选择框类型 |
 | disabled | `boolean` | — | — | 1.2.4 | 整体禁用，不可交互。默认继承 select 的 disabled 配置。 |

@@ -294,7 +294,7 @@ const renderIconTag = (option, onClose) =>
 | modelValue | `SelectValueT` | — | — | 选中值（v-model 双向绑定）。单选时为 string 或 number；多选时为数组。单选收到数组时取最后一个元素。 | — |
 | defaultValue | `SelectValueT` | — | — | 非受控模式下的默认值。 | — |
 | size | `SizeT` | `'small'` / `'medium'` / `'large'` | 继承表单容器 | 选择器尺寸。未设置时继承表单容器。 | — |
-| round | `RoundT` | `'pill'` / CSS 值 | 继承表单容器 | 圆角值。未设置时继承表单容器。 | — |
+| round | `RoundT` | `'pill'` / CSS 值 | 继承表单容器 | 圆角值。未设置时继承表单容器。“pill” 取同尺寸单行胶囊圆角常数（v1.2.7-sp3 起，单/多选统一；多选时圆角不随标签撑高变化） | — |
 | color | `Color2T` | `'normal'` / `'success'` / `'warning'` / `'danger'` | `'normal'` | 选择器颜色。 | — |
 | variant | `VariantT` | `'solid'` / `'outline'` / `'text'` | `'outline'` | 选择器样式。 | — |
 | placeholder | `string` | — | — | 占位文本 | — |
@@ -434,6 +434,7 @@ const renderIconTag = (option, onClose) =>
 
 | 版本 | 变更内容 |
 |------|---------|
+| 1.2.7-sp3 | 修复 `round="pill"` 时多选形态圆角被钳制为巨大全胶囊弧形的问题：pill 圆角改为同尺寸单行胶囊圆角常数（不随标签撑高变化，随断点镜像，单/多选统一，#206） |
 | 1.2.7-sp1 | 修复选项文本过长时溢出容器的问题；移动端（≤pad_v）选项与多选标签支持横向滚动；禁用态背景色从 fill2 改回 control4-light |
 | 1.2.7 | 数据驱动（`options`/`fieldNames`，扁平与分组）；搜索过滤（`filterable`/`filterOption`/`filterMethod`/`filterSort`/远程搜索/`inputValue` 受控/`retainInputValue`）；虚拟滚动（`virtual`/`virtualListProps`，仅 options 驱动）；创建选项（`allowCreate`/`createLabel`/`tokenSeparators`/`autoTagInMultiple` + `create` 事件，创建项持久化）；多选增强（`limit` + `exceed-limit`、`maxTagCount='responsive'` 容器自适应折叠（SSR 保守渲染）、`renderTag`、`change` 新增第二参数、`remove-tag` 事件）；自定义渲染（`renderLabel`/`#option-label`/`#group-label`）；无障碍（listbox role 与 aria 属性）与移动端交互适配（ODialog 草稿-确认、搜索/创建能力移动端失效）；表单兜底（`fallbackOption`）；表单提交与 GEO（`name`/`itemprop` 绑定内部原生 select）；暴露 `focus`/`blur`/`scrollTo`/`virtualListRef`；`disabled`/`clearable`/`size`/`round` 接入表单继承；OOption 子组件：支持 `renderLabel` 注入、limit 达上限未选项自动禁用、卸载时自动注销（已选 label 经缓存保留） |
 | 1.2.6 | 背景色 CSS 变量从 control5-light/control4-light 改为 fill2；关闭按钮（clear icon）尺寸跟随 `--select-icon-size`；内部改用 defineSlots 替代 useSlots；响应式判定从 isPhonePad 改为 isPhonePadSize |

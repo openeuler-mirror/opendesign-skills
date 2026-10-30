@@ -27,7 +27,7 @@ type TextareaResizeT = 'both' | 'horizontal' | 'h' | 'vertical' | 'v' | 'none';
 | modelValue | `string` | — | — | 输入内容（v-model 双向绑定）。 |
 | defaultValue | `string` | — | — | 非受控模式下的默认值。 |
 | size | `SizeT` | `'large'` / `'medium'` / `'small'` | — | 输入框尺寸。"large" 大号、"medium" 中号、"small" 小号。 |
-| round | `RoundT` | `'pill'` / CSS 值 | — | 圆角值。"pill" 映射为较大圆角（radius_control-l），也可传 CSS 值。 |
+| round | `RoundT` | `'pill'` / CSS 值 | — | 圆角值。“pill” 取同尺寸单行胶囊圆角常数（v1.2.7-sp3 起）：small 全断点 12px；medium 默认 16px、≤1680px 降 14px；large 默认 20px、≤1680px 降 18px、≤840px 恢复 20px——不随内容高度增长，也可传 CSS 值。 |
 | color | `Color2T` | `'normal'` / `'success'` / `'warning'` / `'danger'` | `'normal'` | 颜色。"normal" 默认、"success" 成功、"warning" 警告、"danger" 错误。默认 normal。在表单中由校验结果自动覆盖。 |
 | variant | `VariantT` | `'solid'` / `'outline'` / `'text'` | `'outline'` | 样式变体。"solid" 实心、"outline" 线框、"text" 纯文字。默认 outline。 |
 | placeholder | `string` | — | — | 占位文本 |
@@ -149,5 +149,6 @@ const content = ref('');
 
 | 版本 | 变更类型 | 变更内容 |
 |------|---------|---------|
+| 1.2.7-sp3 | 修复 | 修复 `round="pill"` 时多行文本域圆角被钳制为巨大全胶囊弧形的问题：pill 圆角改为同尺寸单行胶囊圆角常数（不随内容高度变化，随断点镜像）；移除 medium 档 ≤pad 的 radius_control-m 降档规则 |
 | v1.2.4 | 修复 | 宽度显示问题已修复 |
 | v1.1.0 | 新增 | 新增 `showLength` prop 和 `length` 插槽；rows 默认值改为 4；移除 min-height 样式 |

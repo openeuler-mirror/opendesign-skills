@@ -169,5 +169,6 @@ const openAt = (el: HTMLElement) => {
 
 | 版本 | 变更类型 | 变更内容 |
 |------|---------|---------|
+| 1.2.7-sp2 | 修复 | 修复固定定位（fixed）+ 窗口缩放场景下弹层脱离触发元素的问题：窗口尺寸变化时（rAF 节流）刷新定位源快照再重算，重算前同步定位快照避免基于过期矩形计算。仅元素模式（`target`）受益；`targetRect` 数据定位模式下窗口缩放跟随仍由调用方负责 |
 | 1.2.7-sp1 | 破坏性变更 | `targetRect` 定位模型重构：类型从 `VirtualElement`（`getBoundingClientRect` 闭包）切换为 `TargetRect` 快照数据（`{ left, top, width, height }` 视口坐标系，结构兼容 `DOMRect`），旧闭包形态不再支持；滚动/缩放跟随职责移交调用方（OTour 已接管），`target` 退化为纯交互元素。修复：非受控模式隐藏时丢失 `update:visible`/`change` 事件；空 `targetRect` 覆盖触发元素导致弹层停留在 (0,0)；挂载即传 `target` 时定位异常 |
 | 1.2.7 | 新增 | 新增 `targetRect` 属性，支持无实际 DOM 时的定位计算（1.2.7 的 `VirtualElement` 形态已废弃，请直接按 1.2.7-sp1 的 `TargetRect` 契约传参） |

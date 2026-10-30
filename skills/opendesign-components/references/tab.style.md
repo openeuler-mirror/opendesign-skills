@@ -23,7 +23,7 @@
 | `--tab-nav-icon-size`             | `var(--o-icon_size_control-m)`（medium） | 页签图标尺寸            |
 | `--tab-nav-icon-gap`              | `8px`                                    | 图标与文字间距          |
 | `--tab-nav-ellipsis-padding-x`    | `16px`                                   | 更多按钮水平内边距      |
-| `--tab-nav-ellipsis-shadow-width` | `8px`                                    | 更多按钮遮罩宽度        |
+| `--tab-nav-ellipsis-shadow-width` | `8px`                                    | 更多按钮遮罩宽度。溢出态下参与尾部让位身位（身位 = 省略号本体宽 + 该变量，经内联 `calc` 消费，v1.2.5-sp5 / 1.2.7-sp3 起）：覆盖它会同时改变渐变阴影宽度与滚动终点的让位量；不再参与 JS 侧的折叠宽度计算 |
 | `--tab-nav-ellipsis-shadow-color`  | `var(--o-grey-14)`                       | 更多按钮遮罩颜色（v1.2.5-sp1 新增，≤840px 下遮罩宽度扩大为 48px） |
 | `--tab-nav-ellipsis-shadow-gradient` | 渐变值                               | 更多按钮遮罩渐变（v1.2.5-sp1 新增） |
 | `--tab-nav-text-size`             | `var(--o-font_size-text2)`（medium）     | 页签文字字号            |
