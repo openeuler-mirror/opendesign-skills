@@ -1,7 +1,7 @@
 ---
 name: opendesign-tokens
 description: OpenDesign 设计 Token 指南。当需要使用 @opensig/opendesign-token 包中的 CSS 变量时使用此 skill。包含六套主题（openEuler/Ascend/Kunpeng/Mindspore/openGauss/openUBMC）的完整 token 体系，支持颜色、间距、圆角、字体、阴影、响应式排版、栅格系统等所有设计令牌。使用场景：(1) 查找颜色值对应的语义 token，(2) 获取间距/圆角/字体的 token 名称，(3) 了解六套主题的差异，(4) 代码中使用 CSS 变量替代硬编码值，(5) 使用响应式 token 实现多断点适配，(6) 引入鸿蒙字体文件并使用字体族/字重 token（含七档字重、拉丁/中文自动分流、按字重按需引入）
-last_update: 2026-10-29
+last_update: 2026-10-30
 ---
 
 # OpenDesign 设计 Token 指南
@@ -673,8 +673,11 @@ Pad及以下 (≤1200px):  grid-padding               | grid-full | grid-padding
 
 ## 5. 圆角 Token（Radius）
 
-> **⚠️ 圆角值因主题而异**：以下 `值` 列是通用参考值，实际值取决于主题。例如 openEuler 主题所有圆角均为 **4px**（接近直角风格），而
-> Mindspore 主题则更圆润。使用时请查阅对应主题 reference 文件中的圆角表格。
+> **⚠️ 圆角值因主题而异**：以下 `值` 列是通用参考值，实际值取决于主题。六套主题分两派（2026-10-30 维护者口径）：
+> openEuler / Kunpeng / openGauss / openUBMC 为平直风——控件与内容圆角均为 **4px**（内容圆角 xl 档为 **0px**，接近直角风格）；
+> Ascend / Mindspore 为递进风——**4 / 8 / 12 / 16**（内容圆角 xl 档 24px，更圆润）。⚠️ 其中 **openGauss / openUBMC 与包产物不一致**：
+> 包产物（npm v0.1.1 CSS 与上游 master JSON）中两主题为递进值，reference 文件已按口径改写为平直并标注差异。使用时请查阅对应主题
+> reference 文件中的圆角表格。
 > 也不存在 `--o-r-radius-1` 等带 `r-` 前缀的圆角变量，圆角 token 没有响应式变体。
 
 ### 内容圆角（用于卡片、容器等）

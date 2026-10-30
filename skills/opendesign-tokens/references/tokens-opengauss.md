@@ -6,7 +6,7 @@
 
 主题标识：`g`
 品牌色：**Purple（紫色）**（`#7D32EA`）
-风格特点：递进圆角（4/8/12/16/24px），主色/链接/控件悬浮均使用品牌紫色，灰色为中性灰，无实质渐变
+风格特点：平直圆角（全档 4px、内容 xl 档 0px），主色/链接/控件悬浮均使用品牌紫色，灰色为中性灰，无实质渐变
 
 ---
 
@@ -135,19 +135,23 @@ openGauss 灰色为中性灰（与 openEuler/Kunpeng/openUBMC 相同）。
 
 ---
 
-## 圆角 Token（Radius）— 递进风格
+## 圆角 Token（Radius）— 平直风格
+
+> ⚠️ **本表为设计口径值**（2026-10-30 维护者裁定：平直风）。包产物（npm `@opensig/opendesign-token` v0.1.1 的
+> `themes/g.*.token.css` 与上游 master `opengauss-token.json`，双源一致）中本主题圆角当前为**递进值**
+> （控件 4/8/12/16、内容 4/8/12/16/24），与本表不一致——生成页面时圆角以本表口径为准（设计侧已加取数覆盖，2026-10-30 裁定）。
 
 | Token | 值 |
 |-------|----|
 | `--o-radius-xs` | `4px` |
-| `--o-radius-s` | `8px` |
-| `--o-radius-m` | `12px` |
-| `--o-radius-l` | `16px` |
-| `--o-radius-xl` | `24px` |
+| `--o-radius-s` | `4px` |
+| `--o-radius-m` | `4px` |
+| `--o-radius-l` | `4px` |
+| `--o-radius-xl` | `0px` |
 | `--o-radius_control-xs` | `4px` |
-| `--o-radius_control-s` | `8px` |
-| `--o-radius_control-m` | `12px` |
-| `--o-radius_control-l` | `16px` |
+| `--o-radius_control-s` | `4px` |
+| `--o-radius_control-m` | `4px` |
+| `--o-radius_control-l` | `4px` |
 
 ---
 
@@ -156,7 +160,7 @@ openGauss 灰色为中性灰（与 openEuler/Kunpeng/openUBMC 相同）。
 - **品牌色**：Purple `#7D32EA`（紫色），控件悬浮和链接均使用品牌色
 - **Primary = Brand**：主操作按钮直接使用品牌紫（同 openEuler/openUBMC 模式）
 - **brand-6 反转**：light（125, 50, 234）与 dark（154, 88, 238）值不同，dark 模式品牌色阶完全反转
-- **圆角**：递进圆角体系（4/8/12/16/24px），风格圆润
+- **圆角**：平直圆角体系（全档 4px、内容 xl 档 0px），接近直角风格（设计口径，与包产物不一致——见「圆角 Token」节标注）
 - **渐变**：无实质渐变（main2 start = end = brand-5）
 - **灰色**：中性灰（同 openEuler/Kunpeng/openUBMC）
 - **阴影**：shadow-1 基于 grey-13（`0 3px 8px rgb(var(--o-grey-13) / 0.08)` 斜杠语法——rgba(var(),a) 逗号混写为非法语法，2026-10-29 修正）

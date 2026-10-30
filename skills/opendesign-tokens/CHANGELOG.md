@@ -7,6 +7,17 @@
 
 ---
 
+## 2026-10-30
+
+### 修正
+
+- **「圆角值因主题而异」警告取值精确化**：旧文「openEuler 主题所有圆角均为 4px」与包产物不符——`@opensig/opendesign-token` v0.1.1
+  中 openEuler / Kunpeng 的内容圆角 **xl 档为 0px**（平直风格的有意取值），并非 4px。
+- **⚠️ openGauss / openUBMC 圆角按设计口径改写为平直**（2026-10-30 维护者裁定，上游源码不改）：`references/tokens-opengauss.md`、
+  `references/tokens-openubmc.md` 的圆角表与风格描述改为平直风（全档 4px、内容 xl 档 0px），并在圆角节标注与包产物的差异——
+  包产物（npm v0.1.1 CSS 与上游 master JSON，双源核实一致）中两主题当前为递进值（控件 4/8/12/16、内容 4/8/12/16/24）。
+  SKILL.md §5 警告段同步按口径分组（平直 e/k/g/u、递进 a/m）。页面生成链路（opendesign-design 第零步）对 g/u 圆角已加取数覆盖：按本表口径取平直、不从上游 JSON 翻译（2026-10-30 裁定）。
+
 ## 2026-10-29
 
 ### 新增
