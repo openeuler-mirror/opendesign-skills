@@ -74,7 +74,7 @@ ONavigation 顶导（见 floors/navigation.md，高 72px）
 │                       │  display: flex | flex-direction: row | flex-wrap: wrap
 │                       │  left: 0 | right: 0 | width: auto（⭐ 通栏撑满页面宽度）
 │                       │  padding: 24px 216px（上下 24px / 左右 216px = PC 栅格边距）
-│                       │  background: var(--o-color-fill2) | border-radius: 0 0 4px 4px（上圆角压平，零间距贴合）
+│                       │  background: var(--o-color-fill2) | border-radius: 0 0 var(--o-radius_control-xs) var(--o-radius_control-xs)（下圆角随目标社区 token，上圆角压平，零间距贴合）
 │                       │
 │                       ├── [分类列 × N]（.o-nav__cat，flex: none，列间 gap 24px）
 │                       │     ├── [列头]（.o-nav__cat-title）>1440px 16px/24px · ≤1440px 14px/22px / Regular / info4，无交互
@@ -86,7 +86,7 @@ ONavigation 顶导（见 floors/navigation.md，高 72px）
 │                       │
 │                       └── [快捷链接栏]（.o-nav__quick，宽 342px，栏内左对齐 + 整栏 margin-left:auto 靠右）⚠️ 可选模块，默认不挂载
 │                             ├── [栏标题]（.o-nav__quick-title，规格同分类列头）
-│                             ├── [纯文本 link × N]（.o-nav__quick-link 灰底块 宽342/高40/圆角4/fill3/距左24 → 内层 .o-nav__quick-link-text = OLink medium 高34/上下padding5/左右0/14-22、link1→link2+下划线→link3+下划线、后缀图标 24×24）
+│                             ├── [纯文本 link × N]（.o-nav__quick-link 灰底块 宽342/高40/圆角随目标社区 token/fill3/距左24 → 内层 .o-nav__quick-link-text = OLink medium 高34/上下padding5/左右0/14-22、link1→link2+下划线→link3+下划线、后缀图标 24×24）
 │                             └── [带图活动卡片]（.o-nav__quick-card，左图 16:9 + 右文 标题/说明，无背后色块）
 │
 └── [右侧操作区]（搜索 / 源码下拉 / 图标）
@@ -146,7 +146,7 @@ ONavigation 顶导（见 floors/navigation.md，高 72px）
 > /* 0) 零间距：紧贴顶导底边展开（像抽屉），覆盖基类的 4px 间距；无需 ::before 热区桥接 */
 > .o-nav__dropdown.o-nav__dropdown--categorized {
 >     top: 100%;                         /* ⭐ 与顶导零间距（2026-10-15 用户确认，覆盖基类 calc(100% + 4px)） */
->     border-radius: 0 0 4px 4px;        /* ⭐ 上圆角压平：否则左上/右上露出月牙缺口，视觉上又"裂开" */
+>     border-radius: 0 0 var(--o-radius_control-xs) var(--o-radius_control-xs);  /* ⭐ 上圆角压平（下圆角档位随目标社区 token）：否则左上/右上露出月牙缺口，视觉上又"裂开" */
 > }
 > .o-nav__dropdown.o-nav__dropdown--categorized::before { display: none; }  /* 无间隙，不需要桥接 */
 > /* 1) 把包含块从 .o-nav__item 上移到顶导本体（sticky 即定位元素） */
@@ -182,7 +182,7 @@ ONavigation 顶导（见 floors/navigation.md，高 72px）
 >
 > ⚠️ **零间距后不要再写 `::before` 热区桥接**：桥接的作用是补上鼠标穿过面板与顶导之间空隙的路径；`top: 100%` 时面板顶边与顶导底边重合，不存在可穿过的空隙，桥接只会白占顶导底部 4px。分类平铺式必须显式 `display: none` 掉基类的 `::before`。
 >
-> ⚠️ **零间距必须同时压平上圆角**：`border-radius: 0 0 4px 4px`。若保留基类的 `4px` 全圆角，面板左上 / 右上会各露出一道月牙形缺口，视觉上面板与顶导又"裂开"了，抽屉式贴合就白做了。下圆角保留（面板底边是自由边）。
+> ⚠️ **零间距必须同时压平上圆角**：`border-radius: 0 0 var(--o-radius_control-xs) var(--o-radius_control-xs)`。若保留基类的全圆角，面板左上 / 右上会各露出一道月牙形缺口，视觉上面板与顶导又"裂开"了，抽屉式贴合就白做了。下圆角保留（面板底边是自由边，档位值随目标社区 token）。
 >
 > ⚠️ **动画位移不算间距**：隐藏态 `translateY(-8px)` 只是入场位移，展开终态是 `translateY(0)`，**不要**因为看到 -8px 就把 `top` 改成 `calc(100% + 8px)`——那会在展开态留下 8px 真实间隙。
 
@@ -766,7 +766,7 @@ body { font-family: 'HarmonyOS Sans', 'HarmonyHeiTi'; }
     width: auto;                            /* ⭐ 由 left/right 撑满页面宽度 */
     height: auto;                           /* ⚠️ 禁止写死高度 */
     padding: 24px 216px;                    /* 上下 24px（推断，待确认 #2）/ 左右 216px PC 栅格边距 */
-    border-radius: 0 0 4px 4px;             /* ⭐ 上圆角压平为 0：零间距紧贴顶导，保留上圆角会在左上/右上露月牙缺口（2026-10-15 用户确认） */
+    border-radius: 0 0 var(--o-radius_control-xs) var(--o-radius_control-xs);   /* ⭐ 上圆角压平为 0：零间距紧贴顶导，保留上圆角会在左上/右上露月牙缺口（2026-10-15 用户确认）；下圆角档位随目标社区 token */
     transform: translateY(-8px);            /* ⚠️ 必须覆盖基类的 translate(-50%, -8px) */
     /* background / box-shadow / position / z-index 全部继承基类 */
 }
@@ -863,7 +863,7 @@ body { font-family: 'HarmonyOS Sans', 'HarmonyHeiTi'; }
     flex: none;
     height: 20px;                           /* OTag small 高 20px */
     padding: 0 6px;                         /* ⚠️ tag.md 垂直 padding 2px 与 20px 高冲突，取 0（待确认 #10） */
-    border-radius: 4px;                     /* radius_control-m */
+    border-radius: var(--o-radius_control-m); /* 档位圆角，值随目标社区 token */
     font-size: 12px;
     line-height: 18px;
     font-weight: 400;
@@ -933,7 +933,7 @@ body { font-family: 'HarmonyOS Sans', 'HarmonyHeiTi'; }
     display: flex; align-items: center;
     width: 342px; height: 40px;
     padding-left: 24px;
-    border-radius: 4px;
+    border-radius: var(--o-radius_control-xs);  /* 档位圆角，值随目标社区 token */
     background: var(--o-color-fill3);
     text-decoration: none;
 }
@@ -965,7 +965,7 @@ body { font-family: 'HarmonyOS Sans', 'HarmonyHeiTi'; }
     width: 121px;                           /* 16:9 → 高 68px 时宽 121px */
     height: 68px;
     object-fit: cover;
-    border-radius: 4px;                     /* 图片自身圆角可保留（不是卡片色块） */
+    border-radius: var(--o-radius_control-xs); /* 档位圆角随目标社区 token（不是卡片色块） */
 }
 .o-nav__quick-card-body { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .o-nav__quick-card-title {
@@ -1151,7 +1151,7 @@ document.querySelectorAll('.o-nav__dropdown--categorized').forEach((panel) => {
 □ 修饰类是否写成复合选择器（优先级高于基类）？
 □ 面板与顶导是否为【零间距】——top: 100%（不是 calc(100% + 4px)），展开时像抽屉一样紧贴顶导底边？
 □ 面板 z-index 是否为 100，且顶导下阴影靠 .o-nav::after 补偿层（top: 0 + height: 100% + z-index: 102）保证可见？⛔ 不许写 height: 0（零高度不渲染 box-shadow）/ height: 1px（被模糊稀释）· ⛔ 不许靠"顶导 101 > 面板 100"（父子比 z-index 无效）？
-□ 上圆角是否已压平为 border-radius: 0 0 4px 4px（零间距下保留 4px 上圆角会在左上/右上露月牙缺口）？
+□ 上圆角是否已压平（上两角为 0；下两角随基类 var(--o-radius_control-xs)，零间距下保留上圆角会在左上/右上露月牙缺口）？
 □ 基类的 ::before 4px 热区桥接是否已显式 display: none（零间距后无间隙可穿，桥接只剩副作用）？
 □ 是否没把隐藏态的 translateY(-8px) 当成间距去改 top（-8px 只是入场位移，展开终态是 translateY(0)）？
 □ 面板布局是否为 flex-direction: row + flex-wrap: wrap（多列平铺，非垂直单列）？

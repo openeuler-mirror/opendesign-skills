@@ -67,11 +67,11 @@ ONavigation 顶导（见 floors/navigation.md，高 72px）
 │                       │  left: 50% + transform: translate(-50%, …)（水平居中于触发器）
 │                       │  width: auto（内容撑开，不超过 1488px）
 │                       │  background: var(--o-color-fill2)
-│                       │  border-radius: 4px
+│                       │  border-radius: var(--o-radius_control-xs)
 │                       │
 │                       └── [选项容器 × N]（垂直排列，一项一行，width: 100%）
 │                            height: 40px（>1440px）/ 32px（841~1440px）
-│                            padding: 0 12px | border-radius: 4px
+│                            padding: 0 12px | border-radius: var(--o-radius_control-xs)
 │                            background: transparent（仅交互态填充）
 │                            16px / 24px | color: var(--o-color-info2)
 │                            └─ hover / 点击态时色块撑满整行（左右各让出面板 padding 4px）
@@ -159,7 +159,7 @@ ONavigation 顶导（见 floors/navigation.md，高 72px）
 | 规格项 | 值 | 来源 |
 |--------|---|------|
 | 面板与顶导间距 | 4px | dropdown.md 展开面板规格 |
-| 面板圆角 | 4px | dropdown.md |
+| 面板圆角 | `var(--o-radius_control-xs)`（openEuler 4px，随目标社区 token） | dropdown.md |
 | 面板背景 | `var(--o-color-fill2)` | dropdown.md |
 | 面板阴影 | `0 6px 24px rgba(18,20,23,0.08)` | dropdown.md DROP_SHADOW |
 | 面板内边距 | **4px（上下左右均 4px）** | 用户确认 |
@@ -171,7 +171,7 @@ ONavigation 顶导（见 floors/navigation.md，高 72px）
 | 选项文本左右内边距 | 12px | 待确认 |
 | 选项字号 / 行高 | 16px / 24px（>1440px）· 12px / 18px（841~1440px）· 14px / 22px（MB） | 用户确认 |
 | 选项文字色 | `var(--o-color-info2)` | 设计稿标注 `#000000 80%` |
-| 选项圆角 | 4px | — |
+| 选项圆角 | `var(--o-radius_control-xs)`（openEuler 4px，随目标社区 token） | — |
 | 选项 hover 背景 | `var(--o-color-control2-light)`（`#F0F5FF` 极浅蓝） | 用户确认 |
 | 选项 hover 文字色 | `var(--o-color-info2)`（**保持不变**） | 用户确认 |
 | 选项点击态背景 | `var(--o-color-control3-light)`（`#E6EDFF` 浅蓝） | 用户确认 |
@@ -286,7 +286,7 @@ ONavigation 顶导（见 floors/navigation.md，高 72px）
 | 选项容器宽度 | 100% | 100% | 100% |
 | 选项文本左右内边距 | 12px | 12px | 12px |
 | 选项字号 / 行高 | 16px / 24px | 12px / 18px | 14px / 22px |
-| 选项圆角 | 4px | 4px | 4px |
+| 选项圆角 | `var(--o-radius_control-xs)` | 同 PC（随目标社区 token） | 同 PC |
 | 面板水平定位 | 居中触发器 | 居中触发器（同 PC） | 左对齐 `left: 0` |
 
 > **面板内边距四边均 4px、gap 0、容器高度 40px/32px** 已由用户确认（2026-10-14）。
@@ -354,7 +354,7 @@ ONavigation 顶导（见 floors/navigation.md，高 72px）
     height: auto;                               /* ⚠️ 禁止写死高度 */
     padding: 4px;                               /* ⭐ 四边均 4px → 色块左右自然让出 4px */
     background: var(--o-color-fill2);
-    border-radius: 4px;
+    border-radius: var(--o-radius_control-xs);  /* 档位圆角，值随目标社区 token */
     box-shadow: 0 6px 24px rgba(18, 20, 23, 0.08);  /* 组件特例值，来源 dropdown.md */
     opacity: 0;
     visibility: hidden;
@@ -400,7 +400,7 @@ ONavigation 顶导（见 floors/navigation.md，高 72px）
     height: 40px;                               /* ⭐ >1440px 固定 40px */
     flex: none;                                 /* 禁止被 flex 压缩 */
     padding: 0 12px;                            /* 文本左右内边距 */
-    border-radius: 4px;
+    border-radius: var(--o-radius_control-xs);  /* 档位圆角，值随目标社区 token */
     background: transparent;                    /* ⭐ 默认透明 */
     font-size: 16px;
     line-height: 24px;
@@ -523,7 +523,7 @@ document.querySelectorAll('.o-nav__item').forEach((item) => {
 
 ```
 □ 面板与顶导间距是否为 4px？
-□ 面板圆角是否为 4px？
+□ 面板圆角是否为 var(--o-radius_control-xs)（值随目标社区 token）？
 □ 面板背景是否为 var(--o-color-fill2)？
 □ 面板阴影是否为 0 6px 24px rgba(18,20,23,0.08)（组件特例值）？
 □ 面板是否 height: auto（禁止写死高度）？

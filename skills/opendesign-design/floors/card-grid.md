@@ -82,7 +82,7 @@
 
 ```
 OCard（自适应宽高）
-│  cornerRadius: var(--o-radius_control-m)（openEuler 4px / openGauss 12px——按目标社区 Token，2026-10-29 修正写死值）
+│  cornerRadius: var(--o-radius_control-m)（openEuler 4px / Ascend 12px——按目标社区 Token，2026-10-29 修正写死值）
 │  fill: --o-color-fill2
 │  padding: 8px
 │
@@ -105,7 +105,7 @@ OCard（自适应宽高）
 
 ```
 OCard（自适应宽高）
-│  cornerRadius: var(--o-radius_control-m)（openEuler 4px / openGauss 12px——按目标社区 Token）
+│  cornerRadius: var(--o-radius_control-m)（openEuler 4px / Ascend 12px——按目标社区 Token）
 │  fill: --o-color-fill2
 │  padding 与内部间距：按 card.md「icon 变体五档分档表」取值（2026-10-23 修订口径：
 │    容器 padding 五档 24/24/16/12/12，图标→标题 12px 不分档、标题→描述 8px 分段 margin 直读，
@@ -172,7 +172,7 @@ OCard（自适应宽高）
 □ 楼层标题（及描述）是否水平居中对齐（Banner 以下楼层）？
 □ 标题到内容间距是否为间距 7（PC 40px / MB 12px）？
 □ 卡片间距是否为 PC 32px / MB 12px？
-□ 卡片圆角是否为目标社区 --o-radius_control-m 值（openEuler 4px / openGauss 12px）？
+□ 卡片圆角是否为目标社区 --o-radius_control-m 值（openEuler 4px / Ascend 12px）？
 □ 封面图比例是否为 16:9（禁止竖图）？
 □ Footer 按钮是否左对齐？
 □ Footer 按钮是否为 OButton medium text 变体？
@@ -198,7 +198,7 @@ OCard（自适应宽高）
 
 | # | 规格 | 确认轮次 |
 |---|------|---------|
-| 1 | 卡片圆角按目标社区 `--o-radius_control-m`（openEuler 4px / openGauss 12px），不写死 4px | 2026-10-29 验证轮（features 楼层裁定） |
+| 1 | 卡片圆角按目标社区 `--o-radius_control-m`（openEuler 4px / Ascend 12px），不写死 4px | 2026-10-29 验证轮（features 楼层裁定） |
 | 2 | 图标卡容器 padding / 内部间距按 card.md 五档分档表，禁止容器统一 gap | 2026-10-23 card.md 修订（本模板 §二 旧口径同步废止，2026-10-29 修正） |
 | 3 | 3 列卡片的卡片标题取 h3（22px/30px，Semibold 600）——hard-constraints §2「三级标题（≤ 3 列）」 | 2026-10-29 验证轮（原「< 3 列」空档修正） |
 | 4 | 楼层标题颜色规范未定义时取 `--o-color-info1`（推断值，产物标注「需确认」） | 2026-10-29 验证轮 |
@@ -214,5 +214,5 @@ OCard（自适应宽高）
 | # | 坑 | 禁令 |
 |---|---|---|
 | 1 | 模板滞后：card.md 已废止的旧口径（统一 padding / gap）在本模板残留，生成侧按旧稿落笔 | 生成前对照 card.md 分档表，模板旧值一律不采信 |
-| 2 | 圆角写死 4px，openGauss 等递进圆角社区生成错误圆角 | 圆角一律走目标社区 `--o-radius_control-m` |
+| 2 | 圆角写死 4px，Ascend / Mindspore 等递进圆角社区生成错误圆角 | 圆角一律走目标社区 `--o-radius_control-m` |
 | 3 | 3 列卡片的标题档位在 §2 表找不到（原「< 3 列」未覆盖），生成侧自行降档到四级标题 | 3 列取 h3 22px/30px（已确认清单 #3） |

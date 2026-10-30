@@ -172,7 +172,7 @@ Logo 和 Tab 同在 `.o-nav__left` 内，但需要对齐方式不同：
     white-space: nowrap;
     /* ⛔ 绝对禁止 border-radius：菜单项所有状态背景一律透明（Part C），
        圆角无任何视觉效果，却会把 border-bottom 指示线两端裁成圆弧缺口。
-       border-radius: 4px 只属于 .o-nav__search，禁止搬到菜单项上 */
+       搜索框圆角（var(--o-radius_control-xs)）只属于 .o-nav__search，禁止搬到菜单项上 */
     border-bottom: 2px solid transparent;   /* 默认透明指示线 */
     transition: color .2s ease, border-color .2s ease;
 }
@@ -198,7 +198,7 @@ Logo 和 Tab 同在 `.o-nav__left` 内，但需要对齐方式不同：
 .o-nav__right { display: flex; align-items: center; gap: 20px; }
 .o-nav__search {
     position: relative; width: 160px; height: 32px;
-    border: 1px solid var(--o-color-control1); border-radius: 4px;
+    border: 1px solid var(--o-color-control1); border-radius: var(--o-radius_control-xs); /* 档位圆角，值随目标社区 token */
     background: var(--o-color-fill2); overflow: hidden; cursor: text;
 }
 .o-nav__search span {           /* 占位文字：在搜索图标【右侧】left = 16px 左内边距 + 16px 图标 + 8px gap = 40px */
@@ -245,7 +245,7 @@ Logo 和 Tab 同在 `.o-nav__left` 内，但需要对齐方式不同：
 | **顶导 z-index** | **100**（整体浮于页面内容之上） | 本文档 |
 | **阴影补偿层（`.o-nav::after`）z-index** | **102**（必须 > 面板的 100，否则阴影被面板整条盖住） | ⚠️ 本文档（2026-10-15 用户验收两次打回后补充） |
 
-> ⛔ **菜单项禁止 `border-radius`**：顶导菜单项所有状态背景一律透明（见 Part C），圆角没有任何视觉效果；但 `border-radius` 会把选中态的 `border-bottom` 指示线**两端裁成圆弧缺口**，导致指示线不是一根完整直线。规范中 `border-radius: 4px` 只属于**搜索框**（`.o-nav__search`），禁止搬到菜单项上。
+> ⛔ **菜单项禁止 `border-radius`**：顶导菜单项所有状态背景一律透明（见 Part C），圆角没有任何视觉效果；但 `border-radius` 会把选中态的 `border-bottom` 指示线**两端裁成圆弧缺口**，导致指示线不是一根完整直线。规范中搜索框圆角（`var(--o-radius_control-xs)`）只属于**搜索框**（`.o-nav__search`），禁止搬到菜单项上。
 
 ### 资源引用
 

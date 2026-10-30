@@ -6,6 +6,56 @@
 
 ---
 
+## 2026-10-30
+
+### 第二十六轮：换社区 Token 圆角错漏的机制性修复（档位圆角全链路收口）
+
+> 来源：维护者反馈——换非 openEuler 社区 tokens 生成页面时「只对了颜色、漏了圆角」，每次需人工逐处校对。根因是社区差异链路只押在颜色维度：起手式翻译清单、QA 检查项、跨社区覆盖条款均未覆盖圆角，而组件文档的档位圆角直值全为 openEuler 基准（多数 4px）。本轮把「社区差异」收敛到 `:root` 一个点：CSS 一律引用 `var(--o-radius_*)`，换社区只换 `:root`，全页圆角自动跟随。
+
+#### 一、链路补全（3 处）
+
+| # | 文件 | 修复 |
+|---|------|------|
+| 1 | `SKILL.md` 第零步 | Token 翻译清单「颜色/字号/间距」→ 全部变量（颜色、字号/行高、间距、栅格、圆角、阴影、控件/图标尺寸），点名圆角随社区差异最大（平直社区全 4px / 内容 xl 档 0px、递进社区 4/8/12/16——六主题口径见 §7.1）并禁止沿用 openEuler 基准值 |
+| 2 | `SKILL.md` 第六步 / 第八步 + `global/hard-constraints.md` §6 | 自检清单各补圆角两项：`:root` 圆角档位取自目标社区 Token；全文无硬编码档位圆角（`border-radius: 数字px` 仅允许形状语义特例） |
+| 3 | `SKILL.md` 通用生成约束 + 第五步规范表 + CodeGen 对齐约束；`global/hard-constraints.md` §0 / §6#15 | 跨社区覆盖条款从「参考色值」扩为「色值、档位圆角直值、阴影」；§0 起手式去掉「默认拉取 openeuler-token.json」的无条件表述（改为目标社区 Token + 全量变量翻译） |
+
+#### 二、全局规则立规（1 处）
+
+| # | 文件 | 内容 |
+|---|------|------|
+| 4 | `global/hard-constraints.md` §7.1（新增） | 「圆角两类与社区规则」：**档位圆角**（对应 `--o-radius-*` / `--o-radius_control-*` 档位）一律 `var()` 引用、值随目标社区 Token；**形状语义圆角**（胶囊 100px、Tab 指示器 9px、carousel 3/6px、hover 微圆角 2px 等无档位直值）不随社区变化。§7 圆角行同步指向，并修正指向已不存在目录 `atomic-components/` 的失效引用（→ `components/`）；附六主题圆角口径表（2026-10-30 维护者裁定：e/k/g/u 平直全 4px 且内容 xl 档 0px、a/m 递进 4/8/12/16 / 内容 xl 24px；g/u 与包产物不一致——v0.1.1 CSS 与上游 JSON 双源核实为递进，差异已在表中标注） |
+
+#### 三、组件文档与楼层模板去死值（7 个文件）
+
+| # | 文件 | 修复 |
+|---|------|------|
+| 5 | `floors/navigation.md` | 搜索框 `border-radius: 4px` → `var(--o-radius_control-xs)`（禁令注释与规范说明两处表述同步） |
+| 6 | `floors/navigation-dropdown.md` | 面板 / 选项圆角 CSS 与结构树、规格表、自检项 → `var(--o-radius_control-xs)` |
+| 7 | `floors/navigation-dropdown-categorized.md` | 面板「0 0 4px 4px」压平写法 → `0 0 var(--o-radius_control-xs) var(--o-radius_control-xs)`；OTag → `var(--o-radius_control-m)`；快捷链接灰底块 / 缩略图 → `var(--o-radius_control-xs)` |
+| 8 | `components/search.md` | 搜索框 / 建议面板圆角 → `var(--o-radius_control-xs)`（hover 微圆角 2px 属形状语义，保留直值） |
+| 9 | `components/navigation.md` | 搜索框 / 下拉面板圆角 CSS、B.1 要点、面板状态矩阵 → `var(--o-radius_control-xs)` |
+| 10 | `components/dropdown.md` | 面板圆角 CSS、规格表、R-6 校验项、自检项 → `var(--o-radius_control-xs)`；两处错误档名 `--o-radius-control-xs`（连字符格式，token 包中不存在）→ `--o-radius_control-xs` |
+| 11 | `components/dialog.md` | 🔴 档名纠正：`radius_control-sm`（**不存在的档位**，真实档位为 xs/s/m/l）→ `radius_control-s`（5 处：结构树 ×2、规格表 ×2、Token 映射表 ×1），取值改为 `var(--o-radius_control-s)`（openEuler 4px / openGauss 8px）；识别特征与状态表两处 8px 锚点同步 |
+
+#### 四、配套更新（2 处）
+
+| # | 文件 | 内容 |
+|---|------|------|
+| 12 | `global/qa-checklist/component-html-qa-checklist.md` | 「Token 引用正确」「特殊效果」两节补档位圆角检查（var 引用 + `:root` 取自目标社区 + 形状语义特例白名单） |
+| 13 | `global/component-doc-spec.md` | 圆角示例行修正（错误档名 `--o-radius-control-m` → `--o-radius_control-m`，值标注随目标社区）；新增落笔规则：档位圆角标注 Token 档位、直值视为 openEuler 基准，形状语义直值保留，禁止不存在的档位名 |
+
+#### 五、口径裁定（2026-10-30 维护者）
+
+- **openGauss (g) / openUBMC (u) 圆角口径为平直**（全档 4px、内容 xl 档 0px），与包产物不一致——npm `@opensig/opendesign-token` v0.1.1 CSS 与上游 master JSON（双源核实）中两主题为递进值（控件 4/8/12/16、内容 4/8/12/16/24）。按裁定：上游源码不改，`opendesign-tokens` 的 `tokens-opengauss.md` / `tokens-openubmc.md` 圆角段按口径改写并标注差异（详见该 skill 同日 CHANGELOG）；本 skill 的六主题口径表（§7.1）与示例值（card-grid「openGauss 12px」、dialog「openGauss 8px」改以 Ascend 为递进示例）同步更新。
+- **主路径取数覆盖（同日维护者选定）**：第零步新增 openGauss / openUBMC 圆角取数覆盖——两社区圆角档位不从上游 JSON 翻译，`:root` 按本仓口径取平直值（全档 4px、xl 档 0px），其余变量照常；第六步自检项与 §7.1 差异说明同步更新。上游对齐后撤销该覆盖。
+
+#### 六、影响评估
+
+⚠️ **破坏性**（硬约束变化）：按旧版规范生成的产物中，档位圆角写死 px 直值的（尤其非 openEuler 社区页面）不再合规——对照 §7.1 复核：CSS 改为 `var(--o-radius_*)`、`:root` 档位值取自目标社区 Token。另：产物中若引用过 `radius_control-sm` / `--o-radius-control-*`（均不存在，`var()` 静默失效），需按 `radius_control-s` / `--o-radius_control-xs` 复核修正。形状语义圆角（胶囊 100px 等）不受影响。
+
+---
+
 ## 2026-10-29
 
 ### 第二十五轮：全流程验证暴露的存量规范问题批量修复（18 项）

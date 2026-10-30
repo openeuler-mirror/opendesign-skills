@@ -971,7 +971,7 @@ Focus 状态即 Actived 状态，显示光标和清除图标。
     padding: 0 12px;
     background: var(--o-color-fill2-light);   /* white / grey-4 */
     border: 1px solid var(--o-color-control1);/* 默认描边: grey@0.25 */
-    border-radius: 4px;                       /* 圆角4px */
+    border-radius: var(--o-radius_control-xs);  /* 档位圆角，值随目标社区 token */
     transition: border-color 0.2s ease;       /* 仅过渡描边颜色 */
     cursor: text;
 }
@@ -1077,7 +1077,7 @@ Focus 状态即 Actived 状态，显示光标和清除图标。
     left: 0;
     width: 100%;                               /* 与搜索框同宽 */
     background: var(--o-color-fill2-light);
-    border-radius: 4px;
+    border-radius: var(--o-radius_control-xs);  /* 档位圆角，值随目标社区 token */
     box-shadow: 0 6px 24px rgba(18,20,23,0.08); /* DROP_SHADOW */
     padding: 4px;
     

@@ -1,7 +1,7 @@
 ---
 name: opendesign-design
 description: OpenDesign HTML 页面生产指南。当需要生成符合 OpenDesign 设计规范的 HTML 页面（按钮、输入框、卡片、导航等 UI 组件）、应用设计规范（栅格/颜色/字号/间距/圆角）、搭建页面框架时使用此 skill。包含 PC/MB 双断点的变量映射硬约束（字号/行高/间距/栅格/图标尺寸的合法取值白名单），覆盖 27 个组件设计规范。生成的 HTML 遵循 opendesign-codegen 工程规范（--o-* 语义 Token、OpenDesign 组件命名、BEM、响应式 Token），可直接作为设计原型或进一步转译为 Vue SFC 生产代码。
-last_update: 2026-10-29
+last_update: 2026-10-30
 ---
 
 # Design Skill · HTML 页面生成指南
@@ -109,7 +109,9 @@ last_update: 2026-10-29
    — ⚠️ 无法确定目标社区时停下询问用户，禁止猜测
 
 WebFetch 拉取目标社区主题 Token（必须执行！URL 见 #数据资源 社区映射表）
-   — 将 JSON 中的颜色/字号/间距变量翻译为 :root CSS 变量
+   — 将 JSON 中的全部变量翻译为 :root CSS 变量——颜色、字号/行高、间距、栅格、圆角、阴影、控件/图标尺寸一个不漏
+   — ⚠️ 圆角随社区差异最大（平直社区全 4px、内容 xl 档 0px；递进社区 4/8/12/16——六主题口径见 hard-constraints §7.1）：`:root` 的 `--o-radius-*` / `--o-radius_control-*` 按目标社区口径取值，禁止沿用 openEuler 基准值
+   — ⚠️ **openGauss / openUBMC 圆角取数覆盖（2026-10-30 维护者裁定）**：两社区的圆角档位**不从上游 JSON 翻译**（JSON 当前为递进值，与设计口径不一致）——`:root` 圆角一律按本仓口径写入（全档 4px、`--o-radius-xl: 0px`，即 `../opendesign-tokens/references/tokens-opengauss.md` / `tokens-openubmc.md` 圆角表的值），其余变量照常从 JSON 翻译；上游对齐后撤销本条
    — ⚠️ 禁止凭训练数据"猜测"颜色值！尤其是 --o-color-fill1（页面背景=浅灰，不是纯白）
    — 拉取失败时：降级用本地 `../opendesign-tokens/references/tokens-{社区}.md`（六主题全量 Token + Dark 值反查，离线可用；栅格 / 响应式见同目录 [tokens.md](../opendesign-tokens/references/tokens.md)）；designer-guide.md 速查表仅作 openEuler Light 辅助
    — 目标社区无本地 Token 文件时：停下询问用户，禁止借用其他社区 Token
@@ -269,7 +271,7 @@ acceptance:                  # 可选：本层验收点，叠加在第六步自�
 | 字号/行高 | 优先使用 `var(--o-r-font_size-*)` + `var(--o-r-line_height-*)` 响应式 Token |
 | 间距 | 页面级使用 `var(--o-r-gap-*)`；组件内使用 `var(--o-gap-*)` |
 | 栅格 | 页面级布局使用 24 栅格（`--o-r-grid-N` + 水槽 `--o-r-grid-column-gutter`） |
-| 圆角/阴影 | `--o-radius-*`、`--o-shadow-*` |
+| 圆角/阴影 | 档位圆角一律 `var(--o-radius-*)` / `var(--o-radius_control-*)`（值随目标社区 token），禁止写死 px；形状语义圆角（胶囊 100px 等固定造型）按组件文档直值。阴影用 `--o-shadow-*` |
 | 组件命名 | 容器类名使用 BEM（如 `.navigation`、`.card-grid`）；组件类名**以各组件规范权威 DOM 为唯一真源**（如 `.o-button`、`.ocard`——各组件前缀不统一，禁止凭本表猜测，2026-10-29 修正示例误导） |
 | 响应式 | 优先响应式 Token 免写媒体查询；确需断点时用 `@media`。**楼层模板 / 组件规范已给出精确分档值的（含固定直值与显式断点），以模板值为准、禁止改用 `--o-r-*` 替换**——楼层模板 CSS 骨架视为已确认的断点特例（如 Banner 正文 MB 档 12/18，直接套 `--o-r-font_size-h4` 会错成 16/24；2026-10-29 验证轮澄清） |
 | 无内联 style | 禁止 `style="..."` 内联样式（极特殊动态值除外并注释） |
@@ -292,6 +294,8 @@ acceptance:                  # 可选：本层验收点，叠加在第六步自�
 □ 【HTML颜色】`body` 的 `background-color` 是否使用 `var(--o-color-fill1)`？（禁止 `#FFFFFF` / `white`）
 □ 【SVG搬运】图标 SVG 是否逐属性原样搬运（fill-rule / clip-rule / transform / opacity 未丢失）？
 □ 【CodeGen对齐】颜色是否全部使用 `var(--o-color-*)` 语义 Token，无 `#fff`/`rgb()` 硬编码？
+□ 【社区Token】`:root` 的圆角档位（`--o-radius-*` / `--o-radius_control-*`）是否按目标社区口径取值？（平直社区全 4px / 内容 xl 0px、递进社区 4/8/12/16——六主题口径见 hard-constraints §7.1；禁止沿用 openEuler 值。openGauss / openUBMC 按口径覆盖：不从 JSON 取递进值）
+□ 【HTML圆角】档位圆角是否全部为 `var(--o-radius_*)`？（硬编码 `border-radius: 数字px` 仅允许形状语义特例——胶囊 100px、Tab 指示器 9px 等组件文档明示的固定造型）
 □ 【CodeGen对齐】是否未直接使用色板变量（`--o-kleinblue-*`/`--o-grey-*` 等）？
 □ 【CodeGen对齐】字号/行高是否使用 `var(--o-r-font_size-*)` + `var(--o-r-line_height-*)`？
 □ 【CodeGen对齐】是否无内联 `style="..."` 和非必要 `!important`？
@@ -330,13 +334,14 @@ acceptance:                  # 可选：本层验收点，叠加在第六步自�
 □ 楼层间距是否统一为间距 10（PC 72px / MB 32px）？
 □ 全页组件组合是否无黑名单违规？
 □ 整体视觉一致性检查
-□ 【社区Token】:root 颜色是否来自目标社区主题 Token（对照第零步社区识别结论，禁止 openEuler 默认值混入）？
+□ 【社区Token】:root 颜色与圆角档位是否来自目标社区主题 Token（对照第零步社区识别结论，禁止 openEuler 默认值混入——圆角尤甚：平直社区全 4px / 内容 xl 0px，Ascend / Mindspore 等递进社区照抄即错）？
 □ 【下拉面板样式统一】导航所有下拉面板是否统一使用用户选定的那一种样式（`.o-nav__dropdown` 与 `.o-nav__dropdown--categorized` 不得在同一顶导内混用）——有下拉面板的页面必查
 □ 【站点框架】路由A页面级增改场景：导航/页脚是否与社区线上实际结构一致（对照第零步抓取的站点框架基准）？
 □ 【渲染验证】组装完成后逐楼层目检完整页面（有浏览器能力 → 打开截图目检；无 → 按第六步降级为静态自检并显式标注「未做渲染目检」）——重点排查固定 width/height 容器内的长文案是否折行溢出堆叠（步骤条标题、卡片标题、按钮、标签）
 □ 【图标风格】关键图标是否与设计系统一致（以浏览器渲染为准，非仅看源码 fill/stroke 属性）？
 □ 【CodeGen对齐】全页颜色是否全部使用 `var(--o-color-*)` 语义 Token，无硬编码？
 □ 【CodeGen对齐】全页字号/行高/间距是否使用响应式 Token？
+□ 【CodeGen对齐】全页档位圆角是否全部使用 `var(--o-radius_*)`（形状语义特例除外），无硬编码 `border-radius: 数字px`？
 □ 【CodeGen对齐】全页是否无语义色板变量直接引用？
 □ 【CodeGen对齐】全页类名是否符合 BEM 规范？
 □ 【视觉合理性】全页数值虽合规，视觉是否仍然异常（各楼层内容重心偏移 / 信息色与背景色颠倒 / 品牌色对比度不足）？——禁止只验数值不验视觉，发现疑点显式提出
@@ -357,7 +362,7 @@ acceptance:                  # 可选：本层验收点，叠加在第六步自�
 > - 🚨 **排列方式变体的结构必须与同类组件的同名变体镜像，禁止自造结构**：`vertical` / `horizontal` 是**跨组件通用的语义**——vertical = 视觉主体（封面 / 图标 / 头像）在文字**上方**，horizontal = 视觉主体在文字**左侧**。给任何组件生成变体前，先查规范中该变体的 DOM 结构定义（Header 方向、图标在 Header 内还是移出与 Body 并排）；同类组件已有一个变体的实现时，**结构必须与之对齐**，禁止按个人理解另造一种。历史教训：OCard icon 卡未定义排列方式结构，实现侧把 vertical 做成「图标与标题横排」，与 cover 的 vertical（封面在上）逻辑相反，还因图标槽比标题行盒高撑大 header，导致「标题行盒→描述」实测 10/14/8 而非 8（第十六轮）
 > - 🚨 **统一 flex gap 会与子元素 margin 叠加，两个纵向间距值不同时禁用 gap**：容器 `gap` 作用于**每一对相邻子元素**，与子元素自身 `margin-top/bottom` 是**相加**关系。当「A→B」与「B→C」需要不同值时（如 OCard icon 的 8px 与 16px），统一 gap 结构上无法分别表达，必须改 `gap: 0` + 分段 margin 直读；若确实要用 gap，须确认相邻子元素没有额外 margin，否则实测值 = gap + margin 而非 gap
 > - 🚨 **卡内数据统计栏必须走 OCard stats-bar 规格，禁止自创**：卡片内出现浏览量 / 点赞 / 评论 / 收藏 / 评分等统计数据行时，一律按 [components/card.md](components/card.md) 规则 7 落地——类名 `.stats-bar`、字号 `font_size-tip1`（14px）/ 行高 22px / 字重 400、颜色 `--o-color-info3`、统计项内图标与文字间距 8px、统计项之间 16px、无背景无边框、无评分全部居左 / 含评分评分居左+其余居右（该规格已列入 [hard-constraints.md §1.3](global/hard-constraints.md) 与其 §3 校验项 □11）；禁止自创类名、改字号改色或另行布局
-> - 🚨 **跨社区内容适配（2026-10-29 验证轮新增）**：楼层模板与组件规范中的社区内容示例（导航菜单项、页脚分组、社交入口、二维码、基金会 Logo 等）与仓内品牌资产（`references/assets/` 以 openEuler 为基）均**随目标社区替换**——非 openEuler 社区：① 内容素材按目标社区用户提供，素材未提供的区域**省略并在工单与 HTML 注释中说明，禁止套用 openEuler 内容编造**；② 仓内 openEuler 品牌资产禁止跨社区使用；③ 模板 / 组件文档内嵌的 openEuler 参考色值（如 #F0F5FF）与社区专属禁令（如「主色调必须 #002FA7」）生成时以目标社区 Token 等价语义覆盖
+> - 🚨 **跨社区内容适配（2026-10-29 验证轮新增）**：楼层模板与组件规范中的社区内容示例（导航菜单项、页脚分组、社交入口、二维码、基金会 Logo 等）与仓内品牌资产（`references/assets/` 以 openEuler 为基）均**随目标社区替换**——非 openEuler 社区：① 内容素材按目标社区用户提供，素材未提供的区域**省略并在工单与 HTML 注释中说明，禁止套用 openEuler 内容编造**；② 仓内 openEuler 品牌资产禁止跨社区使用；③ 模板 / 组件文档内嵌的 openEuler 参考值——色值（如 #F0F5FF）、档位圆角直值（多数 4px）、阴影——生成时一律以目标社区 Token 等价语义覆盖（档位圆角写 `var(--o-radius_*)`，值由 `:root` 的目标社区定义决定）；社区专属禁令（如「主色调必须 #002FA7」）同样按目标社区覆盖
 > - **问题必须回写 skill，禁止只改产物**：用户每抛出一个问题，修复时除改当前产物外，**必须同步定位到对应 skill 文件并回写**（组件规范补缺项 / 硬约束补条款 / QA 清单补检查项 / CHANGELOG 记根因与踩坑）。只改产物不回写规范 = 下一轮必复发；本轮问题若在 CHANGELOG 中找不到对应记录，视为未完成
 > - **规范未覆盖时的分级处理**（禁止静默取值）：
 >   - 规范文档缺少某项参数（如 PC 端未写明 Banner 的垂直对齐方式）→ **先显式向用户指出该缺失**，并给出你打算采用的设计常识做法
@@ -373,7 +378,7 @@ acceptance:                  # 可选：本层验收点，叠加在第六步自�
 > - 颜色全部使用 `var(--o-color-*)` 语义 Token，**严禁**使用色板变量（`--o-kleinblue-*`/`--o-grey-*` 等）
 > - 字号/行高优先 `var(--o-r-font_size-*)` + `var(--o-r-line_height-*)` 响应式 Token
 > - 间距使用 `var(--o-r-gap-*)` 或 `var(--o-gap-*)` Token
-> - 圆角/阴影使用 `--o-radius-*` / `--o-shadow-*` Token
+> - 档位圆角一律 `var(--o-radius-*)` / `var(--o-radius_control-*)`（值随目标社区 token，禁止写死 px；胶囊 100px 等形状语义特例除外），阴影使用 `--o-shadow-*` Token
 > - 类名使用 BEM 命名规范（`block__element--modifier`）
 > - 禁止非必要 `!important` 和内联 `style="..."`
 > - 页面使用 24 栅格布局（`--o-r-grid-N` + `--o-r-grid-column-gutter`）

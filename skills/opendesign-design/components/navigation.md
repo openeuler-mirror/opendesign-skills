@@ -1020,7 +1020,7 @@ primary4 (#B3CFFF): 极浅蓝色   - 用于Disabled禁用态
 - 尺寸：small = 32px高
 - 图标：16×16px（搜索图标 + 清除按钮）
 - 描边：1px INSIDE（内描边）
-- 圆角：4px
+- 圆角：`radius_control-xs`（值随目标社区 token）
 
 **⚠️ 重要提示（2026实战总结）**：
 > OSearch有**三种描边状态**，不是两种！必须实现Hover态！
@@ -1048,7 +1048,7 @@ primary4 (#B3CFFF): 极浅蓝色   - 用于Disabled禁用态
     height: 32px;                              /* small尺寸 */
     background: var(--o-color-fill2-light);   /* white / grey-4 */
     border: 1px solid var(--o-color-control1);/* 默认描边: rgba(0,0,0,0.25) */
-    border-radius: 4px;
+    border-radius: var(--o-radius_control-xs);  /* 档位圆角，值随目标社区 token */
 }
 
 /* 2️⃣ Hover悬浮态（仅限Enabled状态！） */
@@ -1087,7 +1087,7 @@ primary4 (#B3CFFF): 极浅蓝色   - 用于Disabled禁用态
 | 规格项 | 值 | 与ODropdown的差异 |
 |--------|-----|-----------------|
 | **与触发元素间距** | 4px | 相同 |
-| **面板圆角** | 4px | 相同 |
+| **面板圆角** | `var(--o-radius_control-xs)`（openEuler 4px，随目标社区 token） | 相同 |
 | **面板内边距** | 4px（四周） | 相同 |
 | **面板背景(Light)** | rgb(255,255,255) | 相同 |
 | **面板阴影** | x=0 y=6 blur=24 rgba(18,20,23,0.08) | 相同 |
@@ -1201,7 +1201,7 @@ OSearch建议项Hover背景:
 | 面板状态 | 面板背景 | 面板定位 | 面板阴影 | 面板圆角 | 面板内边距 |
 |---------|---------|---------|---------|---------|-----------|
 | **收起** | 不可见 | — | — | — | — |
-| **展开** | white<br>(#FFFFFF) | 按钮下方**4px**处 | DROP_SHADOW<br>x=0 y=6 blur=24<br>rgba(18,20,23,0.08) | **4px**<br>(radius_control-xs) | **4px**<br>(四周) |
+| **展开** | white<br>(#FFFFFF) | 按钮下方**4px**处 | DROP_SHADOW<br>x=0 y=6 blur=24<br>rgba(18,20,23,0.08) | **`var(--o-radius_control-xs)`**<br>(openEuler 4px，随目标社区 token) | **4px**<br>(四周) |
 
 **面板内菜单项状态矩阵**（2026-10-15 与 floors 顶导下拉面板选项规则统一：hover 只换背景、无持久选中态、全状态 Regular(400)）：
 
@@ -1240,7 +1240,7 @@ OSearch建议项Hover背景:
     top: calc(100% + 4px);     /* 按钮下方4px */
     background: var(--o-color-fill2-light);
     box-shadow: 0 6px 24px rgba(18, 20, 23, 0.08);
-    border-radius: 4px;
+    border-radius: var(--o-radius_control-xs);  /* 档位圆角，值随目标社区 token */
     padding: 4px;
 }
 
