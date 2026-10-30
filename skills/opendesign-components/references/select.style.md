@@ -203,6 +203,7 @@ layout:
 
 | 版本 | 变更内容 |
 |------|---------|
+| v1.2.7-sp3 | `round="pill"` 圆角改为同尺寸单行胶囊圆角常数（small 12px；medium 16px、≤1680px 降 14px；large 20px、≤1680px 降 18px、≤840px 恢复 20px），多选标签撑高不再钳制出巨大弧形（#206） |
 | v1.2.7-sp1 | 禁用背景色 `--select-bg-color-disabled` 从 fill2 改回 control4-light |
 | v1.2.7 | 多选标签间距方向调整（`--select-tag-margin`）；新增内部变量 `--_overlay-left`/`--_overlay-right`（renderLabel 浮层定位，JS 测量注入，一般无需覆盖） |
 | v1.2.6 | 背景色 CSS 变量从 control5-light/control4-light 改为 fill2；关闭按钮尺寸跟随 `--select-icon-size` |

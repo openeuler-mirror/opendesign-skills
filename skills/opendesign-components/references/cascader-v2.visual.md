@@ -6,7 +6,8 @@ OCascaderV2 是级联选择器的 PC 重构版本（与原 OCascader 完全独�
 
 📱 **响应式行为**：有 media.scss 断点规则。
 
-- **pad_v ~ laptop 区间**：large 选择框高度缩小为 36px、图标缩小为 control-s、字号 tip1；large 面板选项 padding 缩小为 6px 12px、字号 tip1、图标缩小为 s；medium 选择框高度缩小为 28px、图标 control-xs、字号 tip1；medium 面板选项 padding 缩小为 2px 12px、字号 tip1、图标 xs。
+- **≤1680px（laptop 及以下，v1.2.7-sp3 起含等号，与 input/select 家族对齐）**：large 选择框高度缩小为 36px、图标缩小为 control-s、字号 tip1；large 面板选项 padding 缩小为 6px 12px、字号 tip1、图标缩小为 s；medium 选择框高度缩小为 28px、图标 control-xs、字号 tip1；medium 面板选项 padding 缩小为 2px 12px、字号 tip1、图标 xs。
+- **≤840px**：large 选择框恢复默认档高度（`--o-control_size-l`）与图标 control-m（v1.2.7-sp3 起与 input/select 家族一致）；其余尺寸维持降档值。
 - 触控设备 expandTrigger 强制降级为 click。
 
 🧩 **布局结构**：OCascaderV2 根元素为 InBox（继承 InBox 的边框/圆角/颜色/尺寸系统），内含 OScroller 包裹的值展示区域（单选为 input、多选为 tag 列表 + input）+ 后缀图标区域（clear/loading/arrow）。浮层通过 OPopup 定位，内部 OCascaderV2Panel 为多列水平排列，每列由 OScroller + ul.o-cascader-v2-options 组成，列间有 ODivider(direction=v) 分隔。filterable 模式下面板切换为搜索结果列表。

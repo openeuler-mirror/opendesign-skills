@@ -1,12 +1,12 @@
 ---
 name: opendesign-components
 description: OpenDesign 组件库使用指南。当需要使用 OpenDesign Vue 组件库快速搭建页面时使用此 skill。支持所有 OpenDesign 组件（48 个），包括按钮、表单、表格、对话框、卡片、图标、滑块、步骤条、轻提示等常用 UI 组件。使用场景：(1) 使用 OpenDesign 组件构建 Vue 页面，(2) 查找组件使用方法和属性说明，(3) 获取组件代码示例
-last_update: 2026-10-08
+last_update: 2026-10-30
 ---
 
 # OpenDesign 组件库使用指南
 
-> 本 Skill 对应 @opensig/opendesign **v1.2.7-sp1**（2026-09 生成），最低依赖版本 ≥1.2.7（1.2.7 完整包含 1.2.5-sp3；sp3 即有的修复在各组件版本变更记录中以「1.2.5-sp3 / 1.2.7」标注，1.2.5-sp3 线用户亦可参照使用）。注意：`targetRect` 数据定位等部分能力需 **1.2.7-sp1**，1.2.7 的 `VirtualElement` 闭包形态已废弃。具体组件 API 在哪个版本引入/变更/废弃，查 [`ReleaseNote`](https://raw.atomgit.com/openeuler/opendesign-components/blobs/ceb10ed8c242ae7990e177a5c058f6ccd4f4a4c4/packages/docs/ReleaseNote.opendesign.md)。
+> 本 Skill 对应 @opensig/opendesign **v1.2.7-sp3**（2026-10 更新，包含 1.2.5-sp5 全部修复），最低依赖版本 ≥1.2.7（各 sp 线即有的修复在各组件版本变更记录中以「1.2.5-spX / 1.2.7-spY」标注，1.2.5-spX 线用户亦可参照使用）。注意：`targetRect` 数据定位等部分能力需 **1.2.7-sp1**（1.2.7 的 `VirtualElement` 闭包形态已废弃）；OTab 溢出裁切重构、多行控件 pill 圆角常数、OPagination 跳页修复等需 **1.2.7-sp3 / 1.2.5-sp5**。具体组件 API 在哪个版本引入/变更/废弃，查 [`ReleaseNote`](https://raw.atomgit.com/openeuler/opendesign-components/blobs/1855bba3490f36452bd15bc43ff9cd9afc75cfdd/packages/docs/ReleaseNote.opendesign.md)。
 
 OpenDesign 是一个面向 openEuler 生态的 Vue 3 组件库，提供 61 个可复用 UI 组件。组件库有六套独立主题，**每个社区项目在初始化时选定一套，运行时只切换 dark/light 模式**。
 
@@ -1890,7 +1890,7 @@ IP 地址输入框，自动分段处理 IPv4 地址。
 | `round` | `RoundT` | — | 圆角 |
 | `lazy` | `boolean` | — | 懒加载（首次展示时才渲染） |
 | `addable` | `boolean` | — | 是否可以新增标签 |
-| `maxShow` | `number` | — | 最多显示的标签数（超出折叠） |
+| `maxShow` | `number` | — | 最多显示的标签数（超出折叠）；未设置时溢出页签全量渲染并由容器裁切，激活页签自动滚动至完整可见，未完整显示的页签经省略号弹层访问（v1.2.5-sp5 / 1.2.7-sp3 起的溢出模型） |
 | `line` | `boolean` | `true` | 是否显示底部线 |
 | `headerClass` | `string \| Array \| Object` | — | 头部自定义类名 |
 

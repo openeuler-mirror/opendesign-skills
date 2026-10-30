@@ -45,17 +45,19 @@
 
 ### 响应式行为表
 
-| 维度 | pad_v ~ laptop | > laptop |
-|------|---------------|---------|
-| large 选择框高度 | 36px | `--o-control_size-l` |
-| large 选择框字号 | tip1 | text1 |
-| large 选择框图标 | control-s | control-m |
-| large 面板选项 padding | 6px 12px | 7px 12px |
-| large 面板选项字号 | tip1 | text1 |
-| large 面板选项图标 | s | m |
-| medium 选择框高度 | 28px | `--o-control_size-m` |
-| medium 选择框图标 | control-xs | control-xs |
-| 触控设备 expandTrigger | 强制 click | 保留原设置 |
+| 维度 | ≤840 | 841 ~ 1680 | > 1680 |
+|------|---------------|-----------|---------|
+| large 选择框高度 | `--o-control_size-l`（恢复默认档，v1.2.7-sp3 起） | 36px | `--o-control_size-l` |
+| large 选择框字号 | tip1 | tip1 | text1 |
+| large 选择框图标 | control-m（恢复默认档，v1.2.7-sp3 起） | control-s | control-m |
+| large 面板选项 padding | 6px 12px | 6px 12px | 7px 12px |
+| large 面板选项字号 | tip1 | tip1 | text1 |
+| large 面板选项图标 | s | s | m |
+| medium 选择框高度 | 28px | 28px | `--o-control_size-m` |
+| medium 选择框图标 | control-xs | control-xs | control-xs |
+| 触控设备 expandTrigger | 强制 click | 强制 click | 保留原设置 |
+
+> v1.2.7-sp3 起降档断点由「pad_v ~ laptop 有界区间」改为「≤1680（含等号）」，与 input/select 家族对齐；≤840 下 large 恢复默认档高度与图标尺寸。
 
 ---
 

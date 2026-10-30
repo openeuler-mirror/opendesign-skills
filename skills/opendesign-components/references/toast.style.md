@@ -19,6 +19,7 @@
 | `--toast-align` | `center` | 提示条对齐方式 |
 | `--toast-max-width` | `100%` | 提示条最大宽度 |
 | `--toast-list-offset` | `80px` | 提示列表距页面顶部/底部的偏移 |
+| `--toast-list-max-width` | `100%` | 提示列表容器最大宽度（v1.2.7-sp2 新增；≤840px 断点覆盖为 75%、手机尺寸为 100%。约束的是列表容器，避免多条提示挤压折行；单条提示仍用 `--toast-max-width`） |
 
 **使用示例**:
 ```vue
@@ -29,8 +30,11 @@
 
 ### 响应式行为表
 
-|------|-------------------|---------|--------|
-| 最大宽度 | 75% | 100% | 100%（默认） |
+| 维度 | ≤840px | 手机尺寸 | >840px |
+|------|--------|---------|--------|
+| 列表最大宽度 | 75% | 100% | 100%（默认） |
+
+> v1.2.7-sp2 起断点最大宽度约束作用于 `.o-toast-list` 列表容器（`--toast-list-max-width`），列表 `width: max-content` 收窄为内容宽，修复移动端提示文案折行；单条提示的 `--toast-max-width` 不再承担断点约束。
 
 ---
 
@@ -61,7 +65,8 @@ layout:
     element: div.o-toast-list
     position: fixed
     z-index: 1001
-    width: 100%
+    width: max-content  # 收窄为内容宽（v1.2.7-sp2 起）
+    max-width: var(--toast-list-max-width)
     text-align: center  # --toast-align
     variants:
       top: { top: var(--toast-list-offset, 80px) }
@@ -73,10 +78,10 @@ layout:
 
 **≤840px**
 ```yaml
-# toast: max-width 75%
+# toast-list: max-width 75%（列表容器，v1.2.7-sp2 起）
 ```
 
 **手机尺寸**
 ```yaml
-# toast: max-width 100%
+# toast-list: max-width 100%（列表容器，v1.2.7-sp2 起）
 ```

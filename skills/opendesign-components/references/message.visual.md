@@ -52,5 +52,6 @@ regions: [sidebar(彩色侧边条,仅colorful), icon(状态图标), main(标题+
 
 | 版本 | 变更内容 |
 |------|---------|
+| 1.2.5-sp5 / 1.2.7-sp3 | 修复关闭按钮被压缩的问题（图标与关闭按钮 `flex-shrink: 0`，长文案下不再被挤压变形） |
 | v1.1.0 | 新增 `--message-list-top-offset` 和 `--message-list-bottom-offset` CSS 变量；`showMessage` 返回关闭函数；OMessageList 新增 `close` 方法 |
 | v0.0.70 | 支持指定目标元素附近显示消息 |
