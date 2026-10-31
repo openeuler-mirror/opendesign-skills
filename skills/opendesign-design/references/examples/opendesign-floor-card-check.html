@@ -170,7 +170,8 @@ body {
     height: 48px; padding: 0 0 16px; display: inline-flex; align-items: center;
     font-size: var(--o-font_size-h4); line-height: var(--o-line_height-h4); /* L 默认 */
 }
-.otab__item + .otab__item { margin-left: 24px; }
+/* 页签间距（tab.md「响应式行为」）：≥1681px 32px / 841~1680px 24px / ≤840px 16px */
+.otab__item + .otab__item { margin-left: 32px; }
 /* 选中指示器：仅 Actived 显示；Press 时变色（tab.md Part C）*/
 .otab__item::after {
     content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
@@ -199,6 +200,7 @@ body {
         height: 44px; padding: 2px 0 16px; align-items: flex-start;
         font-size: var(--o-font_size-text2); line-height: var(--o-line_height-text2); /* M */
     }
+    .otab__item + .otab__item { margin-left: 24px; }  /* 页签间距 841~1680px 档 */
 }
 /* Tab：601~840px / 340~600px 用 S（tab.md small：竖向 56×56、14px/22px、16px 居中短线指示器、圆角 9px）*/
 @media (max-width: 840px) {
@@ -207,6 +209,7 @@ body {
         flex-direction: column; justify-content: center; align-items: center;
         font-size: var(--o-font_size-tip1); line-height: var(--o-line_height-tip1); /* S */
     }
+    .otab__item + .otab__item { margin-left: 16px; }  /* 页签间距 601~840 / 340~600 两档 */
     /* small 指示器：16px 宽居中短线（非全宽），圆角 9px；改为文档流内随文字排布 */
     .otab__item::after { position: static; left: auto; right: auto; bottom: auto; width: 16px; border-radius: 9px; margin-top: 4px; }
 }

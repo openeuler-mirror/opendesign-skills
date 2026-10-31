@@ -95,6 +95,7 @@
 | Tab 页签 → 卡片容器 | 24 | 16 | 12 | 12 | 12 |
 | 卡片容器 → 查看更多按钮 | 32 | 24 | 16 | 12 | 12 |
 | 查看更多 → 模块底部外边距 | 72 | 56 | 40 | 32 | 32 |
+| Tab 页签 ↔ Tab 页签（横向） | 32 | 24 | 24 | 16 | 16 |
 | 卡片水平间距 | 32 | 24 | 16 | 16 | 12 |
 | 卡片垂直间距 | —（≤5 卡） / 32（>5 卡） | — / 24 | — / 16 | — / 16 | —（≤6 卡横滑）/ 12（>6 卡平铺） |
 | 卡片列数 | ≤5 卡单行横排；**>5 卡一排四列换行** | 同左 | 同左 | 同左 | ≤6 卡一排两卡横滑；>6 卡两列平铺为默认，横滑为备选 |
@@ -116,8 +117,9 @@
 
 ### ⚠️ 与上游 `--o-r-gap-*` 的差异声明（有意覆盖，禁止"修正"）
 
-- 除**「楼层标题 → 楼层描述」在 601~840px / 340~600px 两档为 16px**（上游 `--o-r-gap-4` 在 ≤840px 为 8px）外，本表其余各行与上游 gap Token 逐档一致。
-- 该 16px 为设计裁决：移动端标题与描述之间需要更大呼吸空间。**禁止**将其"对齐"回 8px。
+- 除**「楼层标题 → 楼层描述」在 601~840px / 340~600px 两档为 16px**（上游 `--o-r-gap-4` 在 ≤840px 为 8px）与**「Tab 页签 ↔ Tab 页签」五档固定 32 / 24 / 24 / 16 / 16**（组件级设计裁决，真源 [tab.md「响应式行为」](../components/tab.md)）两处**有意覆盖**外，本表其余各行与上游 gap Token 逐档一致。
+- 楼层标题与描述间的 16px 为设计裁决：移动端标题与描述之间需要更大呼吸空间。**禁止**将其"对齐"回 8px。
+- Tab 页签间距不随 `--o-r-gap-*` 映射（上游最接近的 `--o-r-gap-6` 在最小档仅 12px，而小屏两档页签为竖向 56×56 方块，12px 过挤）。**禁止**按 Token 近似值"修正"。
 
 ---
 
@@ -336,9 +338,12 @@
 /* ===== Tab 尺寸骨架（L / M / M / S / S，规格以 tab.md 为唯一真源）===== */
 /* ≥1681px = L（48px 高、20px/28px）；841~1200px / 1201~1680px = M（44px 高、18px/26px） */
 .otab__item { height: 48px; padding: 0 0 16px; font-size: var(--o-font_size-h4); line-height: var(--o-line_height-h4); }
+/* 页签间距（tab.md「响应式行为」分档表）：≥1681px 32px / 841~1680px 24px / ≤840px 16px */
+.otab__item + .otab__item { margin-left: 32px; }
 /* ⚠️ M / S 两处媒体查询必须成对编写：M 档不写 min-width: 841px 时仍会命中 601~840px，且源码在后盖掉下面的 S */
 @media (min-width: 841px) and (max-width: 1680px) {
     .otab__item { height: 44px; padding: 2px 0 16px; font-size: var(--o-font_size-text2); line-height: var(--o-line_height-text2); }
+    .otab__item + .otab__item { margin-left: 24px; }
 }
 /* 601~840px / 340~600px = S：竖向 56×56、14px/22px、16px 居中短线指示器（圆角 9px，非全宽） */
 @media (max-width: 840px) {
@@ -347,6 +352,7 @@
         flex-direction: column; justify-content: center; align-items: center;
         font-size: var(--o-font_size-tip1); line-height: var(--o-line_height-tip1);
     }
+    .otab__item + .otab__item { margin-left: 16px; }
     .otab__item::after { position: static; left: auto; right: auto; bottom: auto; width: 16px; border-radius: 9px; margin-top: 4px; }
 }
 
@@ -386,6 +392,7 @@
 □ 楼层描述字号/行高是否为 16/24 · 14/22 · 14/22 · 14/22 · 14/22（regular / info2）？
 □ 二级标题字号/行高是否为 24/32 · 20/28 · 18/26 · 16/24 · 16/24（semibold / info1）？
 □ Tab 尺寸是否为 L / M / M / **S** / **S**（tab.md；601~840px 与 340~600px 为竖向 56×56、14px/22px、16px 居中短线指示器）？
+□ Tab 页签间距是否逐档为 **32 / 24 / 24 / 16 / 16**（tab.md「响应式行为」分档表；未写成全断点统一的单值）？
 □ Tab 是否含 tab.md Part C 全量交互态（Hover 非选中仅变 primary2 / Press primary3 + 同色下划线 / Disabled info4 去下划线），而非只有 `.is-active`？
 □ Tab 的 hover / press 是否**未改字重**（字重只由「是否选中」决定；⛔ 禁止 hover 加粗——实测拉丁标签 400→600 文字宽 +1.9px，下划线变宽、后续页签被推挤）？
 □ Tab 的 Press 规则特异性是否 ≥ Hover 规则（否则按下时 Press 色被 Hover 色盖掉，表现为「按下毫无变化」）？
