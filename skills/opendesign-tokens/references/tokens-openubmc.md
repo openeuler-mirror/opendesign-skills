@@ -6,7 +6,7 @@
 
 主题标识：`u`
 品牌色：**Azure Blue（天蓝色）**（`#0071F3`）
-风格特点：圆角较大（8~24px），主色/链接/控件悬浮均使用品牌蓝色，灰色为中性灰
+风格特点：平直圆角（全档 4px、内容 xl 档 0px），主色/链接/控件悬浮均使用品牌蓝色，灰色为中性灰
 
 ---
 
@@ -119,19 +119,23 @@ openUBMC 灰色为中性灰（与 openEuler/Kunpeng/openGauss 相同）。
 
 ---
 
-## 圆角 Token（Radius）— 圆润风格
+## 圆角 Token（Radius）— 平直风格
+
+> ⚠️ **本表为设计口径值**（2026-10-30 维护者裁定：平直风）。包产物（npm `@opensig/opendesign-token` v0.1.1 的
+> `themes/u.*.token.css` 与上游 master `openubmc-token.json`，双源一致）中本主题圆角当前为**递进值**
+> （控件 4/8/12/16、内容 4/8/12/16/24），与本表不一致——生成页面时圆角以本表口径为准（设计侧已加取数覆盖，2026-10-30 裁定）。
 
 | Token | 值 |
 |-------|----|
 | `--o-radius-xs` | `4px` |
-| `--o-radius-s` | `8px` |
-| `--o-radius-m` | `12px` |
-| `--o-radius-l` | `16px` |
-| `--o-radius-xl` | `24px` |
+| `--o-radius-s` | `4px` |
+| `--o-radius-m` | `4px` |
+| `--o-radius-l` | `4px` |
+| `--o-radius-xl` | `0px` |
 | `--o-radius_control-xs` | `4px` |
-| `--o-radius_control-s` | `8px` |
-| `--o-radius_control-m` | `12px` |
-| `--o-radius_control-l` | `16px` |
+| `--o-radius_control-s` | `4px` |
+| `--o-radius_control-m` | `4px` |
+| `--o-radius_control-l` | `4px` |
 
 ---
 
@@ -140,7 +144,7 @@ openUBMC 灰色为中性灰（与 openEuler/Kunpeng/openGauss 相同）。
 - **品牌色**：Azure Blue `#0071F3`（天蓝色），控件悬浮和链接均使用品牌色
 - **Primary = Brand**：主操作按钮直接使用品牌蓝（同 openEuler 模式）
 - **brand-6 锚定**：light/dark 模式下 `--o-brand-6` 值相同（不随模式反转）
-- **圆角**：递进圆角体系（4/8/12/16/24px），风格圆润
+- **圆角**：平直圆角体系（全档 4px、内容 xl 档 0px），接近直角风格（设计口径，与包产物不一致——见「圆角 Token」节标注）
 - **渐变**：无实质渐变（main2 start = end = brand-6）
 - **灰色**：中性灰（同 openEuler/Kunpeng/openGauss）
 

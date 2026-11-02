@@ -8,7 +8,7 @@
 
 ## 0. 颜色 Token 常见错误（生成HTML前必须拉取上游Token）
 
-> 🔴 **AI生成HTML页面时，必须先通过 WebFetch 拉取 `openeuler-token.json`（见 SKILL.md 数据资源），将 JSON 中的颜色变量翻译为 `:root` CSS 变量。禁止凭训练数据"猜测"颜色值。**
+> 🔴 **AI生成HTML页面时，必须先通过 WebFetch 拉取目标社区主题 Token（见 SKILL.md 数据资源社区映射表），将 JSON 中的全部变量——颜色、字号/行高、间距、栅格、圆角、阴影等——翻译为 `:root` CSS 变量。禁止凭训练数据"猜测"取值，禁止不识别目标社区就默认拉取 openEuler Token。**
 
 > ⚠️ 以下仅列出**最常出错**的Token对照，完整值以拉取的上游JSON为准。
 
@@ -130,6 +130,8 @@
 ## 2. 文字（字号 / 行高）
 
 > 🔴 **本节最高优先级铁律**：生成**任何**页面时，**全局字体一律使用「鸿蒙黑体（HarmonyOS Sans / HarmonyHeiTi）」**，无任何例外。禁止使用 PingFang、苹方、思源、微软雅黑、Inter、Roboto、系统默认字体或任何其他字族。
+>
+> ⚠️ **口径澄清（2026-10-29 验证轮）**：本铁律约束的是**首选字体**；上游 `--o-font_family` Token 的回退链（含 PingFang SC / Microsoft YaHei 等后备档）按上游原样引用、逐字保留，不视为违反本条——只禁止把回退档提升为首选。
 
 下表中"角色"指文字在页面信息层级中的语义身份。**字号与行高在同一行内成对锁定，禁止拆分搭配**。
 
@@ -140,7 +142,7 @@
 | 三级数据展示（楼层标题） | 40px / 56 | 18px / 26 | — |
 | 一级标题 | 32px / 44 | 18px / 26 | — |
 | 二级标题 | 24px / 32 | 16px / 24 | — |
-| 三级标题（列表卡片 < 3 列） | 22px / 30 | 16px / 24 | — |
+| 三级标题（列表卡片 ≤ 3 列） | 22px / 30 | 16px / 24 | — |
 | 四级标题（列表卡片 = 4 列） | 20px / 28 | 16px / 24 | — |
 | 大号正文 | 18px / 26 | 14px / 22 | — |
 | 常规正文 / 标题辅助信息 | 16px / 24（段高 12px） | 14px / 22 | 常规正文 |
@@ -251,6 +253,7 @@
 - ✅ 楼层之间的距离统一使用**间距 10**（PC 72px / MB 32px）
 - ✅ **例外（Banner 楼层专属）**：Banner 各等级的「标题距导航」为楼层专属值（如 XL = 136px / 88px 等），**不受上方间距白名单约束**，取值以 [floors/banner.md](../floors/banner.md) 为准
 - ✅ **例外（通用楼层卡片模块专属）**：该楼层使用**五档断点固定间距表**（≥1681px / 1201~1680px / 841~1200px / 601~840px / 340~600px，含 56px 等 PC/MB 两列未覆盖的档位值），**为固定值约束，优先级高于上方白名单与 `--o-r-gap-*` 默认映射**，取值以 [floors/floor-card.md](../floors/floor-card.md) 间距表为唯一真源
+- ✅ **例外（组件级几何参数，2026-10-29 验证轮补充）**：楼层模板 / 组件规范**明示为强制值**的几何参数（如页脚底部 padding 34px、导航右侧操作区 gap 20px、页脚底部信息行高 78px）不受上方白名单约束，取值以对应楼层模板 / 组件文档为准，引用时须注明出处；**未明示为强制值的，仍必须回白名单取值**
 - ❌ 禁止 6 / 10 / 14 / 18 / 20 / 28 / 36 / 56 等未列出数值
 - ❌ MB 端禁止出现 40 / 48 / 64 / 72px 等 PC 专属数值
 
@@ -409,7 +412,7 @@
 □ 12. 【HTML栅格】每个楼层内容容器 padding 是否为 0？（禁止用 padding 控制楼层边距）
 □ 13. 【HTML栅格】是否误用 1200px / 1140px / 960px 等常见框架默认值？
 □ 14. 【HTML栅格】验证公式：margin-left + width + margin-right = 画布宽度（PC: 216+1488+216=1920 / MB: 24+312+24=360）？
-□ 15. 【HTML颜色】`:root` 中的颜色值是否来自上游Token（openeuler-token.json），而非凭训练数据猜测？（尤其检查 `--o-color-fill1` 是否误写为纯白 `#FFFFFF`）
+□ 15. 【HTML颜色】`:root` 中的颜色值是否来自目标社区上游Token（{community}-token.json），而非凭训练数据猜测？（尤其检查 `--o-color-fill1` 是否误写为纯白 `#FFFFFF`）
 □ 16. 【HTML颜色】`body` 的 `background-color` 是否使用 `var(--o-color-fill1)`？（禁止 `#FFFFFF` / `white`）
 □ 17. 【HTML导航】顶导 Logo 与导航文字是否垂直居中？（禁止 `align-items: flex-end` + 子项 `padding-bottom` + `align-self: center` 组合模拟贴底对齐——border-box 下高度失真导致错位；正确做法：导航区 `align-items: center` 整体居中，导航项 `height: 100%` + `border-bottom: 2px` 实现下划线贴底）
 □ 18. 【HTML图标】深色/品牌色背景上的图标是否已反色为白色？（assets SVG 原始 fill 为黑色，禁止修改 SVG 文件；须在 CSS 中 `filter: invert(1)` 反色，确保 solid 按钮、深色代码块头部等场景图标可见且与白色文字一致）
@@ -428,6 +431,8 @@
 □ 31. 【卡片文本行数】卡片标题/描述是否按断点分档截断——**≥841px** 标题 2 行、描述 3 行；**≤840px** 标题 1 行、描述 2 行，超出末尾 `...`？line-clamp 四件套（`display: -webkit-box` + `-webkit-box-orient: vertical` + `-webkit-line-clamp: N` + `overflow: hidden`）是否齐全——漏 `overflow: hidden` 则省略号不出现、文字直接溢出（详见 `components/card.md` 硬约束规则 8）？
 □ 32. 【卡片内间距】cover 卡片内边距是否按 card.md 五档分档表取值（容器 8/8/0/8，**601~840px 与 340~600px 为 4/4/0/4**；Body 上/右/下/左 = 24/24/24/24 → 16/16/16/16 → 12/8/12/8 → 12/8/12/8 → 12/8/12/8；标题→描述 12 → 8）？⚠️ 是否误把 **Body padding 左右**当成「文字距卡片边缘」——水平方向会叠加：**「标题→卡片左」= 容器左 + Body 左**（如 ≥1681px 8+24=32）。校验一律用 card.md「实际可视间距（直读值）」表（封面→卡边缘 8/8/8/**4**/**4**、封面→标题 24/16/12/12/12、文字→卡左/右 32/24/16/12/12、文字底→卡底 24/16/12/12/12），禁止把容器 padding 与 section padding 叠加心算
 □ 33. 【禁用态隔离·全局】凡是出现禁用态的元素，其 hover / press / focus / 展开规则是否**一律带 `:not(:disabled)`（或 `.is-disabled` 对应类）限定**——hover 划过禁用项时颜色、字重、指示器、背景必须与禁用默认态**逐项相同**？⛔ 典型翻车：`.item:hover:not(.is-active)` 特异性 (0,3,0) > `.item:disabled` (0,2,0)，禁用色被 hover 盖掉，鼠标一划过就变色（实测 Tab 禁用项 hover → primary2、press → primary3 且指示器变色）。同时确认 JS 侧禁用项不响应点击、不切换选中态——详见 §2.2
+□ 34. 【社区Token·圆角】`:root` 的圆角档位（`--o-radius-*` / `--o-radius_control-*`）是否取自目标社区 Token？⛔ 禁止沿用 openEuler 基准值——平直社区（e/k/g/u）全 4px（内容 xl 档 0px）、递进社区（a/m）4/8/12/16，照抄即错（两类圆角的判别、六主题口径与规则见 §7.1）
+□ 35. 【HTML圆角】产物全文是否无硬编码档位圆角——`border-radius: 数字px` 仅允许形状语义特例（胶囊 100px、Tab 指示器 9px 等组件文档明示的固定造型），档位圆角一律 `var(--o-radius_*)`？
 任一项不通过 → **立即回滚到清单值**，禁止"差不多"。无法对应到清单时，停下询问用户，**不要自行造数**。
 ```
 
@@ -439,12 +444,34 @@
 
 | 属性 | 来源 |
 |---|---|
-| 色值（`color-*`） | 远端 Token JSON，见 [SKILL.md 数据资源](../SKILL.md#数据资源) |
-| 字重（`font_weight-*`） | 远端 Token JSON |
-| 阴影（`shadow-*`） | 远端 Token JSON |
-| 圆角 | 见 [atomic-components/](../atomic-components/) 各组件文档（按钮 4 / 16 / 100px、输入框/卡片/Tag 4px 等） |
-| 按钮 / 输入框 / Tag 等**组件级**几何参数 | 见 [atomic-components/](../atomic-components/) 各组件文档 |
+| 色值（`color-*`） | 远端目标社区 Token JSON，见 [SKILL.md 数据资源](../SKILL.md#数据资源) |
+| 字重（`font_weight-*`） | 远端目标社区 Token JSON |
+| 阴影（`shadow-*`） | 远端目标社区 Token JSON |
+| 圆角 | 见下方 §7.1「圆角两类与社区规则」——档位圆角走目标社区 Token，形状语义圆角按 [components/](../components/) 各组件文档 |
+| 按钮 / 输入框 / Tag 等**组件级**几何参数 | 见 [components/](../components/) 各组件文档 |
 | 描边宽度 | 全局 1px INSIDE，不随设备变化 |
+
+### 7.1 圆角两类与社区规则（换社区 Token 的主陷阱）
+
+圆角分两类，取值规则不同：
+
+| 类 | 判别 | 取值规则 |
+|---|---|---|
+| **档位圆角** | 对应 `--o-radius-*`（内容圆角）/ `--o-radius_control-*`（控件圆角）档位——输入框、卡片、Tag、菜单项、下拉面板、分页页码等 | **CSS 一律写 `var(--o-radius_control-*)` / `var(--o-radius-*)`，禁止写死 px**。值随目标社区（六主题口径见下表；卡片等控件圆角取 `radius_control-*` 档——递进社区（Ascend / Mindspore）卡片即 12px）。`:root` 的档位值按目标社区口径取（g/u 口径与包产物的差异见下表说明；降级源 `opendesign-tokens/references/tokens-{社区}.md`） |
+| **形状语义圆角** | 表达固定形状而非档位——胶囊形 100px（按钮 large/small、ODropdown text 变体、OSwitch 轨道、OStep 图标容器）、Tab small 指示器 9px、carousel 指示块 3px/6px、hover 微圆角 2px（均无对应档位，为设计稿直值） | **不随社区 Token 变化**，按组件文档直值保留 |
+
+**六主题圆角口径**（2026-10-30 维护者裁定，数值以 `opendesign-tokens/references/tokens-{社区}.md` 圆角表为准）：
+
+| 主题 | 圆角风格 | `--o-radius_control-xs/s/m/l` | `--o-radius-xs/s/m/l/xl` |
+|---|---|---|---|
+| openEuler (e) / Kunpeng (k) / openGauss (g) / openUBMC (u) | 平直（接近直角） | 4 / 4 / 4 / 4 | 4 / 4 / 4 / 4 / **0** |
+| Ascend (a) / Mindspore (m) | 递进（圆润） | 4 / 8 / 12 / 16 | 4 / 8 / 12 / 16 / 24 |
+
+> `--o-radius-xl = 0px` 是平直风格的有意取值（超大圆角档归零），不是缺值。
+>
+> ⚠️ **openGauss (g) / openUBMC (u) 口径与包产物不一致**：包产物（npm `@opensig/opendesign-token` v0.1.1 的 `themes/*.token.css` 与上游 master `{community}-token.json`，双源一致）中两主题当前为递进值（控件 4/8/12/16、内容 4/8/12/16/24）。本仓按维护者口径记平直，`tokens-opengauss.md` / `tokens-openubmc.md` 已按口径改写并标注差异；SKILL.md 第零步对两社区已加取数覆盖（2026-10-30 裁定）：`:root` 圆角按本仓口径取平直值、不从上游 JSON 翻译（复核包值：token 校验 CLI `list "--o-radius*" -t <e|a|k|m|g|u>`，见 opendesign-tokens skill「Token CLI」节）。
+
+**为什么单列（换社区圆角错漏的根因）**：组件文档中的档位圆角直值均为 **openEuler 基准**（多数 4px），而圆角恰是六套主题间差异最大的维度之一。递进社区（Ascend / Mindspore）生成时照抄这些直值 = 用错社区（卡片应为 12px 而非 4px）。正确写法是 CSS 引用 `var(--o-radius_*)`、`:root` 值按目标社区口径取（g/u 口径与包产物的差异见上方说明）——换社区只换 `:root` 一处，全页圆角自动跟随，无需逐处人工校对。
 
 ---
 

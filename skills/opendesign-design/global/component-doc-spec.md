@@ -13,9 +13,11 @@
 | 行高 | `--o-r-line_height-*` | `--o-r-line_height-tip1` (22px) |
 | 字重 | `--o-font_weight-*` | `--o-font_weight-regular` (400)、`--o-font_weight-bold` (600) |
 | 间距 | `--o-gap-*` / `--o-r-gap-*` | `--o-gap-1` (4px)、`--o-gap-2` (8px) |
-| 圆角 | `--o-radius-*` | `--o-radius-control-m` (4px) |
+| 圆角 | `--o-radius-*` / `--o-radius_control-*` | `--o-radius_control-m`（值随目标社区：openEuler 4px / Ascend 12px） |
 | 图标尺寸 | `--o-icon_size-*` | `--o-icon_size-m` (24px) |
 | 阴影 | `--o-shadow-*` | `--o-shadow-1` |
+
+> 圆角按 hard-constraints §7.1 分两类落笔：**档位圆角**标注 Token 档位、值注明「随目标社区 Token」（文档中的直值一律视为 openEuler 基准）；**形状语义圆角**（胶囊 100px 等固定造型）直值保留。圆角档位名只有 xs/s/m/l/xl（控件圆角 `--o-radius_control-*` 仅 xs/s/m/l），禁止使用不存在的档位名。
 
 ## 颜色 Token 对照表
 

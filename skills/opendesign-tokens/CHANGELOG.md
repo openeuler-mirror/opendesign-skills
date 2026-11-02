@@ -7,6 +7,33 @@
 
 ---
 
+## 2026-10-30
+
+### 修正
+
+- **「圆角值因主题而异」警告取值精确化**：旧文「openEuler 主题所有圆角均为 4px」与包产物不符——`@opensig/opendesign-token` v0.1.1
+  中 openEuler / Kunpeng 的内容圆角 **xl 档为 0px**（平直风格的有意取值），并非 4px。
+- **⚠️ openGauss / openUBMC 圆角按设计口径改写为平直**（2026-10-30 维护者裁定，上游源码不改）：`references/tokens-opengauss.md`、
+  `references/tokens-openubmc.md` 的圆角表与风格描述改为平直风（全档 4px、内容 xl 档 0px），并在圆角节标注与包产物的差异——
+  包产物（npm v0.1.1 CSS 与上游 master JSON，双源核实一致）中两主题当前为递进值（控件 4/8/12/16、内容 4/8/12/16/24）。
+  SKILL.md §5 警告段同步按口径分组（平直 e/k/g/u、递进 a/m）。页面生成链路（opendesign-design 第零步）对 g/u 圆角已加取数覆盖：按本表口径取平直、不从上游 JSON 翻译（2026-10-30 裁定）。
+
+## 2026-10-29
+
+### 新增
+
+- **`references/tokens-opengauss.md` 新增「文字色 Token（Info）」节**：openGauss 上游 v0.1.1 未定义 info1~4 语义 Token，
+  Light 值取 `references/tokens.md`「文字色 Token」通用定义（mixedgray-14 基，本主题灰色板 grey-14 同值）、Dark 值按
+  hard-constraints §0.1「同灰度、反色相」规则推导（显式标注「推导值」，待上游补齐后以上游为准）——此前页面生成每次
+  都需临时交叉推导（2026-10-29 全流程验证三个楼层均撞上此缺口），现固化为文档。附复核提醒：info 系与 control2/3-light
+  的 Dark 推导值，启用 Dark 模式前需维护者确认。
+
+### 修正
+
+- **Shadow Token 非法语法修正**：`references/tokens.md`「Shadow Tokens」节的 `rgba(var(--o-grey-13), 0.08)` 为
+  「空格通道 + 逗号 alpha」混写（hard-constraints §0 判定的非法语法，浏览器整条声明静默丢弃）——三处（shadow-1/2/3）
+  统一改为合法斜杠语法 `rgb(var(--o-grey-13) / 0.08)`；`tokens-opengauss.md` 主题特征总结中的同款写法同步修正。
+
 ## 2026-07-31
 
 ### 新增
