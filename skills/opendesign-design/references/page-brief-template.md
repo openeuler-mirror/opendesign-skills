@@ -12,6 +12,7 @@
 
 ```text
 做一个 ____ 社区（openEuler / openGauss / openUBMC / 鲲鹏 / 昇腾…）的 ____ 端页面（PC / 手机；双端分两次生成）。
+多端适配（仅 PC 稿时可填；不填默认其他屏幕宽度全部自动缩小）：____（全部缩小 / 部分楼层换结构，如筛选改抽屉、分页改触底）
 场景：____（全新页面 / 在现有站点上增改；增改请给站点地址：____）
 页面语言：____（中文 / 英文 / 中英双语；不填默认中文）
 
@@ -45,6 +46,9 @@ meta:
   community: openGauss        # 【必填】openEuler|openGauss|openUBMC|Kunpeng|Ascend 等社区
                               # （决定主题 Token，禁止默认 openEuler；无 Token 的社区停下询问）
   device: PC                  # 【必填】PC|MB（决定字号/间距/栅格白名单列；双端分两次生成）
+  adaptive_policy: null           # 仅 device=PC 时填写：scale-default = 全部流式（默认）|
+                              # per-floor = 逐楼层判定并在工单中声明换版（global/responsive-design.md）；
+                              # 未填时默认 scale-default，草稿中显式呈现供确认
   scenario: new-page          # 【必填】new-page = 全新落地页 | site-extension = 已有站点增改
   site_url: null              # scenario = site-extension 时【必填】：导航/页脚按该线上站真实结构还原
   language: zh                # zh|en|zh-en（默认 zh，草稿中显式呈现供确认）
@@ -76,6 +80,7 @@ acceptance:                   # 可选：全页级验收点，叠加在 SKILL.md
 | 字段 | 谁负责 | 判定标准 |
 |------|--------|----------|
 | `community` / `device` / `scenario` / `site_url` | **用户意图** | 猜错会产出错误交付物（社区 / 设备 / 增改场景错了，整页从头错）——AI 缺失时必须询问，禁止猜测 |
+| `adaptive_policy` | **用户意图 + AI 判定** | 用户是否要求多端适配是意图；要求后逐楼层「流式/换版/降级」的形态判定是 AI 的领域知识（responsive-design §1-§2 判据），判定结果写进楼层工单 adaptive 字段供用户确认 |
 | `language` / `confirm` | 用户可选 | 有安全默认值（zh / per-floor），草稿中显式呈现供确认 |
 | `floors[].id` / `type` / `variant` / `columns` | **AI 规划** | 楼层分类学是 skill 的领域知识，AI 负责映射；用户在确认时可改 |
 | `acceptance` | 用户可选 | 用户提出的验收点；AI 可建议 |
@@ -108,6 +113,14 @@ icons:                       # AI 从 references/assets/ 匹配，用户可指�
 
 acceptance:                  # 可选：本层验收点，叠加在 SKILL.md 第六步自检之上
   - solid 按钮唯一且左对齐
+
+adaptive:                    # adaptive_policy = per-floor 时必填（global/responsive-design.md §3）；纯流式楼层写
+  breakpoint: 840            # adaptive: scale 并省略其余字段。breakpoint 只能 840|600|840+600（缺省 840）
+  capabilities:              # 结构/交互变化的能力逐条声明；mobile 形态优先选模式库（responsive-design §4）
+    - name: 筛选区
+      pc: 平铺 ORadioGroup（3 列）
+      mobile: ODialog 抽屉（「筛选」按钮唤起）
+  degrades: []               # 显式降级的能力（无替代物时必列，逐条向用户确认）
 ```
 
 ## 四、快捷通道（熟练用户）
