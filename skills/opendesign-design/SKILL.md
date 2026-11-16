@@ -1,7 +1,7 @@
 ---
 name: opendesign-design
 description: OpenDesign HTML 页面生产指南。当需要生成符合 OpenDesign 设计规范的 HTML 页面（按钮、输入框、卡片、导航等 UI 组件）、应用设计规范（栅格/颜色/字号/间距/圆角）、搭建页面框架时使用此 skill。包含 PC/MB 双断点的变量映射硬约束（字号/行高/间距/栅格/图标尺寸的合法取值白名单），覆盖 27 个组件设计规范。生成的 HTML 遵循 opendesign-codegen 工程规范（--o-* 语义 Token、OpenDesign 组件命名、BEM、响应式 Token），可直接作为设计原型或进一步转译为 Vue SFC 生产代码。
-last_update: 2026-10-31
+last_update: 2026-11-06
 ---
 
 # Design Skill · HTML 页面生成指南
@@ -106,7 +106,7 @@ last_update: 2026-10-31
    （openEuler / openGauss / openUBMC / 鲲鹏 / 昇腾…）
    — ⚠️ 各社区主题 Token 相互独立（openGauss 品牌色为紫色、openEuler 为蓝色）
    — ⚠️ 禁止不识别社区就默认拉取 openeuler-token！用错社区主题 Token 属最高优先级错误
-   — ⚠️ 无法确定目标社区时停下询问用户，禁止猜测
+   — ⚠️ 无法确定目标社区时停下向用户索要，禁止猜测；缺口不止社区时按第一步「输入齐全性检查」递调用填空模板一次收齐，不逐项追问
 
 WebFetch 拉取目标社区主题 Token（必须执行！URL 见 #数据资源 社区映射表）
    — 将 JSON 中的全部变量翻译为 :root CSS 变量——颜色、字号/行高、间距、栅格、圆角、阴影、控件/图标尺寸一个不漏
@@ -130,7 +130,7 @@ WebFetch 拉取目标社区主题 Token（必须执行！URL 见 #数据资源 �
 
 ### 第一步：规划页面楼层结构
 
-**输入齐全性检查（规划前必做）**：对照以下清单检查用户输入，意图级信息（1~4 项）缺失时**先索要再规划**，禁止凭空假设：
+**输入齐全性检查（规划前必做）**：对照以下清单检查用户输入，意图级信息（1~4 项）缺失时把**调用填空模板**（[references/page-brief-template.md](references/page-brief-template.md) §一）发给用户——**已知项代填、缺项留空**，补齐后再进入规划，禁止凭空假设：
 
 ```
 1. 目标社区（第零步已识别）
@@ -140,7 +140,7 @@ WebFetch 拉取目标社区主题 Token（必须执行！URL 见 #数据资源 �
 5. 楼层构成意图与内容素材（越具体越好；不全时不阻塞规划，在第三步楼层工单中逐层索要）
 ```
 
-**快捷通道**：用户首轮已直接提供填好的页面需求单 → 按 [references/page-brief-template.md](references/page-brief-template.md) §三校验（【必填】缺失停下询问、枚举非法给出合法值请用户修正），校验通过则跳过本步规划确认，直接进入逐楼层循环。
+**快捷通道**：用户首轮已直接提供填好的页面需求单 → 按 [references/page-brief-template.md](references/page-brief-template.md) §四校验（【必填】缺失停下询问、枚举非法给出合法值请用户修正），校验通过则跳过本步规划确认，直接进入逐楼层循环。
 
 根据用户需求，将页面拆解为楼层序列。所有落地页遵循固定结构（见 [hard-constraints.md §8](global/hard-constraints.md)）：
 
@@ -148,7 +148,7 @@ WebFetch 拉取目标社区主题 Token（必须执行！URL 见 #数据资源 �
 导航楼层（必选）→ [Banner 楼层]（可选）→ 楼层 1 → 楼层 2 → … → 页脚楼层（必选）
 ```
 
-向用户输出**页面需求单草稿**（格式见 [references/page-brief-template.md](references/page-brief-template.md) §一），**等待确认后才能继续**：
+向用户输出**页面需求单草稿**（格式见 [references/page-brief-template.md](references/page-brief-template.md) §二），**等待确认后才能继续**：
 
 ```
 # ========== 页面需求单 ==========
@@ -215,7 +215,7 @@ floors:
 
 #### 第三步：生成本楼层工单草稿（组件选型 + 内容素材 + 验收点）
 
-仅处理**当前楼层**（不是整页所有组件），输出**楼层工单草稿**（格式见 [references/page-brief-template.md](references/page-brief-template.md) §二），包含三部分：
+仅处理**当前楼层**（不是整页所有组件），输出**楼层工单草稿**（格式见 [references/page-brief-template.md](references/page-brief-template.md) §三），包含三部分：
 
 ```
 # ========== 楼层工单：[楼层名称] ==========
