@@ -1,7 +1,7 @@
 ---
 name: opendesign-design
 description: OpenDesign HTML 页面生产指南。当需要生成符合 OpenDesign 设计规范的 HTML 页面（按钮、输入框、卡片、导航等 UI 组件）、应用设计规范（栅格/颜色/字号/间距/圆角）、搭建页面框架时使用此 skill。包含 PC/MB 双断点的变量映射硬约束（字号/行高/间距/栅格/图标尺寸的合法取值白名单），覆盖 27 个组件设计规范。生成的 HTML 遵循 opendesign-codegen 工程规范（--o-* 语义 Token、OpenDesign 组件命名、BEM、响应式 Token），可直接作为设计原型或进一步转译为 Vue SFC 生产代码。
-last_update: 2026-11-06
+last_update: 2026-11-17
 ---
 
 # Design Skill · HTML 页面生成指南
@@ -14,6 +14,7 @@ last_update: 2026-11-06
 
 > 🔴 **生成任何页面前，必读以下硬约束文档**：
 > 1. [global/hard-constraints.md](global/hard-constraints.md) — **变量映射硬约束 + 组件组合规则**（合并版）：PC / MB 双断点下，字号 / 行高 / 间距 / 栅格 / 图标尺寸的合法取值白名单，以及按钮对齐 / 排列 / 间距、组件栅格挂靠、卡片间距、禁止组合黑名单及自动校验清单。所有几何数值必须严格选自该白名单，禁止四舍五入、推断或造数。
+> 2. [global/responsive-design.md](global/responsive-design.md) — **多端适配设计规范（Responsive Design）**：PC 稿在其他屏幕宽度下是流式压缩、断点换版还是功能降级的判定方法；换版楼层须在楼层工单声明 `adaptive` 字段（断点 + 能力替换形态 + 降级清单），形态从替换模式库选型。**涉及 PC 稿的页面必读**（楼层工单含 `adaptive` 声明或用户要求多端适配时）。
 >
 > 以上约束**最高优先级**，与下文 [#图标处理规范（核心约束）](#图标处理规范核心约束) 并列，缺一不可。
 >
@@ -138,6 +139,7 @@ WebFetch 拉取目标社区主题 Token（必须执行！URL 见 #数据资源 �
 3. 场景：new-page 全新落地页，还是 site-extension 已有站点增改（后者须有 site_url）
 4. 页面语言（zh / en / zh-en；未说明默认 zh，在需求单中显式呈现供确认）
 5. 楼层构成意图与内容素材（越具体越好；不全时不阻塞规划，在第三步楼层工单中逐层索要）
+6. 多端适配要求（仅 device=PC 时）：用户是否要求 MB 端适配？——要求时按 [global/responsive-design.md](global/responsive-design.md) §1 对每个楼层判定形态；未说明时默认「全部流式」，在需求单 meta.adaptive_policy 中显式呈现供确认
 ```
 
 **快捷通道**：用户首轮已直接提供填好的页面需求单 → 按 [references/page-brief-template.md](references/page-brief-template.md) §四校验（【必填】缺失停下询问、枚举非法给出合法值请用户修正），校验通过则跳过本步规划确认，直接进入逐楼层循环。
@@ -157,6 +159,8 @@ meta:
   device: PC
   scenario: new-page
   language: zh
+  adaptive_policy: scale-default   # device=PC 时显式呈现：scale-default = 全部流式（默认）|
+                               # per-floor = 第三步逐楼层按 responsive-design 规范判定并声明换版
 floors:
   - id: nav
     type: navigation
@@ -234,6 +238,8 @@ acceptance:                  # 可选：本层验收点，叠加在第六步自�
 
 > ⚠️ **内容素材是用户素材：缺失时停下向用户索要，禁止编造**——导航菜单项、页脚链接、卡片标题 / 描述、Banner 文案均同（第零步「站点框架基准」抓取到的线上结构除外）。本条是「禁止凭空编造导航项」在全部楼层内容上的泛化。
 >
+> 📐 **换版声明（adaptive_policy = per-floor 时必做）**：需求单 meta.adaptive_policy 为 per-floor 时，本工单必须含 [global/responsive-design.md](global/responsive-design.md) §3 定义的 `adaptive` 字段——断点（840 / 600 / 840+600，缺省 840）、逐能力替换形态（从规范 §4 模式库选型）、降级清单（degrades 非空时逐条向用户复述确认）。工单无 adaptive 字段且未标注纯流式时，视为缺项：先补判定再生成，禁止落地时隐式 display:none。
+>
 > ⚠️ 页面需求单 `meta.confirm = auto` 时：楼层工单仍须生成（内容结构化载体），但仅内容素材缺失或验收点存疑时停下，其余直接进入第四步。
 
 用户确认 / 补充后，逐一读取每个组件的 `components/{name}.md`，**全部读取完毕才能进入下一步**。
@@ -307,6 +313,13 @@ acceptance:                  # 可选：本层验收点，叠加在第六步自�
    — 有浏览器能力（Playwright / Puppeteer MCP、IDE 预览等）→ 打开 HTML 片段截图目检
    — 无浏览器能力（headless / CLI 环境）→ 逐项静态自检，并在交付说明中显式标注「未做渲染目检，需人工在浏览器复核」
 
+换版验收（工单含 adaptive 字段的楼层必查，详见 [global/responsive-design.md](global/responsive-design.md) §5）：
+□ 断点边界三连（断点 -1px / 整点 / +1px）两侧形态是否正确切换？
+□ capabilities 表逐项落地核对（缺一项即不通过）？
+□ 隐藏能力是否都有等价物或已列入 degrades（无声明的 display:none = 不通过）？
+□ 841~1200 区间是否为「PC 结构 + 流式」（无移动形态提前触发）？
+□ 分页形态切换时数据窗口语义是否成对修改？
+
 验证不通过 → 修正后重验，**通过后才进入下一个楼层**。
 ```
 
@@ -337,6 +350,7 @@ acceptance:                  # 可选：本层验收点，叠加在第六步自�
 □ 【社区Token】:root 颜色与圆角档位是否来自目标社区主题 Token（对照第零步社区识别结论，禁止 openEuler 默认值混入——圆角尤甚：平直社区全 4px / 内容 xl 0px，Ascend / Mindspore 等递进社区照抄即错）？
 □ 【下拉面板样式统一】导航所有下拉面板是否统一使用用户选定的那一种样式（`.o-nav__dropdown` 与 `.o-nav__dropdown--categorized` 不得在同一顶导内混用）——有下拉面板的页面必查
 □ 【站点框架】路由A页面级增改场景：导航/页脚是否与社区线上实际结构一致（对照第零步抓取的站点框架基准）？
+□ 【多端适配】需求单 adaptive_policy = per-floor 时：各楼层 adaptive 声明与实现是否一致（断点 / 能力形态 / 降级清单逐层复核）？渲染验证是否覆盖五个断点档（各档内任取一个宽度）+ 断点两侧 ±1px 且逐档重载？degrades 是否已向用户逐条确认？
 □ 【渲染验证】组装完成后逐楼层目检完整页面（有浏览器能力 → 打开截图目检；无 → 按第六步降级为静态自检并显式标注「未做渲染目检」）——重点排查固定 width/height 容器内的长文案是否折行溢出堆叠（步骤条标题、卡片标题、按钮、标签）
 □ 【图标风格】关键图标是否与设计系统一致（以浏览器渲染为准，非仅看源码 fill/stroke 属性）？
 □ 【CodeGen对齐】全页颜色是否全部使用 `var(--o-color-*)` 语义 Token，无硬编码？

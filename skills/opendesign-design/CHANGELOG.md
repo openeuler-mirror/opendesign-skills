@@ -6,6 +6,20 @@
 
 ---
 
+## 2026-11-17
+
+### 新增
+- **多端适配设计规范 [global/responsive-design.md](global/responsive-design.md)**：定义「PC 稿在其他屏幕宽度下怎么适配」的设计决策规范（Responsive Design）——来源于两轮调研：多站代码普查（约 900 个组件）+ 两套同引擎线上门户 30 页的浏览器截图逐页比对（调研素材不随 skill 分发）。核心内容：①三种适配方式（缩放 / 断点换版 / 功能降级）判定——降级是正当设计选择，声明的作用是把「这是故意的」写下来而非禁止；无第四种「悄悄隐藏」（无替代物且未声明）；②断点收敛规则（断点换版默认 840、交互级叠加 600 且可承担同功能两档形态，同页禁止混线；841–1200 归 PC 侧简化不出独立稿，附中间带质量警示）；③触发信号扩充：指针媒体特性（hover/pointer）、组件几何约束、数据条数、两端数据集不一致声明；④楼层工单 `adaptive` 字段声明格式（line + capabilities 逐能力替换形态【含反向增强】+ degrades 降级清单）；⑤替换模式库扩容（筛进抽屉、分页→触底、表格三策略【表头 label 卡/固定列横滚/折叠行+外链】、目录两档抽屉、工具栏三级降级、流程图→时间轴、底部常驻操作条、去 CTA 化出口完整性、显式「请前往 PC 端」降级提示等）；⑥验收口径升级：分档截图逐档重载、应用壳内滚容器探测、841–1080 表格可读性专项、空态/加载态不作证据、视觉证形态交互须复测。
+- `SKILL.md`：必读文档清单加第 2 项（responsive-design）；第一步输入清单加「多端适配要求」；需求单模板加 `meta.adaptive_policy`（scale-default / per-floor）；第三步楼层工单加换版声明门禁（per-floor 时 adaptive 字段必填）；第六步自检加换版验收块；第八步加全页适配复核项。
+- `references/page-brief-template.md`：需求单加 `adaptive_policy` 字段及填写责任；楼层工单示例加 `adaptive` 段。
+- `references/designer-guide.md`：输入清单加「②b 多端适配要求」。
+
+### 更新
+- `SKILL.md` frontmatter `last_update` → 2026-11-17。
+- 术语口径：三形态采用业界术语（流式 fluid / 断点换版 adaptive / 功能降级 degradation）；工单字段 `fork`/`line`/`fork_to` 更名为 `adaptive`/`breakpoint`/`mobile`，需求单 `fork_policy` 更名为 `adaptive_policy`。
+
+---
+
 ## 2026-11-06
 
 ### 第二十八轮：调用填空模板——「输入对齐」从确认载体前移到首轮开口
